@@ -2,7 +2,7 @@
   import { t } from '$lib/i18n';
 </script>
 
-<footer class="mt-16 border-t border-slate-200 bg-white">
+<footer class="mt-auto border-t border-slate-200 bg-white">
   <div class="mx-auto grid max-w-7xl gap-8 px-4 py-10 text-sm text-slate-600 md:grid-cols-3 lg:px-6">
     <div>
       <h3 class="font-semibold text-slate-900">{$t('contact.address')}</h3>

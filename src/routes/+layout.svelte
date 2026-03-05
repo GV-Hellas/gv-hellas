@@ -27,7 +27,7 @@
   onDestroy(() => clearTimeout(navTimer));
 </script>
 
-<div class="min-h-screen bg-slate-50 text-slate-900">
+<div class="flex min-h-screen flex-col bg-slate-50 text-slate-900">
   <Nav />
 
   {#if showProgress}
@@ -38,7 +38,7 @@
     </div>
   {/if}
 
-  <main class="mx-auto w-full max-w-7xl px-4 py-8 lg:px-6">
+  <main class="mx-auto w-full max-w-7xl flex-1 px-4 py-8 lg:px-6">
     {#key pathname}
       <div in:fade={{ duration: 110 }} out:fade={{ duration: 90 }}>
         {@render children()}
