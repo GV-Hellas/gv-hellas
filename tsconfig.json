@@ -1,0 +1,19 @@
+{
+  "extends": "./.svelte-kit/tsconfig.json",
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "module": "esnext",
+    "target": "esnext",
+    "checkJs": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "types": ["@sveltejs/kit", "vite"]
+  },
+  "include": [
+    "src/**/*.d.ts",
+    "src/**/*.js",
+    "src/**/*.svelte",
+    ".svelte-kit/types/**/*.d.ts"
+  ]
+}
