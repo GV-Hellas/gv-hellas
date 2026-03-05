@@ -11,7 +11,7 @@
     async function handleSubmit(event: Event) {
         event.preventDefault();
         // Placeholder submit handler.
-        // In a real deployment you would send the form data to a serverless function[cite: 9].
+        // In a real deployment you would send the form data to a serverless function.
         submitted = true;
     }
 </script>
@@ -46,7 +46,7 @@
                         bind:value={email}
                         class="w-full p-2 border border-gray-300 rounded focus:ring-primary focus:border-primary"
                         required
-                /> [cite: 12]
+                />
             </div>
 
             <div>
@@ -71,7 +71,7 @@
             </div>
 
             <button type="submit" class="px-4 py-2 bg-primary text-white rounded hover:bg-primary-dark transition">
-                {$t('contact.send')} [cite: 13]
+                {$t('contact.send')}
             </button>
         </form>
 
@@ -92,7 +92,6 @@
                        class="underline hover:text-primary">Facebook</a></li>
                 <li><a href="https://www.instagram.com" target="_blank" rel="noopener"
                        class="underline hover:text-primary">Instagram</a></li>
-                [cite: 14]
                 <li><a href="https://www.tiktok.com" target="_blank" rel="noopener"
                        class="underline hover:text-primary">TikTok</a></li>
             </ul>
