@@ -1,5 +1,5 @@
 // src/lib/i18n.ts
-import { register, init, t, locale } from 'svelte-i18n';
+import { register, init, t, locale, json } from 'svelte-i18n';
 
 register('el', () =>
     Promise.resolve({
@@ -609,4 +609,4 @@ init({
     initialLocale: 'el'
 });
 
-export { t, locale };
+export { t, locale, json };

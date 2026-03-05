@@ -1,18 +1,14 @@
-<script>
-    import { t } from '$lib/i18n';
+<script lang="ts">
+    import { t, json } from '$lib/i18n';
 
-    // New structure: church.schedules.current + church.schedules.previous
-    $: current = $t('church.schedules.current');
-    $: previous = $t('church.schedules.previous');
-    $: ui = $t('church.ui');
+    // Use $json instead of $t for objects
+    $: current = $json('church.schedules.current');
+    $: previous = $json('church.schedules.previous');
+    $: ui = $json('church.ui');
 
     let showPrevious = false;
 
-    // ---- Backward/forward compatible helpers (so tables don't "go empty") ----
-    // Current schedule already uses sections; keep as-is.
-
-    // Previous schedule: your i18n stores it as sections[].rows (NOT entries[]).
-    // But keep compatibility if you ever store old data as entries/highlight again.
+    // ---- Backward/forward compatible helpers ----
     $: previousSections =
         previous?.sections ??
         (previous?.entries
@@ -21,7 +17,7 @@
                     title: '',
                     rows: previous.entries.map((e) => ({
                         date: e.date,
-                        event: e.service, // old key name
+                        event: e.service,
                         service: '',
                         time: e.time
                     })),
