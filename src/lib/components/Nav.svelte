@@ -60,7 +60,7 @@
   <div class="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 lg:px-6">
     <div class="flex min-w-[13rem] items-center gap-3">
       <a href="/" class="block">
-        <img src="/images/logo.svg" alt="GV Hellas" class="h-20 w-20 rounded-xl object-contain" />
+        <img src="/images/logo.png" alt="GV Hellas" class="h-20 w-20 rounded-xl object-contain" />
       </a>
     </div>
 
