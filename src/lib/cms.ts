@@ -1,7 +1,7 @@
 const CMS_BASE_URL = import.meta.env.VITE_CMS_BASE_URL || '/api/content';
 const CMS_TIMEOUT_MS = Number(import.meta.env.VITE_CMS_TIMEOUT_MS || 5000);
 
-async function fetchFromCMS(endpoint, fetchImpl = fetch) {
+async function fetchFromCMS(endpoint: string, fetchImpl: typeof fetch = fetch) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), CMS_TIMEOUT_MS);
 
@@ -25,29 +25,29 @@ const fallback = {
   gallery: []
 };
 
-export async function getEvents({ fetch: fetchImpl } = {}) {
+export async function getEvents({ fetch: fetchImpl }: { fetch?: typeof fetch } = {}) {
   const data = await fetchFromCMS('/events', fetchImpl);
   return Array.isArray(data) && data.length ? data : fallback.events;
 }
 
-export async function getEvent(slug, { fetch: fetchImpl } = {}) {
+export async function getEvent(slug: string, { fetch: fetchImpl }: { fetch?: typeof fetch } = {}) {
   const data = await fetchFromCMS(`/events/${slug}`, fetchImpl);
   if (data) return data;
   const events = await getEvents({ fetch: fetchImpl });
   return events.find((event) => event.slug === slug) || null;
 }
 
-export async function getUsefulLinks({ fetch: fetchImpl } = {}) {
+export async function getUsefulLinks({ fetch: fetchImpl }: { fetch?: typeof fetch } = {}) {
   const data = await fetchFromCMS('/links', fetchImpl);
   return Array.isArray(data) ? data : fallback.links;
 }
 
-export async function getBusinesses({ fetch: fetchImpl } = {}) {
+export async function getBusinesses({ fetch: fetchImpl }: { fetch?: typeof fetch } = {}) {
   const data = await fetchFromCMS('/businesses', fetchImpl);
   return Array.isArray(data) ? data : fallback.businesses;
 }
 
-export async function getGallery({ fetch: fetchImpl } = {}) {
+export async function getGallery({ fetch: fetchImpl }: { fetch?: typeof fetch } = {}) {
   const data = await fetchFromCMS('/gallery', fetchImpl);
   return Array.isArray(data) ? data : fallback.gallery;
 }
