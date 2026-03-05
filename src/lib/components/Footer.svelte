@@ -1,28 +1,30 @@
 <script>
-  import { t } from '../i18n';
+  import { t } from '$lib/i18n';
 </script>
 
-<footer class="bg-primary-dark text-white mt-16">
-  <div class="container mx-auto px-4 py-8 grid md:grid-cols-3 gap-6 text-sm">
+<footer class="mt-auto border-t border-[#b8c9e3] bg-gradient-to-r from-[#dbe7f6] via-[#c7d8ee] to-[#d6e2f2]">
+  <div class="mx-auto grid max-w-7xl gap-8 px-4 py-10 text-sm text-slate-700 md:grid-cols-3 lg:px-6">
     <div>
-      <h3 class="font-bold mb-2">{$t('contact.address')}</h3>
-      <p>4852 Rothrist, Suisse</p>
-      <h3 class="font-bold mt-4 mb-2">Email</h3>
-      <p><a href="mailto:info@gv-hellas.ch" class="underline">info@gv-hellas.ch</a></p>
-      <h3 class="font-bold mt-4 mb-2">{$t('contact.phoneContact')}</h3>
-      <p><a href="tel:+41787296030" class="underline">+41 (0)78 729 60 30</a></p>
+      <h3 class="font-semibold text-slate-900">{$t('contact.address')}</h3>
+      <p class="mt-2">4852 Rothrist, Suisse</p>
+      <h3 class="mt-4 font-semibold text-slate-900">Email</h3>
+      <p class="mt-1"><a href="mailto:info@gv-hellas.ch" class="text-slate-900 hover:underline">info@gv-hellas.ch</a></p>
+      <h3 class="mt-4 font-semibold text-slate-900">{$t('contact.phoneContact')}</h3>
+      <p class="mt-1"><a href="tel:+41787296030" class="text-slate-900 hover:underline">+41 (0)78 729 60 30</a></p>
     </div>
+
     <div>
-      <h3 class="font-bold mb-2">{$t('contact.followUs')}</h3>
-      <ul class="space-y-2">
-        <li><a href="https://www.facebook.com" class="underline" target="_blank" rel="noopener">Facebook</a></li>
-        <li><a href="https://www.instagram.com" class="underline" target="_blank" rel="noopener">Instagram</a></li>
-        <li><a href="https://www.tiktok.com" class="underline" target="_blank" rel="noopener">TikTok</a></li>
+      <h3 class="font-semibold text-slate-900">{$t('contact.followUs')}</h3>
+      <ul class="mt-2 space-y-2">
+        <li><a href="https://www.facebook.com" class="hover:text-slate-900" target="_blank" rel="noopener">Facebook</a></li>
+        <li><a href="https://www.instagram.com" class="hover:text-slate-900" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://www.tiktok.com" class="hover:text-slate-900" target="_blank" rel="noopener">TikTok</a></li>
       </ul>
     </div>
-    <div class="text-right md:text-left md:col-span-1 flex flex-col justify-between">
-      <p>© {new Date().getFullYear()} GV Hellas</p>
-      <p class="text-xs mt-2">Designed with ❤️ using SvelteKit</p>
+
+    <div class="md:text-right">
+      <p class="font-medium text-slate-900">© {new Date().getFullYear()} GV Hellas</p>
+      <p class="mt-2 text-xs">Built with SvelteKit 5</p>
     </div>
   </div>
 </footer>

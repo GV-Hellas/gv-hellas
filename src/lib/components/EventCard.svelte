@@ -1,17 +1,23 @@
 <script>
-  import { t } from '../i18n';
-  export let event;
-  export let lang = 'el';
+  import { t } from '$lib/i18n';
+  import MediaSkeleton from '$lib/components/MediaSkeleton.svelte';
+
+  let { event, lang = 'el' } = $props();
 </script>
 
-<a href={`/events/${event.slug}`} class="block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+<a
+  href={`/events/${event.slug}`}
+  class="group block overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+>
   {#if event.image}
-    <img src={event.image} alt={event.title[lang]} class="w-full h-48 object-cover" />
+    <MediaSkeleton src={event.image} sources={event.imageVariants} alt={event.title[lang]} mediaClass="h-52 object-cover" containerClass="h-52" />
   {/if}
-  <div class="p-4">
-    <h3 class="font-semibold text-lg mb-2">{event.title[lang]}</h3>
-    <p class="text-sm text-gray-600 mb-2">{new Date(event.date).toLocaleDateString(lang === 'de' ? 'de-CH' : 'el-GR')}</p>
-    <p class="text-sm text-gray-700 line-clamp-3">{event.excerpt[lang]}</p>
-    <div class="mt-4 text-primary font-semibold">{$t('events.readMore')}</div>
+  <div class="p-5">
+    <p class="text-xs font-semibold uppercase tracking-wide text-primary">
+      {new Date(event.date).toLocaleDateString(lang === 'de' ? 'de-CH' : 'el-GR')}
+    </p>
+    <h3 class="mt-2 text-lg font-semibold text-slate-900">{event.title[lang]}</h3>
+    <p class="mt-2 text-sm text-slate-600">{event.excerpt[lang]}</p>
+    <div class="mt-4 text-sm font-semibold text-primary group-hover:underline">{$t('events.readMore')} →</div>
   </div>
 </a>
