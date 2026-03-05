@@ -14,16 +14,16 @@
   <Nav />
 
   {#if isNavigating}
-    <div class="pointer-events-none fixed inset-0 z-40 bg-slate-950/10 backdrop-blur-[1px]">
-      <div class="absolute left-1/2 top-4 h-1 w-40 -translate-x-1/2 overflow-hidden rounded-full bg-white/70 shadow">
-        <div class="progress-indicator h-full w-1/2 rounded-full bg-primary"></div>
+    <div class="pointer-events-none fixed inset-x-0 top-[4.65rem] z-40 flex justify-center px-4">
+      <div class="h-1 w-full max-w-7xl overflow-hidden rounded-full bg-slate-200/80 shadow-sm">
+        <div class="progress-indicator h-full w-1/3 rounded-full bg-primary"></div>
       </div>
     </div>
   {/if}
 
   <main class="mx-auto w-full max-w-7xl px-4 py-8 lg:px-6">
     {#key pathname}
-      <div in:fade={{ duration: 180 }} out:fade={{ duration: 130 }}>
+      <div in:fade={{ duration: 140 }} out:fade={{ duration: 120 }}>
         {@render children()}
       </div>
     {/key}

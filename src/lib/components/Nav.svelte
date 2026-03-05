@@ -29,6 +29,20 @@
   ];
 
   let mobileOpen = $state(false);
+  let openDropdown = $state(null);
+  let closeTimer;
+
+  function openMenu(groupKey) {
+    clearTimeout(closeTimer);
+    openDropdown = groupKey;
+  }
+
+  function closeMenuWithDelay() {
+    clearTimeout(closeTimer);
+    closeTimer = setTimeout(() => {
+      openDropdown = null;
+    }, 180);
+  }
 
   function switchLanguage(lang) {
     locale.set(lang);
@@ -42,28 +56,45 @@
   }
 </script>
 
-<nav class="sticky top-0 z-30 border-b border-white/20 bg-primary/90 text-white shadow-lg backdrop-blur-md">
+<nav class="sticky top-0 z-30 border-b border-white/20 bg-primary/92 text-white shadow-lg backdrop-blur-md">
   <div class="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 lg:px-6">
-    <div class="flex min-w-[11rem] items-center gap-3">
-      <div class="h-10 w-10 rounded-xl border border-white/35 bg-white/10" aria-hidden="true"></div>
-      <a href="/" class="text-lg font-semibold tracking-wide md:text-xl">GV Hellas</a>
+    <div class="flex min-w-[13rem] items-center gap-3">
+      <div class="h-14 w-14 rounded-2xl border border-white/35 bg-white/10" aria-hidden="true"></div>
+      <a href="/" class="text-xl font-extrabold tracking-wide md:text-2xl">GV Hellas</a>
     </div>
 
     <button class="rounded-lg border border-white/25 p-2 md:hidden" type="button" onclick={() => (mobileOpen = !mobileOpen)}>
       ☰
     </button>
 
-    <div class="hidden items-center gap-2 md:flex">
-      <a href="/" class="rounded-full px-3 py-2 text-xs font-semibold hover:bg-white/10">{$t('nav.home')}</a>
+    <div class="hidden items-center gap-3 md:flex">
+      <a href="/" class="rounded-full px-3 py-2 text-sm font-bold hover:bg-white/10">{$t('nav.home')}</a>
       {#each groups as group}
-        <div class="relative group">
-          <button class="rounded-full px-3 py-2 text-sm text-white/90 transition group-hover:bg-white/10">{$t(`nav.${group.key}`)}</button>
-          <div class="absolute right-0 mt-2 hidden min-w-56 rounded-2xl border border-slate-200 bg-white p-2 text-slate-800 shadow-xl group-hover:block">
-            {#each group.items as item}
-              <a href={item.href} class={`block rounded-xl px-3 py-2 text-sm transition ${isActive(item.href) ? 'bg-primary text-white' : 'hover:bg-slate-100'}`}>
-                {$t(`nav.${item.key}`)}
-              </a>
-            {/each}
+        <div class="relative">
+          <button
+            class="rounded-full px-4 py-2.5 text-base font-extrabold text-white/95 transition hover:bg-white/10"
+            type="button"
+            onmouseenter={() => openMenu(group.key)}
+            onmouseleave={closeMenuWithDelay}
+            onfocus={() => openMenu(group.key)}
+          >
+            {$t(`nav.${group.key}`)}
+          </button>
+          <div
+            class={`absolute right-0 top-full pt-2 ${openDropdown === group.key ? 'block' : 'hidden'}`}
+            role="group"
+            onmouseenter={() => openMenu(group.key)}
+            onmouseleave={closeMenuWithDelay}
+            onfocusin={() => openMenu(group.key)}
+            onfocusout={closeMenuWithDelay}
+          >
+            <div class="min-w-60 rounded-2xl border border-slate-200 bg-white p-2 text-slate-800 shadow-xl">
+              {#each group.items as item}
+                <a href={item.href} class={`block rounded-xl px-3 py-2.5 text-sm font-semibold transition ${isActive(item.href) ? 'bg-primary text-white' : 'hover:bg-slate-100'}`}>
+                  {$t(`nav.${item.key}`)}
+                </a>
+              {/each}
+            </div>
           </div>
         </div>
       {/each}
@@ -71,13 +102,13 @@
 
     <div class="hidden items-center gap-2 md:flex">
       <div class="flex rounded-full bg-white/10 p-1">
-        <button type="button" class="rounded-full px-3 py-1 text-xs font-semibold transition" class:bg-white={$locale === 'el'} class:text-primary={$locale === 'el'} onclick={() => switchLanguage('el')}>EL</button>
-        <button type="button" class="rounded-full px-3 py-1 text-xs font-semibold transition" class:bg-white={$locale === 'de'} class:text-primary={$locale === 'de'} onclick={() => switchLanguage('de')}>DE</button>
+        <button type="button" class="rounded-full px-3 py-1 text-xs font-bold transition" class:bg-white={$locale === 'el'} class:text-primary={$locale === 'el'} onclick={() => switchLanguage('el')}>EL</button>
+        <button type="button" class="rounded-full px-3 py-1 text-xs font-bold transition" class:bg-white={$locale === 'de'} class:text-primary={$locale === 'de'} onclick={() => switchLanguage('de')}>DE</button>
       </div>
       <div class="ml-1 flex items-center gap-1">
         {#each socials as social}
           <a href={social.href} target="_blank" rel="noopener" aria-label={social.name} class="rounded-full p-2 transition hover:bg-white/15">
-            <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current"><path d={social.icon}></path></svg>
+            <svg viewBox="0 0 24 24" class="h-5 w-5 fill-current"><path d={social.icon}></path></svg>
           </a>
         {/each}
       </div>
@@ -86,19 +117,19 @@
 
   {#if mobileOpen}
     <div class="border-t border-white/15 px-4 pb-4 md:hidden">
-      <a href="/" class="mt-3 block rounded-lg px-3 py-2 text-sm hover:bg-white/10">{$t('nav.home')}</a>
+      <a href="/" class="mt-3 block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-white/10">{$t('nav.home')}</a>
       {#each groups as group}
-        <p class="mt-3 px-3 text-xs uppercase tracking-wide text-white/60">{$t(`nav.${group.key}`)}</p>
+        <p class="mt-3 px-3 text-xs font-semibold uppercase tracking-wide text-white/60">{$t(`nav.${group.key}`)}</p>
         {#each group.items as item}
-          <a href={item.href} class={`mt-1 block rounded-lg px-3 py-2 text-sm ${isActive(item.href) ? 'bg-white/20' : 'hover:bg-white/10'}`}>
+          <a href={item.href} class={`mt-1 block rounded-lg px-3 py-2 text-sm font-semibold ${isActive(item.href) ? 'bg-white/20' : 'hover:bg-white/10'}`}>
             {$t(`nav.${item.key}`)}
           </a>
         {/each}
       {/each}
       <div class="mt-4 flex items-center justify-between px-3">
         <div class="flex gap-2">
-          <button class="rounded bg-white/20 px-3 py-1 text-sm" type="button" onclick={() => switchLanguage('el')}>EL</button>
-          <button class="rounded bg-white/20 px-3 py-1 text-sm" type="button" onclick={() => switchLanguage('de')}>DE</button>
+          <button class="rounded bg-white/20 px-3 py-1 text-sm font-semibold" type="button" onclick={() => switchLanguage('el')}>EL</button>
+          <button class="rounded bg-white/20 px-3 py-1 text-sm font-semibold" type="button" onclick={() => switchLanguage('de')}>DE</button>
         </div>
         <div class="flex gap-2">
           {#each socials as social}

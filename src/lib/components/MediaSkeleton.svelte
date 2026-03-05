@@ -1,23 +1,37 @@
 <script>
-  let {
-    type = 'image',
-    src,
-    alt = '',
-    mediaClass = '',
-    containerClass = '',
-    poster = ''
-  } = $props();
+  let { type = 'image', src, alt = '', mediaClass = '', containerClass = '', poster = '' } = $props();
 
   let loaded = $state(false);
+  let imageEl = $state();
+  let videoEl = $state();
+
+  $effect(() => {
+    src;
+    loaded = false;
+  });
+
+  $effect(() => {
+    if (type === 'image' && imageEl?.complete) {
+      loaded = true;
+    }
+  });
+
+  $effect(() => {
+    if (type === 'video' && videoEl?.readyState >= 2) {
+      loaded = true;
+    }
+  });
 </script>
 
 <div class={`relative overflow-hidden ${containerClass}`}>
-  {#if !loaded}
-    <div class="skeleton-shimmer absolute inset-0 z-10" aria-hidden="true"></div>
-  {/if}
+  <div
+    class={`skeleton-shimmer absolute inset-0 z-10 pointer-events-none transition-opacity duration-250 ${loaded ? 'opacity-0' : 'opacity-100'}`}
+    aria-hidden="true"
+  ></div>
 
   {#if type === 'video'}
     <video
+      bind:this={videoEl}
       controls
       preload="metadata"
       poster={poster}
@@ -30,6 +44,7 @@
     </video>
   {:else}
     <img
+      bind:this={imageEl}
       src={src}
       alt={alt}
       class={`w-full ${mediaClass}`}
