@@ -1,13 +1,10 @@
 const CMS_BASE_URL = import.meta.env.VITE_CMS_BASE_URL || 'https://gv-hellas.ch/wp-json/wp/v2';
-const CMS_TIMEOUT_MS = Number(import.meta.env.VITE_CMS_TIMEOUT_MS || 8000);
+const CMS_TIMEOUT_MS = Number(import.meta.env.VITE_CMS_TIMEOUT_MS || 2500);
 
 const fallbackEvents = [
   {
     slug: 'fasnachtfeier-2025',
-    title: {
-      el: 'Αποκριάτικο Πάρτυ 2025',
-      de: 'Fasnachtfeier 2025'
-    },
+    title: { el: 'Αποκριάτικο Πάρτυ 2025', de: 'Fasnachtfeier 2025' },
     date: '2025-02-14',
     excerpt: {
       el: 'Πρόσκληση για το αποκριάτικο πάρτυ του συλλόγου το 2025.',
@@ -21,10 +18,7 @@ const fallbackEvents = [
   },
   {
     slug: 'generalversammlung-2025',
-    title: {
-      el: 'Κοπή πίτας – Γενική συνέλευση 2025',
-      de: 'Generalversammlung 2025 (Kuchenschneiden)'
-    },
+    title: { el: 'Κοπή πίτας – Γενική συνέλευση 2025', de: 'Generalversammlung 2025 (Kuchenschneiden)' },
     date: '2025-01-19',
     excerpt: {
       el: 'Σας προσκαλούμε στην ετήσια γενική συνέλευση και κοπή πίτας.',
@@ -57,37 +51,6 @@ const fallbackGallery = [
   { type: 'image', src: 'https://gv-hellas.ch/wp-content/uploads/2024/06/fasnacht-2023-1.jpg', alt: 'Fasnacht 2023' }
 ];
 
-async function fetchFromCMS(endpoint, params = {}) {
-  if (!CMS_BASE_URL) {
-    return null;
-  }
-
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), CMS_TIMEOUT_MS);
-
-  try {
-    const url = new URL(`${CMS_BASE_URL}${endpoint}`);
-    Object.entries(params).forEach(([key, value]) => {
-      if (value !== undefined && value !== null && value !== '') {
-        url.searchParams.set(key, String(value));
-      }
-    });
-
-    const res = await fetch(url, { signal: controller.signal });
-
-    if (!res.ok) {
-      throw new Error(`CMS fetch failed: ${res.status}`);
-    }
-
-    return res.json();
-  } catch (error) {
-    console.warn('CMS request failed, using fallback data.', error);
-    return null;
-  } finally {
-    clearTimeout(timeout);
-  }
-}
-
 function stripHtml(value = '') {
   return value.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 }
@@ -108,32 +71,43 @@ function mapWordpressEvent(post) {
   };
 }
 
-export async function getEvents() {
-  const data = await fetchFromCMS('/posts', {
-    per_page: 24,
-    _embed: 1,
-    status: 'publish'
-  });
+async function fetchFromCMS(endpoint, params = {}, fetchImpl = fetch) {
+  if (!CMS_BASE_URL) return null;
 
-  if (Array.isArray(data) && data.length > 0) {
-    return data.map(mapWordpressEvent);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), CMS_TIMEOUT_MS);
+
+  try {
+    const url = new URL(`${CMS_BASE_URL}${endpoint}`);
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== '') {
+        url.searchParams.set(key, String(value));
+      }
+    });
+
+    const res = await fetchImpl(url, { signal: controller.signal });
+    if (!res.ok) throw new Error(`CMS fetch failed: ${res.status}`);
+
+    return res.json();
+  } catch (error) {
+    console.warn('CMS request failed, using fallback data.', error);
+    return null;
+  } finally {
+    clearTimeout(timeout);
   }
+}
 
+export async function getEvents({ fetch: fetchImpl } = {}) {
+  const data = await fetchFromCMS('/posts', { per_page: 24, _embed: 1, status: 'publish' }, fetchImpl);
+  if (Array.isArray(data) && data.length > 0) return data.map(mapWordpressEvent);
   return fallbackEvents;
 }
 
-export async function getEvent(slug) {
-  const data = await fetchFromCMS('/posts', {
-    slug,
-    _embed: 1,
-    status: 'publish'
-  });
+export async function getEvent(slug, { fetch: fetchImpl } = {}) {
+  const data = await fetchFromCMS('/posts', { slug, _embed: 1, status: 'publish' }, fetchImpl);
+  if (Array.isArray(data) && data.length > 0) return mapWordpressEvent(data[0]);
 
-  if (Array.isArray(data) && data.length > 0) {
-    return mapWordpressEvent(data[0]);
-  }
-
-  const events = await getEvents();
+  const events = await getEvents({ fetch: fetchImpl });
   return events.find((event) => event.slug === slug) || null;
 }
 
@@ -145,11 +119,8 @@ export async function getBusinesses() {
   return fallbackBusinesses;
 }
 
-export async function getGallery() {
-  const media = await fetchFromCMS('/media', {
-    per_page: 18,
-    media_type: 'image'
-  });
+export async function getGallery({ fetch: fetchImpl } = {}) {
+  const media = await fetchFromCMS('/media', { per_page: 18, media_type: 'image' }, fetchImpl);
 
   if (Array.isArray(media) && media.length > 0) {
     return media

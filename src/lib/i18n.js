@@ -1,4 +1,4 @@
-import {register, init, getLocaleFromNavigator, t, locale} from 'svelte-i18n';
+import {register, init, t, locale} from 'svelte-i18n';
 
 register('el', () => Promise.resolve({
     nav: {
@@ -120,7 +120,7 @@ register('de', () => Promise.resolve({
 
 init({
     fallbackLocale: 'el',
-    initialLocale: getLocaleFromNavigator()
+    initialLocale: 'el'
 });
 
 export {t, locale};
