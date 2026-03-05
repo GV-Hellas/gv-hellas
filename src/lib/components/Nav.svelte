@@ -60,8 +60,8 @@
   <div class="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 lg:px-6">
     <div class="flex min-w-[18rem] items-center gap-3">
       <a href="/" class="flex items-center gap-3">
-        <img src="/images/logo.svg" alt="GV Hellas" class="h-20 w-20 rounded-xl object-cover" />
-        <span class="leading-tight text-sm font-bold sm:text-base">Griechischer Verein<br />Hellas</span>
+        <img src="/images/logo.png" alt="GV Hellas" class="h-20 w-20 rounded-xl object-cover" />
+        <span class="leading-tight text-sm font-black sm:text-lg">Griechischer Verein<br />Hellas</span>
       </a>
     </div>
 
