@@ -42,6 +42,58 @@ pnpm build
 pnpm preview
 ```
 
+### 5. CMS Configuration (Built-in DB CMS)
+Copy `.env.example` to `.env` and adjust if needed:
+
+```bash
+cp .env.example .env
+```
+
+The app uses internal CMS APIs (`/api/content`) with data persisted in a local SQLite database (`data/cms.db`).
+
+### 6. Admin UI
+Open:
+
+```
+https://<your-domain>/admin
+```
+
+Login using:
+- `CMS_ADMIN_USER`
+- `CMS_ADMIN_PASSWORD`
+
+Admin sections:
+- `/admin/events` (index table, create, edit, delete)
+- `/admin/gallery` (index table, create, edit, delete, tags)
+
+### 7. Seed from current website + image variants
+Fetch data from current WordPress site, download images locally, and generate JPG/WEBP responsive variants:
+
+```bash
+npm run seed:cms
+```
+
+This stores image files under `static/uploads` and updates `data/cms.json`.
+
+### 8. Import CMS JSON into DB
+Populate DB tables from `data/cms.json`:
+
+```bash
+npm run db:import-json
+```
+
+### 9. Optional Docker database stack
+A dedicated DB stack is provided for local environments that already run multiple dockerized websites:
+
+```bash
+docker compose -f docker-compose.cms-db.yml up -d
+```
+
+- Postgres: `localhost:55432`
+- PgAdmin: `http://localhost:58080`
+
+Uses named volume: `gv_hellas_pg_data`.
+
 ## 🎨 Theme Configuration
 
 Tailwind CSS v4 configuration is handled directly in `src/app.css`. We use CSS variables within the `@theme` block to manage the association's branding:

@@ -1,65 +1,71 @@
 <script lang="ts">
-    import { t, locale } from '$lib/i18n';
-    import Slider from '$lib/components/Slider.svelte';
-    import EventCard from '$lib/components/EventCard.svelte';
+  import { t, locale } from '$lib/i18n';
+  import Slider from '$lib/components/Slider.svelte';
+  import EventCard from '$lib/components/EventCard.svelte';
 
-    let { data } = $props();
+  let { data } = $props();
 
-    // Use $t as a function directly.
-    // Svelte 5 will track the dependency on the store automatically.
-    let slides = $derived([
-        {
-            image: '/images/hero-1.jpg',
-            title: $t('home.welcomeTitle'),
-            subtitle: $t('home.welcomeSubtitle')
-        },
-        {
-            image: '/images/hero-2.jpg',
-            title: $t('home.aboutHeadline'),
-            subtitle: $t('home.aboutText')
-        }
-    ]);
+  const heroImages = [
+    'https://gv-hellas.ch/wp-content/uploads/2024/06/hero-1.jpg',
+    'https://gv-hellas.ch/wp-content/uploads/2024/06/hero-2.jpg'
+  ];
 
-    let lang = $derived($locale ?? undefined);
+  let slides = $derived([
+    {
+      image: heroImages[0],
+      title: $t('home.welcomeTitle'),
+      subtitle: $t('home.welcomeSubtitle')
+    },
+    {
+      image: heroImages[1],
+      title: $t('home.aboutHeadline'),
+      subtitle: $t('home.aboutText')
+    }
+  ]);
+
+  let lang = $derived($locale ?? 'el');
+  let events = $derived(data?.events ?? []);
 </script>
 
 <section>
-    <Slider {slides} interval={6000}/>
+  <Slider {slides} interval={6500} />
+</section>
+
+<section class="my-12 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+  <h2 class="text-2xl font-bold text-slate-900">{$t('home.aboutHeadline')}</h2>
+  <p class="mt-3 max-w-3xl text-slate-600">{$t('home.aboutText')}</p>
 </section>
 
 <section class="my-12">
-    <h2 class="text-2xl font-bold mb-4">{$t('home.aboutHeadline')}</h2>
-    <p>{$t('home.aboutText')}</p>
+  <div class="mb-5 flex items-end justify-between gap-4">
+    <h2 class="text-2xl font-bold text-slate-900">{$t('events.headline')}</h2>
+    <a href="/events" class="text-sm font-semibold text-primary hover:underline">{$t('events.readMore')}</a>
+  </div>
+  <div class="grid gap-6 md:grid-cols-3">
+    {#each events as event}
+      <EventCard {event} {lang} />
+    {/each}
+  </div>
 </section>
 
-<section class="my-12">
-    <h2 class="text-2xl font-bold mb-4">{$t('events.headline')}</h2>
-    <div class="grid md:grid-cols-3 gap-6">
-        {#each data.events as event}
-            <EventCard {event} lang={lang}/>
-        {/each}
-    </div>
+<section class="my-12 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+  <h2 class="text-2xl font-bold text-slate-900">{$t('home.activitiesHeadline')}</h2>
+  <p class="mt-4 text-slate-700">{$t('home.activitiesIntro')}</p>
+  <ul class="mt-4 space-y-3 text-slate-700">
+    <li>• Ήθη και Έθιμα / Bräuche und Traditionen</li>
+    <li>• Παραδοσιακοί Χοροί / Traditionelle Tänze</li>
+    <li>• Φαγητό και Παράδοση / Essen und Tradition</li>
+    <li>• Ελληνική Γλώσσα / Griechische Sprache</li>
+    <li>• Θρησκεία / Religion</li>
+  </ul>
 </section>
 
-<section class="my-12">
-    <h2 class="text-2xl font-bold mb-4">{$t('home.activitiesHeadline')}</h2>
-    <ul class="list-disc list-inside space-y-2">
-        <li>Bräuche und Traditionen / Ήθη και Έθιμα</li>
-        <li>Traditionelle Tänze / Παραδοσιακοί Χοροί</li>
-        <li>Essen und Tradition / Φαγητό και Παράδοση</li>
-        <li>Griechische Sprache / Ελληνική Γλώσσα</li>
-        <li>Religion / Θρησκεία</li>
-    </ul>
-</section>
-
-<section class="my-12">
-    <h2 class="text-2xl font-bold mb-4">{$t('home.sponsorsHeadline')}</h2>
-    <div class="flex flex-wrap gap-4 items-center">
-        <a href="https://ssr-rothrist.ch" target="_blank" rel="noopener" class="underline">SSR Rothrist</a>
-        <a href="https://physiomurgenthal.ch" target="_blank" rel="noopener" class="underline">Physio Murgenthal</a>
-        <a href="https://zahnarztaarburgoftringen.ch" target="_blank" rel="noopener" class="underline">Zahnarzt
-            Aarburg/Oftringen</a>
-        <a href="https://zahnarztpraxisturbenthal.ch" target="_blank" rel="noopener" class="underline">Zahnarzt
-            Turbenthal</a>
-    </div>
+<section class="my-12 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+  <h2 class="text-2xl font-bold text-slate-900">{$t('home.sponsorsHeadline')}</h2>
+  <div class="mt-4 grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
+    <a href="https://ssr-rothrist.ch" target="_blank" rel="noopener" class="rounded-xl border border-slate-200 px-4 py-3 font-medium text-primary hover:bg-slate-50">SSR Rothrist</a>
+    <a href="https://physiomurgenthal.ch" target="_blank" rel="noopener" class="rounded-xl border border-slate-200 px-4 py-3 font-medium text-primary hover:bg-slate-50">Physio Murgenthal</a>
+    <a href="https://zahnarztaarburgoftringen.ch" target="_blank" rel="noopener" class="rounded-xl border border-slate-200 px-4 py-3 font-medium text-primary hover:bg-slate-50">Zahnarzt Aarburg/Oftringen</a>
+    <a href="https://zahnarztpraxisturbenthal.ch" target="_blank" rel="noopener" class="rounded-xl border border-slate-200 px-4 py-3 font-medium text-primary hover:bg-slate-50">Zahnarzt Turbenthal</a>
+  </div>
 </section>
