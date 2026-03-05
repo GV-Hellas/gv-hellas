@@ -3,12 +3,13 @@
   import MediaSkeleton from '$lib/components/MediaSkeleton.svelte';
 
   let { data } = $props();
+  let items = $derived(data?.items ?? []);
 </script>
 
 <h1 class="mb-6 text-3xl font-bold">{$t('gallery.headline')}</h1>
 
 <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-  {#each data.items as item}
+  {#each items as item}
     {#if item.type === 'image'}
       <MediaSkeleton
         src={item.src}

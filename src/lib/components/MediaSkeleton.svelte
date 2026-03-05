@@ -1,43 +1,25 @@
 <script>
-  import { onMount } from 'svelte';
-
   let { type = 'image', src, alt = '', mediaClass = '', containerClass = '', poster = '' } = $props();
 
   let loaded = $state(false);
-  let shouldLoad = $state(false);
-  let hostEl = $state();
+  let activeSrc = $state('');
 
-  let activeSrc = $derived(shouldLoad ? src : '');
+  function startLoading() {
+    // defer assigning src so skeleton renders first, then browser fetch starts
+    requestAnimationFrame(() => {
+      activeSrc = src || '';
+    });
+  }
 
   $effect(() => {
     src;
     loaded = false;
-    shouldLoad = false;
-  });
-
-  onMount(() => {
-    if (!hostEl) {
-      shouldLoad = true;
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          shouldLoad = true;
-          observer.disconnect();
-        }
-      },
-      { rootMargin: '250px 0px' }
-    );
-
-    observer.observe(hostEl);
-
-    return () => observer.disconnect();
+    activeSrc = '';
+    startLoading();
   });
 </script>
 
-<div bind:this={hostEl} class={`relative overflow-hidden ${containerClass}`}>
+<div class={`relative overflow-hidden ${containerClass}`}>
   <div
     class={`skeleton-shimmer absolute inset-0 z-10 pointer-events-none transition-opacity duration-200 ${loaded ? 'opacity-0' : 'opacity-100'}`}
     aria-hidden="true"

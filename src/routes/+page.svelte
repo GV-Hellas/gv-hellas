@@ -24,6 +24,7 @@
   ]);
 
   let lang = $derived($locale ?? 'el');
+  let events = $derived(data?.events ?? []);
 </script>
 
 <section>
@@ -41,7 +42,7 @@
     <a href="/events" class="text-sm font-semibold text-primary hover:underline">{$t('events.readMore')}</a>
   </div>
   <div class="grid gap-6 md:grid-cols-3">
-    {#each data.events as event}
+    {#each events as event}
       <EventCard {event} {lang} />
     {/each}
   </div>
