@@ -56,11 +56,12 @@
   }
 </script>
 
-<nav class="sticky top-0 z-30 border-b border-white/20 bg-primary/92 text-white shadow-lg backdrop-blur-md">
+<nav class="sticky top-0 z-30 border-b border-[#8ea8cf] bg-primary/95 text-slate-900 shadow-lg backdrop-blur-md">
   <div class="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 lg:px-6">
-    <div class="flex min-w-[13rem] items-center gap-3">
-      <a href="/" class="block">
-        <img src="/images/logo.png" alt="GV Hellas" class="h-20 w-20 rounded-xl object-contain" />
+    <div class="flex min-w-[18rem] items-center gap-3">
+      <a href="/" class="flex items-center gap-3">
+        <img src="/images/logo.svg" alt="GV Hellas" class="h-20 w-20 rounded-xl object-cover" />
+        <span class="leading-tight text-sm font-bold sm:text-base">Griechischer Verein<br />Hellas</span>
       </a>
     </div>
 
@@ -69,11 +70,11 @@
     </button>
 
     <div class="hidden items-center gap-3 md:flex">
-      <a href="/" class="rounded-full px-4 py-2.5 text-base font-extrabold hover:bg-white/10">{$t('nav.home')}</a>
+      <a href="/" class="rounded-full px-4 py-2.5 text-base font-extrabold text-slate-900 hover:bg-white/35">{$t('nav.home')}</a>
       {#each groups as group}
         <div class="relative">
           <button
-            class="rounded-full px-4 py-2.5 text-base font-extrabold text-white/95 transition hover:bg-white/10"
+            class="rounded-full px-4 py-2.5 text-base font-extrabold text-slate-900 transition hover:bg-white/35"
             type="button"
             onmouseenter={() => openMenu(group.key)}
             onmouseleave={closeMenuWithDelay}
@@ -108,7 +109,7 @@
       </div>
       <div class="ml-1 flex items-center gap-1">
         {#each socials as social}
-          <a href={social.href} target="_blank" rel="noopener" aria-label={social.name} class="rounded-full p-2 transition hover:bg-white/15">
+          <a href={social.href} target="_blank" rel="noopener" aria-label={social.name} class="rounded-full p-2 transition hover:bg-white/35">
             <svg viewBox="0 0 24 24" class="h-5 w-5 fill-current"><path d={social.icon}></path></svg>
           </a>
         {/each}
@@ -118,23 +119,23 @@
 
   {#if mobileOpen}
     <div class="border-t border-white/15 px-4 pb-4 md:hidden">
-      <a href="/" class="mt-3 block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-white/10">{$t('nav.home')}</a>
+      <a href="/" class="mt-3 block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-white/30">{$t('nav.home')}</a>
       {#each groups as group}
-        <p class="mt-3 px-3 text-xs font-semibold uppercase tracking-wide text-white/60">{$t(`nav.${group.key}`)}</p>
+        <p class="mt-3 px-3 text-xs font-semibold uppercase tracking-wide text-slate-700">{$t(`nav.${group.key}`)}</p>
         {#each group.items as item}
-          <a href={item.href} class={`mt-1 block rounded-lg px-3 py-2 text-sm font-semibold ${isActive(item.href) ? 'bg-white/20' : 'hover:bg-white/10'}`}>
+          <a href={item.href} class={`mt-1 block rounded-lg px-3 py-2 text-sm font-semibold ${isActive(item.href) ? 'bg-white/35' : 'hover:bg-white/30'}`}>
             {$t(`nav.${item.key}`)}
           </a>
         {/each}
       {/each}
       <div class="mt-4 flex items-center justify-between px-3">
         <div class="flex gap-2">
-          <button class="rounded bg-white/20 px-3 py-1 text-sm font-semibold" type="button" onclick={() => switchLanguage('el')}>EL</button>
-          <button class="rounded bg-white/20 px-3 py-1 text-sm font-semibold" type="button" onclick={() => switchLanguage('de')}>DE</button>
+          <button class="rounded bg-white/35 px-3 py-1 text-sm font-semibold" type="button" onclick={() => switchLanguage('el')}>EL</button>
+          <button class="rounded bg-white/35 px-3 py-1 text-sm font-semibold" type="button" onclick={() => switchLanguage('de')}>DE</button>
         </div>
         <div class="flex gap-2">
           {#each socials as social}
-            <a href={social.href} target="_blank" rel="noopener" aria-label={social.name} class="rounded-full p-2 transition hover:bg-white/15">
+            <a href={social.href} target="_blank" rel="noopener" aria-label={social.name} class="rounded-full p-2 transition hover:bg-white/35">
               <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current"><path d={social.icon}></path></svg>
             </a>
           {/each}

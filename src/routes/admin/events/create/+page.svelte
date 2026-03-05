@@ -1,6 +1,6 @@
 <script>
   let mediaBlocks = $state('[]');
-  let { form } = $props();
+  let preview = $state('');
 
   function addSnippet(type) {
     const arr = JSON.parse(mediaBlocks || '[]');
@@ -9,18 +9,26 @@
     if (type === 'carousel') arr.push({ type: 'carousel', items: [{ type: 'image', src: '' }] });
     mediaBlocks = JSON.stringify(arr, null, 2);
   }
+
+  function onFileChange(event) {
+    const file = event.currentTarget.files?.[0];
+    preview = file ? URL.createObjectURL(file) : '';
+  }
 </script>
 
 <h1 class="mb-4 text-2xl font-bold">Create event</h1>
-{#if form?.error}<p class="mb-3 text-red-700">{form.error}</p>{/if}
-<form method="POST" action="?/save" class="grid gap-3 rounded border border-slate-200 bg-white p-4 md:grid-cols-2">
+<form method="POST" enctype="multipart/form-data" action="?/save" class="grid gap-3 rounded border border-slate-200 bg-white p-4 md:grid-cols-2">
   <input name="slug" placeholder="slug" class="rounded border px-3 py-2" required />
   <input type="date" name="date" class="rounded border px-3 py-2" required />
   <input name="title_el" placeholder="Title EL" class="rounded border px-3 py-2" required />
   <input name="title_de" placeholder="Title DE" class="rounded border px-3 py-2" required />
   <textarea name="excerpt_el" placeholder="Excerpt EL" class="rounded border px-3 py-2"></textarea>
   <textarea name="excerpt_de" placeholder="Excerpt DE" class="rounded border px-3 py-2"></textarea>
-  <input name="image" placeholder="Main image URL" class="rounded border px-3 py-2 md:col-span-2" />
+  <div class="md:col-span-2">
+    <label class="mb-1 block text-sm font-semibold">Main image upload</label>
+    <input name="image" type="file" accept="image/*" class="block w-full" onchange={onFileChange} required />
+    {#if preview}<img src={preview} alt="preview" class="mt-2 h-20 w-20 rounded object-cover" />{/if}
+  </div>
   <textarea name="content_el" placeholder="Rich HTML EL" class="min-h-40 rounded border px-3 py-2"></textarea>
   <textarea name="content_de" placeholder="Rich HTML DE" class="min-h-40 rounded border px-3 py-2"></textarea>
 

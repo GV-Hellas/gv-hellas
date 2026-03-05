@@ -1,5 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 import { getEventBySlug, upsertEvent } from '$lib/server/cms-store';
+import { processImageUpload } from '$lib/server/media';
 
 export async function load({ params }) {
   return { event: getEventBySlug(params.slug) };
@@ -8,18 +9,32 @@ export async function load({ params }) {
 export const actions = {
   save: async ({ request, params }) => {
     const form = await request.formData();
+    const existing = getEventBySlug(params.slug);
     const slug = String(form.get('slug') || params.slug).trim();
     if (!slug) return fail(400, { error: 'Slug required' });
+
+    let blocks = [];
+    try {
+      blocks = JSON.parse(String(form.get('media_blocks') || '[]'));
+    } catch {
+      blocks = [];
+    }
+
+    const upload = form.get('image');
+    const processed = upload instanceof File && upload.size > 0 ? await processImageUpload(upload, `event-${slug}`) : null;
 
     upsertEvent({
       slug,
       date: String(form.get('date') || '').trim(),
       title: { el: String(form.get('title_el') || ''), de: String(form.get('title_de') || '') },
       excerpt: { el: String(form.get('excerpt_el') || ''), de: String(form.get('excerpt_de') || '') },
-      image: String(form.get('image') || ''),
-      imageVariants: { webp: [], jpg: [] },
+      image: processed?.original || existing?.image || '',
+      imageVariants: {
+        webp: processed?.webp?.[0]?.src || existing?.imageVariants?.webp || '',
+        jpg: processed?.jpg?.[0]?.src || existing?.imageVariants?.jpg || ''
+      },
       content: { el: String(form.get('content_el') || ''), de: String(form.get('content_de') || '') },
-      mediaBlocks: JSON.parse(String(form.get('media_blocks') || '[]'))
+      mediaBlocks: blocks
     });
 
     throw redirect(303, '/admin/events');
