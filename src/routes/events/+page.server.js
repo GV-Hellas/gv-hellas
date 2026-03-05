@@ -1,6 +1,6 @@
 import { getEvents } from '$lib/cms';
 
-/** @type {import('./$types').PageLoad} */
+/** @type {import('./$types').PageServerLoad} */
 export async function load({ fetch }) {
   const events = await getEvents({ fetch });
   const now = new Date();

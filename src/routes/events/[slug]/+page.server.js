@@ -1,6 +1,6 @@
 import { getEvent } from '$lib/cms';
 
-/** @type {import('./$types').PageLoad} */
+/** @type {import('./$types').PageServerLoad} */
 export async function load({ params, fetch }) {
   const event = await getEvent(params.slug, { fetch });
   if (!event) {
