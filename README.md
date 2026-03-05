@@ -42,14 +42,15 @@ pnpm build
 pnpm preview
 ```
 
-### 5. CMS Configuration (WordPress)
+### 5. CMS Configuration (Built-in CMS)
 Copy `.env.example` to `.env` and adjust if needed:
 
 ```bash
 cp .env.example .env
 ```
 
-The app will query `https://gv-hellas.ch/wp-json/wp/v2` by default and gracefully fall back to local seed data when the CMS is unavailable.
+The app uses an internal CMS API (`/api/content`) backed by `data/cms.json`.
+Use `/admin` to manage content through the built-in editor UI.
 
 ## 🎨 Theme Configuration
 
@@ -91,20 +92,32 @@ UI strings are managed in `src/lib/i18n.js`. Components use the `$t` store for t
 ## ⚖️ Disclaimer
 
 This project is a modern skeleton designed for migration. While it includes mock data for local development, it is prepared for a production-ready headless CMS integration.
-## 🧩 CMS for non-technical editors (recommended setup)
+## 🛠️ Running the built-in CMS (no WordPress dependency)
 
-This project currently uses **WordPress as the CMS** via REST (`/wp-json/wp/v2`).
-No new CMS was installed in this repository/container.
+The project now includes a built-in JSON CMS with admin UI at `/admin`.
 
-For non-technical content editing with a friendly UI, keep using your hosted WordPress admin:
+### Admin login
+Set credentials in your environment (optional, defaults shown):
 
-1. Open `https://gv-hellas.ch/wp-admin` and log in.
-2. **Events**: create/edit regular Posts (title, excerpt, content, featured image, publish date).
-3. **Gallery**: upload/manage images in Media Library.
-4. Publish/update entries; Svelte frontend reads them automatically from REST API.
+```bash
+CMS_ADMIN_USER=admin
+CMS_ADMIN_PASSWORD=admin123
+```
 
-If you want even cleaner editor screens for volunteers, add these WordPress plugins on the hosted site:
-- **Custom Post Type UI** (optional `Events`/`Gallery` post types)
-- **Advanced Custom Fields (ACF)** (structured event fields)
+Then open: `https://<your-domain>/admin`
 
-This keeps CMS + website hosted together and manageable by non-technical users.
+From there non-technical users can add/edit/delete:
+- Events
+- Gallery images
+
+### Data storage
+CMS content is stored in: `data/cms.json`.
+
+### Seed data from current website
+To import existing posts/media from gv-hellas WordPress REST into the new CMS store:
+
+```bash
+npm run seed:cms
+```
+
+This writes records into `data/cms.json` and keeps links/businesses from existing data.

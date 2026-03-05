@@ -3,14 +3,15 @@
   import MediaSkeleton from '$lib/components/MediaSkeleton.svelte';
 
   let { slides = [], interval = 5000 } = $props();
+  let normalizedSlides = $derived((slides ?? []).filter((slide) => slide?.image));
 
   let index = $state(0);
   let timer;
 
   onMount(() => {
-    if (slides.length < 2) return;
+    if (normalizedSlides.length < 2) return;
     timer = setInterval(() => {
-      index = (index + 1) % slides.length;
+      index = (index + 1) % normalizedSlides.length;
     }, interval);
   });
 
@@ -18,7 +19,7 @@
 </script>
 
 <div class="relative h-[22rem] overflow-hidden rounded-3xl shadow-xl md:h-[30rem]">
-  {#each slides as slide, i}
+  {#each normalizedSlides as slide, i}
     <div class={`absolute inset-0 transition-opacity duration-700 ${i === index ? 'opacity-100' : 'opacity-0'}`}>
       <MediaSkeleton src={slide.image} alt={slide.title} mediaClass="h-full object-cover" containerClass="h-full" />
       <div class="absolute inset-0 bg-gradient-to-tr from-slate-950/70 via-slate-900/40 to-cyan-700/20"></div>
@@ -31,9 +32,9 @@
     </div>
   {/each}
 
-  {#if slides.length > 1}
+  {#if normalizedSlides.length > 1}
     <div class="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
-      {#each slides as _, i}
+      {#each normalizedSlides as _, i}
         <button
           type="button"
           class={`h-2.5 w-2.5 rounded-full transition ${i === index ? 'bg-white' : 'bg-white/40'}`}
