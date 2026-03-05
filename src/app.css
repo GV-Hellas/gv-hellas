@@ -1,11 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --color-primary-light: #4f9fd6;
-  --color-primary: #0b5f98;
-  --color-primary-dark: #0a4475;
+  --color-primary-light: #2dd4bf;
+  --color-primary: #0d9488;
+  --color-primary-dark: #0f766e;
 
-  --color-secondary-light: #f8fafc;
+  --color-secondary-light: #f5f7ff;
   --color-secondary: #e2e8f0;
   --color-secondary-dark: #cbd5e1;
 }
@@ -16,10 +17,30 @@
 
 body {
   margin: 0;
-  font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background: #f8fafc;
+  font-family: 'Manrope', 'Noto Sans', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background: linear-gradient(180deg, #f8fbff 0%, #f7fafc 30%, #f8fafc 100%);
 }
 
 a {
   text-decoration: none;
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(90deg, rgba(203, 213, 225, 0.45) 20%, rgba(226, 232, 240, 0.85) 50%, rgba(203, 213, 225, 0.45) 80%);
+  background-size: 220% 100%;
+  animation: shimmer 1.15s linear infinite;
+}
+
+.progress-indicator {
+  animation: progressMove 0.9s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes progressMove {
+  0% { transform: translateX(-90%); }
+  100% { transform: translateX(220%); }
 }

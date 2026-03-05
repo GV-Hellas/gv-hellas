@@ -1,5 +1,6 @@
 <script lang="ts">
   import { t, locale } from '$lib/i18n';
+  import MediaSkeleton from '$lib/components/MediaSkeleton.svelte';
 
   /** @type {import('./$types').PageProps} */
   let { data } = $props();
@@ -20,13 +21,12 @@
     </p>
 
     {#if event.image}
-      <div class="mb-6 overflow-hidden rounded shadow-lg">
-        <img
-                src={event.image}
-                alt={event.title[lang]}
-                class="w-full max-h-96 object-cover"
-        />
-      </div>
+      <MediaSkeleton
+        src={event.image}
+        alt={event.title[lang]}
+        containerClass="mb-6 rounded-xl border border-slate-200"
+        mediaClass="max-h-96 object-cover"
+      />
     {/if}
 
     <div class="prose max-w-none">

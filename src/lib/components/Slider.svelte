@@ -1,5 +1,6 @@
 <script>
   import { onDestroy, onMount } from 'svelte';
+  import MediaSkeleton from '$lib/components/MediaSkeleton.svelte';
 
   let { slides = [], interval = 5000 } = $props();
 
@@ -7,28 +8,21 @@
   let timer;
 
   onMount(() => {
-    if (slides.length < 2) {
-      return;
-    }
-
+    if (slides.length < 2) return;
     timer = setInterval(() => {
       index = (index + 1) % slides.length;
     }, interval);
   });
 
-  onDestroy(() => {
-    clearInterval(timer);
-  });
+  onDestroy(() => clearInterval(timer));
 </script>
 
 <div class="relative h-[22rem] overflow-hidden rounded-3xl shadow-xl md:h-[30rem]">
   {#each slides as slide, i}
-    <div
-      class={`absolute inset-0 bg-cover bg-center transition-opacity duration-700 ${i === index ? 'opacity-100' : 'opacity-0'}`}
-      style={`background-image: linear-gradient(120deg, rgba(2, 6, 23, 0.75), rgba(2, 6, 23, 0.2)), url('${slide.image}')`}
-      aria-hidden={i !== index}
-    >
-      <div class="flex h-full items-end p-6 md:p-10">
+    <div class={`absolute inset-0 transition-opacity duration-700 ${i === index ? 'opacity-100' : 'opacity-0'}`}>
+      <MediaSkeleton src={slide.image} alt={slide.title} mediaClass="h-full object-cover" containerClass="h-full" />
+      <div class="absolute inset-0 bg-gradient-to-tr from-slate-950/70 via-slate-900/40 to-cyan-700/20"></div>
+      <div class="absolute inset-0 flex items-end p-6 md:p-10">
         <div class="max-w-2xl text-white">
           <h2 class="text-2xl font-bold leading-tight md:text-5xl">{slide.title}</h2>
           <p class="mt-3 text-sm text-slate-100 md:text-lg">{slide.subtitle}</p>
