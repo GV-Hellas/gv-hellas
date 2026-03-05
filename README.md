@@ -42,6 +42,15 @@ pnpm build
 pnpm preview
 ```
 
+### 5. CMS Configuration (WordPress)
+Copy `.env.example` to `.env` and adjust if needed:
+
+```bash
+cp .env.example .env
+```
+
+The app will query `https://gv-hellas.ch/wp-json/wp/v2` by default and gracefully fall back to local seed data when the CMS is unavailable.
+
 ## 🎨 Theme Configuration
 
 Tailwind CSS v4 configuration is handled directly in `src/app.css`. We use CSS variables within the `@theme` block to manage the association's branding:

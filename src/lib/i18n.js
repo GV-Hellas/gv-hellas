@@ -9,7 +9,9 @@ register('el', () => Promise.resolve({
         contact: 'Επικοινωνία',
         businesses: 'Ελληνοφωνες Επιχειρήσεις',
         equipment: 'Ενοικίαση Εξοπλισμού',
-        church: 'Πρόγραμμα Εκκλησίας Olten'
+        church: 'Πρόγραμμα Εκκλησίας Olten',
+        community: 'Κοινότητα',
+        services: 'Πληροφορίες & Υπηρεσίες'
     },
     home: {
         welcomeTitle: 'Καλώς ήρθατε στην ιστοσελίδα μας!',
@@ -66,7 +68,9 @@ register('de', () => Promise.resolve({
         contact: 'Kontakt',
         businesses: 'Griechischsprachige Unternehmen',
         equipment: 'Materialvermietung',
-        church: 'Kirchenprogramm Olten'
+        church: 'Kirchenprogramm Olten',
+        community: 'Vereinsleben',
+        services: 'Infos & Services'
     },
     home: {
         welcomeTitle: 'Willkommen auf unserer Webseite!',
