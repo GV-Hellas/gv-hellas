@@ -1,5 +1,5 @@
 const CMS_BASE_URL = import.meta.env.VITE_CMS_BASE_URL || 'https://gv-hellas.ch/wp-json/wp/v2';
-const CMS_TIMEOUT_MS = Number(import.meta.env.VITE_CMS_TIMEOUT_MS || 1200);
+const CMS_TIMEOUT_MS = Number(import.meta.env.VITE_CMS_TIMEOUT_MS || 5000);
 
 const fallbackEvents = [
   {
@@ -90,9 +90,12 @@ async function fetchFromCMS(endpoint, params = {}, fetchImpl = fetch) {
 
     return res.json();
   } catch (error) {
-    if (error?.name !== 'AbortError') {
-      console.warn('CMS request failed, using fallback data.', error);
+    if (error?.name === 'AbortError') {
+      // Preserve navigation semantics: canceled preloads should not be cached as fallback content.
+      throw error;
     }
+
+    console.warn('CMS request failed, using fallback data.', error);
     return null;
   } finally {
     clearTimeout(timeout);

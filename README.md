@@ -91,3 +91,20 @@ UI strings are managed in `src/lib/i18n.js`. Components use the `$t` store for t
 ## ⚖️ Disclaimer
 
 This project is a modern skeleton designed for migration. While it includes mock data for local development, it is prepared for a production-ready headless CMS integration.
+## 🧩 CMS for non-technical editors (recommended setup)
+
+This project currently uses **WordPress as the CMS** via REST (`/wp-json/wp/v2`).
+No new CMS was installed in this repository/container.
+
+For non-technical content editing with a friendly UI, keep using your hosted WordPress admin:
+
+1. Open `https://gv-hellas.ch/wp-admin` and log in.
+2. **Events**: create/edit regular Posts (title, excerpt, content, featured image, publish date).
+3. **Gallery**: upload/manage images in Media Library.
+4. Publish/update entries; Svelte frontend reads them automatically from REST API.
+
+If you want even cleaner editor screens for volunteers, add these WordPress plugins on the hosted site:
+- **Custom Post Type UI** (optional `Events`/`Gallery` post types)
+- **Advanced Custom Fields (ACF)** (structured event fields)
+
+This keeps CMS + website hosted together and manageable by non-technical users.
