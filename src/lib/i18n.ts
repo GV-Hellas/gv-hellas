@@ -1,3 +1,4 @@
+// src/lib/i18n.ts
 import { register, init, t, locale } from 'svelte-i18n';
 
 register('el', () =>
@@ -60,61 +61,244 @@ register('el', () =>
         church: {
             headline: 'Πρόγραμμα Εκκλησίας Olten',
             description: 'Εδώ θα δημοσιεύουμε το πρόγραμμα της εκκλησίας στο Olten.',
-            schedule: {
-                meta: {
-                    line1: 'ΟΙΚΟΥΜΕΝΙΚΟΝ ΠΑΤΡΙΑΡΧΕΙΟΝ',
-                    line2: 'ΙΕΡΑ ΜΗΤΡΟΠΟΛΙΣ ΕΛΒΕΤΙΑΣ',
-                    parishLine1: 'ΕΛΛΗΝΙΚΗ ΟΡΘΟΔΟΞΟΣ ΕΝΟΡΙΑ',
-                    parishLine2: 'ΑΓΙΟΥ ΓΕΩΡΓΙΟΥ OLTEN',
-                    address: 'Klosterplatz 8, 4600 Olten'
-                },
-                program: {
-                    title: 'ΠΡΟΓΡΑΜΜΑ ΙΕΡΩΝ ΑΚΟΛΟΥΘΙΩΝ',
-                    subtitle: 'ΑΓΙΑΣ ΚΑΙ ΜΕΓΑΛΗΣ ΕΒΔΟΜΑΔΟΣ 2025'
-                },
-                table: {
-                    date: 'Ημερομηνία',
-                    service: 'Ακολουθία',
-                    time: 'Ώρα'
-                },
-                entries: [
-                    {
-                        date: '13.04.2025',
-                        service: 'Κυριακή των Βαΐων — Όρθρος και Θεία Λειτουργία',
-                        time: '10.00'
+
+            ui: {
+                currentHeading: 'Πρόγραμμα 2025–2026',
+                previousHeading: 'Πρόγραμμα 2025 (Αγία & Μεγάλη Εβδομάδα)',
+                showPrevious: 'Εμφάνιση προηγούμενου προγράμματος',
+                hidePrevious: 'Απόκρυψη προηγούμενου προγράμματος'
+            },
+
+            schedules: {
+                // NEW (published): Program year 2025–2026 + Holy Week 2026
+                current: {
+                    meta: {
+                        lines: ['ΟΙΚΟΥΜΕΝΙΚΟΝ ΠΑΤΡΙΑΡΧΕΙΟΝ', 'ΙΕΡΑ ΜΗΤΡΟΠΟΛΙΣ ΕΛΒΕΤΙΑΣ'],
+                        parish: 'ΕΝΟΡΙΑ ΑΓΙΟΥ ΓΕΩΡΓΙΟΥ OLTEN',
+                        address: 'Kapuzinerkloster, Klosterplatz 8, 4600 Olten'
                     },
-                    {
-                        date: '16.04.2025',
-                        service: 'Μεγάλη Τετάρτη — Ιερόν Ευχέλαιο',
-                        time: '19.00'
+                    program: {
+                        title: 'ΠΡΟΓΡΑΜΜΑ ΙΕΡΩΝ ΑΚΟΛΟΥΘΙΩΝ',
+                        subtitle: 'ΙΕΡΟΥ ΝΑΟΥ ΑΓΙΟΥ ΓΕΩΡΓΙΟΥ OLTEN (KAPUZINERKLOSTER) — ΕΤΟΥΣ 2025–2026'
                     },
-                    {
-                        date: '17.04.2025',
-                        service: 'Μεγάλη Πέμπτη — Ακολουθία Παθών',
-                        time: '20.00'
+                    table: {
+                        date: 'Ημερομηνία',
+                        event: 'Εορτή / Ακολουθία',
+                        service: 'Τύπος',
+                        time: 'Ώρα'
                     },
-                    {
-                        date: '18.04.2025',
-                        service: 'Μεγάλη Παρασκευή — Ακολουθία Επιταφίου',
-                        time: '20.15'
+                    sections: [
+                        {
+                            title: 'ΕΤΟΥΣ 2025–2026',
+                            rows: [
+                                {
+                                    date: '14.09.2025',
+                                    event: 'Εορτή της Υψώσεως',
+                                    service: 'Θ. Λειτουργία',
+                                    time: '10.00'
+                                },
+                                {
+                                    date: '05.10.2025',
+                                    event: "Κυριακή Β' Λουκά",
+                                    service: 'Θ. Λειτουργία',
+                                    time: '10.00'
+                                },
+                                {
+                                    date: '16.11.2025',
+                                    event: 'Του Αγίου Αποστόλου Ματθαίου',
+                                    service: 'Θ. Λειτουργία',
+                                    time: '10.00'
+                                },
+                                {
+                                    date: '25.12.2025',
+                                    event: 'ΧΡΙΣΤΟΥΓΕΝΝΑ',
+                                    service: 'Θ. Λειτουργία',
+                                    time: '10.00',
+                                    emphasis: true
+                                },
+                                {
+                                    date: '18.01.2026',
+                                    event: "Κυριακή ΙΒ' Λουκά",
+                                    service: 'Θ. Λειτουργία',
+                                    time: '10.00'
+                                },
+                                {
+                                    date: '15.02.2026',
+                                    event: 'Κυριακή της Απόκρεω',
+                                    service: 'Θ. Λειτουργία',
+                                    time: '10.00'
+                                },
+                                {
+                                    date: '22.03.2026',
+                                    event: "Κυριακή Δ' Νηστειών",
+                                    service: 'Θ. Λειτουργία',
+                                    time: '10.00'
+                                },
+                                {
+                                    date: '05.04.2026',
+                                    event: 'Κυριακή των Βαΐων',
+                                    service: 'Θ. Λειτουργία',
+                                    time: '10.00'
+                                }
+                            ]
+                        },
+                        {
+                            title: 'ΑΓΙΑ ΚΑΙ ΜΕΓΑΛΗ ΕΒΔΟΜΑΔΑ 2026',
+                            rows: [
+                                {
+                                    date: '08.04.2026',
+                                    event: 'Μ. Τετάρτη — Ιερό Ευχέλαιο',
+                                    service: '',
+                                    time: '17.30–18.45',
+                                    note:
+                                        "(κατ’ εξαίρεση για φέτος διότι το Kapuzinerkloster θα χρησιμοποιηθεί από τους υπευθύνους του)"
+                                },
+                                {
+                                    date: '09.04.2026',
+                                    event: 'Μ. Πέμπτη — Ακολουθία Παθών',
+                                    service: '',
+                                    time: '20.00'
+                                },
+                                {
+                                    date: '10.04.2026',
+                                    event: 'Μ. Παρασκευή — Επιτάφιος Θρήνος',
+                                    service: '',
+                                    time: '20.00'
+                                },
+                                {
+                                    date: '11.04.2026',
+                                    event: 'Μ. Σάββατο — Θ. Λειτουργία',
+                                    service: '',
+                                    time: '09.00'
+                                }
+                            ],
+                            highlight: {
+                                date: '11.04.2026',
+                                title: 'Μέγα Σάββατο',
+                                text: 'Παννυχίδα ΑΝΑΣΤΑΣΕΩΣ, Όρθρος και Θ. Λειτουργία του ΠΑΣΧΑ',
+                                time: '23.00'
+                            }
+                        },
+                        {
+                            title: '',
+                            rows: [
+                                {
+                                    date: '17.05.2026',
+                                    event: 'Κυριακή του Τυφλού',
+                                    service: 'Θ. Λειτουργία',
+                                    time: '10.00'
+                                },
+                                {
+                                    date: '07.06.2026',
+                                    event: 'Κυριακή των Αγ. Πάντων',
+                                    service: 'Θ. Λειτουργία',
+                                    time: '10.00'
+                                }
+                            ]
+                        }
+                    ],
+                    signature: {
+                        lines: [
+                            "Μετ’ ευχών εγκαρδίων διατελλώ,",
+                            '+ Ο Επίσκοπος Τυάνων Φανούριος',
+                            'Επόπτης Γερμανοφώνου Ελβετίας',
+                            'Υπεύθυνος της Ελληνικής Ορθοδόξου ενορίας Αγίου Γεωργίου Olten.'
+                        ]
                     },
-                    {
-                        date: '19.04.2025',
-                        service: 'Μέγα Σάββατο — Θεία Λειτουργία Μ. Βασιλείου',
-                        time: '09.00'
+                    contact: {
+                        heading: 'Στοιχεία επικοινωνίας',
+                        phoneLabel: 'Τηλ. Επικοινωνίας',
+                        emailLabel: 'E-mail',
+                        facebookLabel: 'Facebook',
+                        facebookName: 'Ορθόδοξη Εκκλησία Ολτεν',
+                        phone: '0041 (0) 76 574 96 41',
+                        email: 'p.fanourios@hotmail.com',
+                        // Replace with your exact Facebook page URL if you have it (you mentioned you do).
+                        facebookUrl:
+                            'https://www.facebook.com/search/top/?q=%CE%9F%CF%81%CE%B8%CF%8C%CE%B4%CE%BF%CE%BE%CE%B7%20%CE%95%CE%BA%CE%BA%CE%BB%CE%B7%CF%83%CE%AF%CE%B1%20%CE%9F%CE%BB%CF%84%CE%B5%CE%BD'
                     }
-                ],
-                highlight: {
-                    date: '19.04.2025',
-                    text: 'Μέγα Σάββατο — Όρθρος και Θεία Λειτουργία του ΠΑΣΧΑ',
-                    time: '23.00'
                 },
-                greeting: 'Καλό και ευλογημένο Πάσχα',
-                signature: [
-                    '+Αρχιμανδρίτης Φανούριος Θολιώτης',
-                    'Πρωτοσύγκελλος Ι. Μ. Ελβετίας',
-                    'Εφημέριος Olten'
-                ]
+
+                // OLD: Holy Week / Easter 2025 (kept for history, hidden by default)
+                previous: {
+                    meta: {
+                        lines: ['ΟΙΚΟΥΜΕΝΙΚΟΝ ΠΑΤΡΙΑΡΧΕΙΟΝ', 'ΙΕΡΑ ΜΗΤΡΟΠΟΛΙΣ ΕΛΒΕΤΙΑΣ'],
+                        parish: 'ΕΛΛΗΝΙΚΗ ΟΡΘΟΔΟΞΟΣ ΕΝΟΡΙΑ ΑΓΙΟΥ ΓΕΩΡΓΙΟΥ OLTEN',
+                        address: 'Klosterplatz 8, 4600 Olten'
+                    },
+                    program: {
+                        title: 'ΠΡΟΓΡΑΜΜΑ ΙΕΡΩΝ ΑΚΟΛΟΥΘΙΩΝ',
+                        subtitle: 'ΑΓΙΑΣ ΚΑΙ ΜΕΓΑΛΗΣ ΕΒΔΟΜΑΔΟΣ 2025'
+                    },
+                    table: {
+                        date: 'Ημερομηνία',
+                        event: 'Ακολουθία',
+                        service: '',
+                        time: 'Ώρα'
+                    },
+                    sections: [
+                        {
+                            title: '',
+                            rows: [
+                                {
+                                    date: '13.04.2025',
+                                    event: 'Κυριακή των Βαΐων — Όρθρος και Θεία Λειτουργία',
+                                    service: '',
+                                    time: '10.00'
+                                },
+                                {
+                                    date: '16.04.2025',
+                                    event: 'Μεγάλη Τετάρτη — Ιερόν Ευχέλαιο',
+                                    service: '',
+                                    time: '19.00'
+                                },
+                                {
+                                    date: '17.04.2025',
+                                    event: 'Μεγάλη Πέμπτη — Ακολουθία Παθών',
+                                    service: '',
+                                    time: '20.00'
+                                },
+                                {
+                                    date: '18.04.2025',
+                                    event: 'Μεγάλη Παρασκευή — Ακολουθία Επιταφίου',
+                                    service: '',
+                                    time: '20.15'
+                                },
+                                {
+                                    date: '19.04.2025',
+                                    event: 'Μέγα Σάββατο — Θεία Λειτουργία Μ. Βασιλείου',
+                                    service: '',
+                                    time: '09.00'
+                                }
+                            ],
+                            highlight: {
+                                date: '19.04.2025',
+                                title: 'Μέγα Σάββατο',
+                                text: 'Όρθρος και Θεία Λειτουργία του ΠΑΣΧΑ',
+                                time: '23.00'
+                            }
+                        }
+                    ],
+                    greeting: 'Καλό και ευλογημένο Πάσχα',
+                    signature: {
+                        lines: [
+                            '+Αρχιμανδρίτης Φανούριος Θολιώτης',
+                            'Πρωτοσύγκελλος Ι. Μ. Ελβετίας',
+                            'Εφημέριος Olten'
+                        ]
+                    },
+                    contact: {
+                        heading: 'Στοιχεία επικοινωνίας',
+                        phoneLabel: 'Τηλ. Επικοινωνίας',
+                        emailLabel: 'E-mail',
+                        facebookLabel: 'Facebook',
+                        facebookName: 'Ορθόδοξη Εκκλησία Ολτεν',
+                        phone: '+41 (0) 76 574 96 41',
+                        email: 'p.fanourios@hotmail.com',
+                        facebookUrl:
+                            'https://www.facebook.com/search/top/?q=%CE%9F%CF%81%CE%B8%CF%8C%CE%B4%CE%BF%CE%BE%CE%B7%20%CE%95%CE%BA%CE%BA%CE%BB%CE%B7%CF%83%CE%AF%CE%B1%20%CE%9F%CE%BB%CF%84%CE%B5%CE%BD'
+                    }
+                }
             }
         }
     })
@@ -180,61 +364,241 @@ register('de', () =>
         church: {
             headline: 'Kirchenprogramm Olten',
             description: 'Hier werden wir das Programm der Kirche in Olten veröffentlichen.',
-            schedule: {
-                meta: {
-                    line1: 'Ökumenisches Patriarchat',
-                    line2: 'Heilige Metropolis der Schweiz',
-                    parishLine1: 'Griechisch-Orthodoxe Gemeinde',
-                    parishLine2: 'Heiliger Georgios Olten',
-                    address: 'Klosterplatz 8, 4600 Olten'
-                },
-                program: {
-                    title: 'Programm der Gottesdienste',
-                    subtitle: 'Karwoche und Ostern 2025'
-                },
-                table: {
-                    date: 'Datum',
-                    service: 'Gottesdienst',
-                    time: 'Uhrzeit'
-                },
-                entries: [
-                    {
-                        date: '13.04.2025',
-                        service: 'Palmsonntag — Liturgie',
-                        time: '10.00 Uhr'
+
+            ui: {
+                currentHeading: 'Programm 2025–2026',
+                previousHeading: 'Programm 2025 (Karwoche & Ostern)',
+                showPrevious: 'Vorheriges Programm anzeigen',
+                hidePrevious: 'Vorheriges Programm ausblenden'
+            },
+
+            schedules: {
+                current: {
+                    meta: {
+                        lines: ['Ökumenisches Patriarchat', 'Heilige Metropolis der Schweiz'],
+                        parish: 'Gemeinde des Heiligen Georgios Olten',
+                        address: 'Kapuzinerkloster, Klosterplatz 8, 4600 Olten'
                     },
-                    {
-                        date: '16.04.2025',
-                        service: 'Mittwoch — Krankensalbung (efchelaion)',
-                        time: '19.00 Uhr'
+                    program: {
+                        title: 'Programm der Gottesdienste',
+                        subtitle: 'Kirche Hl. Georgios Olten (KAPUZINERKLOSTER) — Jahr 2025–2026'
                     },
-                    {
-                        date: '17.04.2025',
-                        service: 'Gründonnerstag — Die Heilige Passion: die 12 Evangelien',
-                        time: '20.00 Uhr'
+                    table: {
+                        date: 'Datum',
+                        event: 'Fest / Gottesdienst',
+                        service: 'Art',
+                        time: 'Uhrzeit'
                     },
-                    {
-                        date: '18.04.2025',
-                        service: 'Karfreitag — Epitaphios',
-                        time: '20.15 Uhr'
+                    sections: [
+                        {
+                            title: 'JAHR 2025–2026',
+                            rows: [
+                                {
+                                    date: '14.09.2025',
+                                    event: 'Fest der Kreuzerhöhung',
+                                    service: 'Göttliche Liturgie',
+                                    time: '10.00'
+                                },
+                                {
+                                    date: '05.10.2025',
+                                    event: '2. Sonntag nach Lukas',
+                                    service: 'Göttliche Liturgie',
+                                    time: '10.00'
+                                },
+                                {
+                                    date: '16.11.2025',
+                                    event: 'Gedenktag des Hl. Apostels Matthäus',
+                                    service: 'Göttliche Liturgie',
+                                    time: '10.00'
+                                },
+                                {
+                                    date: '25.12.2025',
+                                    event: 'WEIHNACHTEN',
+                                    service: 'Göttliche Liturgie',
+                                    time: '10.00',
+                                    emphasis: true
+                                },
+                                {
+                                    date: '18.01.2026',
+                                    event: '12. Sonntag nach Lukas',
+                                    service: 'Göttliche Liturgie',
+                                    time: '10.00'
+                                },
+                                {
+                                    date: '15.02.2026',
+                                    event: 'Sonntag der Apokreo',
+                                    service: 'Göttliche Liturgie',
+                                    time: '10.00'
+                                },
+                                {
+                                    date: '22.03.2026',
+                                    event: '4. Sonntag der Fastenzeit',
+                                    service: 'Göttliche Liturgie',
+                                    time: '10.00'
+                                },
+                                {
+                                    date: '05.04.2026',
+                                    event: 'Palmsonntag',
+                                    service: 'Göttliche Liturgie',
+                                    time: '10.00'
+                                }
+                            ]
+                        },
+                        {
+                            title: 'HEILIGE UND GROßE WOCHE 2026',
+                            rows: [
+                                {
+                                    date: '08.04.2026',
+                                    event: 'Großer Mittwoch — Krankensalbung (Efchelaion)',
+                                    service: '',
+                                    time: '17.30–18.45',
+                                    note:
+                                        '(ausnahmsweise dieses Jahr, da das Kapuzinerkloster von den Verantwortlichen genutzt wird)'
+                                },
+                                {
+                                    date: '09.04.2026',
+                                    event: 'Großer Donnerstag — Passionsgottesdienst',
+                                    service: '',
+                                    time: '20.00'
+                                },
+                                {
+                                    date: '10.04.2026',
+                                    event: 'Großer Freitag — Epitaphios (Klagegesang)',
+                                    service: '',
+                                    time: '20.00'
+                                },
+                                {
+                                    date: '11.04.2026',
+                                    event: 'Großer Samstag — Göttliche Liturgie',
+                                    service: '',
+                                    time: '09.00'
+                                }
+                            ],
+                            highlight: {
+                                date: '11.04.2026',
+                                title: 'Großer Samstag',
+                                text: 'Auferstehungsfeier — Orthros und Osterliturgie',
+                                time: '23.00'
+                            }
+                        },
+                        {
+                            title: '',
+                            rows: [
+                                {
+                                    date: '17.05.2026',
+                                    event: 'Sonntag des Blinden',
+                                    service: 'Göttliche Liturgie',
+                                    time: '10.00'
+                                },
+                                {
+                                    date: '07.06.2026',
+                                    event: 'Allerheiligen-Sonntag',
+                                    service: 'Göttliche Liturgie',
+                                    time: '10.00'
+                                }
+                            ]
+                        }
+                    ],
+                    signature: {
+                        lines: [
+                            'Mit herzlichen Grüßen,',
+                            '+ Bischof von Tyana Fanourios',
+                            'Aufsicht deutschsprachige Schweiz',
+                            'Verantwortlicher der griechisch-orthodoxen Gemeinde Hl. Georgios Olten.'
+                        ]
                     },
-                    {
-                        date: '19.04.2025',
-                        service: 'Karsamstag — S. Basilius Liturgie',
-                        time: '09.00 Uhr'
+                    contact: {
+                        heading: 'Kontakt',
+                        phoneLabel: 'Telefon',
+                        emailLabel: 'E-Mail',
+                        facebookLabel: 'Facebook',
+                        facebookName: 'Orthodoxe Kirche Olten',
+                        phone: '0041 (0) 76 574 96 41',
+                        email: 'p.fanourios@hotmail.com',
+                        facebookUrl:
+                            'https://www.facebook.com/search/top/?q=Orthodoxe%20Kirche%20Olten'
                     }
-                ],
-                highlight: {
-                    date: '19.04.2025',
-                    text: 'Karsamstag — Orthros und Ostern Liturgie',
-                    time: '23.00 Uhr'
                 },
-                greeting: 'Frohe und gesegnete Ostern',
-                signature: [
-                    '+Archimandrit Fanourios Tholiotis',
-                    'Protosynkellos der Heiligen Metropolis der Schweiz',
-                    'Pfarrer Olten'
-                ]
+
+                previous: {
+                    meta: {
+                        lines: ['Ökumenisches Patriarchat', 'Heilige Metropolis der Schweiz'],
+                        parish: 'Griechisch-Orthodoxe Gemeinde Hl. Georgios Olten',
+                        address: 'Klosterplatz 8, 4600 Olten'
+                    },
+                    program: {
+                        title: 'Programm der Gottesdienste',
+                        subtitle: 'Karwoche und Ostern 2025'
+                    },
+                    table: {
+                        date: 'Datum',
+                        event: 'Gottesdienst',
+                        service: '',
+                        time: 'Uhrzeit'
+                    },
+                    sections: [
+                        {
+                            title: '',
+                            rows: [
+                                {
+                                    date: '13.04.2025',
+                                    event: 'Palmsonntag — Liturgie',
+                                    service: '',
+                                    time: '10.00'
+                                },
+                                {
+                                    date: '16.04.2025',
+                                    event: 'Mittwoch — Krankensalbung (Efchelaion)',
+                                    service: '',
+                                    time: '19.00'
+                                },
+                                {
+                                    date: '17.04.2025',
+                                    event: 'Gründonnerstag — Die Heilige Passion (12 Evangelien)',
+                                    service: '',
+                                    time: '20.00'
+                                },
+                                {
+                                    date: '18.04.2025',
+                                    event: 'Karfreitag — Epitaphios',
+                                    service: '',
+                                    time: '20.15'
+                                },
+                                {
+                                    date: '19.04.2025',
+                                    event: 'Karsamstag — Basilius-Liturgie',
+                                    service: '',
+                                    time: '09.00'
+                                }
+                            ],
+                            highlight: {
+                                date: '19.04.2025',
+                                title: 'Karsamstag',
+                                text: 'Orthros und Osterliturgie',
+                                time: '23.00'
+                            }
+                        }
+                    ],
+                    greeting: 'Frohe und gesegnete Ostern',
+                    signature: {
+                        lines: [
+                            '+Archimandrit Fanourios Tholiotis',
+                            'Protosynkellos der Heiligen Metropolis der Schweiz',
+                            'Pfarrer Olten'
+                        ]
+                    },
+                    contact: {
+                        heading: 'Kontakt',
+                        phoneLabel: 'Telefon',
+                        emailLabel: 'E-Mail',
+                        facebookLabel: 'Facebook',
+                        facebookName: 'Orthodoxe Kirche Olten',
+                        phone: '+41 (0) 76 574 96 41',
+                        email: 'p.fanourios@hotmail.com',
+                        facebookUrl:
+                            'https://www.facebook.com/search/top/?q=Orthodoxe%20Kirche%20Olten'
+                    }
+                }
             }
         }
     })
