@@ -1,38 +1,47 @@
 <script>
-  import { onMount, onDestroy } from 'svelte';
-  import { t } from '../i18n';
+  import { onDestroy, onMount } from 'svelte';
+  import MediaSkeleton from '$lib/components/MediaSkeleton.svelte';
 
-  export let slides = [];
-  export let interval = 5000;
+  let { slides = [], interval = 5000 } = $props();
+  let normalizedSlides = $derived((slides ?? []).filter((slide) => slide?.image));
 
-  let index = 0;
+  let index = $state(0);
   let timer;
 
   onMount(() => {
+    if (normalizedSlides.length < 2) return;
     timer = setInterval(() => {
-      index = (index + 1) % slides.length;
+      index = (index + 1) % normalizedSlides.length;
     }, interval);
   });
+
   onDestroy(() => clearInterval(timer));
 </script>
 
-<div class="relative w-full overflow-hidden">
-  {#each slides as slide, i}
-    <div
-      class="absolute top-0 left-0 w-full h-96 bg-cover bg-center transition-opacity duration-700"
-      style="background-image: url('{slide.image}')"
-      class:selected={i === index}
-    >
-      <div class="bg-black bg-opacity-50 h-full flex flex-col justify-center items-center text-center text-white p-4">
-        <h2 class="text-2xl md:text-4xl font-bold mb-2">{slide.title}</h2>
-        <p class="text-sm md:text-lg">{slide.subtitle}</p>
+<div class="relative h-[22rem] overflow-hidden rounded-3xl shadow-xl md:h-[30rem]">
+  {#each normalizedSlides as slide, i}
+    <div class={`absolute inset-0 transition-opacity duration-700 ${i === index ? 'opacity-100' : 'opacity-0'}`}>
+      <MediaSkeleton src={slide.image} sources={slide.imageVariants} alt={slide.title} mediaClass="h-full object-cover" containerClass="h-full" />
+      <div class="absolute inset-0 bg-gradient-to-tr from-slate-950/70 via-slate-900/40 to-cyan-700/20"></div>
+      <div class="absolute inset-0 flex items-end p-6 md:p-10">
+        <div class="max-w-2xl text-white">
+          <h2 class="text-2xl font-bold leading-tight md:text-5xl">{slide.title}</h2>
+          <p class="mt-3 text-sm text-slate-100 md:text-lg">{slide.subtitle}</p>
+        </div>
       </div>
     </div>
   {/each}
 
-  <style>
-    .absolute { position: absolute; }
-    .selected { opacity: 1; z-index: 10; }
-    .absolute:not(.selected) { opacity: 0; z-index: 1; }
-  </style>
+  {#if normalizedSlides.length > 1}
+    <div class="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
+      {#each normalizedSlides as _, i}
+        <button
+          type="button"
+          class={`h-2.5 w-2.5 rounded-full transition ${i === index ? 'bg-white' : 'bg-white/40'}`}
+          onclick={() => (index = i)}
+          aria-label={`Go to slide ${i + 1}`}
+        ></button>
+      {/each}
+    </div>
+  {/if}
 </div>

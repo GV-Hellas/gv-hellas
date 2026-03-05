@@ -1,4 +1,4 @@
-import {register, init, getLocaleFromNavigator, t, locale} from 'svelte-i18n';
+import {register, init, t, locale} from 'svelte-i18n';
 
 register('el', () => Promise.resolve({
     nav: {
@@ -9,7 +9,9 @@ register('el', () => Promise.resolve({
         contact: 'Επικοινωνία',
         businesses: 'Ελληνοφωνες Επιχειρήσεις',
         equipment: 'Ενοικίαση Εξοπλισμού',
-        church: 'Πρόγραμμα Εκκλησίας Olten'
+        church: 'Πρόγραμμα Εκκλησίας Olten',
+        community: 'Κοινότητα',
+        services: 'Πληροφορίες & Υπηρεσίες'
     },
     home: {
         welcomeTitle: 'Καλώς ήρθατε στην ιστοσελίδα μας!',
@@ -17,6 +19,7 @@ register('el', () => Promise.resolve({
         aboutHeadline: 'Σύλλογος ομογενών του Rothrist',
         aboutText: 'Ιδρυμένος το 2019, ο σύλλογος μας έχει στόχο τη διατήρηση και προώθηση των ελληνικών παραδοσεων, της γλώσσας και του πολιτισμού στην Ελβετία.',
         activitiesHeadline: 'Δράσεις',
+        activitiesIntro: 'Σκοπός του Συλλόγου είναι η ενεργός παρέμβασή του στα πολιτιστικά δρώμενα της κοινότητας των Ελλήνων ομογενών του Rothrist, η αξιοποίηση και διάσωση των ζωντανών στοιχείων της παράδοσης και του λαϊκού μας πολιτισμού όπως οι χοροί τα τραγούδια και έθιμα, η ελληνική γλώσσα, διοργανώνοντας δράσεις σχετικές με τις παρακάτω θεματικές ενότητες:',
         sponsorsHeadline: 'Ευγενικοί χορηγοί'
     },
     events: {
@@ -66,7 +69,9 @@ register('de', () => Promise.resolve({
         contact: 'Kontakt',
         businesses: 'Griechischsprachige Unternehmen',
         equipment: 'Materialvermietung',
-        church: 'Kirchenprogramm Olten'
+        church: 'Kirchenprogramm Olten',
+        community: 'Vereinsleben',
+        services: 'Infos & Services'
     },
     home: {
         welcomeTitle: 'Willkommen auf unserer Webseite!',
@@ -74,6 +79,7 @@ register('de', () => Promise.resolve({
         aboutHeadline: 'Verein der Auslandgriechen von Rothrist',
         aboutText: 'Gegründet 2019 hat unser Verein das Ziel, die griechischen Traditionen, Sprache und Kultur in der Schweiz zu pflegen und zu fördern.',
         activitiesHeadline: 'Aktivitäten',
+        activitiesIntro: 'Ziel des Vereins ist die aktive Mitwirkung am kulturellen Leben der griechischen Gemeinde in Rothrist sowie die Pflege und Bewahrung lebendiger Elemente unserer Tradition und Volkskultur – wie Tänze, Lieder, Bräuche und die griechische Sprache – durch Aktionen zu den folgenden Themenschwerpunkten:',
         sponsorsHeadline: 'Liebenswürdige Sponsoren'
     },
     events: {
@@ -116,7 +122,7 @@ register('de', () => Promise.resolve({
 
 init({
     fallbackLocale: 'el',
-    initialLocale: getLocaleFromNavigator()
+    initialLocale: 'el'
 });
 
 export {t, locale};

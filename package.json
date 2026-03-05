@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "pnpm svelte-kit sync && vite dev",
     "build": "pnpm svelte-kit sync && vite build",
-    "preview": "pnpm svelte-kit sync && vite preview"
+    "preview": "pnpm svelte-kit sync && vite preview",
+    "seed:cms": "node scripts/seed-cms.mjs",
+    "db:import-json": "node scripts/import-json-to-db.mjs"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^7.0.1",

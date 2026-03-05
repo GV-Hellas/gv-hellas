@@ -1,0 +1,130 @@
+{
+  "events": [
+    {
+      "slug": "fasnachtfeier-2025",
+      "title": {
+        "el": "Αποκριάτικο Πάρτυ 2025",
+        "de": "Fasnachtfeier 2025"
+      },
+      "date": "2025-02-14",
+      "excerpt": {
+        "el": "Πρόσκληση για το αποκριάτικο πάρτυ του συλλόγου το 2025.",
+        "de": "Einladung zur Fasnachtfeier des Vereins im Jahr 2025."
+      },
+      "image": "https://gv-hellas.ch/wp-content/uploads/2025/01/fasnachtfeier.jpg",
+      "content": {
+        "el": "<p>Πλούσιο πρόγραμμα με μουσική και χορό.</p>",
+        "de": "<p>Ein buntes Programm mit Musik und Tanz.</p>"
+      },
+      "mediaBlocks": [],
+      "imageVariants": {
+        "jpg": [],
+        "webp": []
+      }
+    },
+    {
+      "slug": "generalversammlung-2025",
+      "title": {
+        "el": "Κοπή πίτας – Γενική συνέλευση 2025",
+        "de": "Generalversammlung 2025 (Kuchenschneiden)"
+      },
+      "date": "2025-01-19",
+      "excerpt": {
+        "el": "Σας προσκαλούμε στην ετήσια γενική συνέλευση και κοπή πίτας.",
+        "de": "Wir laden Sie zur jährlichen Generalversammlung und Kuchenschneiden ein."
+      },
+      "image": "https://gv-hellas.ch/wp-content/uploads/2025/01/generalversammlung.jpg",
+      "content": {
+        "el": "<p>Ελάτε να συζητήσουμε τα πεπραγμένα της χρονιάς.</p>",
+        "de": "<p>Kommen Sie, um das vergangene Jahr zu besprechen.</p>"
+      },
+      "mediaBlocks": [],
+      "imageVariants": {
+        "jpg": [],
+        "webp": []
+      }
+    }
+  ],
+  "links": [
+    {
+      "name": {
+        "el": "Πρεσβεία της Ελλάδος στη Βέρνη",
+        "de": "Botschaft von Griechenland in Bern"
+      },
+      "url": "https://www.mfa.gr"
+    },
+    {
+      "name": {
+        "el": "Κοινότητα Rothrist",
+        "de": "Gemeinde Rothrist"
+      },
+      "url": "https://www.rothrist.ch"
+    },
+    {
+      "name": {
+        "el": "Ιερά Μητρόπολη Ελβετίας",
+        "de": "Heilige Metropolie der Schweiz"
+      },
+      "url": "https://dioceseorthodoxe.ch"
+    }
+  ],
+  "businesses": [
+    {
+      "name": "ssr-rothrist.ch",
+      "url": "https://ssr-rothrist.ch"
+    },
+    {
+      "name": "physiomurgenthal.ch",
+      "url": "https://physiomurgenthal.ch"
+    },
+    {
+      "name": "zahnarztaarburgoftringen.ch",
+      "url": "https://zahnarztaarburgoftringen.ch"
+    },
+    {
+      "name": "zahnarztpraxisturbenthal.ch",
+      "url": "https://zahnarztpraxisturbenthal.ch"
+    }
+  ],
+  "gallery": [
+    {
+      "id": "g1",
+      "type": "image",
+      "src": "https://gv-hellas.ch/wp-content/uploads/2024/06/gruendung-1.jpg",
+      "alt": "Gründung des Vereins",
+      "tags": [
+        "verein"
+      ],
+      "srcVariants": {
+        "jpg": [],
+        "webp": []
+      }
+    },
+    {
+      "id": "g2",
+      "type": "image",
+      "src": "https://gv-hellas.ch/wp-content/uploads/2024/06/gruendung-2.jpg",
+      "alt": "Gründung des Vereins",
+      "tags": [
+        "verein"
+      ],
+      "srcVariants": {
+        "jpg": [],
+        "webp": []
+      }
+    },
+    {
+      "id": "g3",
+      "type": "image",
+      "src": "https://gv-hellas.ch/wp-content/uploads/2024/06/fasnacht-2023-1.jpg",
+      "alt": "Fasnacht 2023",
+      "tags": [
+        "fasnacht"
+      ],
+      "srcVariants": {
+        "jpg": [],
+        "webp": []
+      }
+    }
+  ]
+}
