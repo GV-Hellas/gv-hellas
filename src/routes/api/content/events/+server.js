@@ -1,7 +1,6 @@
 import { json } from '@sveltejs/kit';
-import { readCMS } from '$lib/server/cms-store';
+import { listEvents } from '$lib/server/cms-store';
 
 export async function GET() {
-  const cms = await readCMS();
-  return json(cms.events ?? []);
+  return json(listEvents());
 }

@@ -21,7 +21,7 @@
 <div class="relative h-[22rem] overflow-hidden rounded-3xl shadow-xl md:h-[30rem]">
   {#each normalizedSlides as slide, i}
     <div class={`absolute inset-0 transition-opacity duration-700 ${i === index ? 'opacity-100' : 'opacity-0'}`}>
-      <MediaSkeleton src={slide.image} alt={slide.title} mediaClass="h-full object-cover" containerClass="h-full" />
+      <MediaSkeleton src={slide.image} sources={slide.imageVariants} alt={slide.title} mediaClass="h-full object-cover" containerClass="h-full" />
       <div class="absolute inset-0 bg-gradient-to-tr from-slate-950/70 via-slate-900/40 to-cyan-700/20"></div>
       <div class="absolute inset-0 flex items-end p-6 md:p-10">
         <div class="max-w-2xl text-white">

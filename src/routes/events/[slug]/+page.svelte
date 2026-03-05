@@ -23,6 +23,7 @@
     {#if event.image}
       <MediaSkeleton
         src={event.image}
+        sources={event.imageVariants}
         alt={event.title[lang]}
         containerClass="mb-6 rounded-xl border border-slate-200"
         mediaClass="max-h-96 object-cover"
@@ -32,6 +33,28 @@
     <div class="prose max-w-none">
       {@html event.content[lang]}
     </div>
+    {#if event.mediaBlocks?.length}
+      <section class="my-6 space-y-4">
+        {#each event.mediaBlocks as block}
+          {#if block.type === 'image'}
+            <img src={block.src} alt={block.alt || ''} class="w-full rounded-xl border border-slate-200" />
+          {:else if block.type === 'video'}
+            <video controls class="w-full rounded-xl border border-slate-200"><source src={block.src} /></video>
+          {:else if block.type === 'carousel'}
+            <div class="grid gap-3 md:grid-cols-2">
+              {#each block.items || [] as item}
+                {#if item.type === 'video'}
+                  <video controls class="w-full rounded-xl border border-slate-200"><source src={item.src} /></video>
+                {:else}
+                  <img src={item.src} alt={item.alt || ''} class="w-full rounded-xl border border-slate-200" />
+                {/if}
+              {/each}
+            </div>
+          {/if}
+        {/each}
+      </section>
+    {/if}
+
   </article>
 {:else}
   <div class="text-center py-12">

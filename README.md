@@ -42,15 +42,57 @@ pnpm build
 pnpm preview
 ```
 
-### 5. CMS Configuration (Built-in CMS)
+### 5. CMS Configuration (Built-in DB CMS)
 Copy `.env.example` to `.env` and adjust if needed:
 
 ```bash
 cp .env.example .env
 ```
 
-The app uses an internal CMS API (`/api/content`) backed by `data/cms.json`.
-Use `/admin` to manage content through the built-in editor UI.
+The app uses internal CMS APIs (`/api/content`) with data persisted in a local SQLite database (`data/cms.db`).
+
+### 6. Admin UI
+Open:
+
+```
+https://<your-domain>/admin
+```
+
+Login using:
+- `CMS_ADMIN_USER`
+- `CMS_ADMIN_PASSWORD`
+
+Admin sections:
+- `/admin/events` (index table, create, edit, delete)
+- `/admin/gallery` (index table, create, edit, delete, tags)
+
+### 7. Seed from current website + image variants
+Fetch data from current WordPress site, download images locally, and generate JPG/WEBP responsive variants:
+
+```bash
+npm run seed:cms
+```
+
+This stores image files under `static/uploads` and updates `data/cms.json`.
+
+### 8. Import CMS JSON into DB
+Populate DB tables from `data/cms.json`:
+
+```bash
+npm run db:import-json
+```
+
+### 9. Optional Docker database stack
+A dedicated DB stack is provided for local environments that already run multiple dockerized websites:
+
+```bash
+docker compose -f docker-compose.cms-db.yml up -d
+```
+
+- Postgres: `localhost:55432`
+- PgAdmin: `http://localhost:58080`
+
+Uses named volume: `gv_hellas_pg_data`.
 
 ## 🎨 Theme Configuration
 
@@ -92,32 +134,3 @@ UI strings are managed in `src/lib/i18n.js`. Components use the `$t` store for t
 ## ⚖️ Disclaimer
 
 This project is a modern skeleton designed for migration. While it includes mock data for local development, it is prepared for a production-ready headless CMS integration.
-## 🛠️ Running the built-in CMS (no WordPress dependency)
-
-The project now includes a built-in JSON CMS with admin UI at `/admin`.
-
-### Admin login
-Set credentials in your environment (optional, defaults shown):
-
-```bash
-CMS_ADMIN_USER=admin
-CMS_ADMIN_PASSWORD=admin123
-```
-
-Then open: `https://<your-domain>/admin`
-
-From there non-technical users can add/edit/delete:
-- Events
-- Gallery images
-
-### Data storage
-CMS content is stored in: `data/cms.json`.
-
-### Seed data from current website
-To import existing posts/media from gv-hellas WordPress REST into the new CMS store:
-
-```bash
-npm run seed:cms
-```
-
-This writes records into `data/cms.json` and keeps links/businesses from existing data.

@@ -59,8 +59,9 @@
 <nav class="sticky top-0 z-30 border-b border-white/20 bg-primary/92 text-white shadow-lg backdrop-blur-md">
   <div class="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 lg:px-6">
     <div class="flex min-w-[13rem] items-center gap-3">
-      <div class="h-14 w-14 rounded-2xl border border-white/35 bg-white/10" aria-hidden="true"></div>
-      <a href="/" class="text-xl font-extrabold tracking-wide md:text-2xl">GV Hellas</a>
+      <a href="/" class="block">
+        <img src="/images/logo.svg" alt="GV Hellas" class="h-20 w-20 rounded-xl object-contain" />
+      </a>
     </div>
 
     <button class="rounded-lg border border-white/25 p-2 md:hidden" type="button" onclick={() => (mobileOpen = !mobileOpen)}>
@@ -68,7 +69,7 @@
     </button>
 
     <div class="hidden items-center gap-3 md:flex">
-      <a href="/" class="rounded-full px-3 py-2 text-sm font-bold hover:bg-white/10">{$t('nav.home')}</a>
+      <a href="/" class="rounded-full px-4 py-2.5 text-base font-extrabold hover:bg-white/10">{$t('nav.home')}</a>
       {#each groups as group}
         <div class="relative">
           <button

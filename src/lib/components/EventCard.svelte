@@ -10,7 +10,7 @@
   class="group block overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
 >
   {#if event.image}
-    <MediaSkeleton src={event.image} alt={event.title[lang]} mediaClass="h-52 object-cover" containerClass="h-52" />
+    <MediaSkeleton src={event.image} sources={event.imageVariants} alt={event.title[lang]} mediaClass="h-52 object-cover" containerClass="h-52" />
   {/if}
   <div class="p-5">
     <p class="text-xs font-semibold uppercase tracking-wide text-primary">

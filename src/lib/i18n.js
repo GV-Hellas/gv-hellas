@@ -19,6 +19,7 @@ register('el', () => Promise.resolve({
         aboutHeadline: 'Σύλλογος ομογενών του Rothrist',
         aboutText: 'Ιδρυμένος το 2019, ο σύλλογος μας έχει στόχο τη διατήρηση και προώθηση των ελληνικών παραδοσεων, της γλώσσας και του πολιτισμού στην Ελβετία.',
         activitiesHeadline: 'Δράσεις',
+        activitiesIntro: 'Σκοπός του Συλλόγου είναι η ενεργός παρέμβασή του στα πολιτιστικά δρώμενα της κοινότητας των Ελλήνων ομογενών του Rothrist, η αξιοποίηση και διάσωση των ζωντανών στοιχείων της παράδοσης και του λαϊκού μας πολιτισμού όπως οι χοροί τα τραγούδια και έθιμα, η ελληνική γλώσσα, διοργανώνοντας δράσεις σχετικές με τις παρακάτω θεματικές ενότητες:',
         sponsorsHeadline: 'Ευγενικοί χορηγοί'
     },
     events: {
@@ -78,6 +79,7 @@ register('de', () => Promise.resolve({
         aboutHeadline: 'Verein der Auslandgriechen von Rothrist',
         aboutText: 'Gegründet 2019 hat unser Verein das Ziel, die griechischen Traditionen, Sprache und Kultur in der Schweiz zu pflegen und zu fördern.',
         activitiesHeadline: 'Aktivitäten',
+        activitiesIntro: 'Ziel des Vereins ist die aktive Mitwirkung am kulturellen Leben der griechischen Gemeinde in Rothrist sowie die Pflege und Bewahrung lebendiger Elemente unserer Tradition und Volkskultur – wie Tänze, Lieder, Bräuche und die griechische Sprache – durch Aktionen zu den folgenden Themenschwerpunkten:',
         sponsorsHeadline: 'Liebenswürdige Sponsoren'
     },
     events: {

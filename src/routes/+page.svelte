@@ -48,25 +48,24 @@
   </div>
 </section>
 
-<section class="my-12 grid gap-6 lg:grid-cols-2">
-  <article class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-    <h2 class="text-2xl font-bold text-slate-900">{$t('home.activitiesHeadline')}</h2>
-    <ul class="mt-4 space-y-3 text-slate-700">
-      <li>• Bräuche und Traditionen / Ήθη και Έθιμα</li>
-      <li>• Traditionelle Tänze / Παραδοσιακοί Χοροί</li>
-      <li>• Essen und Tradition / Φαγητό και Παράδοση</li>
-      <li>• Griechische Sprache / Ελληνική Γλώσσα</li>
-      <li>• Religion / Θρησκεία</li>
-    </ul>
-  </article>
+<section class="my-12 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+  <h2 class="text-2xl font-bold text-slate-900">{$t('home.activitiesHeadline')}</h2>
+  <p class="mt-4 text-slate-700">{$t('home.activitiesIntro')}</p>
+  <ul class="mt-4 space-y-3 text-slate-700">
+    <li>• Ήθη και Έθιμα / Bräuche und Traditionen</li>
+    <li>• Παραδοσιακοί Χοροί / Traditionelle Tänze</li>
+    <li>• Φαγητό και Παράδοση / Essen und Tradition</li>
+    <li>• Ελληνική Γλώσσα / Griechische Sprache</li>
+    <li>• Θρησκεία / Religion</li>
+  </ul>
+</section>
 
-  <article class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-    <h2 class="text-2xl font-bold text-slate-900">{$t('home.sponsorsHeadline')}</h2>
-    <div class="mt-4 grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
-      <a href="https://ssr-rothrist.ch" target="_blank" rel="noopener" class="rounded-xl border border-slate-200 px-4 py-3 font-medium text-primary hover:bg-slate-50">SSR Rothrist</a>
-      <a href="https://physiomurgenthal.ch" target="_blank" rel="noopener" class="rounded-xl border border-slate-200 px-4 py-3 font-medium text-primary hover:bg-slate-50">Physio Murgenthal</a>
-      <a href="https://zahnarztaarburgoftringen.ch" target="_blank" rel="noopener" class="rounded-xl border border-slate-200 px-4 py-3 font-medium text-primary hover:bg-slate-50">Zahnarzt Aarburg/Oftringen</a>
-      <a href="https://zahnarztpraxisturbenthal.ch" target="_blank" rel="noopener" class="rounded-xl border border-slate-200 px-4 py-3 font-medium text-primary hover:bg-slate-50">Zahnarzt Turbenthal</a>
-    </div>
-  </article>
+<section class="my-12 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+  <h2 class="text-2xl font-bold text-slate-900">{$t('home.sponsorsHeadline')}</h2>
+  <div class="mt-4 grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
+    <a href="https://ssr-rothrist.ch" target="_blank" rel="noopener" class="rounded-xl border border-slate-200 px-4 py-3 font-medium text-primary hover:bg-slate-50">SSR Rothrist</a>
+    <a href="https://physiomurgenthal.ch" target="_blank" rel="noopener" class="rounded-xl border border-slate-200 px-4 py-3 font-medium text-primary hover:bg-slate-50">Physio Murgenthal</a>
+    <a href="https://zahnarztaarburgoftringen.ch" target="_blank" rel="noopener" class="rounded-xl border border-slate-200 px-4 py-3 font-medium text-primary hover:bg-slate-50">Zahnarzt Aarburg/Oftringen</a>
+    <a href="https://zahnarztpraxisturbenthal.ch" target="_blank" rel="noopener" class="rounded-xl border border-slate-200 px-4 py-3 font-medium text-primary hover:bg-slate-50">Zahnarzt Turbenthal</a>
+  </div>
 </section>
