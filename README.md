@@ -1,65 +1,84 @@
 # GV Hellas Svelte Website
 
-This repository contains a **SvelteKit** implementation of the GV Hellas association website.  The goal is to mirror the content and structure of the existing WordPress site (https://gv-hellas.ch) in a modern, performant front‑end with a headless CMS backend.  The site supports Greek (`el`) and German (`de`) languages, making it easy for the board and non‑technical members to add and update events, announcements, useful links and more.
+This repository contains a modern **SvelteKit** implementation of the GV Hellas association website. It has been fully upgraded to **Svelte 5**, **Vite 7**, and **Tailwind CSS v4** to ensure maximum performance, maintainability, and accessibility.
 
-## Features
+The project mirrors the structure of the existing WordPress site ([gv-hellas.ch](https://gv-hellas.ch)) while providing a lightning-fast frontend with a headless CMS backend.
 
-* **Internationalisation (i18n)** – The UI and all content strings can be translated.  A language switcher in the navigation toggles between Greek and German.  Strings are defined centrally in `src/lib/i18n.js`.
-* **CMS abstraction** – All data (events, useful links, businesses, gallery items) is fetched through helper functions in `src/lib/cms.js`.  By default these functions return mock data so the site runs even without a backend.  To connect to a real headless CMS (e.g. Sanity, Strapi, Contentful) set the `VITE_CMS_BASE_URL` environment variable and adjust the `fetchFromCMS` helper.
-* **Event management** – Events are listed on `/events` and categorised into upcoming and past events based on their date.  Each event has its own detail page at `/events/[slug]`.  Non‑coders can create and update events in the CMS and see them automatically reflected on the site.
-* **Dynamic home page** – The home page features a hero slider, an “about” section, previews of the latest events, an activities overview and a sponsor section.  All content is editable via the CMS.
-* **Useful links, gallery, businesses** – Separate pages list useful links (`/links`), photos and videos (`/gallery`) and Greek‑speaking businesses/sponsors (`/businesses`).
-* **Contact form** – `/contact` contains a simple contact form.  The current implementation shows a thank‑you message after submission; you can hook it up to Formspree or a serverless function by replacing the `handleSubmit` function.
-* **Placeholder pages** – `/equipment` and `/church` provide placeholders for equipment rental information and the church schedule.  You can fill these pages with real content as soon as it becomes available.
-* **Tailwind CSS** – Styling uses Tailwind for a clean, modern aesthetic.  Colour palettes are defined in `tailwind.config.cjs`.
+## 🚀 Key Features
 
-## Getting started
+* **Svelte 5 Runes** – Leverages `$state`, `$derived`, and `$props` for modern, efficient reactivity.
+* **Tailwind CSS v4** – Powered by the new "Oxide" engine with CSS-first theme configuration.
+* **Full i18n Support** – Integrated Greek (el) and German (de) localization via `svelte-i18n`.
+* **Accessibility First** – Compliant with modern a11y standards (form labels, media captions, and semantic HTML).
+* **CMS Abstraction** – Clean data fetching layer in `src/lib/cms.js`, allowing for easy integration with any headless CMS (Sanity, Strapi, etc.).
+* **Responsive Design** – A mobile-first, fluid layout designed for all devices.
 
-1. **Install dependencies**
+## 🛠️ Getting Started
 
-   ```bash
-   npm install
-   ```
+### 1. Install Dependencies
+We recommend using **pnpm** for this project.
 
-   If you are unable to use npm on your environment (for example, in restricted sandboxes), you can still read and modify the source files.  Deployment will require running `npm install` and `npm run build` on a machine with internet access.
+```bash
+pnpm install
+```
 
-2. **Configure the CMS**
+### 2. Synchronize Types
+Generate the SvelteKit-specific TypeScript definitions for IDE support:
 
-   Choose a headless CMS (Sanity, Strapi, Contentful, etc.) and model your content types:
+```bash
+pnpm svelte-kit sync
+```
 
-   * **Event** – fields: `slug`, `title` (per language), `date`, `excerpt` (per language), `image`, `content` (per language).
-   * **Useful link** – fields: `name` (per language), `url`.
-   * **Business** – fields: `name`, `url` and optional `logo`.
-   * **Gallery item** – fields: `type` (`image` or `video`), `src`, `alt`.
+### 3. Development Server
+Launch the development environment with hot-module replacement:
 
-   Expose an API endpoint for each content type.  Set `VITE_CMS_BASE_URL` in a `.env` file at the project root to point at your CMS base URL.  Adjust the paths in `src/lib/cms.js` if necessary.
+```bash
+pnpm dev
+```
 
-3. **Run the dev server**
+### 4. Build for Production
+```bash
+pnpm build
+pnpm preview
+```
 
-   ```bash
-   npm run dev
-   ```
+## 🎨 Theme Configuration
 
-   Visit `http://localhost:5173` to see the site in action.  Changes to `.svelte`, `.js` and `.css` files will hot‑reload during development.
+Tailwind CSS v4 configuration is handled directly in `src/app.css`. We use CSS variables within the `@theme` block to manage the association's branding:
 
-4. **Build for production**
+```css
+@theme {
+  --color-primary: #005fa3;
+  --color-primary-light: #0078bd;
+  --color-primary-dark: #004680;
+  
+  --color-secondary: #e5e5e5;
+  --color-secondary-light: #f0f0f0;
+  --color-secondary-dark: #d4d4d4;
+}
+```
 
-   ```bash
-   npm run build
-   npm run preview
-   ```
+## 🌍 Localization
 
-## Translating content
+UI strings are managed in `src/lib/i18n.js`. Components use the `$t` store for translations.
 
-All UI strings live in `src/lib/i18n.js`.  Each key has an `el` and a `de` variant.  When adding new pages or components be sure to add translations for both languages.  Content stored in the CMS should also include translations for every language you support.
+**Example Usage in Svelte 5:**
 
-## Extending the site
+```svelte
+<script>
+  import { t } from '$lib/i18n';
+</script>
 
-* **Add more languages** – Register new locales in `src/lib/i18n.js` and add translation keys.  Add additional buttons in the navigation bar to switch languages.
-* **Add authentication and private pages** – If the association decides to offer member‑only content, integrate an authentication provider (e.g. Clerk or Auth0) and protect certain routes.
-* **Integrate payments or ticketing** – For paid events you can integrate Stripe or an event ticketing system.  Extend the CMS schema to include pricing and ticket availability.
-* **SEO and metadata** – Use SvelteKit’s `<svelte:head>` to set page‑specific titles, descriptions and social metadata.
+<h1>{$t('home.welcomeTitle')}</h1>
+```
 
-## Disclaimer
+## 🏗️ Project Structure
 
-This skeleton is designed for demonstration purposes and does not include production‑ready error handling, authentication, or backend integration.  However, it provides a solid foundation for migrating the existing GV Hellas WordPress site to a modern SvelteKit front‑end with a headless CMS.  Feel free to customise the design and functionality to suit your association’s needs.
+* **/src/routes** – Contains the application pages and SvelteKit routing logic.
+* **/src/lib/components** – Reusable UI components (Nav, Footer, Slider, EventCard).
+* **/src/lib/cms.js** – The data interface for fetching content.
+* **/src/lib/i18n.js** – Localization dictionaries and configuration.
+
+## ⚖️ Disclaimer
+
+This project is a modern skeleton designed for migration. While it includes mock data for local development, it is prepared for a production-ready headless CMS integration.
