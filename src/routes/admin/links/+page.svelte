@@ -17,9 +17,9 @@
         <tr class="border-t">
           <td class="px-3 py-2">{#if item.logo}<img src={item.logo} alt="logo" class="h-9 w-9 rounded object-cover" />{/if}</td>
           <td class="px-3 py-2">{item.name.el}</td>
-          <td class="px-3 py-2"><a href={item.url} class="text-primary" target="_blank" rel="noopener">{item.url}</a></td>
+          <td class="px-3 py-2"><a href={item.url} class="text-primary-dark" target="_blank" rel="noopener">{item.url}</a></td>
           <td class="px-3 py-2">
-            <a class="mr-3 text-primary" href={`/admin/links/${item.id}/edit`}>Edit</a>
+            <a class="mr-3 text-primary-dark" href={`/admin/links/${item.id}/edit`}>Edit</a>
             <form method="POST" action="?/delete" class="inline">
               <input type="hidden" name="id" value={item.id} />
               <button class="text-red-600">Delete</button>

@@ -59,7 +59,7 @@
 {:else}
   <div class="text-center py-12">
     <p class="text-xl text-gray-600">Event not found / Η εκδήλωση δεν βρέθηκε.</p>
-    <a href="/events" class="text-primary hover:underline mt-4 inline-block">
+    <a href="/events" class="text-primary-dark hover:underline mt-4 inline-block">
       {$t('events.headline')}
     </a>
   </div>

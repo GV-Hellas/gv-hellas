@@ -104,8 +104,8 @@
 
     <div class="hidden items-center gap-2 md:flex">
       <div class="flex rounded-full bg-white/10 p-1">
-        <button type="button" class="rounded-full px-3 py-1 text-xs font-bold transition" class:bg-white={$locale === 'el'} class:text-primary={$locale === 'el'} onclick={() => switchLanguage('el')}>EL</button>
-        <button type="button" class="rounded-full px-3 py-1 text-xs font-bold transition" class:bg-white={$locale === 'de'} class:text-primary={$locale === 'de'} onclick={() => switchLanguage('de')}>DE</button>
+        <button type="button" class="rounded-full px-3 py-1 text-xs font-bold transition" class:bg-white={$locale === 'el'} class:text-primary-dark={$locale === 'el'} onclick={() => switchLanguage('el')}>EL</button>
+        <button type="button" class="rounded-full px-3 py-1 text-xs font-bold transition" class:bg-white={$locale === 'de'} class:text-primary-dark={$locale === 'de'} onclick={() => switchLanguage('de')}>DE</button>
       </div>
       <div class="ml-1 flex items-center gap-1">
         {#each socials as social}

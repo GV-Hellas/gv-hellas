@@ -19,7 +19,7 @@
           <td class="px-3 py-2">{event.date}</td>
           <td class="px-3 py-2">{event.title.el}</td>
           <td class="px-3 py-2">
-            <a class="mr-3 text-primary" href={`/admin/events/${event.slug}/edit`}>Edit</a>
+            <a class="mr-3 text-primary-dark" href={`/admin/events/${event.slug}/edit`}>Edit</a>
             <form method="POST" action="?/delete" class="inline">
               <input type="hidden" name="slug" value={event.slug} />
               <button class="text-red-600">Delete</button>
