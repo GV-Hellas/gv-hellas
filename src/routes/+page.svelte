@@ -39,7 +39,7 @@
 <section class="my-12">
   <div class="mb-5 flex items-end justify-between gap-4">
     <h2 class="text-2xl font-bold text-slate-900">{$t('events.headline')}</h2>
-    <a href="/events" class="text-sm font-semibold text-primary hover:underline">{$t('events.readMore')}</a>
+    <a href="/events" class="text-sm font-semibold text-primary-dark hover:underline">{$t('events.readMore')}</a>
   </div>
   <div class="grid gap-6 md:grid-cols-3">
     {#each events as event}
@@ -63,9 +63,9 @@
 <section class="my-12 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
   <h2 class="text-2xl font-bold text-slate-900">{$t('home.sponsorsHeadline')}</h2>
   <div class="mt-4 grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
-    <a href="https://ssr-rothrist.ch" target="_blank" rel="noopener" class="rounded-xl border border-slate-200 px-4 py-3 font-medium text-primary hover:bg-slate-50">SSR Rothrist</a>
-    <a href="https://physiomurgenthal.ch" target="_blank" rel="noopener" class="rounded-xl border border-slate-200 px-4 py-3 font-medium text-primary hover:bg-slate-50">Physio Murgenthal</a>
-    <a href="https://zahnarztaarburgoftringen.ch" target="_blank" rel="noopener" class="rounded-xl border border-slate-200 px-4 py-3 font-medium text-primary hover:bg-slate-50">Zahnarzt Aarburg/Oftringen</a>
-    <a href="https://zahnarztpraxisturbenthal.ch" target="_blank" rel="noopener" class="rounded-xl border border-slate-200 px-4 py-3 font-medium text-primary hover:bg-slate-50">Zahnarzt Turbenthal</a>
+    <a href="https://ssr-rothrist.ch" target="_blank" rel="noopener" class="rounded-xl border border-slate-200 px-4 py-3 font-medium text-primary-dark hover:bg-slate-50">SSR Rothrist</a>
+    <a href="https://physiomurgenthal.ch" target="_blank" rel="noopener" class="rounded-xl border border-slate-200 px-4 py-3 font-medium text-primary-dark hover:bg-slate-50">Physio Murgenthal</a>
+    <a href="https://zahnarztaarburgoftringen.ch" target="_blank" rel="noopener" class="rounded-xl border border-slate-200 px-4 py-3 font-medium text-primary-dark hover:bg-slate-50">Zahnarzt Aarburg/Oftringen</a>
+    <a href="https://zahnarztpraxisturbenthal.ch" target="_blank" rel="noopener" class="rounded-xl border border-slate-200 px-4 py-3 font-medium text-primary-dark hover:bg-slate-50">Zahnarzt Turbenthal</a>
   </div>
 </section>

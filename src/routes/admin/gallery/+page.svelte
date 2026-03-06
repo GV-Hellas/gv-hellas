@@ -17,7 +17,7 @@
           <td class="px-3 py-2">{item.alt}</td>
           <td class="px-3 py-2">{(item.tags || []).join(', ')}</td>
           <td class="px-3 py-2">
-            <a href={`/admin/gallery/${item.id}/edit`} class="mr-3 text-primary">Edit</a>
+            <a href={`/admin/gallery/${item.id}/edit`} class="mr-3 text-primary-dark">Edit</a>
             <form method="POST" action="?/delete" class="inline">
               <input type="hidden" name="id" value={item.id} />
               <button class="text-red-600">Delete</button>

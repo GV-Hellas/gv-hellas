@@ -2,9 +2,11 @@
   let { data, form } = $props();
   let event = $derived(data?.event);
   let mediaBlocks = $state('[]');
+  let preview = $state('');
 
   $effect(() => {
     mediaBlocks = JSON.stringify(event?.mediaBlocks || [], null, 2);
+    preview = event?.image || '';
   });
 
   function addSnippet(type) {
@@ -14,18 +16,27 @@
     if (type === 'carousel') arr.push({ type: 'carousel', items: [{ type: 'image', src: '' }] });
     mediaBlocks = JSON.stringify(arr, null, 2);
   }
+
+  function onFileChange(eventInput) {
+    const file = eventInput.currentTarget.files?.[0];
+    preview = file ? URL.createObjectURL(file) : event?.image || '';
+  }
 </script>
 
 <h1 class="mb-4 text-2xl font-bold">Edit event: {event?.slug}</h1>
 {#if form?.error}<p class="mb-3 text-red-700">{form.error}</p>{/if}
-<form method="POST" action="?/save" class="grid gap-3 rounded border border-slate-200 bg-white p-4 md:grid-cols-2">
+<form method="POST" enctype="multipart/form-data" action="?/save" class="grid gap-3 rounded border border-slate-200 bg-white p-4 md:grid-cols-2">
   <input name="slug" value={event?.slug} class="rounded border px-3 py-2" required />
   <input type="date" name="date" value={event?.date} class="rounded border px-3 py-2" required />
   <input name="title_el" value={event?.title?.el} class="rounded border px-3 py-2" required />
   <input name="title_de" value={event?.title?.de} class="rounded border px-3 py-2" required />
   <textarea name="excerpt_el" class="rounded border px-3 py-2">{event?.excerpt?.el}</textarea>
   <textarea name="excerpt_de" class="rounded border px-3 py-2">{event?.excerpt?.de}</textarea>
-  <input name="image" value={event?.image} class="rounded border px-3 py-2 md:col-span-2" />
+  <div class="md:col-span-2">
+    <label class="mb-1 block text-sm font-semibold">Main image upload</label>
+    <input name="image" type="file" accept="image/*" class="block w-full" onchange={onFileChange} />
+    {#if preview}<img src={preview} alt="preview" class="mt-2 h-20 w-20 rounded object-cover" />{/if}
+  </div>
   <textarea name="content_el" class="min-h-40 rounded border px-3 py-2">{event?.content?.el}</textarea>
   <textarea name="content_de" class="min-h-40 rounded border px-3 py-2">{event?.content?.de}</textarea>
 
