@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { t, locale } from '$lib/i18n';
-  import Slider from '$lib/components/Slider.svelte';
-  import EventCard from '$lib/components/EventCard.svelte';
+    import { t, locale } from '$lib/i18n';
+    import Slider from '$lib/components/Slider.svelte';
+    import EventCard from '$lib/components/EventCard.svelte';
 
-  let { data } = $props();
+    let { data } = $props();
 
   const heroImages = [
     'https://gv-hellas.ch/wp-content/uploads/2024/06/hero-1.jpg',

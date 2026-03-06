@@ -1,11 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { DatabaseSync } from 'node:sqlite';
+import {DatabaseSync} from 'node:sqlite';
 
 const DB_PATH = path.resolve('data/cms.db');
 
 if (!fs.existsSync(path.dirname(DB_PATH))) {
-  fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
+    fs.mkdirSync(path.dirname(DB_PATH), {recursive: true});
 }
 
 const db = new DatabaseSync(DB_PATH);
@@ -58,92 +58,146 @@ db.exec(`
 
     CREATE TABLE IF NOT EXISTS links
     (
-        id      INTEGER PRIMARY KEY AUTOINCREMENT,
-        name_el TEXT,
-        name_de TEXT,
-        url     TEXT NOT NULL
+        id        INTEGER PRIMARY KEY AUTOINCREMENT,
+        name_el   TEXT,
+        name_de   TEXT,
+        url       TEXT NOT NULL,
+        logo      TEXT,
+        logo_webp TEXT,
+        logo_jpg  TEXT
     );
 
     CREATE TABLE IF NOT EXISTS businesses
     (
-        id   INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        url  TEXT NOT NULL
+        id        INTEGER PRIMARY KEY AUTOINCREMENT,
+        name      TEXT NOT NULL,
+        url       TEXT NOT NULL,
+        logo      TEXT NOT NULL,
+        logo_webp TEXT,
+        logo_jpg  TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS equipment
+    (
+        id            INTEGER PRIMARY KEY AUTOINCREMENT,
+        name          TEXT NOT NULL,
+        brand         TEXT,
+        model_year    TEXT,
+        description   TEXT,
+        price_per_day REAL,
+        image_1       TEXT,
+        image_1_webp  TEXT,
+        image_1_jpg   TEXT,
+        image_2       TEXT,
+        image_2_webp  TEXT,
+        image_2_jpg   TEXT,
+        image_3       TEXT,
+        image_3_webp  TEXT,
+        image_3_jpg   TEXT,
+        video         TEXT,
+        created_at    TEXT DEFAULT CURRENT_TIMESTAMP,
+        updated_at    TEXT DEFAULT CURRENT_TIMESTAMP
     );
 `);
 
-export function getDB() {
-  return db;
+function addColumnIfMissing(table: string, column: string, definition: string): void {
+    const cols = db.prepare(`PRAGMA table_info(${table})`).all() as Array<{ name: string }>;
+    if (!cols.some((c) => c.name === column)) {
+        db.exec(`ALTER TABLE ${table}
+            ADD COLUMN ${column} ${definition}`);
+    }
 }
 
-function bootstrapFromJson() {
-  // Fix TS18047 & TS2365: Explicitly cast the return type of .get()
-  const result = db.prepare('SELECT COUNT(*) as c FROM events').get() as { c: number } | undefined;
-  const eventCount = result?.c ?? 0;
+addColumnIfMissing('links', 'logo', 'TEXT');
+addColumnIfMissing('links', 'logo_webp', 'TEXT');
+addColumnIfMissing('links', 'logo_jpg', 'TEXT');
+addColumnIfMissing('businesses', 'logo', "TEXT NOT NULL DEFAULT ''");
+addColumnIfMissing('businesses', 'logo_webp', 'TEXT');
+addColumnIfMissing('businesses', 'logo_jpg', 'TEXT');
 
-  if (eventCount > 0) return;
 
-  try {
-    const jsonPath = path.resolve('data/cms.json');
-    if (!fs.existsSync(jsonPath)) return;
-    const raw = fs.readFileSync(jsonPath, 'utf-8');
-    const data = JSON.parse(raw);
+export function getDB() {
+    return db;
+}
 
-    for (const e of data.events || []) {
-      db.prepare(`INSERT INTO events (slug,date,title_el,title_de,excerpt_el,excerpt_de,image,image_webp,image_jpg,content_el,content_de,media_blocks) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`).run(
-          e.slug,
-          e.date || '',
-          e.title?.el || '',
-          e.title?.de || '',
-          e.excerpt?.el || '',
-          e.excerpt?.de || '',
-          e.image || '',
-          // Fix TS2532: Use optional chaining to handle potentially missing variants or arrays
-          e.imageVariants?.webp?.[0]?.src || '',
-          e.imageVariants?.jpg?.[0]?.src || '',
-          e.content?.el || '',
-          e.content?.de || '',
-          JSON.stringify(e.mediaBlocks || [])
-      );
-    }
+function bootstrapFromJson(): void {
+    const eventCount = (db.prepare('SELECT COUNT(*) as c FROM events').get() as { c: number } | undefined)?.c || 0;
+    if (eventCount > 0) return;
 
-    for (const g of data.gallery || []) {
-      db.prepare(`INSERT INTO gallery_items (id,type,src,src_webp,src_jpg,alt) VALUES (?,?,?,?,?,?)`).run(
-          g.id || `g-${Date.now()}`,
-          g.type || 'image',
-          g.src || '',
-          g.srcVariants?.webp?.[0]?.src || '',
-          g.srcVariants?.jpg?.[0]?.src || '',
-          g.alt || ''
-      );
-      for (const tag of g.tags || []) {
-        db.prepare(`INSERT INTO gallery_tags (name) VALUES (?) ON CONFLICT(name) DO NOTHING`).run(tag);
+    try {
+        const jsonPath = path.resolve('data/cms.json');
+        if (!fs.existsSync(jsonPath)) return;
+        const raw = fs.readFileSync(jsonPath, 'utf-8');
+        const data = JSON.parse(raw) as Record<string, unknown>;
 
-        // Fix TS2532: Cast the row result so TypeScript knows 'id' exists
-        const row = db.prepare(`SELECT id FROM gallery_tags WHERE name = ?`).get(tag) as { id: number } | undefined;
-        if (row?.id) {
-          db.prepare(`INSERT OR IGNORE INTO gallery_item_tags (item_id, tag_id) VALUES (?, ?)`).run(g.id, row.id);
+        for (const e of (data.events as any[] | undefined) || []) {
+            db.prepare(`INSERT INTO events (slug, date, title_el, title_de, excerpt_el, excerpt_de, image, image_webp, image_jpg, content_el, content_de, media_blocks)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`).run(
+                e.slug,
+                e.date || '',
+                e.title?.el || '',
+                e.title?.de || '',
+                e.excerpt?.el || '',
+                e.excerpt?.de || '',
+                e.image || '',
+                e.imageVariants?.webp?.[0]?.src || '',
+                e.imageVariants?.jpg?.[0]?.src || '',
+                e.content?.el || '',
+                e.content?.de || '',
+                JSON.stringify(e.mediaBlocks || [])
+            );
         }
-      }
-    }
 
-    for (const l of data.links || []) {
-      db.prepare(`INSERT INTO links (name_el,name_de,url) VALUES (?,?,?)`).run(
-          l.name?.el || '',
-          l.name?.de || '',
-          l.url || ''
-      );
-    }
+        for (const g of (data.gallery as any[] | undefined) || []) {
+            const gid = g.id || `g-${Date.now()}`;
+            db.prepare(`INSERT INTO gallery_items (id, type, src, src_webp, src_jpg, alt)
+                        VALUES (?, ?, ?, ?, ?, ?)`).run(
+                gid,
+                g.type || 'image',
+                g.src || '',
+                g.srcVariants?.webp?.[0]?.src || '',
+                g.srcVariants?.jpg?.[0]?.src || '',
+                g.alt || ''
+            );
+            for (const tag of g.tags || []) {
+                db.prepare(`INSERT INTO gallery_tags (name)
+                            VALUES (?)
+                            ON CONFLICT(name) DO NOTHING`).run(tag);
+                const row = db.prepare(`SELECT id
+                                        FROM gallery_tags
+                                        WHERE name = ?`).get(tag) as { id: number } | undefined;
+                if (row) db.prepare(`INSERT OR IGNORE INTO gallery_item_tags (item_id, tag_id)
+                                     VALUES (?, ?)`).run(gid, row.id);
+            }
+        }
 
-    for (const b of data.businesses || []) {
-      db.prepare(`INSERT INTO businesses (name,url) VALUES (?,?)`).run(
-          b.name || '',
-          b.url || ''
-      );
+        for (const l of (data.links as any[] | undefined) || []) {
+            db.prepare(`INSERT INTO links (name_el, name_de, url, logo, logo_webp, logo_jpg)
+                        VALUES (?, ?, ?, ?, ?, ?)`).run(
+                l.name?.el || '',
+                l.name?.de || '',
+                l.url || '',
+                l.logo || '',
+                l.logoVariants?.webp?.[0]?.src || '',
+                l.logoVariants?.jpg?.[0]?.src || ''
+            );
+        }
+
+        for (const b of (data.businesses as any[] | undefined) || []) {
+            db.prepare(`INSERT INTO businesses (name, url, logo, logo_webp, logo_jpg)
+                        VALUES (?, ?, ?, ?, ?)`).run(
+                b.name || '',
+                b.url || '',
+                b.logo || '',
+                b.logoVariants?.webp?.[0]?.src || '',
+                b.logoVariants?.jpg?.[0]?.src || ''
+            );
+        }
+    } catch (error) {
+        console.warn('DB bootstrap from cms.json failed', error);
     }
-  } catch (error) {
-    console.warn('DB bootstrap from cms.json failed', error);
-  }
 }
 
 bootstrapFromJson();
+
+
