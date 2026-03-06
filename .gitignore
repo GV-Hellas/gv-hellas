@@ -11,3 +11,8 @@ yarn-error.log*
 .vscode/*
 .svelte-kit
 *lock.yamldata/cms.db
+
+.env
+pnpm-*
+*lock.yaml
+data/cms.db

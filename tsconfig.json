@@ -8,7 +8,7 @@
     "strict": true,
     "skipLibCheck": true,
     "allowJs": true,
-    "types": ["@sveltejs/kit", "vite"]
+    "types": ["@sveltejs/kit", "vite", "node"]
   },
   "include": [
     "src/**/*.d.ts",

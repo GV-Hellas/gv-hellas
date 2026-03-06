@@ -15,7 +15,7 @@
         <tr class="border-t">
           <td class="px-3 py-2">{item.name}</td><td class="px-3 py-2">{item.brand}</td><td class="px-3 py-2">{item.modelYear}</td><td class="px-3 py-2">CHF {item.pricePerDay}</td>
           <td class="px-3 py-2">
-            <a class="mr-3 text-primary" href={`/admin/equipment/${item.id}/edit`}>Edit</a>
+            <a class="mr-3 text-primary-dark" href={`/admin/equipment/${item.id}/edit`}>Edit</a>
             <form method="POST" action="?/delete" class="inline"><input type="hidden" name="id" value={item.id} /><button class="text-red-600">Delete</button></form>
           </td>
         </tr>

@@ -80,20 +80,20 @@
             <p>4852 Rothrist, Suisse</p>
 
             <h2 class="text-xl font-semibold mt-4 mb-2">{$t('contact.phoneContact')}</h2>
-            <p><a href="tel:+41787296030" class="underline hover:text-primary transition">+41 (0)78 729 60 30</a></p>
+            <p><a href="tel:+41787296030" class="underline hover:text-primary-dark transition">+41 (0)78 729 60 30</a></p>
 
             <h2 class="text-xl font-semibold mt-4 mb-2">Email</h2>
-            <p><a href="mailto:info@gv-hellas.ch" class="underline hover:text-primary transition">info@gv-hellas.ch</a>
+            <p><a href="mailto:info@gv-hellas.ch" class="underline hover:text-primary-dark transition">info@gv-hellas.ch</a>
             </p>
 
             <h2 class="text-xl font-semibold mt-4 mb-2">{$t('contact.followUs')}</h2>
             <ul class="space-y-2">
                 <li><a href="https://www.facebook.com" target="_blank" rel="noopener"
-                       class="underline hover:text-primary">Facebook</a></li>
+                       class="underline hover:text-primary-dark">Facebook</a></li>
                 <li><a href="https://www.instagram.com" target="_blank" rel="noopener"
-                       class="underline hover:text-primary">Instagram</a></li>
+                       class="underline hover:text-primary-dark">Instagram</a></li>
                 <li><a href="https://www.tiktok.com" target="_blank" rel="noopener"
-                       class="underline hover:text-primary">TikTok</a></li>
+                       class="underline hover:text-primary-dark">TikTok</a></li>
             </ul>
         </div>
     </div>

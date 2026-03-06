@@ -14,7 +14,7 @@
   <header class="mb-6 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
     <div class="flex flex-wrap items-center justify-between gap-3">
       <a href="/admin/events" class="flex items-center gap-3">
-        <img src="/images/logo.svg" alt="logo" class="h-12 w-12 rounded-lg object-cover" />
+        <img src="/images/logo.png" alt="logo" class="h-12 w-12 rounded-lg object-cover" />
         <div>
           <p class="text-xs font-semibold tracking-[0.2em] text-slate-500">ADMIN</p>
           <p class="text-sm font-semibold text-slate-900">Griechischer Verein Hellas</p>

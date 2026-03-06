@@ -60,8 +60,8 @@
   <div class="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 lg:px-6">
     <div class="flex min-w-[18rem] items-center gap-3">
       <a href="/" class="flex items-center gap-3">
-        <img src="/images/logo.svg" alt="GV Hellas" class="h-20 w-20 rounded-xl object-cover" />
-        <span class="leading-tight text-sm font-bold sm:text-base">Griechischer Verein<br />Hellas</span>
+        <img src="/images/logo.png" alt="GV Hellas" class="h-20 w-20 rounded-xl object-cover" />
+        <span class="leading-tight text-sm font-black sm:text-lg">Griechischer Verein<br />Hellas</span>
       </a>
     </div>
 
@@ -104,8 +104,8 @@
 
     <div class="hidden items-center gap-2 md:flex">
       <div class="flex rounded-full bg-white/10 p-1">
-        <button type="button" class="rounded-full px-3 py-1 text-xs font-bold transition" class:bg-white={$locale === 'el'} class:text-primary={$locale === 'el'} onclick={() => switchLanguage('el')}>EL</button>
-        <button type="button" class="rounded-full px-3 py-1 text-xs font-bold transition" class:bg-white={$locale === 'de'} class:text-primary={$locale === 'de'} onclick={() => switchLanguage('de')}>DE</button>
+        <button type="button" class="rounded-full px-3 py-1 text-xs font-bold transition" class:bg-white={$locale === 'el'} class:text-primary-dark={$locale === 'el'} onclick={() => switchLanguage('el')}>EL</button>
+        <button type="button" class="rounded-full px-3 py-1 text-xs font-bold transition" class:bg-white={$locale === 'de'} class:text-primary-dark={$locale === 'de'} onclick={() => switchLanguage('de')}>DE</button>
       </div>
       <div class="ml-1 flex items-center gap-1">
         {#each socials as social}
