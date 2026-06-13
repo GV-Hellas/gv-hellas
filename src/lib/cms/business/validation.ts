@@ -1,6 +1,8 @@
 import {z} from 'zod';
 import {BUSINESS_SPONSOR_TYPES} from './schema';
 
+const mediaTypeSchema = z.enum(['image', 'video', 'audio']);
+
 export const localizedHtmlSchema = z.object({
     el: z.string().optional().default(''),
     de: z.string().optional().default('')
@@ -8,7 +10,7 @@ export const localizedHtmlSchema = z.object({
 
 export const businessMediaSchema = z.object({
     id: z.string().min(1),
-    type: z.string().optional(),
+    type: mediaTypeSchema,
     url: z.string().optional().default(''),
     filename: z.string().optional(),
     originalFilename: z.string().optional(),
@@ -17,7 +19,7 @@ export const businessMediaSchema = z.object({
     alt: localizedHtmlSchema.optional(),
     caption: localizedHtmlSchema.optional(),
     uploadKey: z.string().optional()
-}).passthrough();
+});
 
 export const businessSectionSchema = z.object({
     id: z.string().min(1),
@@ -52,7 +54,10 @@ export const businessPayloadSchema = z.object({
         .trim()
         .optional()
         .default('')
-        .refine((value) => !value || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value), 'Valid email required'),
+        .refine(
+            (value) => !value || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+            'Valid email required'
+        ),
     telephone: z.string().trim().optional().default(''),
     contactPerson: z.string().trim().optional().default(''),
     sections: z.array(businessSectionSchema).min(1, 'At least one section is required')

@@ -5,6 +5,7 @@ import {businessPayloadSchema} from '$lib/cms/business/validation';
 import {saveBusiness} from '$lib/server/cms/businessStore';
 import {saveBusinessMedia} from '$lib/server/cms/businessMediaStore';
 import {sanitizeEventHtml} from '$lib/server/html/sanitizeEventHtml';
+import type {BusinessPayload} from "$lib/cms/business/types";
 
 function normalizeSlug(value: string, fallback: string) {
     return (value || slugify(fallback)).trim();
@@ -51,9 +52,9 @@ export const actions: Actions = {
             );
         }
 
-        const business = result.data;
-        const slug = normalizeSlug(business.slug, business.name);
+        const business: BusinessPayload = result.data;
 
+        const slug = slugify(business.name).trim();
         if (!slug) {
             return json(
                 {
@@ -63,7 +64,6 @@ export const actions: Actions = {
                 {status: 400}
             );
         }
-
         business.slug = slug;
 
         business.description.el = sanitizeEventHtml(business.description.el);
@@ -101,7 +101,6 @@ export const actions: Actions = {
             }
         }
 
-        // noinspection TypeScriptValidateTypes
         const stored = saveBusiness(business);
 
         return json({
