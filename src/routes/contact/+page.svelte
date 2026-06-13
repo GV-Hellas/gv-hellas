@@ -292,7 +292,7 @@
 </script>
 
 <svelte:head>
-    <title>{$t('contact.headline')} | GV Hellas</title>
+    <title>{$t('contact.headline')} - GV Hellas</title>
 </svelte:head>
 
 <section class="grid gap-8 pb-10">

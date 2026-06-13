@@ -30,6 +30,10 @@
         Array.isArray(previous?.signature) ? previous.signature : previous?.signature?.lines ?? [];
 </script>
 
+<svelte:head>
+    <title>{$t('church.headline')} - GV Hellas</title>
+</svelte:head>
+
 <section class="space-y-6">
     <header class="space-y-2">
         <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">

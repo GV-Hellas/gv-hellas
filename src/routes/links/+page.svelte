@@ -5,6 +5,10 @@
     let lang = $derived(($locale || 'el') as string);
 </script>
 
+<svelte:head>
+    <title>{$t('links.headline')} - GV Hellas</title>
+</svelte:head>
+
 <h1 class="mb-6 text-3xl font-bold">{$t('links.headline')}</h1>
 
 <ul class="space-y-4">

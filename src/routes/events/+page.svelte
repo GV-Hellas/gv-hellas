@@ -11,6 +11,10 @@
     let past = $derived(data?.past ?? []);
 </script>
 
+<svelte:head>
+    <title>{$t('events.headline')} - GV Hellas</title>
+</svelte:head>
+
 <h1 class="text-3xl font-bold mb-6">{$t('events.headline')}</h1>
 
 <section class="mb-12">

@@ -1,7 +1,11 @@
-<script>
+<script lang="ts">
   import { t } from '$lib/i18n';
   let { data } = $props();
 </script>
+
+<svelte:head>
+  <title>{$t('businesses.headline')} - GV Hellas</title>
+</svelte:head>
 
 <h1 class="mb-6 text-3xl font-bold">{$t('businesses.headline')}</h1>
 <p class="mb-6">{$t('businesses.thanks')}</p>

@@ -53,6 +53,10 @@
     $effect(clearFilterIfMissing);
 </script>
 
+<svelte:head>
+    <title>{$t('gallery.headline')} - GV Hellas</title>
+</svelte:head>
+
 <section class="mx-auto max-w-6xl">
     <header class="mb-6">
         <h1 class="text-3xl font-bold">
