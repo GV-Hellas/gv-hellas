@@ -1,26 +1,113 @@
-import { fail, redirect } from '@sveltejs/kit';
-import { upsertBusiness } from '$lib/server/cms-store';
-import { processImageUpload } from '$lib/server/media';
+import {type Actions, json} from '@sveltejs/kit';
 
-export const actions = {
-  save: async ({ request }) => {
-    const form = await request.formData();
-    const name = String(form.get('name') || '').trim();
-    const url = String(form.get('url') || '').trim();
-    const upload = form.get('logo');
+import {slugify} from '$lib/utils';
+import {businessPayloadSchema} from '$lib/cms/business/validation';
+import {saveBusiness} from '$lib/server/cms/businessStore';
+import {saveBusinessMedia} from '$lib/server/cms/businessMediaStore';
+import {sanitizeEventHtml} from '$lib/server/html/sanitizeEventHtml';
 
-    if (!name || !url) return fail(400, { error: 'Name and URL are required.' });
-    if (!(upload instanceof File) || upload.size === 0) return fail(400, { error: 'Logo is mandatory.' });
+function normalizeSlug(value: string, fallback: string) {
+    return (value || slugify(fallback)).trim();
+}
 
-    const processed = await processImageUpload(upload, 'business-logo');
+export const actions: Actions = {
+    save: async ({request}: { request: Request }) => {
+        const formData = await request.formData();
+        const rawPayload = formData.get('payload');
 
-    upsertBusiness({
-      name,
-      url,
-      logo: processed?.original || '',
-      logoVariants: { webp: processed?.webp?.[0]?.src || '', jpg: processed?.jpg?.[0]?.src || '' }
-    });
+        if (typeof rawPayload !== 'string') {
+            return json(
+                {
+                    ok: false,
+                    message: 'Missing business payload'
+                },
+                {status: 400}
+            );
+        }
 
-    throw redirect(303, '/admin/businesses');
-  }
+        let parsedJson: unknown;
+
+        try {
+            parsedJson = JSON.parse(rawPayload);
+        } catch {
+            return json(
+                {
+                    ok: false,
+                    message: 'Invalid business payload'
+                },
+                {status: 400}
+            );
+        }
+
+        const result = businessPayloadSchema.safeParse(parsedJson);
+
+        if (!result.success) {
+            return json(
+                {
+                    ok: false,
+                    message: result.error.issues[0]?.message || 'Invalid business data'
+                },
+                {status: 400}
+            );
+        }
+
+        const business = result.data;
+        const slug = normalizeSlug(business.slug, business.name);
+
+        if (!slug) {
+            return json(
+                {
+                    ok: false,
+                    message: 'Could not infer slug from business name'
+                },
+                {status: 400}
+            );
+        }
+
+        business.slug = slug;
+
+        business.description.el = sanitizeEventHtml(business.description.el);
+        business.description.de = sanitizeEventHtml(business.description.de);
+
+        const logo = formData.get('logo');
+
+        if (logo instanceof File && logo.size > 0) {
+            const savedLogo = await saveBusinessMedia(logo, slug);
+            business.logo = savedLogo.url;
+        }
+
+        for (const section of business.sections) {
+            section.beforeHtml.el = sanitizeEventHtml(section.beforeHtml.el);
+            section.beforeHtml.de = sanitizeEventHtml(section.beforeHtml.de);
+            section.afterHtml.el = sanitizeEventHtml(section.afterHtml.el);
+            section.afterHtml.de = sanitizeEventHtml(section.afterHtml.de);
+
+            for (const media of section.media) {
+                if (!media.uploadKey) continue;
+
+                const file = formData.get(media.uploadKey);
+
+                if (file instanceof File && file.size > 0) {
+                    const saved = await saveBusinessMedia(file, slug);
+
+                    media.url = saved.url;
+                    media.filename = saved.filename;
+                    media.originalFilename = saved.originalFilename;
+                    media.mimeType = saved.mimeType;
+                    media.size = saved.size;
+                }
+
+                delete media.uploadKey;
+            }
+        }
+
+        // noinspection TypeScriptValidateTypes
+        const stored = saveBusiness(business);
+
+        return json({
+            ok: true,
+            id: stored.id,
+            slug: stored.slug
+        });
+    }
 };

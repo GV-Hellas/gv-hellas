@@ -107,6 +107,82 @@ register('el', () =>
                     validationUrl: 'Το πεδίο είναι υποχρεωτικό και πρέπει να είναι έγκυρο URL.'
                 }
             },
+            businesses: {
+                title: 'Επιχειρήσεις',
+                subtitle: 'Διαχείριση επιχειρήσεων, καταχωρίσεων και χορηγών.',
+                createNew: 'Δημιουργία νέας',
+                empty: 'Δεν υπάρχουν ακόμη επιχειρήσεις.',
+
+                table: {
+                    logo: 'Λογότυπο',
+                    name: 'Επωνυμία',
+                    sponsorType: 'Χορηγία',
+                    url: 'URL',
+                    contact: 'Επικοινωνία',
+                    actions: 'Ενέργειες'
+                },
+
+                actions: {
+                    view: 'Προβολή',
+                    edit: 'Επεξεργασία'
+                },
+
+                sponsorTypes: {
+                    listed: 'Απλή καταχώριση',
+                    bronze: 'Χάλκινος χορηγός',
+                    silver: 'Ασημένιος χορηγός',
+                    gold: 'Χρυσός χορηγός'
+                },
+
+                sponsorTypeDescriptions: {
+                    listed: 'Η επιχείρηση εμφανίζεται στον κατάλογο.',
+                    bronze: 'Βασικό επίπεδο χορηγίας.',
+                    silver: 'Μεσαίο επίπεδο χορηγίας με αυξημένη προβολή.',
+                    gold: 'Κορυφαίο επίπεδο χορηγίας με μέγιστη προβολή.'
+                },
+
+                deleteDialog: {
+                    title: 'Διαγραφή επιχείρησης;',
+                    description: 'Αυτή η ενέργεια δεν μπορεί να αναιρεθεί. Η επιλεγμένη επιχείρηση θα διαγραφεί οριστικά.',
+                    confirm: 'Διαγραφή επιχείρησης',
+                    deleting: 'Διαγραφή…'
+                },
+
+                toast: {
+                    deleted: 'Η επιχείρηση διαγράφηκε',
+                    deleteFailed: 'Δεν ήταν δυνατή η διαγραφή της επιχείρησης'
+                },
+
+                form: {
+                    createBusiness: 'Δημιουργία επιχείρησης',
+                    editBusiness: 'Επεξεργασία επιχείρησης',
+                    subtitle: 'Προσθέστε τα στοιχεία της επιχείρησης, το λογότυπο, πολυμέσα και δίγλωσσο περιεχόμενο.',
+
+                    name: 'Επωνυμία επιχείρησης',
+                    slug: 'Slug',
+                    slugPlaceholder: 'Αφήστε το κενό για αυτόματη δημιουργία',
+                    sponsorType: 'Τύπος χορηγίας',
+
+                    description: 'Περιγραφή',
+                    url: 'Ιστοσελίδα',
+                    email: 'Email',
+                    telephone: 'Τηλέφωνο',
+                    contactPerson: 'Υπεύθυνος επικοινωνίας',
+
+                    logo: 'Λογότυπο',
+                    logoPreview: 'Προεπισκόπηση λογοτύπου',
+                    currentLogoHint: 'Τρέχον λογότυπο. Ανεβάστε νέο αρχείο μόνο αν θέλετε να το αντικαταστήσετε.',
+
+                    section: 'Ενότητα',
+                    addSection: 'Προσθήκη ενότητας',
+                    removeSection: 'Αφαίρεση ενότητας',
+                    textBeforeMedia: 'Κείμενο πριν από τα πολυμέσα',
+                    textAfterMedia: 'Κείμενο μετά τα πολυμέσα',
+
+                    saveBusiness: 'Αποθήκευση επιχείρησης',
+                    saveChanges: 'Αποθήκευση αλλαγών'
+                }
+            },
             login: {
                 title: 'Σύνδεση CMS Admin',
                 username: 'Όνομα χρήστη',
@@ -160,6 +236,14 @@ register('el', () =>
         gallery: {
             headline: 'Οπτικοακουστικό Υλικό'
         },
+        businesses: {
+            headline: 'Ελληνόφωνες Επιχειρήσεις',
+            subtitle: 'Ανακαλύψτε επιχειρήσεις και χορηγούς που συνδέονται με τον GV Hellas.',
+            eyebrow: 'Δίκτυο GV Hellas',
+            viewProfile: 'Προβολή προφίλ',
+            empty: 'Δεν έχουν προστεθεί ακόμη επιχειρήσεις.',
+            thanks: 'Ευχαριστούμε θερμά τους χορηγούς μας για την υποστήριξή τους.'
+        },
         contact: {
             headline: 'Επικοινωνία',
             formHeadline: 'Στείλτε μας ένα μήνυμα',
@@ -171,10 +255,6 @@ register('el', () =>
             address: 'Διεύθυνση',
             phoneContact: 'Τηλέφωνο Επικοινωνίας',
             followUs: 'Ακολουθήστε μας'
-        },
-        businesses: {
-            headline: 'Ελληνοφωνες Επιχειρήσεις',
-            thanks: 'Ευχαριστούμε θερμά τους χορηγούς μας για την υποστήριξή τους.'
         },
         equipment: {
             headline: 'Ενοικίαση Εξοπλισμού',
@@ -542,6 +622,82 @@ register('de', () =>
                     validationUrl: 'Dieses Feld ist erforderlich und muss eine gültige URL sein.'
                 }
             },
+            businesses: {
+                title: 'Unternehmen',
+                subtitle: 'Unternehmen, Einträge und Sponsoren verwalten.',
+                createNew: 'Neu erstellen',
+                empty: 'Noch keine Unternehmen vorhanden.',
+
+                table: {
+                    logo: 'Logo',
+                    name: 'Name',
+                    sponsorType: 'Sponsoring',
+                    url: 'URL',
+                    contact: 'Kontakt',
+                    actions: 'Aktionen'
+                },
+
+                actions: {
+                    view: 'Ansehen',
+                    edit: 'Bearbeiten'
+                },
+
+                sponsorTypes: {
+                    listed: 'Einfacher Eintrag',
+                    bronze: 'Bronze-Sponsor',
+                    silver: 'Silber-Sponsor',
+                    gold: 'Gold-Sponsor'
+                },
+
+                sponsorTypeDescriptions: {
+                    listed: 'Das Unternehmen erscheint im Verzeichnis.',
+                    bronze: 'Basis-Sponsoringstufe.',
+                    silver: 'Mittlere Sponsoringstufe mit erhöhter Sichtbarkeit.',
+                    gold: 'Höchste Sponsoringstufe mit maximaler Sichtbarkeit.'
+                },
+
+                deleteDialog: {
+                    title: 'Unternehmen löschen?',
+                    description: 'Diese Aktion kann nicht rückgängig gemacht werden. Das ausgewählte Unternehmen wird dauerhaft gelöscht.',
+                    confirm: 'Unternehmen löschen',
+                    deleting: 'Löschen…'
+                },
+
+                toast: {
+                    deleted: 'Das Unternehmen wurde gelöscht',
+                    deleteFailed: 'Das Unternehmen konnte nicht gelöscht werden'
+                },
+
+                form: {
+                    createBusiness: 'Unternehmen erstellen',
+                    editBusiness: 'Unternehmen bearbeiten',
+                    subtitle: 'Fügen Sie Unternehmensdaten, Logo, Medien und zweisprachige Inhalte hinzu.',
+
+                    name: 'Unternehmensname',
+                    slug: 'Slug',
+                    slugPlaceholder: 'Leer lassen, um automatisch zu erstellen',
+                    sponsorType: 'Sponsoring-Typ',
+
+                    description: 'Beschreibung',
+                    url: 'Website',
+                    email: 'E-Mail',
+                    telephone: 'Telefon',
+                    contactPerson: 'Kontaktperson',
+
+                    logo: 'Logo',
+                    logoPreview: 'Logo-Vorschau',
+                    currentLogoHint: 'Aktuelles Logo. Laden Sie nur dann eine neue Datei hoch, wenn Sie es ersetzen möchten.',
+
+                    section: 'Abschnitt',
+                    addSection: 'Abschnitt hinzufügen',
+                    removeSection: 'Abschnitt entfernen',
+                    textBeforeMedia: 'Text vor den Medien',
+                    textAfterMedia: 'Text nach den Medien',
+
+                    saveBusiness: 'Unternehmen speichern',
+                    saveChanges: 'Änderungen speichern'
+                }
+            },
             login: {
                 title: 'CMS Admin Login',
                 username: 'Benutzername',
@@ -597,6 +753,14 @@ register('de', () =>
         gallery: {
             headline: 'Fotos und Videos'
         },
+        businesses: {
+            headline: 'Griechischsprachige Unternehmen',
+            subtitle: 'Entdecken Sie Unternehmen und Sponsoren, die mit GV Hellas verbunden sind.',
+            eyebrow: 'GV Hellas Netzwerk',
+            viewProfile: 'Profil ansehen',
+            empty: 'Es wurden noch keine Unternehmen hinzugefügt.',
+            thanks: 'Wir möchten unseren Sponsoren herzlich für ihre wertvolle Unterstützung danken.'
+        },
         contact: {
             headline: 'Kontakt',
             formHeadline: 'Schicken Sie uns eine Nachricht',
@@ -608,10 +772,6 @@ register('de', () =>
             address: 'Adresse',
             phoneContact: 'Telefonischer Kontakt',
             followUs: 'Folgen Sie uns'
-        },
-        businesses: {
-            headline: 'Griechischsprachige Unternehmen',
-            thanks: 'Wir möchten unseren Sponsoren herzlich für ihre wertvolle Unterstützung danken.'
         },
         equipment: {
             headline: 'Materialvermietung',

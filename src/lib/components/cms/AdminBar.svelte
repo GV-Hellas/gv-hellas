@@ -5,7 +5,7 @@
     const items = [
         {href: "/admin/events", labelKey: "nav.events"},
         {href: "/admin/links", labelKey: "nav.links"},
-        // { href: "/admin/sponsors", labelKey: "nav.sponsors" },
+        {href: "/admin/businesses", labelKey: "nav.businesses"},
     ];
 
     function isActive(href: string) {
