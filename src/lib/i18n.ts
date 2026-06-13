@@ -1,5 +1,5 @@
 // src/lib/i18n.ts
-import { register, init, t, locale, json } from 'svelte-i18n';
+import {register, init, t, locale, json} from 'svelte-i18n';
 
 register('el', () =>
     Promise.resolve({
@@ -15,15 +15,137 @@ register('el', () =>
             community: 'Κοινότητα',
             services: 'Πληροφορίες & Υπηρεσίες'
         },
+        admin: {
+            label: 'ADMIN',
+            dashboard: {
+                title: 'Πίνακας διαχείρισης',
+                subtitle: 'Διαχειριστείτε το περιεχόμενο του ιστότοπου γρήγορα και καθαρά.',
+                quickActions: 'Γρήγορες ενέργειες',
+                createEvent: 'Νέα εκδήλωση',
+                editPages: 'Επεξεργασία σελίδων',
+                manageGallery: 'Διαχείριση υλικού'
+            },
+            events: {
+                title: 'Διαχείριση εκδηλώσεων',
+                subtitle: 'Δημιουργία, επεξεργασία και δημοσίευση εκδηλώσεων.',
+                newEvent: 'Νέα εκδήλωση',
+                table: {
+                    title: 'Τίτλος',
+                    date: 'Ημερομηνία',
+                    status: 'Κατάσταση',
+                    featured: 'Προβολή αρχικής',
+                    actions: 'Ενέργειες'
+                },
+                status: {
+                    draft: 'Πρόχειρο',
+                    published: 'Δημοσιευμένο'
+                },
+                actions: {
+                    edit: 'Επεξεργασία',
+                    preview: 'Προεπισκόπηση'
+                },
+                empty: 'Δεν υπάρχουν ακόμη εκδηλώσεις.',
+                deleteDialog: {
+                    title: 'Διαγραφή εκδήλωσης;',
+                    description: 'Αυτή η ενέργεια δεν μπορεί να αναιρεθεί. Η επιλεγμένη εκδήλωση θα διαγραφεί οριστικά.',
+                    confirm: 'Διαγραφή εκδήλωσης',
+                    deleting: 'Διαγραφή…'
+                },
+                toast: {
+                    deleted: 'Η εκδήλωση διαγράφηκε',
+                    deleteFailed: 'Δεν ήταν δυνατή η διαγραφή της εκδήλωσης'
+                }
+            },
+            links: {
+                title: 'Σύνδεσμοι',
+                subtitle: 'Διαχείριση χρήσιμων εξωτερικών συνδέσμων και λογοτύπων.',
+                createNew: 'Δημιουργία νέου',
+                empty: 'Δεν υπάρχουν ακόμη σύνδεσμοι.',
+
+                table: {
+                    logo: 'Λογότυπο',
+                    title: 'Τίτλος',
+                    url: 'URL',
+                    actions: 'Ενέργειες'
+                },
+
+                actions: {
+                    edit: 'Επεξεργασία'
+                },
+
+                deleteDialog: {
+                    title: 'Διαγραφή συνδέσμου;',
+                    description: 'Αυτή η ενέργεια δεν μπορεί να αναιρεθεί. Ο επιλεγμένος σύνδεσμος θα διαγραφεί οριστικά.',
+                    confirm: 'Διαγραφή συνδέσμου',
+                    deleting: 'Διαγραφή…'
+                },
+
+                toast: {
+                    deleted: 'Ο σύνδεσμος διαγράφηκε',
+                    deleteFailed: 'Δεν ήταν δυνατή η διαγραφή του συνδέσμου'
+                },
+
+                form: {
+                    createTitle: 'Δημιουργία συνδέσμου',
+                    editTitle: 'Επεξεργασία συνδέσμου',
+                    subtitle: 'Προσθέστε δίγλωσσο τίτλο, URL προορισμού και προαιρετικό λογότυπο.',
+                    detailsTitle: 'Στοιχεία συνδέσμου',
+                    detailsDescription: 'Ο ελληνικός τίτλος χρησιμοποιείται ως κύρια ετικέτα στη διαχείριση.',
+                    nameEl: 'Τίτλος - EL',
+                    nameDe: 'Τίτλος - DE',
+                    nameElPlaceholder: 'Τίτλος',
+                    nameDePlaceholder: 'Titel',
+                    url: 'URL',
+                    logoUpload: 'Ανέβασμα λογοτύπου',
+                    logoPreview: 'Προεπισκόπηση λογοτύπου',
+                    currentLogoHint: 'Τρέχον λογότυπο. Ανεβάστε νέο αρχείο μόνο αν θέλετε να το αντικαταστήσετε.',
+                    createButton: 'Δημιουργία συνδέσμου',
+                    saveButton: 'Αποθήκευση αλλαγών',
+                    descriptionHtml: 'Περιγραφή',
+                    validationNameEl: 'Το πεδίο Τίτλου-EL είναι υποχρεωτικό.',
+                    validationNameDe: 'Το πεδίο Τίτλου-DE είναι υποχρεωτικό.',
+                    validationUrl: 'Το πεδίο είναι υποχρεωτικό και πρέπει να είναι έγκυρο URL.'
+                }
+            },
+            login: {
+                title: 'Σύνδεση CMS Admin',
+                username: 'Όνομα χρήστη',
+                password: 'Κωδικός πρόσβασης',
+                submit: 'Σύνδεση'
+            },
+            form: {
+                languageHint: 'Πρώτα εισάγετε το περιεχόμενο στα Ελληνικά και κατόπιν στα Γερμανικά.',
+                createEvent: 'Δημιουργία εκδήλωσης',
+                editEvent: 'Επεξεργασία εκδήλωσης',
+                saveChanges: 'Αποθήκευση αλλαγών',
+                title: 'Τίτλος',
+                description: 'Σύντομη περιγραφή',
+                date: 'Ημερομηνία',
+                pickDate: 'Επιλέξτε ημερομηνία',
+                dateRequired: 'Παρακαλώ επιλέξτε ημερομηνία',
+                time: 'Ώρα',
+                location: 'Τοποθεσία',
+                category: 'Κατηγορία',
+                priceMembers: 'Τιμή μελών CHF',
+                pricePublic: 'Τιμή κοινού CHF',
+                addSection: 'Προσθήκη ενότητας',
+                saveEvent: 'Αποθήκευση εκδήλωσης',
+                saving: 'Αποθήκευση…',
+                couldNotSave: 'Δεν ήταν δυνατή η αποθήκευση της εκδήλωσης',
+                saved: 'Αποθηκεύτηκε',
+                section: 'Ενότητα',
+                removeSection: 'Αφαίρεση',
+                textBeforeMedia: 'Κείμενο πριν από το υλικό',
+                textAfterMedia: 'Κείμενο μετά το υλικό'
+            }
+        },
         home: {
             welcomeTitle: 'Καλώς ήρθατε στην ιστοσελίδα μας!',
             welcomeSubtitle: 'Σύλλογος ομογενών Ελλήνων Rothrist',
             aboutHeadline: 'Σύλλογος ομογενών του Rothrist',
-            aboutText:
-                'Ιδρυμένος το 2019, ο σύλλογος μας έχει στόχο τη διατήρηση και προώθηση των ελληνικών παραδοσεων, της γλώσσας και του πολιτισμού στην Ελβετία.',
+            aboutText: 'Ιδρυμένος το 2019, ο σύλλογος μας έχει στόχο τη διατήρηση και προώθηση των ελληνικών παραδοσεων, της γλώσσας και του πολιτισμού στην Ελβετία.',
             activitiesHeadline: 'Δράσεις',
-            activitiesIntro:
-                'Σκοπός του Συλλόγου είναι η ενεργός παρέμβασή του στα πολιτιστικά δρώμενα της κοινότητας των Ελλήνων ομογενών του Rothrist, η αξιοποίηση και διάσωση των ζωντανών στοιχείων της παράδοσης και του λαϊκού μας πολιτισμού όπως οι χοροί τα τραγούδια και έθιμα, η ελληνική γλώσσα, διοργανώνοντας δράσεις σχετικές με τις παρακάτω θεματικές ενότητες:',
+            activitiesIntro: 'Σκοπός του Συλλόγου είναι η ενεργός παρέμβασή του στα πολιτιστικά δρώμενα της κοινότητας των Ελλήνων ομογενών του Rothrist, η αξιοποίηση και διάσωση των ζωντανών στοιχείων της παράδοσης και του λαϊκού μας πολιτισμού όπως οι χοροί τα τραγούδια και έθιμα, η ελληνική γλώσσα, διοργανώνοντας δράσεις σχετικές με τις παρακάτω θεματικές ενότητες:',
             sponsorsHeadline: 'Ευγενικοί χορηγοί'
         },
         events: {
@@ -174,7 +296,7 @@ register('el', () =>
                             ],
                             highlight: {
                                 date: '11.04.2026',
-                                title: 'Μέγα Σάββατο',
+                                title: 'Μεγάλο Σάββατο',
                                 text: 'Παννυχίδα ΑΝΑΣΤΑΣΕΩΣ, Όρθρος και Θ. Λειτουργία του ΠΑΣΧΑ',
                                 time: '23.00'
                             }
@@ -266,14 +388,14 @@ register('el', () =>
                                 },
                                 {
                                     date: '19.04.2025',
-                                    event: 'Μέγα Σάββατο — Θεία Λειτουργία Μ. Βασιλείου',
+                                    event: 'Μεγάλο Σάββατο — Θεία Λειτουργία Μ. Βασιλείου',
                                     service: '',
                                     time: '09.00'
                                 }
                             ],
                             highlight: {
                                 date: '19.04.2025',
-                                title: 'Μέγα Σάββατο',
+                                title: 'Μεγάλο Σάββατο',
                                 text: 'Όρθρος και Θεία Λειτουργία του ΠΑΣΧΑ',
                                 time: '23.00'
                             }
@@ -300,6 +422,16 @@ register('el', () =>
                     }
                 }
             }
+        },
+        common: {
+            yes: 'Ναι',
+            no: 'Όχι',
+            save: 'Αποθήκευση',
+            cancel: 'Ακύρωση',
+            delete: 'Διαγραφή',
+            published: 'Δημοσιευμένο',
+            draft: 'Πρόχειρο',
+            validationFailed: 'Παρακαλώ ελέγξτε τα πεδία της φόρμας'
         }
     })
 );
@@ -317,6 +449,130 @@ register('de', () =>
             church: 'Kirchenprogramm Olten',
             community: 'Vereinsleben',
             services: 'Infos & Services'
+        },
+        admin: {
+            label: 'ADMIN',
+            dashboard: {
+                title: 'Administrationsbereich',
+                subtitle: 'Verwalten Sie die Website-Inhalte schnell und übersichtlich.',
+                quickActions: 'Schnelle Aktionen',
+                createEvent: 'Neue Veranstaltung',
+                editPages: 'Seiten bearbeiten',
+                manageGallery: 'Medien verwalten'
+            },
+            events: {
+                title: 'Veranstaltungen verwalten',
+                subtitle: 'Veranstaltungen erstellen, bearbeiten und veröffentlichen.',
+                newEvent: 'Neue Veranstaltung',
+                table: {
+                    title: 'Titel',
+                    date: 'Datum',
+                    status: 'Status',
+                    featured: 'Startseite',
+                    actions: 'Aktionen'
+                },
+                status: {
+                    draft: 'Entwurf',
+                    published: 'Veröffentlicht'
+                },
+                actions: {
+                    edit: 'Bearbeiten',
+                    preview: 'Vorschau'
+                },
+                empty: 'Es gibt noch keine Veranstaltungen.',
+                deleteDialog: {
+                    title: 'Veranstaltung löschen?',
+                    description: 'Diese Aktion kann nicht rückgängig gemacht werden. Die ausgewählte Veranstaltung wird dauerhaft gelöscht.',
+                    confirm: 'Veranstaltung löschen',
+                    deleting: 'Löschen…'
+                },
+                toast: {
+                    deleted: 'Die Veranstaltung wurde gelöscht',
+                    deleteFailed: 'Die Veranstaltung konnte nicht gelöscht werden'
+                }
+            },
+            links: {
+                title: 'Links',
+                subtitle: 'Nützliche externe Links und Logos verwalten.',
+                createNew: 'Neu erstellen',
+                empty: 'Noch keine Links vorhanden.',
+
+                table: {
+                    logo: 'Logo',
+                    title: 'Titel',
+                    url: 'URL',
+                    actions: 'Aktionen'
+                },
+
+                actions: {
+                    edit: 'Bearbeiten'
+                },
+
+                deleteDialog: {
+                    title: 'Link löschen?',
+                    description: 'Diese Aktion kann nicht rückgängig gemacht werden. Der ausgewählte Link wird dauerhaft gelöscht.',
+                    confirm: 'Link löschen',
+                    deleting: 'Löschen…'
+                },
+
+                toast: {
+                    deleted: 'Der Link wurde gelöscht',
+                    deleteFailed: 'Der Link konnte nicht gelöscht werden'
+                },
+
+                form: {
+                    createTitle: 'Link erstellen',
+                    editTitle: 'Link bearbeiten',
+                    subtitle: 'Fügen Sie einen zweisprachigen Titel, eine Ziel-URL und optional ein Logo hinzu.',
+                    detailsTitle: 'Linkdetails',
+                    detailsDescription: 'Der griechische Titel wird als primäre Admin-Bezeichnung verwendet.',
+                    nameEl: 'Titel - EL',
+                    nameDe: 'Titel - DE',
+                    nameElPlaceholder: 'Τίτλος',
+                    nameDePlaceholder: 'Titel',
+                    url: 'URL',
+                    logoUpload: 'Logo hochladen',
+                    logoPreview: 'Logo-Vorschau',
+                    currentLogoHint: 'Aktuelles Logo. Laden Sie nur dann eine neue Datei hoch, wenn Sie es ersetzen möchten.',
+                    createButton: 'Link erstellen',
+                    saveButton: 'Änderungen speichern',
+                    descriptionHtml: 'Beschreibung',
+                    validationNameEl: 'Das Feld "Title-EL" ist erforderlich.',
+                    validationNameDe: 'Das Feld "Title-DE" ist erforderlich.',
+                    validationUrl: 'Dieses Feld ist erforderlich und muss eine gültige URL sein.'
+                }
+            },
+            login: {
+                title: 'CMS Admin Login',
+                username: 'Benutzername',
+                password: 'Passwort',
+                submit: 'Login'
+            },
+            form: {
+                languageHint: 'Geben Sie den Inhalt zuerst auf Griechisch und dann auf Deutsch ein.',
+                createEvent: 'Veranstaltung erstellen',
+                editEvent: 'Veranstaltung bearbeiten',
+                saveChanges: 'Änderungen speichern',
+                title: 'Titel',
+                description: 'Kurzbeschreibung',
+                date: 'Datum',
+                pickDate: 'Datum auswählen',
+                dateRequired: 'Bitte wählen Sie ein Datum aus',
+                time: 'Uhrzeit',
+                location: 'Ort',
+                category: 'Kategorie',
+                priceMembers: 'Mitgliederpreis CHF',
+                pricePublic: 'Öffentlicher Preis CHF',
+                addSection: 'Abschnitt hinzufügen',
+                saveEvent: 'Veranstaltung speichern',
+                saving: 'Speichern…',
+                couldNotSave: 'Die Veranstaltung konnte nicht gespeichert werden',
+                saved: 'Gespeichert',
+                section: 'Abschnitt',
+                removeSection: 'Entfernen',
+                textBeforeMedia: 'Text vor den Medien',
+                textAfterMedia: 'Text nach den Medien'
+            }
         },
         home: {
             welcomeTitle: 'Willkommen auf unserer Webseite!',
@@ -600,6 +856,16 @@ register('de', () =>
                     }
                 }
             }
+        },
+        common: {
+            yes: 'Ja',
+            no: 'Nein',
+            save: 'Speichern',
+            cancel: 'Abbrechen',
+            delete: 'Löschen',
+            published: 'Veröffentlicht',
+            draft: 'Entwurf',
+            validationFailed: 'Bitte überprüfen Sie die Formularfelder'
         }
     })
 );
@@ -609,4 +875,4 @@ init({
     initialLocale: 'el'
 });
 
-export { t, locale, json };
+export {t, locale, json};

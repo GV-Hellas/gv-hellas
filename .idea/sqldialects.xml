@@ -3,5 +3,7 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/src/lib/server/cms-store.ts" dialect="SQLite" />
     <file url="file://$PROJECT_DIR$/src/lib/server/db.ts" dialect="SQLite" />
+    <file url="file://$PROJECT_DIR$/src/routes/api/content/events/[slug]/+server.ts" dialect="GenericSQL" />
+    <file url="PROJECT" dialect="SQLite" />
   </component>
 </project>

@@ -1,0 +1,29 @@
+services:
+  gv_hellas_db:
+    image: postgres:16-alpine
+    container_name: gv_hellas_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: gv_hellas
+      POSTGRES_USER: gv_hellas
+      POSTGRES_PASSWORD: gv_hellas_password
+    ports:
+      - "55432:5432"
+    volumes:
+      - gv_hellas_pg_data:/var/lib/postgresql/data
+
+  gv_hellas_db_admin:
+    image: dpage/pgadmin4:8
+    container_name: gv_hellas_db_admin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@gv-hellas.local
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "58080:80"
+    depends_on:
+      - gv_hellas_db
+
+volumes:
+  gv_hellas_pg_data:
+    name: gv_hellas_pg_data

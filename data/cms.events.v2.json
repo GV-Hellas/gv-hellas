@@ -1,0 +1,4492 @@
+{
+  "events": [
+    {
+      "id": "cef9aa92-8096-4eac-bd94-508d5df4404c",
+      "slug": "apokriatiko-party-2025",
+      "title": {
+        "el": "ΑΠΟΚΡΙΑΤΙΚΟ ΠΑΡΤΥ 2025",
+        "de": "ΑΠΟΚΡΙΑΤΙΚΟ ΠΑΡΤΥ 2025"
+      },
+      "description": {
+        "el": "https://gv-hellas.ch/wp-content/uploads/2025/02/0-02-05-d50e8431565353908063bdda93c445130a1174dd5db5d0c6c5ed5b12200d002e_6831610709700b58.mp4",
+        "de": "https://gv-hellas.ch/wp-content/uploads/2025/02/0-02-05-d50e8431565353908063bdda93c445130a1174dd5db5d0c6c5ed5b12200d002e_6831610709700b58.mp4"
+      },
+      "date": "2025-02-14",
+      "time": "22:56",
+      "location": "",
+      "category": "party",
+      "priceMembers": null,
+      "pricePublic": null,
+      "sections": [
+        {
+          "id": "26b6ea47-64dd-43ea-abe2-ebd161728d09",
+          "beforeHtml": {
+            "el": "&lt;div>&lt;/div><p></p>",
+            "de": "&lt;div>&lt;/div><p></p>"
+          },
+          "media": [
+            {
+              "id": "7c54832e-c94b-40ae-bfe7-a0c2d6e8a7a5",
+              "type": "image",
+              "url": "/uploads/img-a644f798cd-480.jpg",
+              "filename": "img-a644f798cd-480.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΑΠΟΚΡΙΑΤΙΚΟ ΠΑΡΤΥ 2025",
+                "de": "ΑΠΟΚΡΙΑΤΙΚΟ ΠΑΡΤΥ 2025"
+              }
+            },
+            {
+              "id": "1e916333-4f1e-4411-8a3d-c08fbbc803a6",
+              "type": "video",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2025/02/0-02-05-d50e8431565353908063bdda93c445130a1174dd5db5d0c6c5ed5b12200d002e_6831610709700b58.mp4",
+              "filename": "0-02-05-d50e8431565353908063bdda93c445130a1174dd5db5d0c6c5ed5b12200d002e_6831610709700b58.mp4",
+              "mimeType": "",
+              "alt": {
+                "el": "ΑΠΟΚΡΙΑΤΙΚΟ ΠΑΡΤΥ 2025",
+                "de": "ΑΠΟΚΡΙΑΤΙΚΟ ΠΑΡΤΥ 2025"
+              }
+            }
+          ],
+          "afterHtml": {
+            "el": "",
+            "de": ""
+          }
+        }
+      ],
+      "createdAt": "2026-06-12T20:23:44.874Z",
+      "updatedAt": "2026-06-12T20:23:44.874Z"
+    },
+    {
+      "id": "6c3282ce-7653-439a-a8de-3bd9b706721d",
+      "slug": "%cf%80%ce%b1%cf%83%cf%87%ce%b1-2024-3",
+      "title": {
+        "el": "ΚΟΠΗ ΠΙΤΑΣ &#8211; ΓΕΝΙΚΗ ΣΥΝΕΛΕΥΣΗ 2025",
+        "de": "ΚΟΠΗ ΠΙΤΑΣ &#8211; ΓΕΝΙΚΗ ΣΥΝΕΛΕΥΣΗ 2025"
+      },
+      "description": {
+        "el": "",
+        "de": ""
+      },
+      "date": "2025-01-19",
+      "time": "14:08",
+      "location": "",
+      "category": "assembly",
+      "priceMembers": null,
+      "pricePublic": null,
+      "sections": [
+        {
+          "id": "d0506189-d1f9-41c0-87df-ea164020c6d0",
+          "beforeHtml": {
+            "el": "&lt;div>\n\t\t\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;/div>",
+            "de": "&lt;div>\n\t\t\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;/div>"
+          },
+          "media": [
+            {
+              "id": "cef7b50c-fe8b-41ab-8de7-624563fb78e4",
+              "type": "image",
+              "url": "/uploads/img-7fbf515ce9-480.jpg",
+              "filename": "img-7fbf515ce9-480.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΚΟΠΗ ΠΙΤΑΣ &#8211; ΓΕΝΙΚΗ ΣΥΝΕΛΕΥΣΗ 2025",
+                "de": "ΚΟΠΗ ΠΙΤΑΣ &#8211; ΓΕΝΙΚΗ ΣΥΝΕΛΕΥΣΗ 2025"
+              }
+            },
+            {
+              "id": "60f44703-79aa-48ed-af50-d8c308b0895b",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2025/01/IMG_6591-769x1024.jpg",
+              "filename": "IMG_6591-769x1024.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΚΟΠΗ ΠΙΤΑΣ &#8211; ΓΕΝΙΚΗ ΣΥΝΕΛΕΥΣΗ 2025",
+                "de": "ΚΟΠΗ ΠΙΤΑΣ &#8211; ΓΕΝΙΚΗ ΣΥΝΕΛΕΥΣΗ 2025"
+              }
+            },
+            {
+              "id": "391eedfd-1b0e-47a7-b12e-1e2554edb89a",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2025/01/IMG_6592-780x1024.jpg",
+              "filename": "IMG_6592-780x1024.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΚΟΠΗ ΠΙΤΑΣ &#8211; ΓΕΝΙΚΗ ΣΥΝΕΛΕΥΣΗ 2025",
+                "de": "ΚΟΠΗ ΠΙΤΑΣ &#8211; ΓΕΝΙΚΗ ΣΥΝΕΛΕΥΣΗ 2025"
+              }
+            },
+            {
+              "id": "1c5ca515-9d1f-4c92-8358-ffcd6fb7b059",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2025/01/IMG_6593-761x1024.jpg",
+              "filename": "IMG_6593-761x1024.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΚΟΠΗ ΠΙΤΑΣ &#8211; ΓΕΝΙΚΗ ΣΥΝΕΛΕΥΣΗ 2025",
+                "de": "ΚΟΠΗ ΠΙΤΑΣ &#8211; ΓΕΝΙΚΗ ΣΥΝΕΛΕΥΣΗ 2025"
+              }
+            }
+          ],
+          "afterHtml": {
+            "el": "",
+            "de": ""
+          }
+        }
+      ],
+      "createdAt": "2026-06-12T20:23:44.874Z",
+      "updatedAt": "2026-06-12T20:23:44.874Z"
+    },
+    {
+      "id": "c17f3f7e-ce82-4460-a541-ef860db80e2b",
+      "slug": "%cf%80%ce%b1%cf%83%cf%87%ce%b1-2024",
+      "title": {
+        "el": "ΦΘΙΝΟΠΩΡΙΝΗ ΕΚΔΗΛΩΣΗ 2024 &#8220;ΓΙΑ ΤΑ 5 ΧΡΟΝΙΑ ΤΟΥ ΣΥΛΛΟΓΟΥ&#8221;",
+        "de": "ΦΘΙΝΟΠΩΡΙΝΗ ΕΚΔΗΛΩΣΗ 2024 &#8220;ΓΙΑ ΤΑ 5 ΧΡΟΝΙΑ ΤΟΥ ΣΥΛΛΟΓΟΥ&#8221;"
+      },
+      "description": {
+        "el": "https://gv-hellas.ch/wp-content/uploads/2024/04/14.09.2024-.mp4",
+        "de": "https://gv-hellas.ch/wp-content/uploads/2024/04/14.09.2024-.mp4"
+      },
+      "date": "2025-01-19",
+      "time": "12:58",
+      "location": "",
+      "category": "general",
+      "priceMembers": null,
+      "pricePublic": null,
+      "sections": [
+        {
+          "id": "8e8a31d5-10b8-4612-8799-b043740014de",
+          "beforeHtml": {
+            "el": "&lt;div>\n\t\t\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\n\t\t\t\t&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;/div>",
+            "de": "&lt;div>\n\t\t\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\n\t\t\t\t&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;/div>"
+          },
+          "media": [
+            {
+              "id": "ae290a4a-2d78-4561-b3ee-458ed75d157e",
+              "type": "image",
+              "url": "/uploads/img-b66144802d-480.jpg",
+              "filename": "img-b66144802d-480.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΦΘΙΝΟΠΩΡΙΝΗ ΕΚΔΗΛΩΣΗ 2024 &#8220;ΓΙΑ ΤΑ 5 ΧΡΟΝΙΑ ΤΟΥ ΣΥΛΛΟΓΟΥ&#8221;",
+                "de": "ΦΘΙΝΟΠΩΡΙΝΗ ΕΚΔΗΛΩΣΗ 2024 &#8220;ΓΙΑ ΤΑ 5 ΧΡΟΝΙΑ ΤΟΥ ΣΥΛΛΟΓΟΥ&#8221;"
+              }
+            },
+            {
+              "id": "5dbce14d-0e0a-4054-b807-f2efd9a271bf",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2024/04/cedd65d7-64ba-4fe0-a06f-86ef18baea0e-768x1024.jpg",
+              "filename": "cedd65d7-64ba-4fe0-a06f-86ef18baea0e-768x1024.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΦΘΙΝΟΠΩΡΙΝΗ ΕΚΔΗΛΩΣΗ 2024 &#8220;ΓΙΑ ΤΑ 5 ΧΡΟΝΙΑ ΤΟΥ ΣΥΛΛΟΓΟΥ&#8221;",
+                "de": "ΦΘΙΝΟΠΩΡΙΝΗ ΕΚΔΗΛΩΣΗ 2024 &#8220;ΓΙΑ ΤΑ 5 ΧΡΟΝΙΑ ΤΟΥ ΣΥΛΛΟΓΟΥ&#8221;"
+              }
+            },
+            {
+              "id": "781c1e47-6263-4887-8288-43eb5b01c3d3",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2024/04/515256f5-b51e-429f-afa8-36d9a4d36e02-768x1024.jpg",
+              "filename": "515256f5-b51e-429f-afa8-36d9a4d36e02-768x1024.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΦΘΙΝΟΠΩΡΙΝΗ ΕΚΔΗΛΩΣΗ 2024 &#8220;ΓΙΑ ΤΑ 5 ΧΡΟΝΙΑ ΤΟΥ ΣΥΛΛΟΓΟΥ&#8221;",
+                "de": "ΦΘΙΝΟΠΩΡΙΝΗ ΕΚΔΗΛΩΣΗ 2024 &#8220;ΓΙΑ ΤΑ 5 ΧΡΟΝΙΑ ΤΟΥ ΣΥΛΛΟΓΟΥ&#8221;"
+              }
+            },
+            {
+              "id": "331038e3-ddcb-48a2-9693-d6ea6b49659f",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2024/04/adee1d1b-85d6-4a81-a67b-609c3452778a-768x1024.jpg",
+              "filename": "adee1d1b-85d6-4a81-a67b-609c3452778a-768x1024.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΦΘΙΝΟΠΩΡΙΝΗ ΕΚΔΗΛΩΣΗ 2024 &#8220;ΓΙΑ ΤΑ 5 ΧΡΟΝΙΑ ΤΟΥ ΣΥΛΛΟΓΟΥ&#8221;",
+                "de": "ΦΘΙΝΟΠΩΡΙΝΗ ΕΚΔΗΛΩΣΗ 2024 &#8220;ΓΙΑ ΤΑ 5 ΧΡΟΝΙΑ ΤΟΥ ΣΥΛΛΟΓΟΥ&#8221;"
+              }
+            },
+            {
+              "id": "ad159ec0-d764-4e19-a9f6-faaa2b34bc34",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2024/04/0a9f2581-3478-47d2-b893-90b479746581-768x1024.jpg",
+              "filename": "0a9f2581-3478-47d2-b893-90b479746581-768x1024.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΦΘΙΝΟΠΩΡΙΝΗ ΕΚΔΗΛΩΣΗ 2024 &#8220;ΓΙΑ ΤΑ 5 ΧΡΟΝΙΑ ΤΟΥ ΣΥΛΛΟΓΟΥ&#8221;",
+                "de": "ΦΘΙΝΟΠΩΡΙΝΗ ΕΚΔΗΛΩΣΗ 2024 &#8220;ΓΙΑ ΤΑ 5 ΧΡΟΝΙΑ ΤΟΥ ΣΥΛΛΟΓΟΥ&#8221;"
+              }
+            },
+            {
+              "id": "939cf80b-7e32-40ad-b3ac-5ecf850fa0b0",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2024/04/4a88e5d6-d985-4fcf-888c-f2b284606131-2-768x1024.jpg",
+              "filename": "4a88e5d6-d985-4fcf-888c-f2b284606131-2-768x1024.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΦΘΙΝΟΠΩΡΙΝΗ ΕΚΔΗΛΩΣΗ 2024 &#8220;ΓΙΑ ΤΑ 5 ΧΡΟΝΙΑ ΤΟΥ ΣΥΛΛΟΓΟΥ&#8221;",
+                "de": "ΦΘΙΝΟΠΩΡΙΝΗ ΕΚΔΗΛΩΣΗ 2024 &#8220;ΓΙΑ ΤΑ 5 ΧΡΟΝΙΑ ΤΟΥ ΣΥΛΛΟΓΟΥ&#8221;"
+              }
+            },
+            {
+              "id": "e2ea78dc-dd70-404b-b4eb-caf94c234731",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2024/04/3bf10360-fdac-40ae-b542-103ac543fe6a-Kopie-768x1024.jpg",
+              "filename": "3bf10360-fdac-40ae-b542-103ac543fe6a-Kopie-768x1024.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΦΘΙΝΟΠΩΡΙΝΗ ΕΚΔΗΛΩΣΗ 2024 &#8220;ΓΙΑ ΤΑ 5 ΧΡΟΝΙΑ ΤΟΥ ΣΥΛΛΟΓΟΥ&#8221;",
+                "de": "ΦΘΙΝΟΠΩΡΙΝΗ ΕΚΔΗΛΩΣΗ 2024 &#8220;ΓΙΑ ΤΑ 5 ΧΡΟΝΙΑ ΤΟΥ ΣΥΛΛΟΓΟΥ&#8221;"
+              }
+            },
+            {
+              "id": "ef59f06c-5227-45b3-b1b0-663c7350a9b6",
+              "type": "video",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2024/04/14.09.2024-.mp4",
+              "filename": "14.09.2024-.mp4",
+              "mimeType": "",
+              "alt": {
+                "el": "ΦΘΙΝΟΠΩΡΙΝΗ ΕΚΔΗΛΩΣΗ 2024 &#8220;ΓΙΑ ΤΑ 5 ΧΡΟΝΙΑ ΤΟΥ ΣΥΛΛΟΓΟΥ&#8221;",
+                "de": "ΦΘΙΝΟΠΩΡΙΝΗ ΕΚΔΗΛΩΣΗ 2024 &#8220;ΓΙΑ ΤΑ 5 ΧΡΟΝΙΑ ΤΟΥ ΣΥΛΛΟΓΟΥ&#8221;"
+              }
+            }
+          ],
+          "afterHtml": {
+            "el": "",
+            "de": ""
+          }
+        }
+      ],
+      "createdAt": "2026-06-12T20:23:44.875Z",
+      "updatedAt": "2026-06-12T20:23:44.875Z"
+    },
+    {
+      "id": "522e085c-e2f4-4c17-a787-83750d3e8188",
+      "slug": "%cf%80%ce%b1%cf%83%cf%87%ce%b1-2024-2",
+      "title": {
+        "el": "ΠΑΣΧΑ 2024",
+        "de": "ΠΑΣΧΑ 2024"
+      },
+      "description": {
+        "el": "https://gv-hellas.ch/wp-content/uploads/2024/11/f27ef928-0c9a-454f-8206-21648b16a864.mp4",
+        "de": "https://gv-hellas.ch/wp-content/uploads/2024/11/f27ef928-0c9a-454f-8206-21648b16a864.mp4"
+      },
+      "date": "2024-04-20",
+      "time": "17:36",
+      "location": "",
+      "category": "religion",
+      "priceMembers": null,
+      "pricePublic": null,
+      "sections": [
+        {
+          "id": "48b0f7f1-3a54-4d8c-a2b4-eb8fbbdd25bb",
+          "beforeHtml": {
+            "el": "&lt;div>\n\t\t\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\n\t\t\t\t&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;/div>",
+            "de": "&lt;div>\n\t\t\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\n\t\t\t\t&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;/div>"
+          },
+          "media": [
+            {
+              "id": "5346a845-396a-4a1f-ab9a-00e879b2ca15",
+              "type": "image",
+              "url": "/uploads/img-ad4fd6278f-480.jpg",
+              "filename": "img-ad4fd6278f-480.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΠΑΣΧΑ 2024",
+                "de": "ΠΑΣΧΑ 2024"
+              }
+            },
+            {
+              "id": "a76d86ba-930e-4aa5-8701-a1093b5e533a",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2024/04/9b717af5-b679-4d12-87b9-9086afa2c8bc-1536x864.jpg",
+              "filename": "9b717af5-b679-4d12-87b9-9086afa2c8bc-1536x864.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΠΑΣΧΑ 2024",
+                "de": "ΠΑΣΧΑ 2024"
+              }
+            },
+            {
+              "id": "75ca4944-8100-494d-b843-d32ee26bddec",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2024/04/e37d2bf6-ddaf-4672-8c3f-773c310666f2-1152x1536.jpg",
+              "filename": "e37d2bf6-ddaf-4672-8c3f-773c310666f2-1152x1536.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΠΑΣΧΑ 2024",
+                "de": "ΠΑΣΧΑ 2024"
+              }
+            },
+            {
+              "id": "8d771a5c-48c8-4fde-ab84-3f7aba5bcb66",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2024/04/613efd44-19e0-45b0-b0f6-9b0ac2badd29-2-1536x864.jpg",
+              "filename": "613efd44-19e0-45b0-b0f6-9b0ac2badd29-2-1536x864.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΠΑΣΧΑ 2024",
+                "de": "ΠΑΣΧΑ 2024"
+              }
+            },
+            {
+              "id": "aea0de5c-3c91-42d0-ac8f-463fd9621f44",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2024/04/d63842b4-0db4-49ff-ae82-9e4bfa12997b-768x1024.jpg",
+              "filename": "d63842b4-0db4-49ff-ae82-9e4bfa12997b-768x1024.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΠΑΣΧΑ 2024",
+                "de": "ΠΑΣΧΑ 2024"
+              }
+            },
+            {
+              "id": "b47912ec-b1f7-4f66-b8ba-179e3f262790",
+              "type": "video",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2024/11/f27ef928-0c9a-454f-8206-21648b16a864.mp4",
+              "filename": "f27ef928-0c9a-454f-8206-21648b16a864.mp4",
+              "mimeType": "",
+              "alt": {
+                "el": "ΠΑΣΧΑ 2024",
+                "de": "ΠΑΣΧΑ 2024"
+              }
+            }
+          ],
+          "afterHtml": {
+            "el": "",
+            "de": ""
+          }
+        }
+      ],
+      "createdAt": "2026-06-12T20:23:44.876Z",
+      "updatedAt": "2026-06-12T20:23:44.876Z"
+    },
+    {
+      "id": "5a38a07d-1ca5-4da0-9c50-68b25f471776",
+      "slug": "%ce%b1%cf%80%ce%bf%ce%ba%cf%81%ce%b9%ce%b1%cf%84%ce%b9%ce%ba%ce%bf-%cf%80%ce%b1%cf%81%cf%84%cf%85-%cf%80%cf%81%ce%bf%cf%83%ce%ba%ce%bb%ce%b7%cf%83%ce%b7",
+      "title": {
+        "el": "ΑΠΟΚΡΙΑΤΙΚΟ ΠΑΡΤΥ – ΠΡΟΣΚΛΗΣΗ",
+        "de": "ΑΠΟΚΡΙΑΤΙΚΟ ΠΑΡΤΥ – ΠΡΟΣΚΛΗΣΗ"
+      },
+      "description": {
+        "el": "https://gv-hellas.ch/wp-content/uploads/2024/02/429925964_7791464874231776_2433892531163126064_n.mp4",
+        "de": "https://gv-hellas.ch/wp-content/uploads/2024/02/429925964_7791464874231776_2433892531163126064_n.mp4"
+      },
+      "date": "2024-02-26",
+      "time": "17:55",
+      "location": "",
+      "category": "party",
+      "priceMembers": null,
+      "pricePublic": null,
+      "sections": [
+        {
+          "id": "44b200c9-aa4a-4b38-a0e4-e727f945e4ae",
+          "beforeHtml": {
+            "el": "&lt;div>\n\t\t\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\n\t\t\t\t&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;/div>",
+            "de": "&lt;div>\n\t\t\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\n\t\t\t\t&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;/div>"
+          },
+          "media": [
+            {
+              "id": "3531482c-8042-4406-af3d-3d76d6d6ad6b",
+              "type": "image",
+              "url": "/uploads/img-0dc964c426-480.jpg",
+              "filename": "img-0dc964c426-480.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΑΠΟΚΡΙΑΤΙΚΟ ΠΑΡΤΥ – ΠΡΟΣΚΛΗΣΗ",
+                "de": "ΑΠΟΚΡΙΑΤΙΚΟ ΠΑΡΤΥ – ΠΡΟΣΚΛΗΣΗ"
+              }
+            },
+            {
+              "id": "def43181-99ac-4ec4-969c-03943463707b",
+              "type": "video",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2024/02/429925964_7791464874231776_2433892531163126064_n.mp4",
+              "filename": "429925964_7791464874231776_2433892531163126064_n.mp4",
+              "mimeType": "",
+              "alt": {
+                "el": "ΑΠΟΚΡΙΑΤΙΚΟ ΠΑΡΤΥ – ΠΡΟΣΚΛΗΣΗ",
+                "de": "ΑΠΟΚΡΙΑΤΙΚΟ ΠΑΡΤΥ – ΠΡΟΣΚΛΗΣΗ"
+              }
+            }
+          ],
+          "afterHtml": {
+            "el": "",
+            "de": ""
+          }
+        }
+      ],
+      "createdAt": "2026-06-12T20:23:44.876Z",
+      "updatedAt": "2026-06-12T20:23:44.876Z"
+    },
+    {
+      "id": "5f194f7f-ba37-4206-9d14-0732a13f68b6",
+      "slug": "episkepsi-ekklisia",
+      "title": {
+        "el": "ΕΠΙΣΚΕΨΗ ΣΥΛΛΟΓΟΥ ΣΤΗΝ ΕΚΚΛΗΣΙΑ",
+        "de": "ΕΠΙΣΚΕΨΗ ΣΥΛΛΟΓΟΥ ΣΤΗΝ ΕΚΚΛΗΣΙΑ"
+      },
+      "description": {
+        "el": "Previous Next",
+        "de": "Previous Next"
+      },
+      "date": "2023-04-09",
+      "time": "15:24",
+      "location": "",
+      "category": "religion",
+      "priceMembers": null,
+      "pricePublic": null,
+      "sections": [
+        {
+          "id": "c47aff4b-ea55-4db1-8f4a-596f91d7952e",
+          "beforeHtml": {
+            "el": "&lt;div>\n\t\t\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div role=\"region\" aria-roledescription=\"carousel\" aria-label=\"Καρουζέλ Εικόνας\" dir=\"ltr\">\n\t\t\t&lt;div aria-live=\"off\">\n\t\t\t\t\t\t\t\t&lt;div role=\"group\" aria-roledescription=\"slide\" aria-label=\"1 of 5\">&lt;figure>&lt;/figure>&lt;/div>&lt;div role=\"group\" aria-roledescription=\"slide\" aria-label=\"2 of 5\">&lt;figure>&lt;/figure>&lt;/div>&lt;div role=\"group\" aria-roledescription=\"slide\" aria-label=\"3 of 5\">&lt;figure>&lt;/figure>&lt;/div>&lt;div role=\"group\" aria-roledescription=\"slide\" aria-label=\"4 of 5\">&lt;figure>&lt;/figure>&lt;/div>&lt;div role=\"group\" aria-roledescription=\"slide\" aria-label=\"5 of 5\">&lt;figure>&lt;/figure>&lt;/div>\t\t\t&lt;/div>\n\t\t\t\t\t\t\t\t\t\t\t\t&lt;div role=\"button\" tabindex=\"0\">\n\t\t\t\t\t\t<i aria-hidden=\"true\"></i>\t\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;div role=\"button\" tabindex=\"0\">\n\t\t\t\t\t\t<i aria-hidden=\"true\"></i>\t\t\t\t\t&lt;/div>\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t&lt;div>&lt;/div>\n\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;/div>",
+            "de": "&lt;div>\n\t\t\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div role=\"region\" aria-roledescription=\"carousel\" aria-label=\"Καρουζέλ Εικόνας\" dir=\"ltr\">\n\t\t\t&lt;div aria-live=\"off\">\n\t\t\t\t\t\t\t\t&lt;div role=\"group\" aria-roledescription=\"slide\" aria-label=\"1 of 5\">&lt;figure>&lt;/figure>&lt;/div>&lt;div role=\"group\" aria-roledescription=\"slide\" aria-label=\"2 of 5\">&lt;figure>&lt;/figure>&lt;/div>&lt;div role=\"group\" aria-roledescription=\"slide\" aria-label=\"3 of 5\">&lt;figure>&lt;/figure>&lt;/div>&lt;div role=\"group\" aria-roledescription=\"slide\" aria-label=\"4 of 5\">&lt;figure>&lt;/figure>&lt;/div>&lt;div role=\"group\" aria-roledescription=\"slide\" aria-label=\"5 of 5\">&lt;figure>&lt;/figure>&lt;/div>\t\t\t&lt;/div>\n\t\t\t\t\t\t\t\t\t\t\t\t&lt;div role=\"button\" tabindex=\"0\">\n\t\t\t\t\t\t<i aria-hidden=\"true\"></i>\t\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;div role=\"button\" tabindex=\"0\">\n\t\t\t\t\t\t<i aria-hidden=\"true\"></i>\t\t\t\t\t&lt;/div>\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t&lt;div>&lt;/div>\n\t\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;/div>"
+          },
+          "media": [
+            {
+              "id": "322a4f9c-3a39-441b-8c46-15e164026110",
+              "type": "image",
+              "url": "/uploads/img-de31ed619d-480.jpg",
+              "filename": "img-de31ed619d-480.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΕΠΙΣΚΕΨΗ ΣΥΛΛΟΓΟΥ ΣΤΗΝ ΕΚΚΛΗΣΙΑ",
+                "de": "ΕΠΙΣΚΕΨΗ ΣΥΛΛΟΓΟΥ ΣΤΗΝ ΕΚΚΛΗΣΙΑ"
+              }
+            },
+            {
+              "id": "e314a6bd-805b-41c7-a461-018226360b0d",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2023/04/εικόνα_Viber_2023-04-09_20-15-28-306-225x300.jpg",
+              "filename": "εικόνα_Viber_2023-04-09_20-15-28-306-225x300.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΕΠΙΣΚΕΨΗ ΣΥΛΛΟΓΟΥ ΣΤΗΝ ΕΚΚΛΗΣΙΑ",
+                "de": "ΕΠΙΣΚΕΨΗ ΣΥΛΛΟΓΟΥ ΣΤΗΝ ΕΚΚΛΗΣΙΑ"
+              }
+            },
+            {
+              "id": "89b57e49-3f9f-40d7-bc67-8565e8c250ea",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2023/04/εικόνα_Viber_2023-04-09_20-15-21-038-225x300.jpg",
+              "filename": "εικόνα_Viber_2023-04-09_20-15-21-038-225x300.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΕΠΙΣΚΕΨΗ ΣΥΛΛΟΓΟΥ ΣΤΗΝ ΕΚΚΛΗΣΙΑ",
+                "de": "ΕΠΙΣΚΕΨΗ ΣΥΛΛΟΓΟΥ ΣΤΗΝ ΕΚΚΛΗΣΙΑ"
+              }
+            },
+            {
+              "id": "5acf032f-17d3-4730-a0ef-5d144b1815ca",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2023/04/εικόνα_Viber_2023-04-09_20-14-53-980-225x300.jpg",
+              "filename": "εικόνα_Viber_2023-04-09_20-14-53-980-225x300.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΕΠΙΣΚΕΨΗ ΣΥΛΛΟΓΟΥ ΣΤΗΝ ΕΚΚΛΗΣΙΑ",
+                "de": "ΕΠΙΣΚΕΨΗ ΣΥΛΛΟΓΟΥ ΣΤΗΝ ΕΚΚΛΗΣΙΑ"
+              }
+            },
+            {
+              "id": "d1473ef1-8eab-4db2-9004-f7cc1d18757a",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2023/04/εικόνα_Viber_2023-04-09_20-15-08-763-225x300.jpg",
+              "filename": "εικόνα_Viber_2023-04-09_20-15-08-763-225x300.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΕΠΙΣΚΕΨΗ ΣΥΛΛΟΓΟΥ ΣΤΗΝ ΕΚΚΛΗΣΙΑ",
+                "de": "ΕΠΙΣΚΕΨΗ ΣΥΛΛΟΓΟΥ ΣΤΗΝ ΕΚΚΛΗΣΙΑ"
+              }
+            },
+            {
+              "id": "b6b58b47-64fc-4efc-87ff-cf3e26162253",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2023/04/εικόνα_Viber_2023-04-09_20-15-14-807-225x300.jpg",
+              "filename": "εικόνα_Viber_2023-04-09_20-15-14-807-225x300.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΕΠΙΣΚΕΨΗ ΣΥΛΛΟΓΟΥ ΣΤΗΝ ΕΚΚΛΗΣΙΑ",
+                "de": "ΕΠΙΣΚΕΨΗ ΣΥΛΛΟΓΟΥ ΣΤΗΝ ΕΚΚΛΗΣΙΑ"
+              }
+            }
+          ],
+          "afterHtml": {
+            "el": "",
+            "de": ""
+          }
+        }
+      ],
+      "createdAt": "2026-06-12T20:23:44.877Z",
+      "updatedAt": "2026-06-12T20:23:44.877Z"
+    },
+    {
+      "id": "c9227c31-3621-4ad7-a245-550ee493c69d",
+      "slug": "%cf%80%ce%b1%cf%83%cf%87%ce%b1-2023",
+      "title": {
+        "el": "ΠΑΣΧΑ 2023",
+        "de": "ΠΑΣΧΑ 2023"
+      },
+      "description": {
+        "el": "https://gv-hellas.ch/wp-content/uploads/2023/03/0-02-05-44ed073e56d640eeaddf78f35ab6d2594807b65bacb2b0b2c55e6f36d54b3458_b8ea222981a091c7.mp4",
+        "de": "https://gv-hellas.ch/wp-content/uploads/2023/03/0-02-05-44ed073e56d640eeaddf78f35ab6d2594807b65bacb2b0b2c55e6f36d54b3458_b8ea222981a091c7.mp4"
+      },
+      "date": "2023-03-22",
+      "time": "18:13",
+      "location": "",
+      "category": "religion",
+      "priceMembers": null,
+      "pricePublic": null,
+      "sections": [
+        {
+          "id": "aa8e220c-3e6d-41f3-8f4d-f24f1340c152",
+          "beforeHtml": {
+            "el": "&lt;div>\n\t\t\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\n\t\t\t\t&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;/div>",
+            "de": "&lt;div>\n\t\t\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\n\t\t\t\t&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;/div>"
+          },
+          "media": [
+            {
+              "id": "c8819fff-88e8-49d5-8fc9-a0a0b62fd0c5",
+              "type": "image",
+              "url": "/uploads/img-781e50d59f-480.jpg",
+              "filename": "img-781e50d59f-480.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΠΑΣΧΑ 2023",
+                "de": "ΠΑΣΧΑ 2023"
+              }
+            },
+            {
+              "id": "e9446df9-859b-4a37-9575-41a03498be43",
+              "type": "video",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2023/03/0-02-05-44ed073e56d640eeaddf78f35ab6d2594807b65bacb2b0b2c55e6f36d54b3458_b8ea222981a091c7.mp4",
+              "filename": "0-02-05-44ed073e56d640eeaddf78f35ab6d2594807b65bacb2b0b2c55e6f36d54b3458_b8ea222981a091c7.mp4",
+              "mimeType": "",
+              "alt": {
+                "el": "ΠΑΣΧΑ 2023",
+                "de": "ΠΑΣΧΑ 2023"
+              }
+            }
+          ],
+          "afterHtml": {
+            "el": "",
+            "de": ""
+          }
+        }
+      ],
+      "createdAt": "2026-06-12T20:23:44.877Z",
+      "updatedAt": "2026-06-12T20:23:44.877Z"
+    },
+    {
+      "id": "e53c33d6-17fc-4f42-8013-abbd2842e076",
+      "slug": "%ce%b5%ce%bd%ce%b1%cf%81%ce%be%ce%b7-%cf%87%ce%bf%cf%81%ce%b5%cf%85%cf%84%ce%b9%ce%ba%ce%bf%cf%85-%cf%84%ce%bc%ce%b7%ce%bc%ce%b1%cf%84%ce%bf%cf%83",
+      "title": {
+        "el": "ΕΝΑΡΞΗ ΧΟΡΕΥΤΙΚΟΥ ΤΜΗΜΑΤΟΣ",
+        "de": "ΕΝΑΡΞΗ ΧΟΡΕΥΤΙΚΟΥ ΤΜΗΜΑΤΟΣ"
+      },
+      "description": {
+        "el": "",
+        "de": ""
+      },
+      "date": "2023-03-19",
+      "time": "17:13",
+      "location": "",
+      "category": "dance",
+      "priceMembers": null,
+      "pricePublic": null,
+      "sections": [
+        {
+          "id": "e20b089b-e36d-4d3b-8b67-b9c8e05e28dc",
+          "beforeHtml": {
+            "el": "",
+            "de": ""
+          },
+          "media": [
+            {
+              "id": "d0ad4225-b3d5-4fc9-9445-fc61604916dd",
+              "type": "image",
+              "url": "/uploads/img-587405aca1-480.jpg",
+              "filename": "img-587405aca1-480.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΕΝΑΡΞΗ ΧΟΡΕΥΤΙΚΟΥ ΤΜΗΜΑΤΟΣ",
+                "de": "ΕΝΑΡΞΗ ΧΟΡΕΥΤΙΚΟΥ ΤΜΗΜΑΤΟΣ"
+              }
+            }
+          ],
+          "afterHtml": {
+            "el": "",
+            "de": ""
+          }
+        }
+      ],
+      "createdAt": "2026-06-12T20:23:44.877Z",
+      "updatedAt": "2026-06-12T20:23:44.877Z"
+    },
+    {
+      "id": "ec48250b-2ded-4a41-b5c5-f51d34b99b3f",
+      "slug": "kathara-deytera",
+      "title": {
+        "el": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023",
+        "de": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023"
+      },
+      "description": {
+        "el": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ &#8211; 27-02-2023 ΔΡΑΣΕΙΣ – ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023 February 5, 2023 ΕΚΔΗΛΩΣΕΙΣ Read More",
+        "de": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ &#8211; 27-02-2023 ΔΡΑΣΕΙΣ – ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023 February 5, 2023 ΕΚΔΗΛΩΣΕΙΣ Read More"
+      },
+      "date": "2023-02-05",
+      "time": "20:12",
+      "location": "",
+      "category": "religion",
+      "priceMembers": null,
+      "pricePublic": null,
+      "sections": [
+        {
+          "id": "f4edccc7-0224-44e8-89a8-736522b3540d",
+          "beforeHtml": {
+            "el": "&lt;div>\n\t\t\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\n        &lt;div\n            \n            \n            \n            \n            \n            \n            \n        >\n\t\t\t            &lt;div>\n\t\t\t\t\n        &lt;div>\n            &lt;span>&lt;/span>\n\t\t\t&lt;h2>\n\t\t\t\n\t\t\t\t                    &lt;span>\n\t\t\t\t\t\tΚΑΘΑΡΑ ΔΕΥΤΕΡΑ - 27-02-2023\t\t\t\t\t&lt;/span>\n\t\t\t\t\t\n\t\t\t\t\t\t\t&lt;/h2>            &lt;span>&lt;/span>\n\n\t\t\t\n        &lt;/div>\n\n\t\t\n\t\t            &lt;/div>\n\n            &lt;div>\n\t\t\t\t\n&lt;div>\n\t&lt;div>\n\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/apokriatiko-party-2025/\" target=\"_blank\" rel=\"noopener noreferrer\">                        \n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t</a>\n\t\t        &lt;div>&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\n\t\t\t&lt;div>\n\t\t\t\t&lt;div>&lt;h3><a href=\"https://gv-hellas.ch/apokriatiko-party-2025/\" target=\"_blank\" rel=\"noopener noreferrer\">ΑΠΟΚΡΙΑΤΙΚΟ ΠΑΡΤΥ 2025</a>&lt;/h3>&lt;/div>\n\t\t\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\t            &lt;span>\n\t\t\t\t<i></i>\t\t\t\t                    <a href=\"https://gv-hellas.ch/2025/02/14/\" target=\"_blank\" rel=\"noopener noreferrer\">\n\t\t\t\t\t14 Φεβρουαρίου, 2025\t\t\t\t</a>\n\t\t\t\t\t\t\t&lt;/span>\n\t\t\t            &lt;span>\n\t\t\t\t<i></i><a href=\"https://gv-hellas.ch/category/ekdilosis/\" target=\"_blank\" rel=\"noopener noreferrer\">ΕΚΔΗΛΩΣΕΙΣ</a>\n\t\t\t&lt;/span>\n\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t        &lt;div>\n            &lt;div>\n                &lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/apokriatiko-party-2025/\" target=\"_blank\" rel=\"noopener noreferrer\">Read More</a>                &lt;/div>\n            &lt;/div>\n        &lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t&lt;/div>\n&lt;/div>\n\n&lt;div>\n\t&lt;div>\n\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2024-3/\" target=\"_blank\" rel=\"noopener noreferrer\">                        \n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t</a>\n\t\t        &lt;div>&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\n\t\t\t&lt;div>\n\t\t\t\t&lt;div>&lt;h3><a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2024-3/\" target=\"_blank\" rel=\"noopener noreferrer\">ΚΟΠΗ ΠΙΤΑΣ &#8211; ΓΕΝΙΚΗ ΣΥΝΕΛΕΥΣΗ 2025</a>&lt;/h3>&lt;/div>\n\t\t\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\t            &lt;span>\n\t\t\t\t<i></i>\t\t\t\t                    <a href=\"https://gv-hellas.ch/2025/01/19/\" target=\"_blank\" rel=\"noopener noreferrer\">\n\t\t\t\t\t19 Ιανουαρίου, 2025\t\t\t\t</a>\n\t\t\t\t\t\t\t&lt;/span>\n\t\t\t            &lt;span>\n\t\t\t\t<i></i><a href=\"https://gv-hellas.ch/category/ekdilosis/\" target=\"_blank\" rel=\"noopener noreferrer\">ΕΚΔΗΛΩΣΕΙΣ</a>\n\t\t\t&lt;/span>\n\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t        &lt;div>\n            &lt;div>\n                &lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2024-3/\" target=\"_blank\" rel=\"noopener noreferrer\">Read More</a>                &lt;/div>\n            &lt;/div>\n        &lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t&lt;/div>\n&lt;/div>\n\n&lt;div>\n\t&lt;div>\n\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2024/\" target=\"_blank\" rel=\"noopener noreferrer\">                        \n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t</a>\n\t\t        &lt;div>&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\n\t\t\t&lt;div>\n\t\t\t\t&lt;div>&lt;h3><a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2024/\" target=\"_blank\" rel=\"noopener noreferrer\">ΦΘΙΝΟΠΩΡΙΝΗ ΕΚΔΗΛΩΣΗ  2024 &#8220;ΓΙΑ ΤΑ 5 ΧΡΟΝΙΑ ΤΟΥ ΣΥΛΛΟΓΟΥ&#8221;</a>&lt;/h3>&lt;/div>\n\t\t\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\t            &lt;span>\n\t\t\t\t<i></i>\t\t\t\t                    <a href=\"https://gv-hellas.ch/2025/01/19/\" target=\"_blank\" rel=\"noopener noreferrer\">\n\t\t\t\t\t19 Ιανουαρίου, 2025\t\t\t\t</a>\n\t\t\t\t\t\t\t&lt;/span>\n\t\t\t            &lt;span>\n\t\t\t\t<i></i><a href=\"https://gv-hellas.ch/category/ekdilosis/\" target=\"_blank\" rel=\"noopener noreferrer\">ΕΚΔΗΛΩΣΕΙΣ</a>\n\t\t\t&lt;/span>\n\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t        &lt;div>\n            &lt;div>\n                &lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2024/\" target=\"_blank\" rel=\"noopener noreferrer\">Read More</a>                &lt;/div>\n            &lt;/div>\n        &lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t&lt;/div>\n&lt;/div>\n\n&lt;div>\n\t&lt;div>\n\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2024-2/\" target=\"_blank\" rel=\"noopener noreferrer\">                        \n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t</a>\n\t\t        &lt;div>&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\n\t\t\t&lt;div>\n\t\t\t\t&lt;div>&lt;h3><a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2024-2/\" target=\"_blank\" rel=\"noopener noreferrer\">ΠΑΣΧΑ 2024</a>&lt;/h3>&lt;/div>\n\t\t\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\t            &lt;span>\n\t\t\t\t<i></i>\t\t\t\t                    <a href=\"https://gv-hellas.ch/2024/04/20/\" target=\"_blank\" rel=\"noopener noreferrer\">\n\t\t\t\t\t20 Απριλίου, 2024\t\t\t\t</a>\n\t\t\t\t\t\t\t&lt;/span>\n\t\t\t            &lt;span>\n\t\t\t\t<i></i><a href=\"https://gv-hellas.ch/category/ekdilosis/\" target=\"_blank\" rel=\"noopener noreferrer\">ΕΚΔΗΛΩΣΕΙΣ</a>\n\t\t\t&lt;/span>\n\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t        &lt;div>\n            &lt;div>\n                &lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2024-2/\" target=\"_blank\" rel=\"noopener noreferrer\">Read More</a>                &lt;/div>\n            &lt;/div>\n        &lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t&lt;/div>\n&lt;/div>\n\n&lt;div>\n\t&lt;div>\n\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%ce%b1%cf%80%ce%bf%ce%ba%cf%81%ce%b9%ce%b1%cf%84%ce%b9%ce%ba%ce%bf-%cf%80%ce%b1%cf%81%cf%84%cf%85-%cf%80%cf%81%ce%bf%cf%83%ce%ba%ce%bb%ce%b7%cf%83%ce%b7/\" target=\"_blank\" rel=\"noopener noreferrer\">                        \n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t</a>\n\t\t        &lt;div>&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\n\t\t\t&lt;div>\n\t\t\t\t&lt;div>&lt;h3><a href=\"https://gv-hellas.ch/%ce%b1%cf%80%ce%bf%ce%ba%cf%81%ce%b9%ce%b1%cf%84%ce%b9%ce%ba%ce%bf-%cf%80%ce%b1%cf%81%cf%84%cf%85-%cf%80%cf%81%ce%bf%cf%83%ce%ba%ce%bb%ce%b7%cf%83%ce%b7/\" target=\"_blank\" rel=\"noopener noreferrer\">ΑΠΟΚΡΙΑΤΙΚΟ ΠΑΡΤΥ – ΠΡΟΣΚΛΗΣΗ</a>&lt;/h3>&lt;/div>\n\t\t\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\t            &lt;span>\n\t\t\t\t<i></i>\t\t\t\t                    <a href=\"https://gv-hellas.ch/2024/02/26/\" target=\"_blank\" rel=\"noopener noreferrer\">\n\t\t\t\t\t26 Φεβρουαρίου, 2024\t\t\t\t</a>\n\t\t\t\t\t\t\t&lt;/span>\n\t\t\t            &lt;span>\n\t\t\t\t<i></i><a href=\"https://gv-hellas.ch/category/ekdilosis/\" target=\"_blank\" rel=\"noopener noreferrer\">ΕΚΔΗΛΩΣΕΙΣ</a>\n\t\t\t&lt;/span>\n\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t        &lt;div>\n            &lt;div>\n                &lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%ce%b1%cf%80%ce%bf%ce%ba%cf%81%ce%b9%ce%b1%cf%84%ce%b9%ce%ba%ce%bf-%cf%80%ce%b1%cf%81%cf%84%cf%85-%cf%80%cf%81%ce%bf%cf%83%ce%ba%ce%bb%ce%b7%cf%83%ce%b7/\" target=\"_blank\" rel=\"noopener noreferrer\">Read More</a>                &lt;/div>\n            &lt;/div>\n        &lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t&lt;/div>\n&lt;/div>\n\n&lt;div>\n\t&lt;div>\n\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/episkepsi-ekklisia/\" target=\"_blank\" rel=\"noopener noreferrer\">                        \n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t</a>\n\t\t        &lt;div>&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\n\t\t\t&lt;div>\n\t\t\t\t&lt;div>&lt;h3><a href=\"https://gv-hellas.ch/episkepsi-ekklisia/\" target=\"_blank\" rel=\"noopener noreferrer\">ΕΠΙΣΚΕΨΗ ΣΥΛΛΟΓΟΥ ΣΤΗΝ ΕΚΚΛΗΣΙΑ</a>&lt;/h3>&lt;/div>\n\t\t\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\t            &lt;span>\n\t\t\t\t<i></i>\t\t\t\t                    <a href=\"https://gv-hellas.ch/2023/04/09/\" target=\"_blank\" rel=\"noopener noreferrer\">\n\t\t\t\t\t9 Απριλίου, 2023\t\t\t\t</a>\n\t\t\t\t\t\t\t&lt;/span>\n\t\t\t            &lt;span>\n\t\t\t\t<i></i><a href=\"https://gv-hellas.ch/category/drasis/\" target=\"_blank\" rel=\"noopener noreferrer\">ΔΡΑΣΕΙΣ</a>\n\t\t\t&lt;/span>\n\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t        &lt;div>\n            &lt;div>\n                &lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/episkepsi-ekklisia/\" target=\"_blank\" rel=\"noopener noreferrer\">Read More</a>                &lt;/div>\n            &lt;/div>\n        &lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t&lt;/div>\n&lt;/div>\n\n&lt;div>\n\t&lt;div>\n\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2023/\" target=\"_blank\" rel=\"noopener noreferrer\">                        \n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t</a>\n\t\t        &lt;div>&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\n\t\t\t&lt;div>\n\t\t\t\t&lt;div>&lt;h3><a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2023/\" target=\"_blank\" rel=\"noopener noreferrer\">ΠΑΣΧΑ 2023</a>&lt;/h3>&lt;/div>\n\t\t\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\t            &lt;span>\n\t\t\t\t<i></i>\t\t\t\t                    <a href=\"https://gv-hellas.ch/2023/03/22/\" target=\"_blank\" rel=\"noopener noreferrer\">\n\t\t\t\t\t22 Μαρτίου, 2023\t\t\t\t</a>\n\t\t\t\t\t\t\t&lt;/span>\n\t\t\t            &lt;span>\n\t\t\t\t<i></i><a href=\"https://gv-hellas.ch/category/ekdilosis/\" target=\"_blank\" rel=\"noopener noreferrer\">ΕΚΔΗΛΩΣΕΙΣ</a>\n\t\t\t&lt;/span>\n\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t        &lt;div>\n            &lt;div>\n                &lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2023/\" target=\"_blank\" rel=\"noopener noreferrer\">Read More</a>                &lt;/div>\n            &lt;/div>\n        &lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t&lt;/div>\n&lt;/div>\n\n&lt;div>\n\t&lt;div>\n\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%ce%b5%ce%bd%ce%b1%cf%81%ce%be%ce%b7-%cf%87%ce%bf%cf%81%ce%b5%cf%85%cf%84%ce%b9%ce%ba%ce%bf%cf%85-%cf%84%ce%bc%ce%b7%ce%bc%ce%b1%cf%84%ce%bf%cf%83/\" target=\"_blank\" rel=\"noopener noreferrer\">                        \n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t</a>\n\t\t        &lt;div>&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\n\t\t\t&lt;div>\n\t\t\t\t&lt;div>&lt;h3><a href=\"https://gv-hellas.ch/%ce%b5%ce%bd%ce%b1%cf%81%ce%be%ce%b7-%cf%87%ce%bf%cf%81%ce%b5%cf%85%cf%84%ce%b9%ce%ba%ce%bf%cf%85-%cf%84%ce%bc%ce%b7%ce%bc%ce%b1%cf%84%ce%bf%cf%83/\" target=\"_blank\" rel=\"noopener noreferrer\">ΕΝΑΡΞΗ ΧΟΡΕΥΤΙΚΟΥ ΤΜΗΜΑΤΟΣ</a>&lt;/h3>&lt;/div>\n\t\t\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\t            &lt;span>\n\t\t\t\t<i></i>\t\t\t\t                    <a href=\"https://gv-hellas.ch/2023/03/19/\" target=\"_blank\" rel=\"noopener noreferrer\">\n\t\t\t\t\t19 Μαρτίου, 2023\t\t\t\t</a>\n\t\t\t\t\t\t\t&lt;/span>\n\t\t\t            &lt;span>\n\t\t\t\t<i></i><a href=\"https://gv-hellas.ch/category/drasis/\" target=\"_blank\" rel=\"noopener noreferrer\">ΔΡΑΣΕΙΣ</a>\n\t\t\t&lt;/span>\n\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t        &lt;div>\n            &lt;div>\n                &lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%ce%b5%ce%bd%ce%b1%cf%81%ce%be%ce%b7-%cf%87%ce%bf%cf%81%ce%b5%cf%85%cf%84%ce%b9%ce%ba%ce%bf%cf%85-%cf%84%ce%bc%ce%b7%ce%bc%ce%b1%cf%84%ce%bf%cf%83/\" target=\"_blank\" rel=\"noopener noreferrer\">Read More</a>                &lt;/div>\n            &lt;/div>\n        &lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t&lt;/div>\n&lt;/div>\n\n&lt;div>\n\t&lt;div>\n\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/kathara-deytera/\" target=\"_blank\" rel=\"noopener noreferrer\">                        \n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t</a>\n\t\t        &lt;div>&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\n\t\t\t&lt;div>\n\t\t\t\t&lt;div>&lt;h3><a href=\"https://gv-hellas.ch/kathara-deytera/\" target=\"_blank\" rel=\"noopener noreferrer\">ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023</a>&lt;/h3>&lt;/div>\n\t\t\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\t            &lt;span>\n\t\t\t\t<i></i>\t\t\t\t                    <a href=\"https://gv-hellas.ch/2023/02/05/\" target=\"_blank\" rel=\"noopener noreferrer\">\n\t\t\t\t\t5 Φεβρουαρίου, 2023\t\t\t\t</a>\n\t\t\t\t\t\t\t&lt;/span>\n\t\t\t            &lt;span>\n\t\t\t\t<i></i><a href=\"https://gv-hellas.ch/category/ekdilosis/\" target=\"_blank\" rel=\"noopener noreferrer\">ΕΚΔΗΛΩΣΕΙΣ</a>\n\t\t\t&lt;/span>\n\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t        &lt;div>\n            &lt;div>\n                &lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/kathara-deytera/\" target=\"_blank\" rel=\"noopener noreferrer\">Read More</a>                &lt;/div>\n            &lt;/div>\n        &lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t&lt;/div>\n&lt;/div>\n            &lt;/div>\n\n\t\t\t\n        &lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;/div>",
+            "de": "&lt;div>\n\t\t\t\t\t\t&lt;section>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t&lt;div>\n\t\t\t&lt;div>\n\t\t\t\t\t\t&lt;div>\n\t\t\t\t&lt;div>\n\t\t\t\t\t\n        &lt;div\n            \n            \n            \n            \n            \n            \n            \n        >\n\t\t\t            &lt;div>\n\t\t\t\t\n        &lt;div>\n            &lt;span>&lt;/span>\n\t\t\t&lt;h2>\n\t\t\t\n\t\t\t\t                    &lt;span>\n\t\t\t\t\t\tΚΑΘΑΡΑ ΔΕΥΤΕΡΑ - 27-02-2023\t\t\t\t\t&lt;/span>\n\t\t\t\t\t\n\t\t\t\t\t\t\t&lt;/h2>            &lt;span>&lt;/span>\n\n\t\t\t\n        &lt;/div>\n\n\t\t\n\t\t            &lt;/div>\n\n            &lt;div>\n\t\t\t\t\n&lt;div>\n\t&lt;div>\n\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/apokriatiko-party-2025/\" target=\"_blank\" rel=\"noopener noreferrer\">                        \n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t</a>\n\t\t        &lt;div>&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\n\t\t\t&lt;div>\n\t\t\t\t&lt;div>&lt;h3><a href=\"https://gv-hellas.ch/apokriatiko-party-2025/\" target=\"_blank\" rel=\"noopener noreferrer\">ΑΠΟΚΡΙΑΤΙΚΟ ΠΑΡΤΥ 2025</a>&lt;/h3>&lt;/div>\n\t\t\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\t            &lt;span>\n\t\t\t\t<i></i>\t\t\t\t                    <a href=\"https://gv-hellas.ch/2025/02/14/\" target=\"_blank\" rel=\"noopener noreferrer\">\n\t\t\t\t\t14 Φεβρουαρίου, 2025\t\t\t\t</a>\n\t\t\t\t\t\t\t&lt;/span>\n\t\t\t            &lt;span>\n\t\t\t\t<i></i><a href=\"https://gv-hellas.ch/category/ekdilosis/\" target=\"_blank\" rel=\"noopener noreferrer\">ΕΚΔΗΛΩΣΕΙΣ</a>\n\t\t\t&lt;/span>\n\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t        &lt;div>\n            &lt;div>\n                &lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/apokriatiko-party-2025/\" target=\"_blank\" rel=\"noopener noreferrer\">Read More</a>                &lt;/div>\n            &lt;/div>\n        &lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t&lt;/div>\n&lt;/div>\n\n&lt;div>\n\t&lt;div>\n\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2024-3/\" target=\"_blank\" rel=\"noopener noreferrer\">                        \n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t</a>\n\t\t        &lt;div>&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\n\t\t\t&lt;div>\n\t\t\t\t&lt;div>&lt;h3><a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2024-3/\" target=\"_blank\" rel=\"noopener noreferrer\">ΚΟΠΗ ΠΙΤΑΣ &#8211; ΓΕΝΙΚΗ ΣΥΝΕΛΕΥΣΗ 2025</a>&lt;/h3>&lt;/div>\n\t\t\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\t            &lt;span>\n\t\t\t\t<i></i>\t\t\t\t                    <a href=\"https://gv-hellas.ch/2025/01/19/\" target=\"_blank\" rel=\"noopener noreferrer\">\n\t\t\t\t\t19 Ιανουαρίου, 2025\t\t\t\t</a>\n\t\t\t\t\t\t\t&lt;/span>\n\t\t\t            &lt;span>\n\t\t\t\t<i></i><a href=\"https://gv-hellas.ch/category/ekdilosis/\" target=\"_blank\" rel=\"noopener noreferrer\">ΕΚΔΗΛΩΣΕΙΣ</a>\n\t\t\t&lt;/span>\n\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t        &lt;div>\n            &lt;div>\n                &lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2024-3/\" target=\"_blank\" rel=\"noopener noreferrer\">Read More</a>                &lt;/div>\n            &lt;/div>\n        &lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t&lt;/div>\n&lt;/div>\n\n&lt;div>\n\t&lt;div>\n\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2024/\" target=\"_blank\" rel=\"noopener noreferrer\">                        \n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t</a>\n\t\t        &lt;div>&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\n\t\t\t&lt;div>\n\t\t\t\t&lt;div>&lt;h3><a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2024/\" target=\"_blank\" rel=\"noopener noreferrer\">ΦΘΙΝΟΠΩΡΙΝΗ ΕΚΔΗΛΩΣΗ  2024 &#8220;ΓΙΑ ΤΑ 5 ΧΡΟΝΙΑ ΤΟΥ ΣΥΛΛΟΓΟΥ&#8221;</a>&lt;/h3>&lt;/div>\n\t\t\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\t            &lt;span>\n\t\t\t\t<i></i>\t\t\t\t                    <a href=\"https://gv-hellas.ch/2025/01/19/\" target=\"_blank\" rel=\"noopener noreferrer\">\n\t\t\t\t\t19 Ιανουαρίου, 2025\t\t\t\t</a>\n\t\t\t\t\t\t\t&lt;/span>\n\t\t\t            &lt;span>\n\t\t\t\t<i></i><a href=\"https://gv-hellas.ch/category/ekdilosis/\" target=\"_blank\" rel=\"noopener noreferrer\">ΕΚΔΗΛΩΣΕΙΣ</a>\n\t\t\t&lt;/span>\n\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t        &lt;div>\n            &lt;div>\n                &lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2024/\" target=\"_blank\" rel=\"noopener noreferrer\">Read More</a>                &lt;/div>\n            &lt;/div>\n        &lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t&lt;/div>\n&lt;/div>\n\n&lt;div>\n\t&lt;div>\n\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2024-2/\" target=\"_blank\" rel=\"noopener noreferrer\">                        \n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t</a>\n\t\t        &lt;div>&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\n\t\t\t&lt;div>\n\t\t\t\t&lt;div>&lt;h3><a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2024-2/\" target=\"_blank\" rel=\"noopener noreferrer\">ΠΑΣΧΑ 2024</a>&lt;/h3>&lt;/div>\n\t\t\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\t            &lt;span>\n\t\t\t\t<i></i>\t\t\t\t                    <a href=\"https://gv-hellas.ch/2024/04/20/\" target=\"_blank\" rel=\"noopener noreferrer\">\n\t\t\t\t\t20 Απριλίου, 2024\t\t\t\t</a>\n\t\t\t\t\t\t\t&lt;/span>\n\t\t\t            &lt;span>\n\t\t\t\t<i></i><a href=\"https://gv-hellas.ch/category/ekdilosis/\" target=\"_blank\" rel=\"noopener noreferrer\">ΕΚΔΗΛΩΣΕΙΣ</a>\n\t\t\t&lt;/span>\n\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t        &lt;div>\n            &lt;div>\n                &lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2024-2/\" target=\"_blank\" rel=\"noopener noreferrer\">Read More</a>                &lt;/div>\n            &lt;/div>\n        &lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t&lt;/div>\n&lt;/div>\n\n&lt;div>\n\t&lt;div>\n\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%ce%b1%cf%80%ce%bf%ce%ba%cf%81%ce%b9%ce%b1%cf%84%ce%b9%ce%ba%ce%bf-%cf%80%ce%b1%cf%81%cf%84%cf%85-%cf%80%cf%81%ce%bf%cf%83%ce%ba%ce%bb%ce%b7%cf%83%ce%b7/\" target=\"_blank\" rel=\"noopener noreferrer\">                        \n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t</a>\n\t\t        &lt;div>&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\n\t\t\t&lt;div>\n\t\t\t\t&lt;div>&lt;h3><a href=\"https://gv-hellas.ch/%ce%b1%cf%80%ce%bf%ce%ba%cf%81%ce%b9%ce%b1%cf%84%ce%b9%ce%ba%ce%bf-%cf%80%ce%b1%cf%81%cf%84%cf%85-%cf%80%cf%81%ce%bf%cf%83%ce%ba%ce%bb%ce%b7%cf%83%ce%b7/\" target=\"_blank\" rel=\"noopener noreferrer\">ΑΠΟΚΡΙΑΤΙΚΟ ΠΑΡΤΥ – ΠΡΟΣΚΛΗΣΗ</a>&lt;/h3>&lt;/div>\n\t\t\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\t            &lt;span>\n\t\t\t\t<i></i>\t\t\t\t                    <a href=\"https://gv-hellas.ch/2024/02/26/\" target=\"_blank\" rel=\"noopener noreferrer\">\n\t\t\t\t\t26 Φεβρουαρίου, 2024\t\t\t\t</a>\n\t\t\t\t\t\t\t&lt;/span>\n\t\t\t            &lt;span>\n\t\t\t\t<i></i><a href=\"https://gv-hellas.ch/category/ekdilosis/\" target=\"_blank\" rel=\"noopener noreferrer\">ΕΚΔΗΛΩΣΕΙΣ</a>\n\t\t\t&lt;/span>\n\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t        &lt;div>\n            &lt;div>\n                &lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%ce%b1%cf%80%ce%bf%ce%ba%cf%81%ce%b9%ce%b1%cf%84%ce%b9%ce%ba%ce%bf-%cf%80%ce%b1%cf%81%cf%84%cf%85-%cf%80%cf%81%ce%bf%cf%83%ce%ba%ce%bb%ce%b7%cf%83%ce%b7/\" target=\"_blank\" rel=\"noopener noreferrer\">Read More</a>                &lt;/div>\n            &lt;/div>\n        &lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t&lt;/div>\n&lt;/div>\n\n&lt;div>\n\t&lt;div>\n\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/episkepsi-ekklisia/\" target=\"_blank\" rel=\"noopener noreferrer\">                        \n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t</a>\n\t\t        &lt;div>&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\n\t\t\t&lt;div>\n\t\t\t\t&lt;div>&lt;h3><a href=\"https://gv-hellas.ch/episkepsi-ekklisia/\" target=\"_blank\" rel=\"noopener noreferrer\">ΕΠΙΣΚΕΨΗ ΣΥΛΛΟΓΟΥ ΣΤΗΝ ΕΚΚΛΗΣΙΑ</a>&lt;/h3>&lt;/div>\n\t\t\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\t            &lt;span>\n\t\t\t\t<i></i>\t\t\t\t                    <a href=\"https://gv-hellas.ch/2023/04/09/\" target=\"_blank\" rel=\"noopener noreferrer\">\n\t\t\t\t\t9 Απριλίου, 2023\t\t\t\t</a>\n\t\t\t\t\t\t\t&lt;/span>\n\t\t\t            &lt;span>\n\t\t\t\t<i></i><a href=\"https://gv-hellas.ch/category/drasis/\" target=\"_blank\" rel=\"noopener noreferrer\">ΔΡΑΣΕΙΣ</a>\n\t\t\t&lt;/span>\n\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t        &lt;div>\n            &lt;div>\n                &lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/episkepsi-ekklisia/\" target=\"_blank\" rel=\"noopener noreferrer\">Read More</a>                &lt;/div>\n            &lt;/div>\n        &lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t&lt;/div>\n&lt;/div>\n\n&lt;div>\n\t&lt;div>\n\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2023/\" target=\"_blank\" rel=\"noopener noreferrer\">                        \n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t</a>\n\t\t        &lt;div>&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\n\t\t\t&lt;div>\n\t\t\t\t&lt;div>&lt;h3><a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2023/\" target=\"_blank\" rel=\"noopener noreferrer\">ΠΑΣΧΑ 2023</a>&lt;/h3>&lt;/div>\n\t\t\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\t            &lt;span>\n\t\t\t\t<i></i>\t\t\t\t                    <a href=\"https://gv-hellas.ch/2023/03/22/\" target=\"_blank\" rel=\"noopener noreferrer\">\n\t\t\t\t\t22 Μαρτίου, 2023\t\t\t\t</a>\n\t\t\t\t\t\t\t&lt;/span>\n\t\t\t            &lt;span>\n\t\t\t\t<i></i><a href=\"https://gv-hellas.ch/category/ekdilosis/\" target=\"_blank\" rel=\"noopener noreferrer\">ΕΚΔΗΛΩΣΕΙΣ</a>\n\t\t\t&lt;/span>\n\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t        &lt;div>\n            &lt;div>\n                &lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%cf%80%ce%b1%cf%83%cf%87%ce%b1-2023/\" target=\"_blank\" rel=\"noopener noreferrer\">Read More</a>                &lt;/div>\n            &lt;/div>\n        &lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t&lt;/div>\n&lt;/div>\n\n&lt;div>\n\t&lt;div>\n\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%ce%b5%ce%bd%ce%b1%cf%81%ce%be%ce%b7-%cf%87%ce%bf%cf%81%ce%b5%cf%85%cf%84%ce%b9%ce%ba%ce%bf%cf%85-%cf%84%ce%bc%ce%b7%ce%bc%ce%b1%cf%84%ce%bf%cf%83/\" target=\"_blank\" rel=\"noopener noreferrer\">                        \n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t</a>\n\t\t        &lt;div>&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\n\t\t\t&lt;div>\n\t\t\t\t&lt;div>&lt;h3><a href=\"https://gv-hellas.ch/%ce%b5%ce%bd%ce%b1%cf%81%ce%be%ce%b7-%cf%87%ce%bf%cf%81%ce%b5%cf%85%cf%84%ce%b9%ce%ba%ce%bf%cf%85-%cf%84%ce%bc%ce%b7%ce%bc%ce%b1%cf%84%ce%bf%cf%83/\" target=\"_blank\" rel=\"noopener noreferrer\">ΕΝΑΡΞΗ ΧΟΡΕΥΤΙΚΟΥ ΤΜΗΜΑΤΟΣ</a>&lt;/h3>&lt;/div>\n\t\t\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\t            &lt;span>\n\t\t\t\t<i></i>\t\t\t\t                    <a href=\"https://gv-hellas.ch/2023/03/19/\" target=\"_blank\" rel=\"noopener noreferrer\">\n\t\t\t\t\t19 Μαρτίου, 2023\t\t\t\t</a>\n\t\t\t\t\t\t\t&lt;/span>\n\t\t\t            &lt;span>\n\t\t\t\t<i></i><a href=\"https://gv-hellas.ch/category/drasis/\" target=\"_blank\" rel=\"noopener noreferrer\">ΔΡΑΣΕΙΣ</a>\n\t\t\t&lt;/span>\n\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t        &lt;div>\n            &lt;div>\n                &lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/%ce%b5%ce%bd%ce%b1%cf%81%ce%be%ce%b7-%cf%87%ce%bf%cf%81%ce%b5%cf%85%cf%84%ce%b9%ce%ba%ce%bf%cf%85-%cf%84%ce%bc%ce%b7%ce%bc%ce%b1%cf%84%ce%bf%cf%83/\" target=\"_blank\" rel=\"noopener noreferrer\">Read More</a>                &lt;/div>\n            &lt;/div>\n        &lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t&lt;/div>\n&lt;/div>\n\n&lt;div>\n\t&lt;div>\n\t\t&lt;div>\n\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/kathara-deytera/\" target=\"_blank\" rel=\"noopener noreferrer\">                        \n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t</a>\n\t\t        &lt;div>&lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\n\t\t\t&lt;div>\n\t\t\t\t&lt;div>&lt;h3><a href=\"https://gv-hellas.ch/kathara-deytera/\" target=\"_blank\" rel=\"noopener noreferrer\">ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023</a>&lt;/h3>&lt;/div>\n\t\t\t\t\t\t\t\t\t&lt;div>\n\t\t\t\t\t\t            &lt;span>\n\t\t\t\t<i></i>\t\t\t\t                    <a href=\"https://gv-hellas.ch/2023/02/05/\" target=\"_blank\" rel=\"noopener noreferrer\">\n\t\t\t\t\t5 Φεβρουαρίου, 2023\t\t\t\t</a>\n\t\t\t\t\t\t\t&lt;/span>\n\t\t\t            &lt;span>\n\t\t\t\t<i></i><a href=\"https://gv-hellas.ch/category/ekdilosis/\" target=\"_blank\" rel=\"noopener noreferrer\">ΕΚΔΗΛΩΣΕΙΣ</a>\n\t\t\t&lt;/span>\n\t\t\t\t\t\t\t\t&lt;/div>\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t        &lt;div>\n            &lt;div>\n                &lt;div>\n\t\t\t\t\t<a href=\"https://gv-hellas.ch/kathara-deytera/\" target=\"_blank\" rel=\"noopener noreferrer\">Read More</a>                &lt;/div>\n            &lt;/div>\n        &lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t&lt;/div>\n&lt;/div>\n            &lt;/div>\n\n\t\t\t\n        &lt;/div>\n\t\t\t\t\t\t&lt;/div>\n\t\t\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/div>\n\t\t\t\t\t&lt;/div>\n\t\t&lt;/section>\n\t\t\t\t&lt;/div>"
+          },
+          "media": [
+            {
+              "id": "6a104f1b-95f7-4d1e-bc2f-afcc760f8ec7",
+              "type": "image",
+              "url": "/uploads/img-f2867a4d2a-480.jpg",
+              "filename": "img-f2867a4d2a-480.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023",
+                "de": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023"
+              }
+            },
+            {
+              "id": "0d5edbfa-cf7b-45cd-bab0-51925462cdde",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2025/02/Καταγραφή.png",
+              "filename": "Καταγραφή.png",
+              "mimeType": "",
+              "alt": {
+                "el": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023",
+                "de": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023"
+              }
+            },
+            {
+              "id": "52df9f71-a1d9-44eb-9d5d-4589e70a502e",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2025/01/IMG_6594-768x1044.jpg",
+              "filename": "IMG_6594-768x1044.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023",
+                "de": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023"
+              }
+            },
+            {
+              "id": "da431513-68a2-46a9-8b72-e99afa7aa9d5",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2024/04/76411a25-8b03-41b1-9c5b-874b5820102e-768x1024.jpg",
+              "filename": "76411a25-8b03-41b1-9c5b-874b5820102e-768x1024.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023",
+                "de": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023"
+              }
+            },
+            {
+              "id": "cf2a6090-e116-4ba5-9da5-e97745b6c818",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2025/01/8daa4dbd-a30c-48a9-ae31-c2a5ebf1b80a-768x432.jpg",
+              "filename": "8daa4dbd-a30c-48a9-ae31-c2a5ebf1b80a-768x432.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023",
+                "de": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023"
+              }
+            },
+            {
+              "id": "2b6ab419-1a90-4c93-90d9-04aca294f3d1",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2024/02/Καταγραφή.jpg",
+              "filename": "Καταγραφή.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023",
+                "de": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023"
+              }
+            },
+            {
+              "id": "5e466839-ca12-4721-8519-4160c73160dd",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2023/04/εικόνα_Viber_2023-04-09_20-14-47-311-768x1024.jpg",
+              "filename": "εικόνα_Viber_2023-04-09_20-14-47-311-768x1024.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023",
+                "de": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023"
+              }
+            },
+            {
+              "id": "0d5dc351-433b-4808-b657-4fe8b91a7f9a",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2023/03/Καταγραφή-6.jpg",
+              "filename": "Καταγραφή-6.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023",
+                "de": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023"
+              }
+            },
+            {
+              "id": "bd0e23af-0a9c-4c66-ad66-a0e3300f76ed",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2023/03/εικόνα_Viber_2023-03-12_22-51-53-230-768x1365.jpg",
+              "filename": "εικόνα_Viber_2023-03-12_22-51-53-230-768x1365.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023",
+                "de": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023"
+              }
+            },
+            {
+              "id": "19b4adfe-bd97-4307-bc87-57a24f2d4167",
+              "type": "image",
+              "url": "https://gv-hellas.ch/wp-content/uploads/2023/02/εικόνα_Viber_2023-02-11_22-47-02-030-768x1365.jpg",
+              "filename": "εικόνα_Viber_2023-02-11_22-47-02-030-768x1365.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023",
+                "de": "ΚΑΘΑΡΑ ΔΕΥΤΕΡΑ 27-02-2023"
+              }
+            }
+          ],
+          "afterHtml": {
+            "el": "",
+            "de": ""
+          }
+        }
+      ],
+      "createdAt": "2026-06-12T20:23:44.878Z",
+      "updatedAt": "2026-06-12T20:23:44.878Z"
+    },
+    {
+      "id": "ab1a45f2-74c4-4ee6-87b8-8ac78301b4c9",
+      "slug": "%ce%b1%cf%80%ce%bf%ce%ba%cf%81%ce%b1%cf%84%ce%b9%ce%ba%ce%bf-%cf%80%ce%b1%cf%81%cf%84%cf%85-%cf%80%cf%81%ce%bf%cf%83%ce%ba%ce%bb%ce%b7%cf%83%ce%b7",
+      "title": {
+        "el": "ΑΠΟΚΡΙΑΤΙΚΟ ΠΑΡΤΥ &#8211; ΠΡΟΣΚΛΗΣΗ",
+        "de": "ΑΠΟΚΡΙΑΤΙΚΟ ΠΑΡΤΥ &#8211; ΠΡΟΣΚΛΗΣΗ"
+      },
+      "description": {
+        "el": "",
+        "de": ""
+      },
+      "date": "2023-01-19",
+      "time": "17:06",
+      "location": "",
+      "category": "party",
+      "priceMembers": null,
+      "pricePublic": null,
+      "sections": [
+        {
+          "id": "77944ac6-765d-49df-8913-0619c14a01f2",
+          "beforeHtml": {
+            "el": "",
+            "de": ""
+          },
+          "media": [
+            {
+              "id": "ffd3b7ca-0539-4374-a593-c4c459e91499",
+              "type": "image",
+              "url": "/uploads/img-5559500b85-480.jpg",
+              "filename": "img-5559500b85-480.jpg",
+              "mimeType": "",
+              "alt": {
+                "el": "ΑΠΟΚΡΙΑΤΙΚΟ ΠΑΡΤΥ &#8211; ΠΡΟΣΚΛΗΣΗ",
+                "de": "ΑΠΟΚΡΙΑΤΙΚΟ ΠΑΡΤΥ &#8211; ΠΡΟΣΚΛΗΣΗ"
+              }
+            }
+          ],
+          "afterHtml": {
+            "el": "",
+            "de": ""
+          }
+        }
+      ],
+      "createdAt": "2026-06-12T20:23:44.878Z",
+      "updatedAt": "2026-06-12T20:23:44.878Z"
+    }
+  ],
+  "gallery": [
+    {
+      "id": "g-2070",
+      "type": "image",
+      "src": "/uploads/img-330e7b82a0-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-330e7b82a0-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-330e7b82a0-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-330e7b82a0-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-330e7b82a0-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-330e7b82a0-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-330e7b82a0-1440.webp"
+          }
+        ]
+      },
+      "alt": "εικόνα_Viber_2025-10-02_21-27-33-405",
+      "tags": []
+    },
+    {
+      "id": "g-2064",
+      "type": "image",
+      "src": "/uploads/img-27ead3b1eb-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-27ead3b1eb-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-27ead3b1eb-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-27ead3b1eb-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-27ead3b1eb-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-27ead3b1eb-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-27ead3b1eb-1440.webp"
+          }
+        ]
+      },
+      "alt": "2124E258-CFF5-40AD-AFCF-3F6BF7AB1847-1536&#215;376",
+      "tags": []
+    },
+    {
+      "id": "g-2046",
+      "type": "image",
+      "src": "/uploads/img-968d5f6be9-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-968d5f6be9-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-968d5f6be9-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-968d5f6be9-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-968d5f6be9-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-968d5f6be9-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-968d5f6be9-1440.webp"
+          }
+        ]
+      },
+      "alt": "image002",
+      "tags": []
+    },
+    {
+      "id": "g-2042",
+      "type": "image",
+      "src": "/uploads/img-f2d1ee9a20-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-f2d1ee9a20-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-f2d1ee9a20-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-f2d1ee9a20-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-f2d1ee9a20-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-f2d1ee9a20-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-f2d1ee9a20-1440.webp"
+          }
+        ]
+      },
+      "alt": "image001",
+      "tags": []
+    },
+    {
+      "id": "g-2038",
+      "type": "image",
+      "src": "/uploads/img-aed7efb125-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-aed7efb125-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-aed7efb125-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-aed7efb125-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-aed7efb125-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-aed7efb125-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-aed7efb125-1440.webp"
+          }
+        ]
+      },
+      "alt": "Καταγραφή",
+      "tags": []
+    },
+    {
+      "id": "g-2036",
+      "type": "image",
+      "src": "/uploads/img-5cbd92f3b1-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-5cbd92f3b1-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-5cbd92f3b1-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-5cbd92f3b1-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-5cbd92f3b1-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-5cbd92f3b1-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-5cbd92f3b1-1440.webp"
+          }
+        ]
+      },
+      "alt": "Καταγραφή",
+      "tags": []
+    },
+    {
+      "id": "g-2030",
+      "type": "image",
+      "src": "/uploads/img-9e95c3f591-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-9e95c3f591-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-9e95c3f591-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-9e95c3f591-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-9e95c3f591-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-9e95c3f591-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-9e95c3f591-1440.webp"
+          }
+        ]
+      },
+      "alt": "Untitled-1",
+      "tags": []
+    },
+    {
+      "id": "g-1997",
+      "type": "image",
+      "src": "/uploads/img-96b7d7fef4-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-96b7d7fef4-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-96b7d7fef4-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-96b7d7fef4-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-96b7d7fef4-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-96b7d7fef4-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-96b7d7fef4-1440.webp"
+          }
+        ]
+      },
+      "alt": "physio_murgenthal_logo-2",
+      "tags": []
+    },
+    {
+      "id": "g-1996",
+      "type": "image",
+      "src": "/uploads/img-96b741041c-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-96b741041c-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-96b741041c-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-96b741041c-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-96b741041c-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-96b741041c-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-96b741041c-1440.webp"
+          }
+        ]
+      },
+      "alt": "ssr_293c-300&#215;300-1-e1661266604441-1-e1661434841920",
+      "tags": []
+    },
+    {
+      "id": "g-1985",
+      "type": "image",
+      "src": "/uploads/img-4a30e3e101-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-4a30e3e101-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-4a30e3e101-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-4a30e3e101-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-4a30e3e101-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-4a30e3e101-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-4a30e3e101-1440.webp"
+          }
+        ]
+      },
+      "alt": "Unknown",
+      "tags": []
+    },
+    {
+      "id": "g-1715",
+      "type": "image",
+      "src": "/uploads/img-e9dd506238-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-e9dd506238-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-e9dd506238-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-e9dd506238-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-e9dd506238-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-e9dd506238-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-e9dd506238-1440.webp"
+          }
+        ]
+      },
+      "alt": "Untitled-4",
+      "tags": []
+    },
+    {
+      "id": "g-1714",
+      "type": "image",
+      "src": "/uploads/img-36b42bdac2-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-36b42bdac2-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-36b42bdac2-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-36b42bdac2-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-36b42bdac2-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-36b42bdac2-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-36b42bdac2-1440.webp"
+          }
+        ]
+      },
+      "alt": "image001",
+      "tags": []
+    },
+    {
+      "id": "g-1713",
+      "type": "image",
+      "src": "/uploads/img-9f00d0e700-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-9f00d0e700-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-9f00d0e700-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-9f00d0e700-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-9f00d0e700-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-9f00d0e700-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-9f00d0e700-1440.webp"
+          }
+        ]
+      },
+      "alt": "section-bg-img",
+      "tags": []
+    },
+    {
+      "id": "g-1712",
+      "type": "image",
+      "src": "/uploads/img-17babac903-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-17babac903-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-17babac903-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-17babac903-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-17babac903-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-17babac903-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-17babac903-1440.webp"
+          }
+        ]
+      },
+      "alt": "walking-v1",
+      "tags": []
+    },
+    {
+      "id": "g-1711",
+      "type": "image",
+      "src": "/uploads/img-200bfb9c28-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-200bfb9c28-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-200bfb9c28-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-200bfb9c28-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-200bfb9c28-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-200bfb9c28-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-200bfb9c28-1440.webp"
+          }
+        ]
+      },
+      "alt": "hiking-v1",
+      "tags": []
+    },
+    {
+      "id": "g-1710",
+      "type": "image",
+      "src": "/uploads/img-13fcae4afe-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-13fcae4afe-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-13fcae4afe-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-13fcae4afe-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-13fcae4afe-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-13fcae4afe-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-13fcae4afe-1440.webp"
+          }
+        ]
+      },
+      "alt": "Untitled-1",
+      "tags": []
+    },
+    {
+      "id": "g-1709",
+      "type": "image",
+      "src": "/uploads/img-8e6993803b-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-8e6993803b-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-8e6993803b-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-8e6993803b-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-8e6993803b-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-8e6993803b-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-8e6993803b-1440.webp"
+          }
+        ]
+      },
+      "alt": "quote-1",
+      "tags": []
+    },
+    {
+      "id": "g-1708",
+      "type": "image",
+      "src": "/uploads/img-c7da6b3ed9-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-c7da6b3ed9-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-c7da6b3ed9-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-c7da6b3ed9-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-c7da6b3ed9-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-c7da6b3ed9-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-c7da6b3ed9-1440.webp"
+          }
+        ]
+      },
+      "alt": "εικόνα_Viber_2023-02-11_22-47-02-030",
+      "tags": []
+    },
+    {
+      "id": "g-1706",
+      "type": "image",
+      "src": "/uploads/img-727adf3734-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-727adf3734-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-727adf3734-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-727adf3734-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-727adf3734-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-727adf3734-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-727adf3734-1440.webp"
+          }
+        ]
+      },
+      "alt": "Flag-map_of_Greece.svg_",
+      "tags": []
+    },
+    {
+      "id": "g-1705",
+      "type": "image",
+      "src": "/uploads/img-65063de219-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-65063de219-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-65063de219-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-65063de219-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-65063de219-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-65063de219-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-65063de219-1440.webp"
+          }
+        ]
+      },
+      "alt": "Greek-flag",
+      "tags": []
+    },
+    {
+      "id": "g-1704",
+      "type": "image",
+      "src": "/uploads/img-e15507847b-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-e15507847b-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-e15507847b-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-e15507847b-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-e15507847b-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-e15507847b-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-e15507847b-1440.webp"
+          }
+        ]
+      },
+      "alt": "apokria-1",
+      "tags": []
+    },
+    {
+      "id": "g-1703",
+      "type": "image",
+      "src": "/uploads/img-69cd9f9a21-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-69cd9f9a21-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-69cd9f9a21-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-69cd9f9a21-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-69cd9f9a21-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-69cd9f9a21-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-69cd9f9a21-1440.webp"
+          }
+        ]
+      },
+      "alt": "AdobeStock_239804375-scaled-e1614519735981",
+      "tags": []
+    },
+    {
+      "id": "g-1702",
+      "type": "image",
+      "src": "/uploads/img-ee0c0dfb12-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-ee0c0dfb12-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-ee0c0dfb12-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-ee0c0dfb12-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-ee0c0dfb12-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-ee0c0dfb12-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-ee0c0dfb12-1440.webp"
+          }
+        ]
+      },
+      "alt": "greek-church-state",
+      "tags": []
+    },
+    {
+      "id": "g-1701",
+      "type": "image",
+      "src": "/uploads/img-7564581399-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-7564581399-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-7564581399-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-7564581399-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-7564581399-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-7564581399-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-7564581399-1440.webp"
+          }
+        ]
+      },
+      "alt": "greek_aphabet_pixabay_dimitrisvetsikas_2102-1024&#215;576-1",
+      "tags": []
+    },
+    {
+      "id": "g-1700",
+      "type": "image",
+      "src": "/uploads/img-d095dbd8be-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-d095dbd8be-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-d095dbd8be-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-d095dbd8be-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-d095dbd8be-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-d095dbd8be-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-d095dbd8be-1440.webp"
+          }
+        ]
+      },
+      "alt": "2022-03-06",
+      "tags": []
+    },
+    {
+      "id": "g-1699",
+      "type": "image",
+      "src": "/uploads/img-600c1cd342-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-600c1cd342-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-600c1cd342-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-600c1cd342-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-600c1cd342-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-600c1cd342-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-600c1cd342-1440.webp"
+          }
+        ]
+      },
+      "alt": "image",
+      "tags": []
+    },
+    {
+      "id": "g-1698",
+      "type": "image",
+      "src": "/uploads/img-945d5cfb80-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-945d5cfb80-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-945d5cfb80-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-945d5cfb80-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-945d5cfb80-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-945d5cfb80-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-945d5cfb80-1440.webp"
+          }
+        ]
+      },
+      "alt": "326990617_484306313875500_7655306916658882943_n",
+      "tags": []
+    },
+    {
+      "id": "g-1697",
+      "type": "image",
+      "src": "/uploads/img-09eda88d2c-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-09eda88d2c-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-09eda88d2c-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-09eda88d2c-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-09eda88d2c-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-09eda88d2c-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-09eda88d2c-1440.webp"
+          }
+        ]
+      },
+      "alt": "3ee3c450459923ba7afb8e3931a34c7f_1",
+      "tags": []
+    },
+    {
+      "id": "g-1696",
+      "type": "image",
+      "src": "/uploads/img-264836cabc-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-264836cabc-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-264836cabc-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-264836cabc-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-264836cabc-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-264836cabc-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-264836cabc-1440.webp"
+          }
+        ]
+      },
+      "alt": "outdoor-image-04",
+      "tags": []
+    },
+    {
+      "id": "g-1695",
+      "type": "image",
+      "src": "/uploads/img-db9c120b68-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-db9c120b68-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-db9c120b68-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-db9c120b68-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-db9c120b68-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-db9c120b68-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-db9c120b68-1440.webp"
+          }
+        ]
+      },
+      "alt": "outdoor-image-01",
+      "tags": []
+    },
+    {
+      "id": "g-1669",
+      "type": "image",
+      "src": "/uploads/img-5e12ee45f0-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-5e12ee45f0-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-5e12ee45f0-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-5e12ee45f0-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-5e12ee45f0-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-5e12ee45f0-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-5e12ee45f0-1440.webp"
+          }
+        ]
+      },
+      "alt": "orthodoxe-Kirche-01-1200&#215;889",
+      "tags": []
+    },
+    {
+      "id": "g-1663",
+      "type": "image",
+      "src": "/uploads/img-6bb947c3c0-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-6bb947c3c0-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-6bb947c3c0-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-6bb947c3c0-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-6bb947c3c0-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-6bb947c3c0-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-6bb947c3c0-1440.webp"
+          }
+        ]
+      },
+      "alt": "Unknown",
+      "tags": []
+    },
+    {
+      "id": "g-1562",
+      "type": "image",
+      "src": "/uploads/img-13e1492516-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-13e1492516-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-13e1492516-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-13e1492516-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-13e1492516-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-13e1492516-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-13e1492516-1440.webp"
+          }
+        ]
+      },
+      "alt": "female-african-american-speaker-giving-presentation-hall-university-workshop_155003-3579",
+      "tags": []
+    },
+    {
+      "id": "g-1559",
+      "type": "image",
+      "src": "/uploads/img-60613991de-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-60613991de-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-60613991de-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-60613991de-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-60613991de-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-60613991de-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-60613991de-1440.webp"
+          }
+        ]
+      },
+      "alt": "speaker-business-meeting-conference-hall_155003-12698",
+      "tags": []
+    },
+    {
+      "id": "g-1556",
+      "type": "image",
+      "src": "/uploads/img-2e9279eb78-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-2e9279eb78-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-2e9279eb78-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-2e9279eb78-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-2e9279eb78-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-2e9279eb78-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-2e9279eb78-1440.webp"
+          }
+        ]
+      },
+      "alt": "yes_53876-47102",
+      "tags": []
+    },
+    {
+      "id": "g-1553",
+      "type": "image",
+      "src": "/uploads/img-ba3283c6fc-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-ba3283c6fc-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-ba3283c6fc-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-ba3283c6fc-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-ba3283c6fc-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-ba3283c6fc-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-ba3283c6fc-1440.webp"
+          }
+        ]
+      },
+      "alt": "group-young-people-are-looking-map-where-they-are-while-walking-autumn-forest_613910-15159",
+      "tags": []
+    },
+    {
+      "id": "g-1550",
+      "type": "image",
+      "src": "/uploads/img-e119c378c7-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-e119c378c7-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-e119c378c7-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-e119c378c7-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-e119c378c7-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-e119c378c7-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-e119c378c7-1440.webp"
+          }
+        ]
+      },
+      "alt": "female-business-executive-giving-speech_107420-63791",
+      "tags": []
+    },
+    {
+      "id": "g-1547",
+      "type": "image",
+      "src": "/uploads/img-052a13173b-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-052a13173b-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-052a13173b-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-052a13173b-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-052a13173b-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-052a13173b-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-052a13173b-1440.webp"
+          }
+        ]
+      },
+      "alt": "corporate-businessman-giving-presentation-large-audience_53876-101865",
+      "tags": []
+    },
+    {
+      "id": "g-1544",
+      "type": "image",
+      "src": "/uploads/img-de11a521d4-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-de11a521d4-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-de11a521d4-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-de11a521d4-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-de11a521d4-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-de11a521d4-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-de11a521d4-1440.webp"
+          }
+        ]
+      },
+      "alt": "people-having-fun-wedding-hall_1303-19593",
+      "tags": []
+    },
+    {
+      "id": "g-1541",
+      "type": "image",
+      "src": "/uploads/img-1e68cce7ef-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-1e68cce7ef-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-1e68cce7ef-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-1e68cce7ef-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-1e68cce7ef-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-1e68cce7ef-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-1e68cce7ef-1440.webp"
+          }
+        ]
+      },
+      "alt": "close-up-recording-video-with-smartphone-during-concert_1153-7310",
+      "tags": []
+    },
+    {
+      "id": "g-1533",
+      "type": "image",
+      "src": "/uploads/img-810a3516f0-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-810a3516f0-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-810a3516f0-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-810a3516f0-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-810a3516f0-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-810a3516f0-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-810a3516f0-1440.webp"
+          }
+        ]
+      },
+      "alt": "woocommerce-placeholder",
+      "tags": []
+    },
+    {
+      "id": "g-1496",
+      "type": "image",
+      "src": "/uploads/img-a644f798cd-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-a644f798cd-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-a644f798cd-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-a644f798cd-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-a644f798cd-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-a644f798cd-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-a644f798cd-1440.webp"
+          }
+        ]
+      },
+      "alt": "Καταγραφή",
+      "tags": []
+    },
+    {
+      "id": "g-1485",
+      "type": "image",
+      "src": "/uploads/img-3a36d2995a-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-3a36d2995a-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-3a36d2995a-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-3a36d2995a-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-3a36d2995a-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-3a36d2995a-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-3a36d2995a-1440.webp"
+          }
+        ]
+      },
+      "alt": "Screenshot",
+      "tags": []
+    },
+    {
+      "id": "g-1484",
+      "type": "image",
+      "src": "/uploads/img-971db16354-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-971db16354-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-971db16354-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-971db16354-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-971db16354-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-971db16354-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-971db16354-1440.webp"
+          }
+        ]
+      },
+      "alt": "Screenshot",
+      "tags": []
+    },
+    {
+      "id": "g-1483",
+      "type": "image",
+      "src": "/uploads/img-dc1f496308-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-dc1f496308-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-dc1f496308-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-dc1f496308-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-dc1f496308-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-dc1f496308-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-dc1f496308-1440.webp"
+          }
+        ]
+      },
+      "alt": "Screenshot",
+      "tags": []
+    },
+    {
+      "id": "g-1482",
+      "type": "image",
+      "src": "/uploads/img-7fbf515ce9-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-7fbf515ce9-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-7fbf515ce9-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-7fbf515ce9-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-7fbf515ce9-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-7fbf515ce9-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-7fbf515ce9-1440.webp"
+          }
+        ]
+      },
+      "alt": "Screenshot",
+      "tags": []
+    },
+    {
+      "id": "g-1481",
+      "type": "image",
+      "src": "/uploads/img-7de791a924-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-7de791a924-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-7de791a924-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-7de791a924-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-7de791a924-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-7de791a924-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-7de791a924-1440.webp"
+          }
+        ]
+      },
+      "alt": "Screenshot",
+      "tags": []
+    },
+    {
+      "id": "g-1468",
+      "type": "image",
+      "src": "/uploads/img-f796afe03d-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-f796afe03d-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-f796afe03d-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-f796afe03d-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-f796afe03d-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-f796afe03d-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-f796afe03d-1440.webp"
+          }
+        ]
+      },
+      "alt": "613efd44-19e0-45b0-b0f6-9b0ac2badd29",
+      "tags": []
+    },
+    {
+      "id": "g-1467",
+      "type": "image",
+      "src": "/uploads/img-07b3374b8a-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-07b3374b8a-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-07b3374b8a-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-07b3374b8a-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-07b3374b8a-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-07b3374b8a-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-07b3374b8a-1440.webp"
+          }
+        ]
+      },
+      "alt": "9b717af5-b679-4d12-87b9-9086afa2c8bc",
+      "tags": []
+    },
+    {
+      "id": "g-1466",
+      "type": "image",
+      "src": "/uploads/img-20c62e4a24-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-20c62e4a24-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-20c62e4a24-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-20c62e4a24-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-20c62e4a24-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-20c62e4a24-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-20c62e4a24-1440.webp"
+          }
+        ]
+      },
+      "alt": "55ba8ddc-c493-49ea-9079-62983e51b22d",
+      "tags": []
+    },
+    {
+      "id": "g-1465",
+      "type": "image",
+      "src": "/uploads/img-57ac37c564-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-57ac37c564-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-57ac37c564-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-57ac37c564-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-57ac37c564-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-57ac37c564-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-57ac37c564-1440.webp"
+          }
+        ]
+      },
+      "alt": "499d0db7-0973-48e0-b0ef-4398e8e1f1d5",
+      "tags": []
+    },
+    {
+      "id": "g-1464",
+      "type": "image",
+      "src": "/uploads/img-d9588acee8-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-d9588acee8-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-d9588acee8-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-d9588acee8-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-d9588acee8-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-d9588acee8-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-d9588acee8-1440.webp"
+          }
+        ]
+      },
+      "alt": "8601ff8a-88da-412e-8cbd-4d3817c10129",
+      "tags": []
+    },
+    {
+      "id": "g-1463",
+      "type": "image",
+      "src": "/uploads/img-282dfd3c75-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-282dfd3c75-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-282dfd3c75-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-282dfd3c75-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-282dfd3c75-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-282dfd3c75-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-282dfd3c75-1440.webp"
+          }
+        ]
+      },
+      "alt": "3808751f-6e7b-41b3-a8c9-8b9f592740f5",
+      "tags": []
+    },
+    {
+      "id": "g-1462",
+      "type": "image",
+      "src": "/uploads/img-457142c7dc-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-457142c7dc-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-457142c7dc-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-457142c7dc-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-457142c7dc-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-457142c7dc-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-457142c7dc-1440.webp"
+          }
+        ]
+      },
+      "alt": "c4e42687-7ce6-43b6-806e-062b2d5106f6",
+      "tags": []
+    },
+    {
+      "id": "g-1461",
+      "type": "image",
+      "src": "/uploads/img-6563118762-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-6563118762-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-6563118762-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-6563118762-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-6563118762-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-6563118762-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-6563118762-1440.webp"
+          }
+        ]
+      },
+      "alt": "e37d2bf6-ddaf-4672-8c3f-773c310666f2",
+      "tags": []
+    },
+    {
+      "id": "g-1460",
+      "type": "image",
+      "src": "/uploads/img-eaa26b2ad0-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-eaa26b2ad0-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-eaa26b2ad0-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-eaa26b2ad0-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-eaa26b2ad0-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-eaa26b2ad0-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-eaa26b2ad0-1440.webp"
+          }
+        ]
+      },
+      "alt": "ff824c3a-7e99-4b10-b6fa-92ea503c3d0c",
+      "tags": []
+    },
+    {
+      "id": "g-1459",
+      "type": "image",
+      "src": "/uploads/img-e95e14f5ab-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-e95e14f5ab-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-e95e14f5ab-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-e95e14f5ab-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-e95e14f5ab-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-e95e14f5ab-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-e95e14f5ab-1440.webp"
+          }
+        ]
+      },
+      "alt": "4b3cc076-11e2-467a-b028-ca8d3abb3442",
+      "tags": []
+    },
+    {
+      "id": "g-1458",
+      "type": "image",
+      "src": "/uploads/img-1777af18d8-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-1777af18d8-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-1777af18d8-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-1777af18d8-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-1777af18d8-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-1777af18d8-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-1777af18d8-1440.webp"
+          }
+        ]
+      },
+      "alt": "613efd44-19e0-45b0-b0f6-9b0ac2badd29 2",
+      "tags": []
+    },
+    {
+      "id": "g-1457",
+      "type": "image",
+      "src": "/uploads/img-16df129d33-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-16df129d33-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-16df129d33-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-16df129d33-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-16df129d33-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-16df129d33-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-16df129d33-1440.webp"
+          }
+        ]
+      },
+      "alt": "9b717af5-b679-4d12-87b9-9086afa2c8bc",
+      "tags": []
+    },
+    {
+      "id": "g-1456",
+      "type": "image",
+      "src": "/uploads/img-87c77443a0-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-87c77443a0-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-87c77443a0-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-87c77443a0-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-87c77443a0-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-87c77443a0-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-87c77443a0-1440.webp"
+          }
+        ]
+      },
+      "alt": "9e8816fd-7aad-4eaf-8c08-866de3166542",
+      "tags": []
+    },
+    {
+      "id": "g-1455",
+      "type": "image",
+      "src": "/uploads/img-433f29b23d-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-433f29b23d-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-433f29b23d-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-433f29b23d-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-433f29b23d-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-433f29b23d-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-433f29b23d-1440.webp"
+          }
+        ]
+      },
+      "alt": "bca0d3f2-3858-4dc7-8721-95a2f4be5278",
+      "tags": []
+    },
+    {
+      "id": "g-1454",
+      "type": "image",
+      "src": "/uploads/img-a583461323-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-a583461323-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-a583461323-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-a583461323-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-a583461323-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-a583461323-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-a583461323-1440.webp"
+          }
+        ]
+      },
+      "alt": "c585e41f-1fbb-40b3-8c3f-f8eb4697bb00",
+      "tags": []
+    },
+    {
+      "id": "g-1453",
+      "type": "image",
+      "src": "/uploads/img-6731163954-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-6731163954-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-6731163954-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-6731163954-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-6731163954-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-6731163954-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-6731163954-1440.webp"
+          }
+        ]
+      },
+      "alt": "d63842b4-0db4-49ff-ae82-9e4bfa12997b",
+      "tags": []
+    },
+    {
+      "id": "g-1451",
+      "type": "image",
+      "src": "/uploads/img-b784ce9b03-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-b784ce9b03-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-b784ce9b03-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-b784ce9b03-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-b784ce9b03-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-b784ce9b03-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-b784ce9b03-1440.webp"
+          }
+        ]
+      },
+      "alt": "8E3EDC8A-6BD3-4458-B509-3839CA901228",
+      "tags": []
+    },
+    {
+      "id": "g-1446",
+      "type": "image",
+      "src": "/uploads/img-ad4fd6278f-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-ad4fd6278f-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-ad4fd6278f-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-ad4fd6278f-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-ad4fd6278f-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-ad4fd6278f-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-ad4fd6278f-1440.webp"
+          }
+        ]
+      },
+      "alt": "8daa4dbd-a30c-48a9-ae31-c2a5ebf1b80a",
+      "tags": []
+    },
+    {
+      "id": "g-1440",
+      "type": "image",
+      "src": "/uploads/img-020d86fbc4-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-020d86fbc4-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-020d86fbc4-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-020d86fbc4-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-020d86fbc4-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-020d86fbc4-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-020d86fbc4-1440.webp"
+          }
+        ]
+      },
+      "alt": "3bf10360-fdac-40ae-b542-103ac543fe6a Kopie",
+      "tags": []
+    },
+    {
+      "id": "g-1439",
+      "type": "image",
+      "src": "/uploads/img-2b582eb278-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-2b582eb278-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-2b582eb278-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-2b582eb278-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-2b582eb278-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-2b582eb278-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-2b582eb278-1440.webp"
+          }
+        ]
+      },
+      "alt": "4a88e5d6-d985-4fcf-888c-f2b284606131 2",
+      "tags": []
+    },
+    {
+      "id": "g-1437",
+      "type": "image",
+      "src": "/uploads/img-a7ed7407fa-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-a7ed7407fa-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-a7ed7407fa-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-a7ed7407fa-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-a7ed7407fa-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-a7ed7407fa-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-a7ed7407fa-1440.webp"
+          }
+        ]
+      },
+      "alt": "IMG_5535",
+      "tags": []
+    },
+    {
+      "id": "g-1436",
+      "type": "image",
+      "src": "/uploads/img-9c08e90427-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-9c08e90427-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-9c08e90427-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-9c08e90427-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-9c08e90427-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-9c08e90427-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-9c08e90427-1440.webp"
+          }
+        ]
+      },
+      "alt": "0a18917b-cbfd-4e0e-b44e-0de9200a073b",
+      "tags": []
+    },
+    {
+      "id": "g-1435",
+      "type": "image",
+      "src": "/uploads/img-4ee371276f-orig.heic",
+      "srcVariants": {
+        "jpg": [],
+        "webp": []
+      },
+      "alt": "IMG_5518",
+      "tags": []
+    },
+    {
+      "id": "g-1434",
+      "type": "image",
+      "src": "/uploads/img-343e789ef2-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-343e789ef2-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-343e789ef2-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-343e789ef2-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-343e789ef2-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-343e789ef2-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-343e789ef2-1440.webp"
+          }
+        ]
+      },
+      "alt": "0a9f2581-3478-47d2-b893-90b479746581",
+      "tags": []
+    },
+    {
+      "id": "g-1433",
+      "type": "image",
+      "src": "/uploads/img-8f328e30d8-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-8f328e30d8-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-8f328e30d8-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-8f328e30d8-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-8f328e30d8-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-8f328e30d8-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-8f328e30d8-1440.webp"
+          }
+        ]
+      },
+      "alt": "099a904d-4088-4811-9f04-a2bc0a9bccf7",
+      "tags": []
+    },
+    {
+      "id": "g-1429",
+      "type": "image",
+      "src": "/uploads/img-80c13d57f6-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-80c13d57f6-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-80c13d57f6-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-80c13d57f6-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-80c13d57f6-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-80c13d57f6-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-80c13d57f6-1440.webp"
+          }
+        ]
+      },
+      "alt": "515256f5-b51e-429f-afa8-36d9a4d36e02",
+      "tags": []
+    },
+    {
+      "id": "g-1428",
+      "type": "image",
+      "src": "/uploads/img-cc4360a345-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-cc4360a345-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-cc4360a345-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-cc4360a345-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-cc4360a345-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-cc4360a345-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-cc4360a345-1440.webp"
+          }
+        ]
+      },
+      "alt": "adee1d1b-85d6-4a81-a67b-609c3452778a",
+      "tags": []
+    },
+    {
+      "id": "g-1427",
+      "type": "image",
+      "src": "/uploads/img-ed41c22148-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-ed41c22148-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-ed41c22148-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-ed41c22148-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-ed41c22148-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-ed41c22148-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-ed41c22148-1440.webp"
+          }
+        ]
+      },
+      "alt": "IMG_5535",
+      "tags": []
+    },
+    {
+      "id": "g-1426",
+      "type": "image",
+      "src": "/uploads/img-d3f325f615-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-d3f325f615-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-d3f325f615-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-d3f325f615-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-d3f325f615-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-d3f325f615-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-d3f325f615-1440.webp"
+          }
+        ]
+      },
+      "alt": "cedd65d7-64ba-4fe0-a06f-86ef18baea0e",
+      "tags": []
+    },
+    {
+      "id": "g-1422",
+      "type": "image",
+      "src": "/uploads/img-b66144802d-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-b66144802d-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-b66144802d-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-b66144802d-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-b66144802d-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-b66144802d-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-b66144802d-1440.webp"
+          }
+        ]
+      },
+      "alt": "76411a25-8b03-41b1-9c5b-874b5820102e",
+      "tags": []
+    },
+    {
+      "id": "g-1353",
+      "type": "image",
+      "src": "/uploads/img-5177f85bd1-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-5177f85bd1-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-5177f85bd1-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-5177f85bd1-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-5177f85bd1-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-5177f85bd1-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-5177f85bd1-1440.webp"
+          }
+        ]
+      },
+      "alt": "48e703c1-7176-46d7-903d-58aee1855644-2",
+      "tags": []
+    },
+    {
+      "id": "g-1352",
+      "type": "image",
+      "src": "/uploads/img-fd19799c51-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-fd19799c51-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-fd19799c51-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-fd19799c51-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-fd19799c51-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-fd19799c51-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-fd19799c51-1440.webp"
+          }
+        ]
+      },
+      "alt": "80d640e6-007e-426a-bdf7-17dce528e7fc-1",
+      "tags": []
+    },
+    {
+      "id": "g-1351",
+      "type": "image",
+      "src": "/uploads/img-8bb9f12cae-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-8bb9f12cae-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-8bb9f12cae-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-8bb9f12cae-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-8bb9f12cae-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-8bb9f12cae-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-8bb9f12cae-1440.webp"
+          }
+        ]
+      },
+      "alt": "48e703c1-7176-46d7-903d-58aee1855644",
+      "tags": []
+    },
+    {
+      "id": "g-1350",
+      "type": "image",
+      "src": "/uploads/img-695a8ef154-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-695a8ef154-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-695a8ef154-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-695a8ef154-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-695a8ef154-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-695a8ef154-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-695a8ef154-1440.webp"
+          }
+        ]
+      },
+      "alt": "91dc5071-b9de-4143-b9ba-4af89f30c33c",
+      "tags": []
+    },
+    {
+      "id": "g-1349",
+      "type": "image",
+      "src": "/uploads/img-f87f11a205-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-f87f11a205-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-f87f11a205-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-f87f11a205-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-f87f11a205-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-f87f11a205-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-f87f11a205-1440.webp"
+          }
+        ]
+      },
+      "alt": "80d640e6-007e-426a-bdf7-17dce528e7fc",
+      "tags": []
+    },
+    {
+      "id": "g-1348",
+      "type": "image",
+      "src": "/uploads/img-c71eb252a5-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-c71eb252a5-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-c71eb252a5-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-c71eb252a5-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-c71eb252a5-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-c71eb252a5-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-c71eb252a5-1440.webp"
+          }
+        ]
+      },
+      "alt": "34a07a03-dadd-4287-8260-2bec003ca930",
+      "tags": []
+    },
+    {
+      "id": "g-1346",
+      "type": "image",
+      "src": "/uploads/img-67266eeacf-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-67266eeacf-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-67266eeacf-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-67266eeacf-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-67266eeacf-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-67266eeacf-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-67266eeacf-1440.webp"
+          }
+        ]
+      },
+      "alt": "48e703c1-7176-46d7-903d-58aee1855644",
+      "tags": []
+    },
+    {
+      "id": "g-1342",
+      "type": "image",
+      "src": "/uploads/img-3e26969218-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-3e26969218-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-3e26969218-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-3e26969218-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-3e26969218-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-3e26969218-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-3e26969218-1440.webp"
+          }
+        ]
+      },
+      "alt": "800e1e63-b15c-4ef1-8bbc-d6592adadcd7",
+      "tags": []
+    },
+    {
+      "id": "g-1341",
+      "type": "image",
+      "src": "/uploads/img-751f88a6c2-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-751f88a6c2-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-751f88a6c2-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-751f88a6c2-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-751f88a6c2-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-751f88a6c2-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-751f88a6c2-1440.webp"
+          }
+        ]
+      },
+      "alt": "14.Jan.2023",
+      "tags": []
+    },
+    {
+      "id": "g-1340",
+      "type": "image",
+      "src": "/uploads/img-6a32c9b0ac-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-6a32c9b0ac-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-6a32c9b0ac-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-6a32c9b0ac-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-6a32c9b0ac-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-6a32c9b0ac-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-6a32c9b0ac-1440.webp"
+          }
+        ]
+      },
+      "alt": "IMG_0792",
+      "tags": []
+    },
+    {
+      "id": "g-1339",
+      "type": "image",
+      "src": "/uploads/img-a718c46e7a-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-a718c46e7a-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-a718c46e7a-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-a718c46e7a-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-a718c46e7a-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-a718c46e7a-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-a718c46e7a-1440.webp"
+          }
+        ]
+      },
+      "alt": "PSEO1792",
+      "tags": []
+    },
+    {
+      "id": "g-1338",
+      "type": "image",
+      "src": "/uploads/img-587f220ec3-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-587f220ec3-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-587f220ec3-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-587f220ec3-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-587f220ec3-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-587f220ec3-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-587f220ec3-1440.webp"
+          }
+        ]
+      },
+      "alt": "PZMG2892",
+      "tags": []
+    },
+    {
+      "id": "g-1337",
+      "type": "image",
+      "src": "/uploads/img-ac32017fc8-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-ac32017fc8-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-ac32017fc8-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-ac32017fc8-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-ac32017fc8-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-ac32017fc8-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-ac32017fc8-1440.webp"
+          }
+        ]
+      },
+      "alt": "PIYE9068",
+      "tags": []
+    },
+    {
+      "id": "g-1336",
+      "type": "image",
+      "src": "/uploads/img-94c640595c-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-94c640595c-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-94c640595c-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-94c640595c-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-94c640595c-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-94c640595c-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-94c640595c-1440.webp"
+          }
+        ]
+      },
+      "alt": "MRQR2438",
+      "tags": []
+    },
+    {
+      "id": "g-1335",
+      "type": "image",
+      "src": "/uploads/img-25192a3231-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-25192a3231-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-25192a3231-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-25192a3231-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-25192a3231-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-25192a3231-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-25192a3231-1440.webp"
+          }
+        ]
+      },
+      "alt": "LZIH8757",
+      "tags": []
+    },
+    {
+      "id": "g-1334",
+      "type": "image",
+      "src": "/uploads/img-ccbaac5332-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-ccbaac5332-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-ccbaac5332-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-ccbaac5332-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-ccbaac5332-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-ccbaac5332-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-ccbaac5332-1440.webp"
+          }
+        ]
+      },
+      "alt": "IVHE3057",
+      "tags": []
+    },
+    {
+      "id": "g-1333",
+      "type": "image",
+      "src": "/uploads/img-7a6bb52770-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-7a6bb52770-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-7a6bb52770-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-7a6bb52770-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-7a6bb52770-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-7a6bb52770-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-7a6bb52770-1440.webp"
+          }
+        ]
+      },
+      "alt": "IQWP7894",
+      "tags": []
+    },
+    {
+      "id": "g-1332",
+      "type": "image",
+      "src": "/uploads/img-436aacf52b-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-436aacf52b-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-436aacf52b-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-436aacf52b-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-436aacf52b-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-436aacf52b-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-436aacf52b-1440.webp"
+          }
+        ]
+      },
+      "alt": "IMG_7119",
+      "tags": []
+    },
+    {
+      "id": "g-1331",
+      "type": "image",
+      "src": "/uploads/img-e7071bfb1f-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-e7071bfb1f-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-e7071bfb1f-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-e7071bfb1f-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-e7071bfb1f-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-e7071bfb1f-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-e7071bfb1f-1440.webp"
+          }
+        ]
+      },
+      "alt": "IMG_7117",
+      "tags": []
+    },
+    {
+      "id": "g-1330",
+      "type": "image",
+      "src": "/uploads/img-ec084aee88-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-ec084aee88-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-ec084aee88-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-ec084aee88-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-ec084aee88-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-ec084aee88-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-ec084aee88-1440.webp"
+          }
+        ]
+      },
+      "alt": "IMG_7115",
+      "tags": []
+    },
+    {
+      "id": "g-1329",
+      "type": "image",
+      "src": "/uploads/img-b471a20449-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-b471a20449-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-b471a20449-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-b471a20449-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-b471a20449-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-b471a20449-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-b471a20449-1440.webp"
+          }
+        ]
+      },
+      "alt": "IMG_6530",
+      "tags": []
+    },
+    {
+      "id": "g-1328",
+      "type": "image",
+      "src": "/uploads/img-bf6770cdb3-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-bf6770cdb3-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-bf6770cdb3-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-bf6770cdb3-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-bf6770cdb3-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-bf6770cdb3-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-bf6770cdb3-1440.webp"
+          }
+        ]
+      },
+      "alt": "IMG_5971",
+      "tags": []
+    },
+    {
+      "id": "g-1327",
+      "type": "image",
+      "src": "/uploads/img-f329788e93-480.jpg",
+      "srcVariants": {
+        "jpg": [
+          {
+            "width": 480,
+            "src": "/uploads/img-f329788e93-480.jpg"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-f329788e93-960.jpg"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-f329788e93-1440.jpg"
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "src": "/uploads/img-f329788e93-480.webp"
+          },
+          {
+            "width": 960,
+            "src": "/uploads/img-f329788e93-960.webp"
+          },
+          {
+            "width": 1440,
+            "src": "/uploads/img-f329788e93-1440.webp"
+          }
+        ]
+      },
+      "alt": "IMG_5968",
+      "tags": []
+    }
+  ]
+}

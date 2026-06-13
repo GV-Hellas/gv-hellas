@@ -1,12 +1,12 @@
 <script lang="ts">
     import {t, locale} from '$lib/i18n';
     import EventCard from '$lib/components/EventCard.svelte';
+    import type {Lang} from "$lib/cms/events/types";
 
     /** @type {import('./$types').PageProps} */
     let {data} = $props();
 
-    // Svelte 5: Use $derived to ensure lang updates reactively with the locale store
-    let lang = $derived($locale ?? 'el');
+    let lang = $derived(($locale || 'el') as Lang);
     let upcoming = $derived(data?.upcoming ?? []);
     let past = $derived(data?.past ?? []);
 </script>
