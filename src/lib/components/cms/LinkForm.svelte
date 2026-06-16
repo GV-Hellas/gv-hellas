@@ -1,8 +1,11 @@
 <script lang="ts">
     import {onDestroy} from 'svelte';
+    import {deserialize} from '$app/forms';
+    import {goto, invalidateAll} from '$app/navigation';
 
     import {t, locale} from '$lib/i18n';
     import type {Lang, LinkPayload, StoredLink} from '$lib/cms/links/types';
+    import {linkPayloadSchema} from '$lib/cms/links/schema';
 
     import LocalizedField from './LocalizedField.svelte';
     import LocalizedRichText from './LocalizedRichText.svelte';
@@ -10,7 +13,11 @@
     import {Button} from '$lib/components/ui/button/index.js';
     import {Input} from '$lib/components/ui/input/index.js';
     import {Label} from '$lib/components/ui/label/index.js';
+    import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js';
     import {cn} from '$lib/utils.js';
+
+    import type {ActionResult} from '@sveltejs/kit';
+    import type {ZodIssue} from 'zod';
 
     type LinkItem = Partial<StoredLink> & LinkPayload;
 
@@ -22,9 +29,10 @@
         initialItem?: LinkItem | null;
     };
 
-    type SaveResponse = {
+    type SaveActionData = {
         ok?: boolean;
-        id?: number;
+        id?: string | number;
+        slug?: string;
         message?: string;
     };
 
@@ -38,11 +46,14 @@
 
     let loading = $state(false);
     let error = $state('');
-    let success = $state('');
     let fieldErrors = $state<Record<string, string>>({});
     let logoFile = $state<File | null>(null);
     let preview = $state('');
     let objectUrl = '';
+
+    let successDialogOpen = $state(false);
+    let successMessage = $state('');
+    let successBackHref = $state('/admin/links');
 
     const controlClass =
         'h-10 rounded-xl border border-slate-300 bg-white shadow-sm focus-visible:border-primary focus-visible:ring-primary/25';
@@ -119,7 +130,10 @@
         logoFile = null;
         fieldErrors = {};
         error = '';
-        success = '';
+
+        successDialogOpen = false;
+        successMessage = '';
+        successBackHref = '/admin/links';
     });
 
     const lang = $derived(($locale || 'el') as Lang);
@@ -133,25 +147,24 @@
         return `${label} - ${languageSuffix}`;
     }
 
-    function issueMessage(path: string) {
-        if (path === 'name.el') {
-            return text('admin.links.form.validationNameEl', 'Greek title is required.');
-        }
-
-        if (path === 'url') {
-            return text('admin.links.form.validationUrl', 'A valid URL is required.');
-        }
-
-        return text('admin.form.validationFailed', 'Please check the form fields.');
+    function issuePath(issue: ZodIssue) {
+        return issue.path.join('.');
     }
 
-    function isValidUrl(value: string) {
-        try {
-            const parsed = new URL(value);
-            return parsed.protocol === 'http:' || parsed.protocol === 'https:';
-        } catch {
-            return false;
-        }
+    function mapIssues(issues: ZodIssue[]) {
+        return issues.reduce<Record<string, string>>((acc, issue) => {
+            const path = issuePath(issue);
+
+            if (!acc[path]) {
+                acc[path] = issue.message;
+            }
+
+            return acc;
+        }, {});
+    }
+
+    function getIssueForPath(path: string, issues: ZodIssue[]) {
+        return issues.find((issue) => issuePath(issue) === path);
     }
 
     function getPayloadForValidation(): LinkPayload {
@@ -173,29 +186,23 @@
         };
     }
 
-    function validatePayload(payload: LinkPayload) {
-        const errors: Record<string, string> = {};
-
-        if (!payload.name.el.trim()) {
-            errors['name.el'] = issueMessage('name.el');
-        }
-
-        if (!payload.url.trim() || !isValidUrl(payload.url.trim())) {
-            errors.url = issueMessage('url');
-        }
-
-        return errors;
-    }
-
     function validateField(path: string) {
         if (!fieldErrors[path]) return;
 
         const payload = getPayloadForValidation();
+        const result = linkPayloadSchema.safeParse(payload);
         const nextErrors = {...fieldErrors};
-        const validationErrors = validatePayload(payload);
 
-        if (validationErrors[path]) {
-            nextErrors[path] = validationErrors[path];
+        if (result.success) {
+            delete nextErrors[path];
+            fieldErrors = nextErrors;
+            return;
+        }
+
+        const issue = getIssueForPath(path, result.error.issues);
+
+        if (issue) {
+            nextErrors[path] = issue.message;
         } else {
             delete nextErrors[path];
         }
@@ -205,16 +212,16 @@
 
     function validateClient() {
         const payload = getPayloadForValidation();
-        const validationErrors = validatePayload(payload);
+        const result = linkPayloadSchema.safeParse(payload);
 
-        if (Object.keys(validationErrors).length > 0) {
-            fieldErrors = validationErrors;
-            error = text('admin.form.validationFailed', 'Please check the form fields.');
+        if (!result.success) {
+            fieldErrors = mapIssues(result.error.issues);
+            error = text('admin.links.form.validationFailed', 'Please check the form fields.');
             return null;
         }
 
         fieldErrors = {};
-        return payload;
+        return result.data;
     }
 
     function onFileChange(event: Event) {
@@ -234,10 +241,17 @@
         preview = objectUrl;
     }
 
+    function actionData(result: ActionResult): SaveActionData | undefined {
+        if ('data' in result) {
+            return result.data as SaveActionData | undefined;
+        }
+
+        return undefined;
+    }
+
     async function submit() {
         loading = true;
         error = '';
-        success = '';
 
         const payload = validateClient();
 
@@ -263,27 +277,62 @@
         try {
             const response = await fetch(submitTo, {
                 method: 'POST',
+                headers: {
+                    accept: 'application/json',
+                    'x-sveltekit-action': 'true'
+                },
                 body: formData
             });
 
-            if (response.redirected) {
-                window.location.href = response.url;
+            const result = deserialize(await response.text()) as ActionResult;
+
+            if (result.type === 'success') {
+                const data = actionData(result);
+
+                if (!data?.ok) {
+                    error =
+                        data?.message ||
+                        text('admin.links.form.couldNotSave', 'The link could not be saved.');
+                    return;
+                }
+
+                successMessage =
+                    data.message ||
+                    `${text('admin.links.form.saved', 'Saved')}${data.id ? `: ${data.id}` : ''}`;
+
+                successBackHref = '/admin/links';
+                successDialogOpen = true;
+
+                await invalidateAll();
                 return;
             }
 
-            const contentType = response.headers.get('content-type') || '';
-            const result = contentType.includes('application/json')
-                ? ((await response.json()) as SaveResponse)
-                : ({ok: response.ok} satisfies SaveResponse);
+            if (result.type === 'failure') {
+                const data = actionData(result);
 
-            if (!response.ok || !result.ok) {
-                error = result.message || text('admin.links.form.couldNotSave', 'The link could not be saved.');
+                error =
+                    data?.message ||
+                    text('admin.links.form.couldNotSave', 'The link could not be saved.');
                 return;
             }
 
-            success = result.id
-                ? `${text('admin.links.form.saved', 'Saved')}: ${result.id}`
-                : text('admin.links.form.saved', 'Saved');
+            if (result.type === 'redirect') {
+                successMessage = text('admin.links.form.saved', 'Saved');
+                successBackHref = result.location || '/admin/links';
+                successDialogOpen = true;
+
+                await invalidateAll();
+                return;
+            }
+
+            if (result.type === 'error') {
+                error =
+                    result.error?.message ||
+                    text('admin.links.form.couldNotSave', 'The link could not be saved.');
+                return;
+            }
+
+            error = text('admin.links.form.couldNotSave', 'The link could not be saved.');
         } catch {
             error = text('admin.links.form.couldNotSave', 'The link could not be saved.');
         } finally {
@@ -400,12 +449,6 @@
         </p>
     {/if}
 
-    {#if success}
-        <p class="success">
-            {success}
-        </p>
-    {/if}
-
     <div class="flex justify-end gap-2 pt-2">
         <a
                 href="/admin/links"
@@ -425,6 +468,29 @@
         </Button>
     </div>
 </form>
+
+<AlertDialog.Root bind:open={successDialogOpen}>
+    <AlertDialog.Content class="rounded-2xl">
+        <AlertDialog.Header>
+            <AlertDialog.Title>
+                {text('admin.links.form.saved', 'Saved')}
+            </AlertDialog.Title>
+
+            <AlertDialog.Description>
+                {successMessage}
+            </AlertDialog.Description>
+        </AlertDialog.Header>
+
+        <AlertDialog.Footer>
+            <AlertDialog.Action
+                    class="rounded-xl"
+                    onclick={() => goto(successBackHref)}
+            >
+                OK
+            </AlertDialog.Action>
+        </AlertDialog.Footer>
+    </AlertDialog.Content>
+</AlertDialog.Root>
 
 <style>
     .form {
@@ -486,11 +552,6 @@
     .field-error {
         font-size: 0.8125rem;
         line-height: 1.25rem;
-    }
-
-    .success {
-        margin: 0;
-        color: #027a48;
     }
 
     .logo-preview {

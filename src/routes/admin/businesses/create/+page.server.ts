@@ -1,29 +1,86 @@
-import {type Actions, json} from '@sveltejs/kit';
+import {fail} from '@sveltejs/kit';
+import type {Actions} from '@sveltejs/kit';
 
 import {slugify} from '$lib/utils';
 import {businessPayloadSchema} from '$lib/cms/business/validation';
 import {saveBusiness} from '$lib/server/cms/businessStore';
 import {saveBusinessMedia} from '$lib/server/cms/businessMediaStore';
 import {sanitizeEventHtml} from '$lib/server/html/sanitizeEventHtml';
-import type {BusinessPayload} from "$lib/cms/business/types";
+import type {BusinessPayload} from '$lib/cms/business/types';
+import {
+    prepareUploadedImageFile,
+    prepareUploadedMediaFile,
+    translateBusinessPayloadMissingGerman
+} from '$lib/server/mediaProcessing';
 
-function normalizeSlug(value: string, fallback: string) {
-    return (value || slugify(fallback)).trim();
+type ActionResponse = {
+    ok: boolean;
+    id?: number;
+    slug?: string;
+    message?: string;
+};
+
+function actionError(status: number, message: string) {
+    return fail(status, {
+        ok: false,
+        message
+    } satisfies ActionResponse);
+}
+
+function sanitizeBusiness(business: BusinessPayload) {
+    business.description.el = sanitizeEventHtml(business.description.el);
+    business.description.de = sanitizeEventHtml(business.description.de);
+
+    for (const section of business.sections) {
+        section.beforeHtml.el = sanitizeEventHtml(section.beforeHtml.el);
+        section.beforeHtml.de = sanitizeEventHtml(section.beforeHtml.de);
+        section.afterHtml.el = sanitizeEventHtml(section.afterHtml.el);
+        section.afterHtml.de = sanitizeEventHtml(section.afterHtml.de);
+    }
+
+    return business;
+}
+
+async function attachProcessedBusinessMedia(business: BusinessPayload, formData: FormData, slug: string) {
+    const logo = formData.get('logo');
+
+    if (logo instanceof File && logo.size > 0) {
+        const processedLogo = await prepareUploadedImageFile(logo);
+        const savedLogo = await saveBusinessMedia(processedLogo.file, slug);
+
+        business.logo = savedLogo.url;
+    }
+
+    for (const section of business.sections) {
+        for (const media of section.media) {
+            if (!media.uploadKey) continue;
+
+            const file = formData.get(media.uploadKey);
+
+            if (file instanceof File && file.size > 0) {
+                const processed = await prepareUploadedMediaFile(file);
+                const saved = await saveBusinessMedia(processed.file, slug);
+
+                media.type = processed.kind;
+                media.url = saved.url;
+                media.filename = saved.filename;
+                media.originalFilename = file.name;
+                media.mimeType = saved.mimeType;
+                media.size = saved.size;
+            }
+
+            delete media.uploadKey;
+        }
+    }
 }
 
 export const actions: Actions = {
-    save: async ({request}: { request: Request }) => {
+    save: async ({request}) => {
         const formData = await request.formData();
         const rawPayload = formData.get('payload');
 
         if (typeof rawPayload !== 'string') {
-            return json(
-                {
-                    ok: false,
-                    message: 'Missing business payload'
-                },
-                {status: 400}
-            );
+            return actionError(400, 'Missing business payload');
         }
 
         let parsedJson: unknown;
@@ -31,82 +88,47 @@ export const actions: Actions = {
         try {
             parsedJson = JSON.parse(rawPayload);
         } catch {
-            return json(
-                {
-                    ok: false,
-                    message: 'Invalid business payload'
-                },
-                {status: 400}
-            );
+            return actionError(400, 'Invalid business payload');
         }
 
-        const result = businessPayloadSchema.safeParse(parsedJson);
+        const source = parsedJson && typeof parsedJson === 'object' ? (parsedJson as Record<string, unknown>) : {};
+        const slug = slugify(String(source.name || ''));
+
+        if (!slug) {
+            return actionError(400, 'Could not infer slug from business name');
+        }
+
+        const result = businessPayloadSchema.safeParse({
+            ...source,
+            slug
+        });
 
         if (!result.success) {
-            return json(
-                {
-                    ok: false,
-                    message: result.error.issues[0]?.message || 'Invalid business data'
-                },
-                {status: 400}
-            );
+            return actionError(400, result.error.issues[0]?.message || 'Invalid business data');
         }
 
-        const business: BusinessPayload = result.data;
-
-        const slug = slugify(business.name).trim();
-        if (!slug) {
-            return json(
-                {
-                    ok: false,
-                    message: 'Could not infer slug from business name'
-                },
-                {status: 400}
-            );
-        }
+        const business: BusinessPayload = sanitizeBusiness(result.data);
         business.slug = slug;
 
-        business.description.el = sanitizeEventHtml(business.description.el);
-        business.description.de = sanitizeEventHtml(business.description.de);
+        await translateBusinessPayloadMissingGerman(business);
+        sanitizeBusiness(business);
 
-        const logo = formData.get('logo');
-
-        if (logo instanceof File && logo.size > 0) {
-            const savedLogo = await saveBusinessMedia(logo, slug);
-            business.logo = savedLogo.url;
+        try {
+            await attachProcessedBusinessMedia(business, formData, slug);
+        } catch (error) {
+            return actionError(
+                400,
+                error instanceof Error ? error.message : 'Could not process uploaded business media'
+            );
         }
 
-        for (const section of business.sections) {
-            section.beforeHtml.el = sanitizeEventHtml(section.beforeHtml.el);
-            section.beforeHtml.de = sanitizeEventHtml(section.beforeHtml.de);
-            section.afterHtml.el = sanitizeEventHtml(section.afterHtml.el);
-            section.afterHtml.de = sanitizeEventHtml(section.afterHtml.de);
+        const stored = await saveBusiness(business);
 
-            for (const media of section.media) {
-                if (!media.uploadKey) continue;
-
-                const file = formData.get(media.uploadKey);
-
-                if (file instanceof File && file.size > 0) {
-                    const saved = await saveBusinessMedia(file, slug);
-
-                    media.url = saved.url;
-                    media.filename = saved.filename;
-                    media.originalFilename = saved.originalFilename;
-                    media.mimeType = saved.mimeType;
-                    media.size = saved.size;
-                }
-
-                delete media.uploadKey;
-            }
-        }
-
-        const stored = saveBusiness(business);
-
-        return json({
+        return {
             ok: true,
             id: stored.id,
-            slug: stored.slug
-        });
+            slug: stored.slug,
+            message: 'Business saved successfully'
+        } satisfies ActionResponse;
     }
 };

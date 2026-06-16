@@ -8,12 +8,17 @@
     "strict": true,
     "skipLibCheck": true,
     "allowJs": true,
-    "types": ["@sveltejs/kit", "vite", "node"]
+    "types": [
+      "@sveltejs/kit",
+      "vite",
+      "node"
+    ]
   },
   "include": [
     "src/**/*.d.ts",
     "src/**/*.ts",
     "src/**/*.svelte",
-    ".svelte-kit/types/**/*.d.ts"
+    ".svelte-kit/types/**/*.d.ts",
+    ".svelte-kit/ambient.d.ts"
   ]
 }

@@ -1,8 +1,11 @@
+<!--suppress ES6UnusedImports -->
 <script lang="ts">
+    import {deserialize} from '$app/forms';
+    import {goto, invalidateAll} from '$app/navigation';
+
     import {t, locale} from '$lib/i18n';
     import type {EventPayload, EventMedia, EventSection, Lang} from '$lib/cms/events/types';
-    import {EVENT_CATEGORIES} from '$lib/cms/events/schema';
-    import {eventPayloadSchema} from '$lib/cms/events/validation';
+    import {EVENT_CATEGORIES, eventPayloadSchema} from '$lib/cms/events/schema';
 
     import LocalizedField from './LocalizedField.svelte';
     import EventSectionEditor from './EventSectionEditor.svelte';
@@ -12,9 +15,9 @@
     import {Label} from '$lib/components/ui/label/index.js';
     import * as Select from '$lib/components/ui/select/index.js';
     import * as Popover from '$lib/components/ui/popover/index.js';
+    import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js';
     import {Calendar} from '$lib/components/ui/calendar/index.js';
 
-    // noinspection ES6UnusedImports
     import ChevronDownIcon from '@lucide/svelte/icons/chevron-down';
     import {cn} from '$lib/utils.js';
 
@@ -24,6 +27,7 @@
         type CalendarDate
     } from '@internationalized/date';
 
+    import type {ActionResult} from '@sveltejs/kit';
     import type {ZodIssue} from 'zod';
 
     type FormMode = 'create' | 'edit';
@@ -32,6 +36,13 @@
         submitTo?: string;
         initialEvent?: EventPayload | null;
         mode?: FormMode;
+    };
+
+    type SaveActionData = {
+        ok?: boolean;
+        id?: string | number;
+        slug?: string;
+        message?: string;
     };
 
     let {
@@ -44,9 +55,12 @@
 
     let loading = $state(false);
     let error = $state('');
-    let success = $state('');
     let fieldErrors = $state<Record<string, string>>({});
     let datePickerOpen = $state(false);
+
+    let successDialogOpen = $state(false);
+    let successMessage = $state('');
+    let successBackHref = $state('/admin/events');
 
     const files = new Map<string, File>();
 
@@ -55,6 +69,15 @@
 
     const invalidControlClass =
         'border-destructive focus-visible:border-destructive focus-visible:ring-destructive/25';
+
+    function newSection(): EventSection {
+        return {
+            id: crypto.randomUUID(),
+            beforeHtml: {el: '', de: ''},
+            media: [],
+            afterHtml: {el: '', de: ''}
+        };
+    }
 
     function emptyEvent(): EventPayload {
         return {
@@ -95,8 +118,11 @@
 
         fieldErrors = {};
         error = '';
-        success = '';
         files.clear();
+
+        successDialogOpen = false;
+        successMessage = '';
+        successBackHref = '/admin/events';
     });
 
     const lang = $derived(($locale || 'el') as Lang);
@@ -112,15 +138,6 @@
         event.date = selectedDate?.toString() ?? '';
     });
 
-    function newSection(): EventSection {
-        return {
-            id: crypto.randomUUID(),
-            beforeHtml: {el: '', de: ''},
-            media: [],
-            afterHtml: {el: '', de: ''}
-        };
-    }
-
     function addSection() {
         event.sections = [...event.sections, newSection()];
     }
@@ -131,7 +148,7 @@
         event.sections = event.sections.filter((section) => section.id !== id);
     }
 
-    function rememberFile(item: { media: EventMedia; file: File }) {
+    function rememberFile(item: {media: EventMedia; file: File}) {
         if (!item.media.uploadKey) return;
 
         files.set(item.media.uploadKey, item.file);
@@ -166,8 +183,6 @@
     }
 
     function validateField(path: string) {
-        // Only live-validate fields that are already showing an error.
-        // This prevents the form from showing errors before the first submit.
         if (!fieldErrors[path]) return;
 
         const payload = getPayloadForValidation();
@@ -213,10 +228,17 @@
         return result.data;
     }
 
+    function actionData(result: ActionResult): SaveActionData | undefined {
+        if ('data' in result) {
+            return result.data as SaveActionData | undefined;
+        }
+
+        return undefined;
+    }
+
     async function submit() {
         loading = true;
         error = '';
-        success = '';
 
         const payload = validateClient();
 
@@ -235,17 +257,56 @@
         try {
             const response = await fetch(submitTo, {
                 method: 'POST',
+                headers: {
+                    accept: 'application/json',
+                    'x-sveltekit-action': 'true'
+                },
                 body: formData
             });
 
-            const result = await response.json();
+            const result = deserialize(await response.text()) as ActionResult;
 
-            if (!response.ok || !result.ok) {
-                error = result.message || $t('admin.form.couldNotSave');
+            if (result.type === 'success') {
+                const data = actionData(result);
+
+                if (!data?.ok) {
+                    error = data?.message || $t('admin.form.couldNotSave');
+                    return;
+                }
+
+                successMessage =
+                    data.message ||
+                    `${$t('admin.form.saved')}${data.slug || data.id ? `: ${data.slug || data.id}` : ''}`;
+
+                successBackHref = '/admin/events';
+                successDialogOpen = true;
+
+                await invalidateAll();
                 return;
             }
 
-            success = `${$t('admin.form.saved')}: ${result.slug}`;
+            if (result.type === 'failure') {
+                const data = actionData(result);
+
+                error = data?.message || $t('admin.form.couldNotSave');
+                return;
+            }
+
+            if (result.type === 'redirect') {
+                successMessage = $t('admin.form.saved');
+                successBackHref = result.location || '/admin/events';
+                successDialogOpen = true;
+
+                await invalidateAll();
+                return;
+            }
+
+            if (result.type === 'error') {
+                error = result.error?.message || $t('admin.form.couldNotSave');
+                return;
+            }
+
+            error = $t('admin.form.couldNotSave');
         } catch {
             error = $t('admin.form.couldNotSave');
         } finally {
@@ -324,7 +385,7 @@
                     </Popover.Trigger>
 
                     <Popover.Content
-                            class="z-9999 w-auto overflow-hidden rounded-xl border border-slate-300 bg-white p-0 text-slate-950 shadow-xl"
+                            class="z-[9999] w-auto overflow-hidden rounded-xl border bg-popover p-0 text-popover-foreground shadow-md"
                             align="start"
                             sideOffset={6}
                     >
@@ -333,9 +394,9 @@
                                 bind:value={selectedDate}
                                 captionLayout="dropdown"
                                 onValueChange={() => {
-                                    validateField('date');
-                                    datePickerOpen = false;
-                                }}
+                                datePickerOpen = false;
+                                queueMicrotask(() => validateField('date'));
+                            }}
                         />
                     </Popover.Content>
                 </Popover.Root>
@@ -390,20 +451,20 @@
                     {$t('admin.form.category')}
                 </Label>
 
-                <Select.Root type="single" bind:value={event.category}>
+                <Select.Root
+                        type="single"
+                        bind:value={event.category}
+                        onValueChange={() => validateField('category')}
+                >
                     <Select.Trigger
                             id={`${id}-category`}
                             aria-invalid={!!fieldErrors.category}
-                            class={cn(
-                            controlClass,
-                            'w-full justify-between px-3',
-                            fieldErrors.category && invalidControlClass
-                        )}
+                            class={cn(controlClass, 'w-full justify-between', fieldErrors.category && invalidControlClass)}
                     >
                         {event.category}
                     </Select.Trigger>
 
-                    <Select.Content class="z-9999 rounded-xl border border-slate-300 bg-white shadow-xl">
+                    <Select.Content class="z-[9999] rounded-xl border border-slate-300 bg-white shadow-xl">
                         {#each EVENT_CATEGORIES as category}
                             <Select.Item value={category} label={category}>
                                 {category}
@@ -486,10 +547,6 @@
         <p class="error">{error}</p>
     {/if}
 
-    {#if success}
-        <p class="success">{success}</p>
-    {/if}
-
     <div class="flex justify-end gap-2 pt-2">
         <a
                 href="/admin/events"
@@ -509,6 +566,29 @@
         </Button>
     </div>
 </form>
+
+<AlertDialog.Root bind:open={successDialogOpen}>
+    <AlertDialog.Content class="rounded-2xl">
+        <AlertDialog.Header>
+            <AlertDialog.Title>
+                {$t('admin.form.saved')}
+            </AlertDialog.Title>
+
+            <AlertDialog.Description>
+                {successMessage}
+            </AlertDialog.Description>
+        </AlertDialog.Header>
+
+        <AlertDialog.Footer>
+            <AlertDialog.Action
+                    class="rounded-xl"
+                    onclick={() => goto(successBackHref)}
+            >
+                OK
+            </AlertDialog.Action>
+        </AlertDialog.Footer>
+    </AlertDialog.Content>
+</AlertDialog.Root>
 
 <style>
     .form {
@@ -546,9 +626,13 @@
         color: #004680;
     }
 
-    .card {
+    .card,
+    .sections {
         display: grid;
         gap: 1rem;
+    }
+
+    .card {
         border: 1px solid #eaecf0;
         border-radius: 1rem;
         background: #fff;
@@ -568,12 +652,7 @@
     }
 
     .placeholder {
-        color: #667085;
-    }
-
-    .sections {
-        display: grid;
-        gap: 1rem;
+        color: #98a2b3;
     }
 
     .field-error,
@@ -585,11 +664,6 @@
     .field-error {
         font-size: 0.8125rem;
         line-height: 1.25rem;
-    }
-
-    .success {
-        margin: 0;
-        color: #027a48;
     }
 
     @media (max-width: 720px) {

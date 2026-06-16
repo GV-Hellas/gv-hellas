@@ -1,20 +1,25 @@
-import {error, json} from '@sveltejs/kit';
-import type {RequestEvent} from '@sveltejs/kit';
+import {error, fail} from '@sveltejs/kit';
+import type {Actions} from '@sveltejs/kit';
 
 import type {EventPayload, EventSection} from '$lib/cms/events/types';
 import {EVENT_CATEGORIES, eventPayloadSchema} from '$lib/cms/events/schema';
 import {sanitizeEventHtml} from '$lib/server/html/sanitizeEventHtml';
 import {getEventBySlug, saveEvent} from '$lib/server/cms/eventsStore';
 import {saveEventMedia} from '$lib/server/cms/mediaStore';
+import {
+    prepareUploadedMediaFile,
+    translateEventPayloadMissingGerman
+} from '$lib/server/mediaProcessing';
 
-type Actions = {
-    save: (event: RequestEvent) => Promise<Response>;
+type ActionResponse = {
+    ok: boolean;
+    id?: string;
+    slug?: string;
+    message?: string;
 };
 
 function localizedText(value: unknown) {
-    if (!value || typeof value !== 'object') {
-        return {el: '', de: ''};
-    }
+    if (!value || typeof value !== 'object') return {el: '', de: ''};
 
     const record = value as Partial<Record<'el' | 'de', unknown>>;
 
@@ -25,8 +30,7 @@ function localizedText(value: unknown) {
 }
 
 function parsePrice(value: unknown) {
-    if (value === '' || value === undefined) return null;
-    if (value === null) return null;
+    if (value === '' || value === undefined || value === null) return null;
 
     const n = Number(value);
 
@@ -42,6 +46,14 @@ function emptySection(): EventSection {
     };
 }
 
+function isEventCategory(value: unknown): value is EventPayload['category'] {
+    return typeof value === 'string' && (EVENT_CATEGORIES as readonly string[]).includes(value);
+}
+
+function normalizeCategory(value: unknown): EventPayload['category'] {
+    return isEventCategory(value) ? value : 'general';
+}
+
 function normalizeEventForForm(raw: unknown): EventPayload {
     const source = raw && typeof raw === 'object' ? (raw as Record<string, unknown>) : {};
 
@@ -50,60 +62,85 @@ function normalizeEventForForm(raw: unknown): EventPayload {
             ? source.sections
             : [emptySection()];
 
-    const category =
-        typeof source.category === 'string' && EVENT_CATEGORIES.includes(source.category as never)
-            ? source.category
-            : 'general';
-
     return {
         title: localizedText(source.title),
         description: localizedText(source.description ?? source.excerpt),
         date: typeof source.date === 'string' ? source.date : '',
         time: typeof source.time === 'string' ? source.time : '',
         location: typeof source.location === 'string' ? source.location : '',
-        category,
+        category: normalizeCategory(source.category),
         priceMembers: parsePrice(source.priceMembers),
         pricePublic: parsePrice(source.pricePublic),
         sections: sections as EventSection[]
     };
 }
 
-function sanitizeAndAttachMedia(event: EventPayload, formData: FormData, slug: string) {
-    return Promise.all(
-        event.sections.map(async (section) => {
-            section.beforeHtml.el = sanitizeEventHtml(section.beforeHtml.el);
-            section.beforeHtml.de = sanitizeEventHtml(section.beforeHtml.de);
-            section.afterHtml.el = sanitizeEventHtml(section.afterHtml.el);
-            section.afterHtml.de = sanitizeEventHtml(section.afterHtml.de);
+function normalizeIncomingPayload(parsedJson: unknown) {
+    const source = parsedJson && typeof parsedJson === 'object' ? (parsedJson as Record<string, unknown>) : {};
 
-            for (const media of section.media) {
-                if (!media.uploadKey) continue;
+    return {
+        ...source,
+        category: normalizeCategory(source.category),
+        priceMembers: parsePrice(source.priceMembers),
+        pricePublic: parsePrice(source.pricePublic)
+    };
+}
 
-                const file = formData.get(media.uploadKey);
+function sanitizeEvent(event: EventPayload) {
+    for (const section of event.sections) {
+        section.beforeHtml.el = sanitizeEventHtml(section.beforeHtml.el);
+        section.beforeHtml.de = sanitizeEventHtml(section.beforeHtml.de);
+        section.afterHtml.el = sanitizeEventHtml(section.afterHtml.el);
+        section.afterHtml.de = sanitizeEventHtml(section.afterHtml.de);
+    }
 
-                if (file instanceof File && file.size > 0) {
-                    const saved = await saveEventMedia(file, slug);
+    return event;
+}
 
-                    media.url = saved.url;
-                    media.filename = saved.filename;
-                    media.mimeType = saved.mimeType;
-                }
+async function sanitizeTranslateAndAttachMedia(event: EventPayload, formData: FormData, slug: string) {
+    sanitizeEvent(event);
+    await translateEventPayloadMissingGerman(event);
+    sanitizeEvent(event);
 
-                delete media.uploadKey;
+    for (const section of event.sections) {
+        for (const media of section.media) {
+            if (!media.uploadKey) continue;
+
+            const file = formData.get(media.uploadKey);
+
+            if (file instanceof File && file.size > 0) {
+                const processed = await prepareUploadedMediaFile(file);
+                const saved = await saveEventMedia(processed.file, slug);
+
+                media.type = processed.kind;
+                media.url = saved.url;
+                media.filename = saved.filename;
+                media.originalFilename = file.name;
+                media.mimeType = saved.mimeType;
+                media.size = saved.size;
             }
-        })
-    );
+
+            delete media.uploadKey;
+        }
+    }
 }
 
 async function getEventFromRouteSlug(routeSlug: string) {
-    console.log('routeSlug', routeSlug);
     return (
-        await getEventBySlug(routeSlug) ??
-        await getEventBySlug(encodeURIComponent(routeSlug))
+        (await getEventBySlug(routeSlug)) ??
+        (await getEventBySlug(decodeURIComponent(routeSlug))) ??
+        (await getEventBySlug(encodeURIComponent(routeSlug)))
     );
 }
 
-export const load: ({params}: { params: { slug: string } }) => Promise<{ event: EventPayload }> = async ({params}: { params: { slug: string } }) => {
+function actionError(status: number, message: string) {
+    return fail(status, {
+        ok: false,
+        message
+    } satisfies ActionResponse);
+}
+
+export const load = async ({params}: {params: {slug: string}}) => {
     const existing = await getEventFromRouteSlug(params.slug);
 
     if (!existing) {
@@ -120,13 +157,7 @@ export const actions: Actions = {
         const existing = await getEventFromRouteSlug(params.slug);
 
         if (!existing) {
-            return json(
-                {
-                    ok: false,
-                    message: 'Event not found'
-                },
-                {status: 404}
-            );
+            return actionError(404, 'Event not found');
         }
 
         const slug = existing.slug;
@@ -134,13 +165,7 @@ export const actions: Actions = {
         const rawPayload = formData.get('payload');
 
         if (typeof rawPayload !== 'string') {
-            return json(
-                {
-                    ok: false,
-                    message: 'Missing event payload'
-                },
-                {status: 400}
-            );
+            return actionError(400, 'Missing event payload');
         }
 
         let parsedJson: unknown;
@@ -148,43 +173,34 @@ export const actions: Actions = {
         try {
             parsedJson = JSON.parse(rawPayload);
         } catch {
-            return json(
-                {
-                    ok: false,
-                    message: 'Invalid event payload'
-                },
-                {status: 400}
-            );
+            return actionError(400, 'Invalid event payload');
         }
 
-        const normalized = {
-            ...(parsedJson as Record<string, unknown>),
-            priceMembers: parsePrice((parsedJson as Record<string, unknown>).priceMembers),
-            pricePublic: parsePrice((parsedJson as Record<string, unknown>).pricePublic)
-        };
-
+        const normalized = normalizeIncomingPayload(parsedJson);
         const result = eventPayloadSchema.safeParse(normalized);
 
         if (!result.success) {
-            return json(
-                {
-                    ok: false,
-                    message: result.error.issues[0]?.message || 'Invalid event data'
-                },
-                {status: 400}
+            return actionError(400, result.error.issues[0]?.message || 'Invalid event data');
+        }
+
+        const event = result.data as EventPayload;
+
+        try {
+            await sanitizeTranslateAndAttachMedia(event, formData, slug);
+        } catch (error) {
+            return actionError(
+                400,
+                error instanceof Error ? error.message : 'Could not process uploaded media'
             );
         }
 
-        const event = result.data;
-
-        await sanitizeAndAttachMedia(event, formData, slug);
-
         const stored = await saveEvent(event, slug);
 
-        return json({
+        return {
             ok: true,
             id: stored.id,
-            slug: stored.slug
-        });
+            slug: stored.slug,
+            message: 'Event saved successfully'
+        } satisfies ActionResponse;
     }
 };

@@ -1,85 +1,93 @@
 <script lang="ts">
     import {t} from '$lib/i18n';
-    import MediaSkeleton from '$lib/components/MediaSkeleton.svelte';
     import type {Lang, StoredEvent, EventMedia} from '$lib/cms/events/types';
 
-    let {event, lang = 'el'}: { event: StoredEvent; lang?: Lang } = $props();
+    let {event, lang = 'el'} = $props<{
+        event: StoredEvent;
+        lang?: Lang;
+    }>();
 
-    function localized(value?: { el?: string; de?: string }) {
-        return value?.[lang] || value?.el || value?.de || '';
-    }
+    function firstMedia(event: StoredEvent): EventMedia | null {
+        const media: EventMedia[] = [];
 
-    function firstImage(event: StoredEvent): EventMedia | null {
         for (const section of event.sections || []) {
-            for (const media of section.media || []) {
-                if (media.type === 'image' && media.url) return media;
+            for (const item of section.media || []) {
+                if (item?.url) {
+                    media.push(item);
+                }
             }
         }
 
-        return null;
+        return (
+            media.find((item) => item.type === 'image') ??
+            media.find((item) => item.type === 'video') ??
+            null
+        );
     }
 
-    function formatDate(event: StoredEvent) {
-        if (!event.date) return '';
-
-        const date = new Date(`${event.date}T${event.time || '00:00'}`);
-
-        if (Number.isNaN(date.getTime())) return event.date;
-
-        return new Intl.DateTimeFormat(lang === 'de' ? 'de-CH' : 'el-GR', {
-            dateStyle: 'medium',
-            timeStyle: event.time ? 'short' : undefined
-        }).format(date);
+    function localized(value: Partial<Record<Lang, string>> | undefined) {
+        return value?.[lang] || value?.el || value?.de || '';
     }
 
+    let cardMedia = $derived(firstMedia(event));
     let title = $derived(localized(event.title));
     let description = $derived(localized(event.description));
-    let image = $derived(firstImage(event));
-    let formattedDate = $derived(formatDate(event));
+    let mediaAlt = $derived(
+        localized(cardMedia?.alt) ||
+        localized(cardMedia?.caption) ||
+        title ||
+        'GV Hellas'
+    );
 </script>
 
 <a
         href={`/events/${event.slug}`}
-        class="group block overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+        class="group block overflow-hidden rounded-2xl border border-border bg-card text-card-foreground shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
 >
-    {#if image?.url}
-        <MediaSkeleton
-                src={image.url}
-                alt={localized(image.alt) || title}
-                mediaClass="h-52 object-cover"
-                containerClass="h-52"
-        />
-    {:else}
-        <div class="flex h-52 items-center justify-center bg-slate-100 text-sm font-semibold text-slate-500">
-            GV Hellas
+    <div class="relative aspect-[4/3] overflow-hidden bg-muted">
+        {#if cardMedia?.type === 'image' && cardMedia.url}
+            <img
+                    src={cardMedia.url}
+                    alt={mediaAlt}
+                    loading="lazy"
+                    class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+            />
+        {:else if cardMedia?.type === 'video' && cardMedia.url}
+            <video
+                    class="h-full w-full object-cover"
+                    muted
+                    playsinline
+                    preload="metadata"
+            >
+                <source src={cardMedia.url} type={cardMedia.mimeType || 'video/webm'} />
+            </video>
+        {:else}
+            <div class="flex h-full w-full items-center justify-center bg-muted px-6 text-center text-sm text-muted-foreground">
+                GV Hellas
+            </div>
+        {/if}
+    </div>
+
+    <div class="space-y-3 p-5">
+        <div class="text-sm font-medium text-muted-foreground">
+            {event.date}
+            {#if event.time}
+                · {event.time}
+            {/if}
         </div>
-    {/if}
 
-    <div class="p-5">
-        {#if event.category}
-            <p class="text-xs font-semibold uppercase tracking-wide text-primary-dark">
-                {event.category}
-            </p>
-        {/if}
-
-        {#if formattedDate}
-            <p class="mt-1 text-xs font-medium text-slate-500">
-                {formattedDate}
-            </p>
-        {/if}
-
-        <h3 class="mt-2 text-lg font-semibold text-slate-900">
+        <h3 class="line-clamp-2 text-lg font-semibold">
             {title}
         </h3>
 
         {#if description}
-            <p class="mt-2 line-clamp-3 text-sm text-slate-600">
-                {description}
+            <p class="line-clamp-3 text-sm text-muted-foreground">
+                {@html description}
             </p>
         {/if}
 
-        <div class="mt-4 text-sm font-semibold text-primary-dark group-hover:underline">
-            {$t('events.readMore')} →
+        <div class="pt-1 text-sm font-semibold text-primary">
+            {$t('events.readMore')}
         </div>
     </div>
 </a>

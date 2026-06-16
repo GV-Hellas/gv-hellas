@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import {z} from 'zod';
 
 export const EVENT_CATEGORIES = [
     'general',
@@ -8,43 +8,52 @@ export const EVENT_CATEGORIES = [
     'celebration'
 ] as const;
 
-const localizedTextSchema = z.object({
-    el: z.string().trim(),
-    de: z.string().trim()
+export const eventMediaTypeSchema = z.enum(['image', 'video', 'audio']);
+
+export const localizedTextSchema = z.object({
+    el: z.string().trim().min(1, 'Required'),
+    de: z.string().trim().optional().default('')
 });
 
-const mediaSchema = z.object({
+export const optionalLocalizedTextSchema = z.object({
+    el: z.string().optional().default(''),
+    de: z.string().optional().default('')
+});
+
+export const eventMediaSchema = z.object({
     id: z.string().min(1),
-    type: z.enum(['image', 'video', 'audio']),
-    uploadKey: z.string().optional(),
-    url: z.string().optional(),
+    type: eventMediaTypeSchema,
+    url: z.string().optional().default(''),
     filename: z.string().optional(),
+    originalFilename: z.string().optional(),
     mimeType: z.string().optional(),
-    alt: localizedTextSchema.optional()
+    size: z.number().optional(),
+    alt: optionalLocalizedTextSchema.optional(),
+    caption: optionalLocalizedTextSchema.optional(),
+    uploadKey: z.string().optional()
 });
 
-const sectionSchema = z.object({
+export const eventSectionSchema = z.object({
     id: z.string().min(1),
-    beforeHtml: localizedTextSchema,
-    media: z.array(mediaSchema),
-    afterHtml: localizedTextSchema
+    beforeHtml: optionalLocalizedTextSchema,
+    media: z.array(eventMediaSchema).default([]),
+    afterHtml: optionalLocalizedTextSchema
 });
+
+const nullablePriceSchema = z
+    .union([z.number(), z.null()])
+    .default(null);
 
 export const eventPayloadSchema = z.object({
-    title: localizedTextSchema.refine((v) => v.el || v.de, {
-        message: 'Title is required in at least one language'
-    }),
-    description: localizedTextSchema.refine(
-        (v) => v.el.length <= 360 && v.de.length <= 360,
-        { message: 'Description must be max 360 characters per language' }
-    ),
-    date: z.string().min(1),
-    time: z.string().min(1),
-    location: z.string().trim().min(1),
-    category: z.enum(EVENT_CATEGORIES),
-    priceMembers: z.number().min(0).nullable(),
-    pricePublic: z.number().min(0).nullable(),
-    sections: z.array(sectionSchema).min(1)
+    title: localizedTextSchema,
+    description: optionalLocalizedTextSchema,
+    date: z.string().trim().min(1, 'Required'),
+    time: z.string().trim().min(1, 'Required'),
+    location: z.string().trim().min(1, 'Required'),
+    category: z.enum(EVENT_CATEGORIES).default('general'),
+    priceMembers: nullablePriceSchema,
+    pricePublic: nullablePriceSchema,
+    sections: z.array(eventSectionSchema).min(1, 'At least one section is required')
 });
 
-export type EventPayloadInput = z.infer<typeof eventPayloadSchema>;
+export type EventPayloadValidated = z.infer<typeof eventPayloadSchema>;
