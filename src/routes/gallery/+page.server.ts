@@ -1,7 +1,11 @@
-import { getGallery } from '$lib/cms';
+import type {ServerLoad} from '@sveltejs/kit';
 
-/** @type {import('./$types').PageServerLoad} */
-export async function load({ fetch }) {
-  const items = await getGallery({ fetch });
-  return { items };
-}
+import {listGallery} from '$lib/server/cms/galleryStore';
+
+export const load: ServerLoad = async () => {
+    const items = await listGallery();
+
+    return {
+        items
+    };
+};

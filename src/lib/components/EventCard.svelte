@@ -44,7 +44,7 @@
         href={`/events/${event.slug}`}
         class="group block overflow-hidden rounded-2xl border border-border bg-card text-card-foreground shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
 >
-    <div class="relative aspect-[4/3] overflow-hidden bg-muted">
+    <div class="relative aspect-4/3 overflow-hidden bg-muted">
         {#if cardMedia?.type === 'image' && cardMedia.url}
             <img
                     src={cardMedia.url}

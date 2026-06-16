@@ -150,9 +150,8 @@ export async function prepareUploadedImageFile(file: File): Promise<PreparedUplo
     const processed = await processImageBytesToWebp(sourceBytes);
     const filename = `${safeBaseFilename(file.name)}.webp`;
 
-    // @ts-ignore
     return {
-        file: new File([processed], filename, {type: 'image/webp'}),
+        file: new File([new Uint8Array(processed)], filename, {type: 'image/webp'}),
         bytes: processed,
         filename,
         originalFilename: file.name,

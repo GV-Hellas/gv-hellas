@@ -1,10 +1,10 @@
+import {env} from '$env/dynamic/private';
 import {getDB} from '$lib/server/db';
+import {slugify} from '$lib/utils';
 import type {Cookies} from '@sveltejs/kit';
 
-const db = getDB();
-
-type MultiLang = { el: string; de: string };
-type Variants = { webp?: string; jpg?: string };
+type MultiLang = {el: string; de: string};
+type Variants = {webp?: string; jpg?: string};
 
 type GalleryItem = {
     id: string;
@@ -15,9 +15,30 @@ type GalleryItem = {
     tags: string[];
 };
 
-type LinkItem = { id?: number; name: MultiLang; url: string; logo: string; logoVariants: Variants };
-type BusinessItem = { id?: number; name: string; url: string; logo: string; logoVariants: Variants };
-type EquipmentImage = { src: string; variants: Variants };
+type LinkItem = {
+    id?: number;
+    name: MultiLang;
+    descriptionHtml?: MultiLang;
+    url: string;
+    logo: string;
+    logoVariants: Variants;
+};
+
+type BusinessItem = {
+    id?: number;
+    sponsorType?: string;
+    name: string;
+    slug?: string;
+    url: string;
+    logo: string;
+    logoVariants: Variants;
+};
+
+type EquipmentImage = {
+    src: string;
+    variants: Variants;
+};
+
 type EquipmentItem = {
     id?: number;
     name: string;
@@ -29,263 +50,773 @@ type EquipmentItem = {
     images: EquipmentImage[];
 };
 
+function formatSupabaseError(context: string, error: {message: string}) {
+    return new Error(`${context}: ${error.message}`);
+}
+
+function nowIso() {
+    return new Date().toISOString();
+}
+
+function parseVariants(row: Record<string, unknown>, base: string): Variants {
+    return {
+        webp: String(row[`${base}_webp`] || ''),
+        jpg: String(row[`${base}_jpg`] || '')
+    };
+}
+
+function safeSlug(value: string) {
+    return value
+        .trim()
+        .replace(/\.json$/i, '')
+        .replaceAll('/', '')
+        .replaceAll('\\', '');
+}
+
+function normalizeBusinessSlug(value: string) {
+    return safeSlug(slugify(value));
+}
+
+function tagNameFromJoin(row: Record<string, unknown>) {
+    const relation = row.gallery_tags as {name?: string} | {name?: string}[] | null | undefined;
+
+    if (Array.isArray(relation)) {
+        return relation[0]?.name || '';
+    }
+
+    return relation?.name || '';
+}
+
 export function isAdminAuthenticated(cookies: Cookies): boolean {
     return cookies.get('cms_admin') === '1';
 }
 
 export function validateAdminCredentials(username: string, password: string): boolean {
-    const envUser = process.env.CMS_ADMIN_USER || 'admin';
-    const envPass = process.env.CMS_ADMIN_PASSWORD || 'admin123';
+    const envUser = env.CMS_ADMIN_USER || 'admin';
+    const envPass = env.CMS_ADMIN_PASSWORD || 'admin123';
+
     return username === envUser && password === envPass;
 }
 
-function parseBlocks(value: string): unknown[] {
-    try {
-        return JSON.parse(value || '[]') as unknown[];
-    } catch {
-        return [];
+/* Gallery */
+
+export async function listGallery(): Promise<GalleryItem[]> {
+    const supabase = await getDB();
+
+    const {data: items, error: itemError} = await supabase
+        .from('gallery_items')
+        .select('*')
+        .order('created_at', {
+            ascending: false
+        });
+
+    if (itemError) {
+        throw formatSupabaseError('Listing gallery items failed', itemError);
     }
+
+    const {data: joins, error: joinError} = await supabase
+        .from('gallery_item_tags')
+        .select('item_id, gallery_tags(name)');
+
+    if (joinError) {
+        throw formatSupabaseError('Listing gallery item tags failed', joinError);
+    }
+
+    const tagMap = new Map<string, string[]>();
+
+    for (const row of joins || []) {
+        const itemId = String((row as Record<string, unknown>).item_id || '');
+        const tagName = tagNameFromJoin(row as Record<string, unknown>);
+
+        if (!itemId || !tagName) continue;
+
+        const existing = tagMap.get(itemId) || [];
+        existing.push(tagName);
+        tagMap.set(itemId, existing);
+    }
+
+    return (items || []).map((row) => {
+        const r = row as Record<string, unknown>;
+
+        return {
+            id: String(r.id || ''),
+            type: String(r.type || 'image'),
+            src: String(r.src || ''),
+            srcVariants: parseVariants(r, 'src'),
+            alt: String(r.alt || ''),
+            tags: tagMap.get(String(r.id || '')) || []
+        };
+    });
 }
 
-function parseVariants(row: Record<string, unknown>, base: string): Variants {
-    return {webp: String(row[`${base}_webp`] || ''), jpg: String(row[`${base}_jpg`] || '')};
+export async function allGalleryTags(): Promise<string[]> {
+    const supabase = await getDB();
+
+    const {data, error} = await supabase
+        .from('gallery_tags')
+        .select('name')
+        .order('name', {
+            ascending: true
+        });
+
+    if (error) {
+        throw formatSupabaseError('Listing gallery tags failed', error);
+    }
+
+    return (data || []).map((row) => String(row.name || '')).filter(Boolean);
 }
 
-export function listGallery(): GalleryItem[] {
-    const items = db.prepare(`SELECT *
-                              FROM gallery_items
-                              ORDER BY created_at DESC`).all() as any[];
-    const tagsStmt = db.prepare(`
-        SELECT t.name
-        FROM gallery_tags t
-                 JOIN gallery_item_tags it ON it.tag_id = t.id
-        WHERE it.item_id = ?
-        ORDER BY t.name ASC
-    `);
+export async function getGalleryById(id: string): Promise<GalleryItem | null> {
+    const items = await listGallery();
 
-    return items.map((row) => ({
-        id: row.id,
-        type: row.type,
-        src: row.src,
-        srcVariants: parseVariants(row, 'src'),
-        alt: row.alt || '',
-        tags: (tagsStmt.all(row.id) as Array<{ name: string }>).map((r) => r.name)
-    }));
+    return items.find((item) => item.id === id) || null;
 }
 
-export function allGalleryTags(): string[] {
-    return (db.prepare(`SELECT name
-                        FROM gallery_tags
-                        ORDER BY name`).all() as Array<{ name: string }>).map((r) => r.name);
-}
+export async function upsertGallery(item: GalleryItem): Promise<void> {
+    const supabase = await getDB();
 
-export function getGalleryById(id: string): GalleryItem | null {
-    return listGallery().find((item) => item.id === id) || null;
-}
+    const {error: itemError} = await supabase
+        .from('gallery_items')
+        .upsert(
+            {
+                id: item.id,
+                type: item.type || 'image',
+                src: item.src || '',
+                src_webp: item.srcVariants?.webp || '',
+                src_jpg: item.srcVariants?.jpg || '',
+                alt: item.alt || '',
+                updated_at: nowIso()
+            },
+            {
+                onConflict: 'id'
+            }
+        );
 
-export function upsertGallery(item: GalleryItem): void {
-    db.prepare(`
-        INSERT INTO gallery_items (id, type, src, src_webp, src_jpg, alt, updated_at)
-        VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
-        ON CONFLICT(id) DO UPDATE SET type=excluded.type,
-                                      src=excluded.src,
-                                      src_webp=excluded.src_webp,
-                                      src_jpg=excluded.src_jpg,
-                                      alt=excluded.alt,
-                                      updated_at=CURRENT_TIMESTAMP
-    `).run(item.id, item.type || 'image', item.src, item.srcVariants?.webp || '', item.srcVariants?.jpg || '', item.alt || '');
+    if (itemError) {
+        throw formatSupabaseError(`Saving gallery item "${item.id}" failed`, itemError);
+    }
 
-    db.prepare(`DELETE
-                FROM gallery_item_tags
-                WHERE item_id = ?`).run(item.id);
+    const {error: deleteError} = await supabase
+        .from('gallery_item_tags')
+        .delete()
+        .eq('item_id', item.id);
+
+    if (deleteError) {
+        throw formatSupabaseError(`Clearing gallery tags for "${item.id}" failed`, deleteError);
+    }
+
     for (const tagName of item.tags || []) {
-        if (!tagName) continue;
-        db.prepare(`INSERT INTO gallery_tags (name)
-                    VALUES (?)
-                    ON CONFLICT(name) DO NOTHING`).run(tagName);
-        const tag = db.prepare(`SELECT id
-                                FROM gallery_tags
-                                WHERE name = ?`).get(tagName) as { id: number } | undefined;
-        if (tag?.id) {
-            db.prepare(`INSERT OR IGNORE INTO gallery_item_tags (item_id, tag_id)
-                        VALUES (?, ?)`).run(item.id, tag.id);
+        const cleanTag = String(tagName || '').trim();
+
+        if (!cleanTag) continue;
+
+        const {data: tag, error: tagError} = await supabase
+            .from('gallery_tags')
+            .upsert(
+                {
+                    name: cleanTag
+                },
+                {
+                    onConflict: 'name'
+                }
+            )
+            .select('id')
+            .single();
+
+        if (tagError) {
+            throw formatSupabaseError(`Saving gallery tag "${cleanTag}" failed`, tagError);
+        }
+
+        const tagId = Number(tag?.id);
+
+        if (!tagId) continue;
+
+        const {error: joinError} = await supabase
+            .from('gallery_item_tags')
+            .upsert(
+                {
+                    item_id: item.id,
+                    tag_id: tagId
+                },
+                {
+                    onConflict: 'item_id,tag_id'
+                }
+            );
+
+        if (joinError) {
+            throw formatSupabaseError(`Linking gallery tag "${cleanTag}" failed`, joinError);
         }
     }
 }
 
-export function deleteGallery(id: string): void {
-    db.prepare(`DELETE
-                FROM gallery_items
-                WHERE id = ?`).run(id);
+export async function deleteGallery(id: string): Promise<boolean> {
+    const supabase = await getDB();
+
+    const {error, count} = await supabase
+        .from('gallery_items')
+        .delete({
+            count: 'exact'
+        })
+        .eq('id', id);
+
+    if (error) {
+        throw formatSupabaseError(`Deleting gallery item "${id}" failed`, error);
+    }
+
+    return (count ?? 0) > 0;
 }
 
-export function listLinks(): LinkItem[] {
-    return (db.prepare(`SELECT *
-                        FROM links
-                        ORDER BY id`).all() as any[]).map((r) => ({
-        id: r.id,
-        name: {el: r.name_el, de: r.name_de},
-        url: r.url,
-        logo: r.logo || '',
-        logoVariants: parseVariants(r, 'logo')
-    }));
+/* Links */
+
+export async function listLinks(): Promise<LinkItem[]> {
+    const supabase = await getDB();
+
+    const {data, error} = await supabase
+        .from('links')
+        .select('*')
+        .order('id', {
+            ascending: true
+        });
+
+    if (error) {
+        throw formatSupabaseError('Listing links failed', error);
+    }
+
+    return (data || []).map((row) => {
+        const r = row as Record<string, unknown>;
+
+        return {
+            id: Number(r.id),
+            name: {
+                el: String(r.name_el || ''),
+                de: String(r.name_de || '')
+            },
+            descriptionHtml: {
+                el: String(r.description_html_el || ''),
+                de: String(r.description_html_de || '')
+            },
+            url: String(r.url || ''),
+            logo: String(r.logo || r.logo_webp || r.logo_jpg || ''),
+            logoVariants: {
+                webp: String(r.logo_webp || r.logo || ''),
+                jpg: String(r.logo_jpg || '')
+            }
+        };
+    });
 }
 
-export function getLinkById(id: number): LinkItem | null {
-    return listLinks().find((item) => item.id === id) || null;
+export async function getLinkById(id: number): Promise<LinkItem | null> {
+    if (!Number.isFinite(id)) return null;
+
+    const supabase = await getDB();
+
+    const {data, error} = await supabase
+        .from('links')
+        .select('*')
+        .eq('id', id)
+        .maybeSingle();
+
+    if (error) {
+        throw formatSupabaseError(`Loading link "${id}" failed`, error);
+    }
+
+    if (!data) return null;
+
+    const row = data as Record<string, unknown>;
+
+    return {
+        id: Number(row.id),
+        name: {
+            el: String(row.name_el || ''),
+            de: String(row.name_de || '')
+        },
+        descriptionHtml: {
+            el: String(row.description_html_el || ''),
+            de: String(row.description_html_de || '')
+        },
+        url: String(row.url || ''),
+        logo: String(row.logo || row.logo_webp || row.logo_jpg || ''),
+        logoVariants: {
+            webp: String(row.logo_webp || row.logo || ''),
+            jpg: String(row.logo_jpg || '')
+        }
+    };
 }
 
-export function upsertLink(link: LinkItem): void {
+export async function upsertLink(link: LinkItem): Promise<LinkItem> {
+    const supabase = await getDB();
+
+    const row = {
+        name_el: link.name.el || '',
+        name_de: link.name.de || '',
+        description_html_el: link.descriptionHtml?.el || '',
+        description_html_de: link.descriptionHtml?.de || '',
+        url: link.url,
+        logo: link.logo || link.logoVariants?.webp || '',
+        logo_webp: link.logoVariants?.webp || link.logo || '',
+        logo_jpg: link.logoVariants?.jpg || '',
+        updated_at: nowIso()
+    };
+
     if (link.id) {
-        db.prepare(`
-            UPDATE links
-            SET name_el   = ?,
-                name_de   = ?,
-                url       = ?,
-                logo      = ?,
-                logo_webp = ?,
-                logo_jpg  = ?
-            WHERE id = ?
-        `).run(link.name.el, link.name.de, link.url, link.logo || '', link.logoVariants?.webp || '', link.logoVariants?.jpg || '', link.id);
-        return;
+        const {data, error} = await supabase
+            .from('links')
+            .update(row)
+            .eq('id', link.id)
+            .select('*')
+            .single();
+
+        if (error) {
+            throw formatSupabaseError(`Updating link "${link.id}" failed`, error);
+        }
+
+        return {
+            id: Number(data.id),
+            name: {
+                el: data.name_el || '',
+                de: data.name_de || ''
+            },
+            descriptionHtml: {
+                el: data.description_html_el || '',
+                de: data.description_html_de || ''
+            },
+            url: data.url || '',
+            logo: data.logo || data.logo_webp || '',
+            logoVariants: {
+                webp: data.logo_webp || data.logo || '',
+                jpg: data.logo_jpg || ''
+            }
+        };
     }
 
-    db.prepare(`INSERT INTO links (name_el, name_de, url, logo, logo_webp, logo_jpg)
-                VALUES (?, ?, ?, ?, ?, ?)`)
-        .run(link.name.el, link.name.de, link.url, link.logo || '', link.logoVariants?.webp || '', link.logoVariants?.jpg || '');
+    const {data, error} = await supabase
+        .from('links')
+        .upsert(row, {
+            onConflict: 'url'
+        })
+        .select('*')
+        .single();
+
+    if (error) {
+        throw formatSupabaseError(`Saving link "${link.url}" failed`, error);
+    }
+
+    return {
+        id: Number(data.id),
+        name: {
+            el: data.name_el || '',
+            de: data.name_de || ''
+        },
+        descriptionHtml: {
+            el: data.description_html_el || '',
+            de: data.description_html_de || ''
+        },
+        url: data.url || '',
+        logo: data.logo || data.logo_webp || '',
+        logoVariants: {
+            webp: data.logo_webp || data.logo || '',
+            jpg: data.logo_jpg || ''
+        }
+    };
 }
 
-export function deleteLink(id: number): void {
-    db.prepare(`DELETE
-                FROM links
-                WHERE id = ?`).run(id);
+export async function deleteLink(id: number): Promise<boolean> {
+    if (!Number.isFinite(id)) return false;
+
+    const supabase = await getDB();
+
+    const {error, count} = await supabase
+        .from('links')
+        .delete({
+            count: 'exact'
+        })
+        .eq('id', id);
+
+    if (error) {
+        throw formatSupabaseError(`Deleting link "${id}" failed`, error);
+    }
+
+    return (count ?? 0) > 0;
 }
 
-export function listBusinesses(): BusinessItem[] {
-    return (db.prepare(`SELECT *
-                        FROM businesses
-                        ORDER BY id`).all() as any[]).map((r) => ({
-        id: r.id,
-        name: r.name,
-        url: r.url,
-        logo: r.logo || '',
-        logoVariants: parseVariants(r, 'logo')
-    }));
+/* Businesses */
+
+async function businessSlugExists(slug: string, exceptId?: number): Promise<boolean> {
+    const supabase = await getDB();
+
+    let query = supabase
+        .from('businesses')
+        .select('id')
+        .eq('slug', slug)
+        .limit(1);
+
+    if (exceptId) {
+        query = query.neq('id', exceptId);
+    }
+
+    const {data, error} = await query;
+
+    if (error) {
+        throw formatSupabaseError(`Checking business slug "${slug}" failed`, error);
+    }
+
+    return (data || []).length > 0;
 }
 
-export function getBusinessById(id: number): BusinessItem | null {
-    return listBusinesses().find((item) => item.id === id) || null;
+async function uniqueBusinessSlug(baseSlug: string, exceptId?: number): Promise<string> {
+    const cleanBase = safeSlug(baseSlug) || `business-${crypto.randomUUID()}`;
+    let candidate = cleanBase;
+    let counter = 2;
+
+    while (await businessSlugExists(candidate, exceptId)) {
+        candidate = `${cleanBase}-${counter}`;
+        counter += 1;
+    }
+
+    return candidate;
 }
 
-export function upsertBusiness(item: BusinessItem): void {
+export async function listBusinesses(): Promise<BusinessItem[]> {
+    const supabase = await getDB();
+
+    const {data, error} = await supabase
+        .from('businesses')
+        .select('*')
+        .order('name', {
+            ascending: true
+        });
+
+    if (error) {
+        throw formatSupabaseError('Listing businesses failed', error);
+    }
+
+    return (data || []).map((row) => {
+        const r = row as Record<string, unknown>;
+
+        return {
+            id: Number(r.id),
+            sponsorType: String(r.sponsor_type || 'listed'),
+            name: String(r.name || ''),
+            slug: String(r.slug || ''),
+            url: String(r.url || ''),
+            logo: String(r.logo || r.logo_webp || r.logo_jpg || ''),
+            logoVariants: {
+                webp: String(r.logo_webp || r.logo || ''),
+                jpg: String(r.logo_jpg || '')
+            }
+        };
+    });
+}
+
+export async function getBusinessById(id: number): Promise<BusinessItem | null> {
+    if (!Number.isFinite(id)) return null;
+
+    const supabase = await getDB();
+
+    const {data, error} = await supabase
+        .from('businesses')
+        .select('*')
+        .eq('id', id)
+        .maybeSingle();
+
+    if (error) {
+        throw formatSupabaseError(`Loading business "${id}" failed`, error);
+    }
+
+    if (!data) return null;
+
+    return {
+        id: Number(data.id),
+        sponsorType: data.sponsor_type || 'listed',
+        name: data.name || '',
+        slug: data.slug || '',
+        url: data.url || '',
+        logo: data.logo || data.logo_webp || data.logo_jpg || '',
+        logoVariants: {
+            webp: data.logo_webp || data.logo || '',
+            jpg: data.logo_jpg || ''
+        }
+    };
+}
+
+export async function upsertBusiness(item: BusinessItem): Promise<BusinessItem> {
+    const supabase = await getDB();
+
+    const existing = item.id ? await getBusinessById(item.id) : null;
+    const baseSlug = existing?.slug || item.slug || normalizeBusinessSlug(item.name);
+    const slug = existing?.slug || await uniqueBusinessSlug(baseSlug, item.id);
+
+    const row = {
+        sponsor_type: item.sponsorType || 'listed',
+        name: item.name || '',
+        slug,
+        url: item.url || '',
+        logo: item.logo || item.logoVariants?.webp || '',
+        logo_webp: item.logoVariants?.webp || item.logo || '',
+        logo_jpg: item.logoVariants?.jpg || '',
+        updated_at: nowIso()
+    };
+
     if (item.id) {
-        db.prepare(`UPDATE businesses
-                    SET name      = ?,
-                        url       = ?,
-                        logo      = ?,
-                        logo_webp = ?,
-                        logo_jpg  = ?
-                    WHERE id = ?`)
-            .run(item.name, item.url, item.logo, item.logoVariants?.webp || '', item.logoVariants?.jpg || '', item.id);
-        return;
+        const {data, error} = await supabase
+            .from('businesses')
+            .update(row)
+            .eq('id', item.id)
+            .select('*')
+            .single();
+
+        if (error) {
+            throw formatSupabaseError(`Updating business "${item.id}" failed`, error);
+        }
+
+        return {
+            id: Number(data.id),
+            sponsorType: data.sponsor_type || 'listed',
+            name: data.name || '',
+            slug: data.slug || '',
+            url: data.url || '',
+            logo: data.logo || data.logo_webp || '',
+            logoVariants: {
+                webp: data.logo_webp || data.logo || '',
+                jpg: data.logo_jpg || ''
+            }
+        };
     }
 
-    db.prepare(`INSERT INTO businesses (name, url, logo, logo_webp, logo_jpg)
-                VALUES (?, ?, ?, ?, ?)`)
-        .run(item.name, item.url, item.logo, item.logoVariants?.webp || '', item.logoVariants?.jpg || '');
+    const {data, error} = await supabase
+        .from('businesses')
+        .insert(row)
+        .select('*')
+        .single();
+
+    if (error) {
+        throw formatSupabaseError(`Creating business "${item.name}" failed`, error);
+    }
+
+    return {
+        id: Number(data.id),
+        sponsorType: data.sponsor_type || 'listed',
+        name: data.name || '',
+        slug: data.slug || '',
+        url: data.url || '',
+        logo: data.logo || data.logo_webp || '',
+        logoVariants: {
+            webp: data.logo_webp || data.logo || '',
+            jpg: data.logo_jpg || ''
+        }
+    };
 }
 
-export function deleteBusiness(id: number): void {
-    db.prepare(`DELETE
-                FROM businesses
-                WHERE id = ?`).run(id);
+export async function deleteBusiness(id: number): Promise<boolean> {
+    if (!Number.isFinite(id)) return false;
+
+    const supabase = await getDB();
+
+    const {error, count} = await supabase
+        .from('businesses')
+        .delete({
+            count: 'exact'
+        })
+        .eq('id', id);
+
+    if (error) {
+        throw formatSupabaseError(`Deleting business "${id}" failed`, error);
+    }
+
+    return (count ?? 0) > 0;
 }
 
-export function listEquipment(): EquipmentItem[] {
-    return (db.prepare(`SELECT *
-                        FROM equipment
-                        ORDER BY created_at DESC`).all() as any[]).map((r) => ({
-        id: r.id,
-        name: r.name,
-        brand: r.brand || '',
-        modelYear: r.model_year || '',
-        description: r.description || '',
-        pricePerDay: Number(r.price_per_day || 0),
-        video: r.video || '',
-        images: [
-            {src: r.image_1 || '', variants: {webp: r.image_1_webp || '', jpg: r.image_1_jpg || ''}},
-            {src: r.image_2 || '', variants: {webp: r.image_2_webp || '', jpg: r.image_2_jpg || ''}},
-            {src: r.image_3 || '', variants: {webp: r.image_3_webp || '', jpg: r.image_3_jpg || ''}}
-        ].filter((img) => img.src)
-    }));
+/* Equipment */
+
+export async function listEquipment(): Promise<EquipmentItem[]> {
+    const supabase = await getDB();
+
+    const {data, error} = await supabase
+        .from('equipment')
+        .select('*')
+        .order('created_at', {
+            ascending: false
+        });
+
+    if (error) {
+        throw formatSupabaseError('Listing equipment failed', error);
+    }
+
+    return (data || []).map((row) => {
+        const r = row as Record<string, unknown>;
+
+        return {
+            id: Number(r.id),
+            name: String(r.name || ''),
+            brand: String(r.brand || ''),
+            modelYear: String(r.model_year || ''),
+            description: String(r.description || ''),
+            pricePerDay: Number(r.price_per_day || 0),
+            video: String(r.video || ''),
+            images: [
+                {
+                    src: String(r.image_1 || ''),
+                    variants: {
+                        webp: String(r.image_1_webp || ''),
+                        jpg: String(r.image_1_jpg || '')
+                    }
+                },
+                {
+                    src: String(r.image_2 || ''),
+                    variants: {
+                        webp: String(r.image_2_webp || ''),
+                        jpg: String(r.image_2_jpg || '')
+                    }
+                },
+                {
+                    src: String(r.image_3 || ''),
+                    variants: {
+                        webp: String(r.image_3_webp || ''),
+                        jpg: String(r.image_3_jpg || '')
+                    }
+                }
+            ].filter((image) => image.src)
+        };
+    });
 }
 
-export function getEquipmentById(id: number): EquipmentItem | null {
-    return listEquipment().find((item) => item.id === id) || null;
+export async function getEquipmentById(id: number): Promise<EquipmentItem | null> {
+    const items = await listEquipment();
+
+    return items.find((item) => item.id === id) || null;
 }
 
-export function upsertEquipment(item: EquipmentItem): void {
+export async function upsertEquipment(item: EquipmentItem): Promise<EquipmentItem> {
+    const supabase = await getDB();
+
     const img1 = item.images?.[0] || ({src: '', variants: {}} as EquipmentImage);
     const img2 = item.images?.[1] || ({src: '', variants: {}} as EquipmentImage);
     const img3 = item.images?.[2] || ({src: '', variants: {}} as EquipmentImage);
 
+    const row = {
+        name: item.name,
+        brand: item.brand || '',
+        model_year: item.modelYear || '',
+        description: item.description || '',
+        price_per_day: Number(item.pricePerDay || 0),
+        image_1: img1.src || '',
+        image_1_webp: img1.variants?.webp || '',
+        image_1_jpg: img1.variants?.jpg || '',
+        image_2: img2.src || '',
+        image_2_webp: img2.variants?.webp || '',
+        image_2_jpg: img2.variants?.jpg || '',
+        image_3: img3.src || '',
+        image_3_webp: img3.variants?.webp || '',
+        image_3_jpg: img3.variants?.jpg || '',
+        video: item.video || '',
+        updated_at: nowIso()
+    };
+
     if (item.id) {
-        db.prepare(`
-            UPDATE equipment
-            SET name          = ?,
-                brand         = ?,
-                model_year    = ?,
-                description   = ?,
-                price_per_day = ?,
-                image_1       = ?,
-                image_1_webp  = ?,
-                image_1_jpg   = ?,
-                image_2       = ?,
-                image_2_webp  = ?,
-                image_2_jpg   = ?,
-                image_3       = ?,
-                image_3_webp  = ?,
-                image_3_jpg   = ?,
-                video         = ?,
-                updated_at    = CURRENT_TIMESTAMP
-            WHERE id = ?
-        `).run(
-            item.name,
-            item.brand || '',
-            item.modelYear || '',
-            item.description || '',
-            Number(item.pricePerDay || 0),
-            img1.src || '', img1.variants?.webp || '', img1.variants?.jpg || '',
-            img2.src || '', img2.variants?.webp || '', img2.variants?.jpg || '',
-            img3.src || '', img3.variants?.webp || '', img3.variants?.jpg || '',
-            item.video || '',
-            item.id
-        );
-        return;
+        const {data, error} = await supabase
+            .from('equipment')
+            .update(row)
+            .eq('id', item.id)
+            .select('*')
+            .single();
+
+        if (error) {
+            throw formatSupabaseError(`Updating equipment "${item.id}" failed`, error);
+        }
+
+        return {
+            id: Number(data.id),
+            name: data.name || '',
+            brand: data.brand || '',
+            modelYear: data.model_year || '',
+            description: data.description || '',
+            pricePerDay: Number(data.price_per_day || 0),
+            video: data.video || '',
+            images: [
+                {
+                    src: data.image_1 || '',
+                    variants: {
+                        webp: data.image_1_webp || '',
+                        jpg: data.image_1_jpg || ''
+                    }
+                },
+                {
+                    src: data.image_2 || '',
+                    variants: {
+                        webp: data.image_2_webp || '',
+                        jpg: data.image_2_jpg || ''
+                    }
+                },
+                {
+                    src: data.image_3 || '',
+                    variants: {
+                        webp: data.image_3_webp || '',
+                        jpg: data.image_3_jpg || ''
+                    }
+                }
+            ].filter((image) => image.src)
+        };
     }
 
-    db.prepare(`
-        INSERT INTO equipment (name, brand, model_year, description, price_per_day,
-                               image_1, image_1_webp, image_1_jpg,
-                               image_2, image_2_webp, image_2_jpg,
-                               image_3, image_3_webp, image_3_jpg,
-                               video)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `).run(
-        item.name,
-        item.brand || '',
-        item.modelYear || '',
-        item.description || '',
-        Number(item.pricePerDay || 0),
-        img1.src || '', img1.variants?.webp || '', img1.variants?.jpg || '',
-        img2.src || '', img2.variants?.webp || '', img2.variants?.jpg || '',
-        img3.src || '', img3.variants?.webp || '', img3.variants?.jpg || '',
-        item.video || ''
-    );
+    const {data, error} = await supabase
+        .from('equipment')
+        .insert(row)
+        .select('*')
+        .single();
+
+    if (error) {
+        throw formatSupabaseError(`Creating equipment "${item.name}" failed`, error);
+    }
+
+    return {
+        id: Number(data.id),
+        name: data.name || '',
+        brand: data.brand || '',
+        modelYear: data.model_year || '',
+        description: data.description || '',
+        pricePerDay: Number(data.price_per_day || 0),
+        video: data.video || '',
+        images: [
+            {
+                src: data.image_1 || '',
+                variants: {
+                    webp: data.image_1_webp || '',
+                    jpg: data.image_1_jpg || ''
+                }
+            },
+            {
+                src: data.image_2 || '',
+                variants: {
+                    webp: data.image_2_webp || '',
+                    jpg: data.image_2_jpg || ''
+                }
+            },
+            {
+                src: data.image_3 || '',
+                variants: {
+                    webp: data.image_3_webp || '',
+                    jpg: data.image_3_jpg || ''
+                }
+            }
+        ].filter((image) => image.src)
+    };
 }
 
-export function deleteEquipment(id: number): void {
-    db.prepare(`DELETE
-                FROM equipment
-                WHERE id = ?`).run(id);
+export async function deleteEquipment(id: number): Promise<boolean> {
+    if (!Number.isFinite(id)) return false;
+
+    const supabase = await getDB();
+
+    const {error, count} = await supabase
+        .from('equipment')
+        .delete({
+            count: 'exact'
+        })
+        .eq('id', id);
+
+    if (error) {
+        throw formatSupabaseError(`Deleting equipment "${id}" failed`, error);
+    }
+
+    return (count ?? 0) > 0;
 }
