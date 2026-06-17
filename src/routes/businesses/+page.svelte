@@ -51,7 +51,7 @@
 </script>
 
 <svelte:head>
-    <title>{$t('businesses.headline')} - GV Hellas</title>
+    <title>{$t('businesses.headline')} - Griechischer Verein Hellas</title>
     <meta
             name="description"
             content={$t('businesses.subtitle')}

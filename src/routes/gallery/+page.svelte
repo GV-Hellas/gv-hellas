@@ -66,7 +66,7 @@
 </script>
 
 <svelte:head>
-    <title>{$t('gallery.headline')} - GV Hellas</title>
+    <title>{$t('gallery.headline')} - Griechischer Verein Hellas</title>
 </svelte:head>
 
 <section class="mx-auto max-w-6xl">

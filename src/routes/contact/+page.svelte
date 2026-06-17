@@ -292,7 +292,7 @@
 </script>
 
 <svelte:head>
-    <title>{$t('contact.headline')} - GV Hellas</title>
+    <title>{$t('contact.headline')} - Griechischer Verein Hellas</title>
 </svelte:head>
 
 <section class="grid gap-8 pb-10">
@@ -490,19 +490,19 @@
 
                     <ul class="mt-2 grid gap-2">
                         <li>
-                            <a href="https://www.facebook.com" target="_blank" rel="noopener" class="link">
+                            <a href="https://www.facebook.com/p/Griechischer-Verein-Hellas-100089940210614/" target="_blank" rel="noopener" class="link">
                                 Facebook
                             </a>
                         </li>
 
                         <li>
-                            <a href="https://www.instagram.com" target="_blank" rel="noopener" class="link">
+                            <a href="https://www.instagram.com/griechischerverein/" target="_blank" rel="noopener" class="link">
                                 Instagram
                             </a>
                         </li>
 
                         <li>
-                            <a href="https://www.tiktok.com" target="_blank" rel="noopener" class="link">
+                            <a href="https://www.tiktok.com/@gvhellas" target="_blank" rel="noopener" class="link">
                                 TikTok
                             </a>
                         </li>

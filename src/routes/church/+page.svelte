@@ -31,7 +31,7 @@
 </script>
 
 <svelte:head>
-    <title>{$t('church.headline')} - GV Hellas</title>
+    <title>{$t('church.headline')} - Griechischer Verein Hellas</title>
 </svelte:head>
 
 <section class="space-y-6">

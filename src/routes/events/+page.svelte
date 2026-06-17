@@ -12,7 +12,7 @@
 </script>
 
 <svelte:head>
-    <title>{$t('events.headline')} - GV Hellas</title>
+    <title>{$t('events.headline')} - Griechischer Verein Hellas</title>
 </svelte:head>
 
 <h1 class="text-3xl font-bold mb-6">{$t('events.headline')}</h1>

@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-    <title>Create link | GV Hellas</title>
+    <title>Create link | Griechischer Verein Hellas</title>
 </svelte:head>
 
 <LinkForm mode="create" submitTo="?/save" />

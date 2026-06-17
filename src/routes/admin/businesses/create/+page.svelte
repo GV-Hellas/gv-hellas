@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-  <title>Create business | GV Hellas</title>
+  <title>Create business | Griechischer Verein Hellas</title>
 </svelte:head>
 
 <BusinessForm

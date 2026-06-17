@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-    <title>{$t('admin.login.title')} | GV Hellas</title>
+    <title>{$t('admin.login.title')} | Griechischer Verein Hellas</title>
 </svelte:head>
 
 <section class="mx-auto mt-10 max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">

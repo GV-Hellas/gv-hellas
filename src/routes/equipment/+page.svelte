@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-  <title>{$t('equipment.headline')} - GV Hellas</title>
+  <title>{$t('equipment.headline')} - Griechischer Verein Hellas</title>
 </svelte:head>
 
 <h1 class="mb-6 text-3xl font-bold">{$t('equipment.headline')}</h1>

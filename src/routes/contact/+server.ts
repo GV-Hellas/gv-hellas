@@ -102,7 +102,7 @@ function escapeHtml(value: string) {
 
 function buildTextEmail(data: ContactPayload) {
     return [
-        'New contact form message from GV Hellas',
+        'New contact form message from Griechischer Verein Hellas',
         '',
         `Name: ${data.name}`,
         `Email: ${data.email}`,
@@ -121,7 +121,7 @@ function buildHtmlEmail(data: ContactPayload) {
 
     return `
         <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #111827;">
-            <h2>New contact form message from GV Hellas</h2>
+            <h2>New contact form message from Griechischer Verein Hellas</h2>
 
             <table cellpadding="6" cellspacing="0" style="border-collapse: collapse;">
                 <tr>
@@ -245,7 +245,7 @@ export const POST: RequestHandler = async ({request, getClientAddress}) => {
             from: env.CONTACT_FROM_EMAIL,
             to: recipients,
             replyTo: data.email,
-            subject: `GV Hellas contact form: ${data.name}`,
+            subject: `Griechischer Verein Hellas contact form: ${data.name}`,
             text: buildTextEmail(data),
             html: buildHtmlEmail(data)
         });

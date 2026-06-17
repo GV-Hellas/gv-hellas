@@ -238,8 +238,8 @@ register('el', () =>
         },
         businesses: {
             headline: 'Ελληνόφωνες Επιχειρήσεις',
-            subtitle: 'Ανακαλύψτε επιχειρήσεις και χορηγούς που συνδέονται με τον GV Hellas.',
-            eyebrow: 'Δίκτυο GV Hellas',
+            subtitle: 'Ανακαλύψτε επιχειρήσεις και χορηγούς που συνδέονται με τον Griechischer Verein Hellas.',
+            eyebrow: 'Δίκτυο Griechischer Verein Hellas',
             viewProfile: 'Προβολή προφίλ',
             empty: 'Δεν έχουν προστεθεί ακόμη επιχειρήσεις.',
             thanks: 'Ευχαριστούμε θερμά τους χορηγούς μας για την υποστήριξή τους.'
@@ -755,8 +755,8 @@ register('de', () =>
         },
         businesses: {
             headline: 'Griechischsprachige Unternehmen',
-            subtitle: 'Entdecken Sie Unternehmen und Sponsoren, die mit GV Hellas verbunden sind.',
-            eyebrow: 'GV Hellas Netzwerk',
+            subtitle: 'Entdecken Sie Unternehmen und Sponsoren, die mit Griechischer Verein Hellas verbunden sind.',
+            eyebrow: 'Griechischer Verein Hellas Netzwerk',
             viewProfile: 'Profil ansehen',
             empty: 'Es wurden noch keine Unternehmen hinzugefügt.',
             thanks: 'Wir möchten unseren Sponsoren herzlich für ihre wertvolle Unterstützung danken.'

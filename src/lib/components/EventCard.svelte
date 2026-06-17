@@ -36,7 +36,7 @@
         localized(cardMedia?.alt) ||
         localized(cardMedia?.caption) ||
         title ||
-        'GV Hellas'
+        'Griechischer Verein Hellas'
     );
 </script>
 
@@ -63,7 +63,7 @@
             </video>
         {:else}
             <div class="flex h-full w-full items-center justify-center bg-muted px-6 text-center text-sm text-muted-foreground">
-                GV Hellas
+                Griechischer Verein Hellas
             </div>
         {/if}
     </div>

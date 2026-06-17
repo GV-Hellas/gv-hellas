@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-  <title>Edit event | GV Hellas</title>
+  <title>Edit event | Griechischer Verein Hellas</title>
 </svelte:head>
 
 <EventForm

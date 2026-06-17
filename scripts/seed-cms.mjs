@@ -142,7 +142,7 @@ async function run() {
       type: 'image',
       src: variants.original,
       srcVariants: { jpg: variants.jpg, webp: variants.webp },
-      alt: item.alt_text || stripHtml(item?.title?.rendered) || 'GV Hellas',
+      alt: item.alt_text || stripHtml(item?.title?.rendered) || 'Griechischer Verein Hellas',
       tags: []
     });
   }

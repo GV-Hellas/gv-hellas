@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-    <title>{$t('links.headline')} - GV Hellas</title>
+    <title>{$t('links.headline')} - Griechischer Verein Hellas</title>
 </svelte:head>
 
 <h1 class="mb-6 text-3xl font-bold">{$t('links.headline')}</h1>

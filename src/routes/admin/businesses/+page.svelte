@@ -156,7 +156,7 @@
 </script>
 
 <svelte:head>
-    <title>{$t('admin.businesses.title')} | GV Hellas</title>
+    <title>{$t('admin.businesses.title')} | Griechischer Verein Hellas</title>
 </svelte:head>
 
 <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">

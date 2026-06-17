@@ -1,6 +1,6 @@
-# GV Hellas Svelte Website
+# Griechischer Verein Hellas Svelte Website
 
-This repository contains a modern **SvelteKit** implementation of the GV Hellas association website. It has been fully upgraded to **Svelte 5**, **Vite 7**, and **Tailwind CSS v4** to ensure maximum performance, maintainability, and accessibility.
+This repository contains a modern **SvelteKit** implementation of the Griechischer Verein Hellas association website. It has been fully upgraded to **Svelte 5**, **Vite 7**, and **Tailwind CSS v4** to ensure maximum performance, maintainability, and accessibility.
 
 The project mirrors the structure of the existing WordPress site ([gv-hellas.ch](https://gv-hellas.ch)) while providing a lightning-fast frontend with a headless CMS backend.
 

@@ -29,7 +29,7 @@
 </script>
 
 <svelte:head>
-    <title>{business.name} | GV Hellas</title>
+    <title>{business.name} | Griechischer Verein Hellas</title>
     <meta name="description" content={business.name} />
 </svelte:head>
 
