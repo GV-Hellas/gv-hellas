@@ -4,6 +4,28 @@ This repository contains a modern **SvelteKit** implementation of the GV Hellas 
 
 The project mirrors the structure of the existing WordPress site ([gv-hellas.ch](https://gv-hellas.ch)) while providing a lightning-fast frontend with a headless CMS backend.
 
+## TODO
+
+-[ ] Main: Logo Decide on a modernization
+-[ ] Main: Active color seems washed out
+-[ ] Main: buttons appear washed out and only on hover show better
+-[ ] Main: cursor pointer when hovering over all buttons and links
+-[ ] Add: CMS/Businesses
+-[ ] CMS/Links: Add description
+-[ ] CMS/Links: Logo displayed incorrectly + submit button seems always disabled
+-[ ] Check content licences
+-[ ] Events-first landing page
+-[ ] from Nov.2019: X years
+-[ ] FB Api: fetch FB posts
+-[ ] Event Registration
+-[ ] Content for Equipment Rentals
+-[ ] GA4 Integration
+
+## TODO (later)
+-[ ] Payment gateway
+-[ ] San Simera
+-[ ] Cooking recipes
+
 ## 🚀 Key Features
 
 * **Svelte 5 Runes** – Leverages `$state`, `$derived`, and `$props` for modern, efficient reactivity.
