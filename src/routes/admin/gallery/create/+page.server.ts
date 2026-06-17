@@ -3,13 +3,23 @@ import type {Actions, ServerLoad} from '@sveltejs/kit';
 
 import {allGalleryTags, upsertGallery} from '$lib/server/cms/galleryStore';
 import {saveGalleryMedia} from '$lib/server/cms/galleryMediaStore';
-import {prepareUploadedMediaFile} from '$lib/server/mediaProcessing';
 
 function parseTags(value: FormDataEntryValue | null) {
     return String(value || '')
         .split(',')
         .map((tag) => tag.trim())
         .filter(Boolean);
+}
+
+function safeId(value: string) {
+    return value
+        .trim()
+        .replace(/\.json$/i, '')
+        .replaceAll('/', '')
+        .replaceAll('\\', '')
+        .replace(/[^a-zA-Z0-9._-]+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-+|-+$/g, '');
 }
 
 function actionError(status: number, message: string) {
@@ -35,19 +45,16 @@ export const actions: Actions = {
             return actionError(400, 'Image or video required');
         }
 
-        const id = String(form.get('id') || `g-${crypto.randomUUID()}`)
-            .trim()
-            .replaceAll('/', '')
-            .replaceAll('\\', '');
+        const id = safeId(String(form.get('id') || `g-${crypto.randomUUID()}`));
 
         if (!id) {
             return actionError(400, 'Invalid gallery item id');
         }
 
-        let processed;
+        let saved;
 
         try {
-            processed = await prepareUploadedMediaFile(upload);
+            saved = await saveGalleryMedia(upload, id);
         } catch (error) {
             return actionError(
                 400,
@@ -55,18 +62,16 @@ export const actions: Actions = {
             );
         }
 
-        const saved = await saveGalleryMedia(processed.file, id);
-
         await upsertGallery({
             id,
-            type: processed.kind,
-            src: saved.url,
-            srcVariants: {
-                webp: processed.kind === 'image' ? saved.url : '',
-                jpg: ''
-            },
+            type: saved.type,
+            src480: saved.src480,
+            src960: saved.src960,
+            videoSrc: saved.videoSrc,
             alt: String(form.get('alt') || ''),
-            tags: parseTags(form.get('tags'))
+            tags: parseTags(form.get('tags')),
+            width: saved.width,
+            height: saved.height
         });
 
         throw redirect(303, '/admin/gallery');

@@ -3,7 +3,6 @@ import type {Actions, ServerLoad} from '@sveltejs/kit';
 
 import {allGalleryTags, getGalleryById, upsertGallery} from '$lib/server/cms/galleryStore';
 import {saveGalleryMedia} from '$lib/server/cms/galleryMediaStore';
-import {prepareUploadedMediaFile} from '$lib/server/mediaProcessing';
 
 function parseTags(value: FormDataEntryValue | null) {
     return String(value || '')
@@ -43,15 +42,18 @@ export const actions: Actions = {
 
         const upload = form.get('image');
 
-        let src = existing.src;
-        let srcVariants = existing.srcVariants;
         let type = existing.type;
+        let src480 = existing.src480;
+        let src960 = existing.src960;
+        let videoSrc = existing.videoSrc;
+        let width = existing.width;
+        let height = existing.height;
 
         if (upload instanceof File && upload.size > 0) {
-            let processed;
+            let saved;
 
             try {
-                processed = await prepareUploadedMediaFile(upload);
+                saved = await saveGalleryMedia(upload, existing.id);
             } catch (error) {
                 return actionError(
                     400,
@@ -59,23 +61,24 @@ export const actions: Actions = {
                 );
             }
 
-            const saved = await saveGalleryMedia(processed.file, existing.id);
-
-            src = saved.url;
-            type = processed.kind;
-            srcVariants = {
-                webp: processed.kind === 'image' ? saved.url : '',
-                jpg: ''
-            };
+            type = saved.type;
+            src480 = saved.src480;
+            src960 = saved.src960;
+            videoSrc = saved.videoSrc;
+            width = saved.width;
+            height = saved.height;
         }
 
         await upsertGallery({
             id: existing.id,
             type,
-            src,
-            srcVariants,
+            src480,
+            src960,
+            videoSrc,
             alt: String(form.get('alt') || ''),
-            tags: parseTags(form.get('tags'))
+            tags: parseTags(form.get('tags')),
+            width,
+            height
         });
 
         throw redirect(303, '/admin/gallery');

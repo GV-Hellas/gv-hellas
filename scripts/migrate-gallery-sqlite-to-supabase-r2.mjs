@@ -31,12 +31,7 @@ const R2_SECRET_ACCESS_KEY = process.env.CLOUDFLARE_R2_SECRET_ACCESS_KEY;
 const R2_BUCKET = process.env.CLOUDFLARE_R2_BUCKET;
 const R2_PUBLIC_BASE_URL = process.env.CLOUDFLARE_R2_PUBLIC_BASE_URL;
 
-const MAX_IMAGE_WIDTH = 1280;
-const MAX_IMAGE_HEIGHT = 720;
-const IMAGE_WEBP_QUALITY = 78;
-
-const MAX_VIDEO_WIDTH = 1280;
-const MAX_VIDEO_HEIGHT = 720;
+const IMAGE_WEBP_QUALITY = Number(process.env.GALLERY_WEBP_QUALITY || 78);
 const VIDEO_CRF = process.env.CMS_VIDEO_CRF || '34';
 const VIDEO_CPU_USED = process.env.CMS_VIDEO_CPU_USED || '5';
 
@@ -88,11 +83,11 @@ function tableExists(tableName) {
     const row = sqlite
         .prepare(
             `
-                SELECT name
-                FROM sqlite_master
-                WHERE type = 'table'
-                  AND name = ?
-                LIMIT 1
+                select name
+                from sqlite_master
+                where type = 'table'
+                  and name = ?
+                limit 1
             `
         )
         .get(tableName);
@@ -106,8 +101,8 @@ function readTable(tableName) {
         return [];
     }
 
-    return sqlite.prepare(`SELECT *
-                           FROM ${tableName}`).all();
+    return sqlite.prepare(`select *
+                           from ${tableName}`).all();
 }
 
 function decodeRepeated(value) {
@@ -128,13 +123,27 @@ function decodeRepeated(value) {
     return current;
 }
 
-function safeFilename(value) {
+function decodeHtmlBasic(value) {
     return String(value || '')
-        .split('/')
-        .pop()
-        ?.split('?')[0]
-        ?.split('#')[0]
-        ?.replace(/[^\w.-]+/g, '-') || `${randomUUID()}.bin`;
+        .replaceAll('&amp;', '&')
+        .replaceAll('&lt;', '<')
+        .replaceAll('&gt;', '>')
+        .replaceAll('&quot;', '"')
+        .replaceAll('&#039;', "'")
+        .replaceAll('&#8211;', '–')
+        .replaceAll('&#8212;', '—')
+        .replaceAll('&#215;', '×');
+}
+
+function safeFilename(value) {
+    return (
+        String(value || '')
+            .split('/')
+            .pop()
+            ?.split('?')[0]
+            ?.split('#')[0]
+            ?.replace(/[^\w.-]+/g, '-') || `${randomUUID()}.bin`
+    );
 }
 
 function safeId(value) {
@@ -161,10 +170,16 @@ function inferKind(filenameOrUrl, mimeType = '') {
     if (mime.startsWith('image/')) return 'image';
     if (mime.startsWith('video/')) return 'video';
 
-    if (/\.(png|jpe?g|webp|gif|avif|svg)(\?.*)?$/.test(lower)) return 'image';
+    if (/\.(png|jpe?g|webp|gif|avif|heic|heif)(\?.*)?$/.test(lower)) return 'image';
     if (/\.(mp4|webm|mov|m4v)(\?.*)?$/.test(lower)) return 'video';
 
     return null;
+}
+
+function imageExtension(filenameOrUrl) {
+    const lower = String(filenameOrUrl || '').toLowerCase();
+
+    return /\.(png|jpe?g|webp|gif|avif|heic|heif)(\?.*)?$/.test(lower);
 }
 
 function candidateLocalPaths(src) {
@@ -203,10 +218,7 @@ async function findLocalFile(src) {
             const stat = await fs.stat(candidate);
 
             if (stat.isFile()) {
-                return {
-                    path: candidate,
-                    size: stat.size
-                };
+                return candidate;
             }
         } catch {
             // Try next candidate.
@@ -214,6 +226,99 @@ async function findLocalFile(src) {
     }
 
     return null;
+}
+
+function stripVariantSuffix(stem) {
+    return String(stem || '')
+        .replace(/[-_](480|960|1440)(w)?$/i, '')
+        .replace(/[-_](480|960|1440)x\d+$/i, '')
+        .replace(/[-_]\d+x(480|960|1440)$/i, '')
+        .replace(/[-_]\d+x\d+$/i, '');
+}
+
+async function metadataWidth(filePath) {
+    try {
+        const metadata = await sharp(filePath).metadata();
+
+        return metadata.width || 0;
+    } catch {
+        return 0;
+    }
+}
+
+async function findBestImageVariant(sourcePath, targetWidth) {
+    const sourceDir = path.dirname(sourcePath);
+    const sourceExt = path.extname(sourcePath);
+    const sourceStem = path.basename(sourcePath, sourceExt);
+    const sourceBase = stripVariantSuffix(sourceStem);
+
+    let files = [];
+
+    try {
+        files = await fs.readdir(sourceDir);
+    } catch {
+        return sourcePath;
+    }
+
+    const candidates = files
+        .filter((file) => imageExtension(file))
+        .map((file) => path.join(sourceDir, file))
+        .filter((filePath) => {
+            const ext = path.extname(filePath);
+            const stem = path.basename(filePath, ext);
+            return stripVariantSuffix(stem) === sourceBase;
+        });
+
+    let best = {
+        filePath: sourcePath,
+        score: Number.POSITIVE_INFINITY
+    };
+
+    for (const candidate of candidates) {
+        const width = await metadataWidth(candidate);
+
+        if (!width) continue;
+
+        const score = Math.abs(width - targetWidth);
+
+        if (score < best.score) {
+            best = {
+                filePath: candidate,
+                score
+            };
+        }
+    }
+
+    if (best.score <= Math.max(120, targetWidth * 0.25)) {
+        return best.filePath;
+    }
+
+    return sourcePath;
+}
+
+async function processImageVariant(sourcePath, targetWidth) {
+    const input = await fs.readFile(sourcePath);
+
+    const output = await sharp(input)
+        .rotate()
+        .resize({
+            width: targetWidth,
+            fit: 'inside',
+            withoutEnlargement: true
+        })
+        .webp({
+            quality: IMAGE_WEBP_QUALITY,
+            effort: 5
+        })
+        .toBuffer();
+
+    const metadata = await sharp(output).metadata();
+
+    return {
+        bytes: output,
+        width: metadata.width || null,
+        height: metadata.height || null
+    };
 }
 
 async function getFfmpegPath() {
@@ -229,32 +334,12 @@ async function getFfmpegPath() {
     return candidate;
 }
 
-async function processImageToWebp(input) {
-    return sharp(input)
-        .rotate()
-        .resize({
-            width: MAX_IMAGE_WIDTH,
-            height: MAX_IMAGE_HEIGHT,
-            fit: 'inside',
-            withoutEnlargement: true
-        })
-        .webp({
-            quality: IMAGE_WEBP_QUALITY,
-            effort: 5
-        })
-        .toBuffer();
-}
-
-async function processVideoToWebm(input, originalFilename) {
+async function processVideoToWebm(inputPath) {
     const ffmpegPath = await getFfmpegPath();
     const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'gv-gallery-video-'));
-    const inputExt = originalFilename.split('.').pop() || 'input';
-    const inputPath = path.join(tempDir, `source.${inputExt}`);
     const outputPath = path.join(tempDir, 'output.webm');
 
     try {
-        await fs.writeFile(inputPath, input);
-
         await execFileAsync(
             ffmpegPath,
             [
@@ -262,7 +347,7 @@ async function processVideoToWebm(input, originalFilename) {
                 '-i',
                 inputPath,
                 '-vf',
-                `scale=w=${MAX_VIDEO_WIDTH}:h=${MAX_VIDEO_HEIGHT}:force_original_aspect_ratio=decrease,setsar=1`,
+                'scale=w=1280:h=720:force_original_aspect_ratio=decrease,setsar=1',
                 '-c:v',
                 'libvpx-vp9',
                 '-b:v',
@@ -295,45 +380,12 @@ async function processVideoToWebm(input, originalFilename) {
     }
 }
 
-async function processGalleryFile(localPath, originalFilename) {
-    const source = await fs.readFile(localPath);
-    const kind = inferKind(originalFilename);
-
-    if (kind === 'image') {
-        const bytes = await processImageToWebp(source);
-
-        return {
-            type: 'image',
-            bytes,
-            mimeType: 'image/webp',
-            ext: 'webp'
-        };
-    }
-
-    if (kind === 'video') {
-        const bytes = await processVideoToWebm(source, originalFilename);
-
-        return {
-            type: 'video',
-            bytes,
-            mimeType: 'video/webm',
-            ext: 'webm'
-        };
-    }
-
-    return null;
-}
-
-async function uploadProcessedToR2({itemId, bytes, mimeType, ext}) {
-    const key = `gallery/${itemId}/${randomUUID()}.${ext}`;
+async function uploadBytesToR2({key, bytes, contentType}) {
     const url = publicR2Url(key);
 
     if (DRY_RUN) {
-        log(`[dry-run] Would upload processed ${mimeType} → r2://${R2_BUCKET}/${key}`);
-        return {
-            url,
-            key
-        };
+        log(`[dry-run] Would upload processed ${contentType} → r2://${R2_BUCKET}/${key}`);
+        return url;
     }
 
     await r2.send(
@@ -341,15 +393,12 @@ async function uploadProcessedToR2({itemId, bytes, mimeType, ext}) {
             Bucket: R2_BUCKET,
             Key: key,
             Body: bytes,
-            ContentType: mimeType,
+            ContentType: contentType,
             CacheControl: 'public, max-age=31536000, immutable'
         })
     );
 
-    return {
-        url,
-        key
-    };
+    return url;
 }
 
 function tagsByItemId() {
@@ -362,10 +411,10 @@ function tagsByItemId() {
     const rows = sqlite
         .prepare(
             `
-                SELECT it.item_id, t.name
-                FROM gallery_item_tags it
-                         JOIN gallery_tags t ON t.id = it.tag_id
-                ORDER BY t.name ASC
+                select it.item_id, t.name
+                from gallery_item_tags it
+                         join gallery_tags t on t.id = it.tag_id
+                order by t.name asc
             `
         )
         .all();
@@ -396,10 +445,12 @@ async function upsertSupabaseGalleryItem(item) {
             {
                 id: item.id,
                 type: item.type,
-                src: item.src,
-                src_webp: item.type === 'image' ? item.src : '',
-                src_jpg: '',
+                src_480: item.src480 || '',
+                src_960: item.src960 || '',
+                video_src: item.videoSrc || '',
                 alt: item.alt || '',
+                width: item.width ?? null,
+                height: item.height ?? null,
                 updated_at: new Date().toISOString()
             },
             {
@@ -423,12 +474,8 @@ async function ensureSupabaseTag(name) {
     const {data, error} = await supabase
         .from('gallery_tags')
         .upsert(
-            {
-                name
-            },
-            {
-                onConflict: 'name'
-            }
+            {name},
+            {onConflict: 'name'}
         )
         .select('id, name')
         .single();
@@ -441,9 +488,11 @@ async function ensureSupabaseTag(name) {
 }
 
 async function replaceSupabaseTags(itemId, tags) {
+    const uniqueTags = [...new Set(tags.map((tag) => String(tag || '').trim()).filter(Boolean))];
+
     if (DRY_RUN) {
-        if (tags.length) {
-            log(`[dry-run] Would set tags for ${itemId}: ${tags.join(', ')}`);
+        if (uniqueTags.length) {
+            log(`[dry-run] Would set tags for ${itemId}: ${uniqueTags.join(', ')}`);
         }
 
         return;
@@ -458,7 +507,7 @@ async function replaceSupabaseTags(itemId, tags) {
         throw new Error(`Supabase delete gallery_item_tags failed: ${deleteError.message}`);
     }
 
-    for (const tagName of tags) {
+    for (const tagName of uniqueTags) {
         const tag = await ensureSupabaseTag(tagName);
 
         if (!tag?.id) continue;
@@ -481,6 +530,75 @@ async function replaceSupabaseTags(itemId, tags) {
     }
 }
 
+async function migrateImageItem({id, src, alt}) {
+    const localFile = await findLocalFile(src);
+
+    if (!localFile) {
+        warn(`Skipping gallery item "${id}" because local file was not found: ${src}`);
+        return null;
+    }
+
+    const source480 = await findBestImageVariant(localFile, 480);
+    const source960 = await findBestImageVariant(localFile, 960);
+
+    const variant480 = await processImageVariant(source480, 480);
+    const variant960 = await processImageVariant(source960, 960);
+
+    const batchId = randomUUID();
+
+    const src480 = await uploadBytesToR2({
+        key: `gallery/${id}/${batchId}-480.webp`,
+        bytes: variant480.bytes,
+        contentType: 'image/webp'
+    });
+
+    const src960 = await uploadBytesToR2({
+        key: `gallery/${id}/${batchId}-960.webp`,
+        bytes: variant960.bytes,
+        contentType: 'image/webp'
+    });
+
+    return {
+        id,
+        type: 'image',
+        src480,
+        src960,
+        videoSrc: '',
+        alt,
+        width: variant960.width,
+        height: variant960.height
+    };
+}
+
+async function migrateVideoItem({id, src, alt}) {
+    const localFile = await findLocalFile(src);
+
+    if (!localFile) {
+        warn(`Skipping gallery video "${id}" because local file was not found: ${src}`);
+        return null;
+    }
+
+    const bytes = await processVideoToWebm(localFile);
+    const batchId = randomUUID();
+
+    const videoSrc = await uploadBytesToR2({
+        key: `gallery/${id}/${batchId}.webm`,
+        bytes,
+        contentType: 'video/webm'
+    });
+
+    return {
+        id,
+        type: 'video',
+        src480: '',
+        src960: '',
+        videoSrc,
+        alt,
+        width: null,
+        height: null
+    };
+}
+
 async function migrateGallery() {
     const rows = readTable('gallery_items');
     const tagMap = tagsByItemId();
@@ -492,61 +610,61 @@ async function migrateGallery() {
 
     log(`Migrating ${rows.length} gallery item(s)...`);
 
+    let migrated = 0;
+    let skipped = 0;
+
     for (const row of rows) {
         const id = safeId(row.id || `g-${randomUUID()}`);
-        const src = row.src_webp || row.src || row.src_jpg || '';
+        const src = row.src || row.src_webp || row.src_jpg || '';
+        const alt = decodeHtmlBasic(row.alt || safeFilename(src));
 
         if (!src) {
             warn(`Skipping gallery item "${id}" because it has no source file.`);
+            skipped += 1;
             continue;
         }
 
-        if (String(src).startsWith(R2_PUBLIC_BASE_URL)) {
-            await upsertSupabaseGalleryItem({
-                id,
-                type: row.type || 'image',
-                src,
-                alt: row.alt || ''
-            });
+        const kind = inferKind(src, row.type);
 
+        try {
+            let item = null;
+
+            if (kind === 'image') {
+                item = await migrateImageItem({id, src, alt});
+            } else if (kind === 'video') {
+                item = await migrateVideoItem({id, src, alt});
+            } else {
+                warn(`Skipping gallery item "${id}" because media type is unsupported: ${src}`);
+                skipped += 1;
+                continue;
+            }
+
+            if (!item) {
+                skipped += 1;
+                continue;
+            }
+
+            await upsertSupabaseGalleryItem(item);
             await replaceSupabaseTags(id, tagMap.get(row.id) || []);
-            log(`Gallery item already on R2: ${id}`);
-            continue;
+
+            migrated += 1;
+
+            if (item.type === 'image') {
+                log(`Gallery item: ${id} → 480=${item.src480}, 960=${item.src960}`);
+            } else {
+                log(`Gallery item: ${id} → ${item.videoSrc}`);
+            }
+        } catch (error) {
+            warn(
+                `Skipping gallery item "${id}" because processing failed: ${
+                    error instanceof Error ? error.message : String(error)
+                }`
+            );
+            skipped += 1;
         }
-
-        const localFile = await findLocalFile(src);
-
-        if (!localFile) {
-            warn(`Skipping gallery item "${id}" because local file was not found: ${src}`);
-            continue;
-        }
-
-        const originalFilename = safeFilename(src);
-        const processed = await processGalleryFile(localFile.path, originalFilename);
-
-        if (!processed) {
-            warn(`Skipping gallery item "${id}" because media type is unsupported: ${src}`);
-            continue;
-        }
-
-        const uploaded = await uploadProcessedToR2({
-            itemId: id,
-            bytes: processed.bytes,
-            mimeType: processed.mimeType,
-            ext: processed.ext
-        });
-
-        await upsertSupabaseGalleryItem({
-            id,
-            type: processed.type,
-            src: uploaded.url,
-            alt: row.alt || ''
-        });
-
-        await replaceSupabaseTags(id, tagMap.get(row.id) || []);
-
-        log(`Gallery item: ${id} → ${uploaded.url}`);
     }
+
+    log(`Migrated ${migrated} gallery item(s), skipped ${skipped}.`);
 }
 
 async function main() {

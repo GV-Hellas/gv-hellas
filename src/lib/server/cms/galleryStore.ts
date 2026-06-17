@@ -2,18 +2,16 @@ import {supabase} from '$lib/server/supabaseClient';
 
 export type GalleryMediaType = 'image' | 'video';
 
-export type GalleryVariants = {
-    webp?: string;
-    jpg?: string;
-};
-
 export type GalleryItem = {
     id: string;
     type: GalleryMediaType;
-    src: string;
-    srcVariants: GalleryVariants;
+    src480: string;
+    src960: string;
+    videoSrc: string;
     alt: string;
     tags: string[];
+    width: number | null;
+    height: number | null;
     createdAt?: string;
     updatedAt?: string;
 };
@@ -21,10 +19,12 @@ export type GalleryItem = {
 type GalleryItemRow = {
     id: string;
     type: string | null;
-    src: string | null;
-    src_webp: string | null;
-    src_jpg: string | null;
+    src_480: string | null;
+    src_960: string | null;
+    video_src: string | null;
     alt: string | null;
+    width: number | null;
+    height: number | null;
     created_at: string | null;
     updated_at: string | null;
 };
@@ -51,16 +51,30 @@ function rowToGalleryItem(row: GalleryItemRow, tags: string[] = []): GalleryItem
     return {
         id: row.id,
         type: normalizeType(row.type),
-        src: row.src || row.src_webp || row.src_jpg || '',
-        srcVariants: {
-            webp: row.src_webp || row.src || '',
-            jpg: row.src_jpg || ''
-        },
+        src480: row.src_480 || '',
+        src960: row.src_960 || '',
+        videoSrc: row.video_src || '',
         alt: row.alt || '',
         tags,
+        width: row.width ?? null,
+        height: row.height ?? null,
         createdAt: row.created_at || undefined,
         updatedAt: row.updated_at || undefined
     };
+}
+
+function validateGalleryItem(item: GalleryItem) {
+    if (!item.id.trim()) {
+        throw new Error('Gallery item id is required');
+    }
+
+    if (item.type === 'image' && !item.src480 && !item.src960) {
+        throw new Error('Gallery image requires src480 or src960');
+    }
+
+    if (item.type === 'video' && !item.videoSrc) {
+        throw new Error('Gallery video requires videoSrc');
+    }
 }
 
 async function loadTagMap() {
@@ -94,9 +108,9 @@ async function loadTagMap() {
 
         if (!tagName) continue;
 
-        const list = tagsByItemId.get(join.item_id) || [];
-        list.push(tagName);
-        tagsByItemId.set(join.item_id, list);
+        const existing = tagsByItemId.get(join.item_id) || [];
+        existing.push(tagName);
+        tagsByItemId.set(join.item_id, existing);
     }
 
     return tagsByItemId;
@@ -164,12 +178,8 @@ async function ensureTag(name: string) {
     const {data, error} = await supabase
         .from('gallery_tags')
         .upsert(
-            {
-                name: cleanName
-            },
-            {
-                onConflict: 'name'
-            }
+            {name: cleanName},
+            {onConflict: 'name'}
         )
         .select('id, name')
         .single<GalleryTagRow>();
@@ -220,27 +230,25 @@ async function replaceGalleryItemTags(itemId: string, tags: string[]) {
 }
 
 export async function upsertGallery(item: GalleryItem): Promise<GalleryItem> {
-    const id = String(item.id || '').trim();
+    validateGalleryItem(item);
 
-    if (!id) {
-        throw new Error('Gallery item id is required');
-    }
+    const id = item.id.trim();
 
     const row = {
         id,
-        type: normalizeType(item.type),
-        src: item.src || item.srcVariants?.webp || '',
-        src_webp: item.srcVariants?.webp || item.src || '',
-        src_jpg: item.srcVariants?.jpg || '',
+        type: item.type,
+        src_480: item.type === 'image' ? item.src480 || '' : '',
+        src_960: item.type === 'image' ? item.src960 || item.src480 || '' : '',
+        video_src: item.type === 'video' ? item.videoSrc || '' : '',
         alt: item.alt || '',
+        width: item.width ?? null,
+        height: item.height ?? null,
         updated_at: new Date().toISOString()
     };
 
     const {data, error} = await supabase
         .from('gallery_items')
-        .upsert(row, {
-            onConflict: 'id'
-        })
+        .upsert(row, {onConflict: 'id'})
         .select('*')
         .single<GalleryItemRow>();
 

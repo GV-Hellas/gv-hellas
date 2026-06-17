@@ -3,21 +3,40 @@
     import MediaSkeleton from '$lib/components/MediaSkeleton.svelte';
 
     type GalleryItem = {
-        id?: string;
-        type?: 'image' | 'video' | 'audio';
-        src?: string;
-        poster?: string;
-        srcVariants?: unknown;
-        alt?: string | { el?: string; de?: string };
-        tags?: string[];
+        id: string;
+        type: 'image' | 'video';
+        src480: string;
+        src960: string;
+        videoSrc: string;
+        alt: string;
+        tags: string[];
+        width: number | null;
+        height: number | null;
     };
 
     type Lang = 'el' | 'de';
 
-    let {data}: { data?: { items?: GalleryItem[] } } = $props();
+    let {data}: {data?: {items?: GalleryItem[]}} = $props();
 
     let lang = $derived((($locale === 'de' ? 'de' : 'el') as Lang));
-    let items = $derived((data?.items ?? []).filter((item) => Boolean(item?.src)));
+
+    function mediaSrc(item: GalleryItem) {
+        if (item.type === 'video') return item.videoSrc;
+        return item.src960 || item.src480;
+    }
+
+    function imageSources(item: GalleryItem) {
+        if (item.type !== 'image') return {};
+
+        return {
+            webp: [
+                item.src480 ? {src: item.src480, width: 480} : null,
+                item.src960 ? {src: item.src960, width: 960} : null
+            ].filter(Boolean) as Array<{src: string; width: number}>
+        };
+    }
+
+    let items = $derived((data?.items ?? []).filter((item) => Boolean(mediaSrc(item))));
 
     let tags = $derived(
         Array.from(new Set(items.flatMap((item) => item.tags ?? [])))
@@ -33,15 +52,8 @@
             : items.filter((item) => (item.tags ?? []).includes(activeTag))
     );
 
-    function label(value: GalleryItem['alt']) {
-        if (!value) return '';
-        if (typeof value === 'string') return value;
-        const key: Lang = lang === 'de' ? 'de' : 'el';
-        return value[key] || value.el || value.de || '';
-    }
-
-    function typeOf(item: GalleryItem) {
-        return item.type || 'image';
+    function label(item: GalleryItem) {
+        return item.alt || '';
     }
 
     function clearFilterIfMissing() {
@@ -75,10 +87,10 @@
             <button
                     type="button"
                     class={`rounded-full px-3 py-1.5 text-sm font-medium transition ${
-          activeTag === 'all'
-            ? 'bg-primary text-white'
-            : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-        }`}
+                    activeTag === 'all'
+                        ? 'bg-primary text-white'
+                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                }`}
                     onclick={() => (activeTag = 'all')}
             >
                 {lang === 'de' ? 'Alle' : 'Όλα'}
@@ -88,10 +100,10 @@
                 <button
                         type="button"
                         class={`rounded-full px-3 py-1.5 text-sm font-medium transition ${
-            activeTag === tag
-              ? 'bg-primary text-white'
-              : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-          }`}
+                        activeTag === tag
+                            ? 'bg-primary text-white'
+                            : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                    }`}
                         onclick={() => (activeTag = tag)}
                 >
                     {tag}
@@ -102,38 +114,31 @@
 
     {#if filtered.length}
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {#each filtered as item (item.id || item.src)}
+            {#each filtered as item (item.id)}
                 <article class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-                    {#if typeOf(item) === 'video'}
+                    {#if item.type === 'video'}
                         <MediaSkeleton
                                 type="video"
-                                src={item.src}
-                                poster={item.poster || ''}
+                                src={item.videoSrc}
                                 containerClass="bg-black"
                                 mediaClass="aspect-video bg-black object-contain"
-                        />
-                    {:else if typeOf(item) === 'audio'}
-                        <MediaSkeleton
-                                type="audio"
-                                src={item.src}
-                                containerClass="bg-white"
                         />
                     {:else}
                         <MediaSkeleton
                                 type="image"
-                                src={item.src}
-                                sources={item.srcVariants as any}
-                                alt={label(item.alt)}
+                                src={item.src960 || item.src480}
+                                sources={imageSources(item)}
+                                alt={label(item)}
                                 containerClass="bg-slate-100"
                                 mediaClass="h-64 object-cover"
                         />
                     {/if}
 
-                    {#if label(item.alt) || item.tags?.length}
+                    {#if label(item) || item.tags?.length}
                         <div class="p-3">
-                            {#if label(item.alt)}
+                            {#if label(item)}
                                 <p class="text-sm font-medium text-slate-800">
-                                    {label(item.alt)}
+                                    {label(item)}
                                 </p>
                             {/if}
 
