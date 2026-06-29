@@ -9,7 +9,7 @@
 
 {#key page.url.pathname}
     <section
-            class="mx-auto min-h-screen max-w-7xl px-4 py-8 border-2 border-[hsl(var(--admin))]"
+            class="mx-auto min-h-screen max-w-7xl px-4 py-8 border-2 border-admin"
             in:fly={{ y: 8, duration: 140 }}
             out:fade={{ duration: 80 }}
     >

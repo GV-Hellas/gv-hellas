@@ -11,9 +11,10 @@ function parseTags(value: FormDataEntryValue | null) {
         .filter(Boolean);
 }
 
-function actionError(status: number, message: string) {
+function actionError(status: number, errorKey: string, message?: string) {
     return fail(status, {
         ok: false,
+        errorKey,
         message
     });
 }
@@ -40,7 +41,7 @@ export const actions: Actions = {
             throw error(404, 'Gallery item not found');
         }
 
-        const upload = form.get('image');
+        const upload = form.get('media');
 
         let type = existing.type;
         let src480 = existing.src480;
@@ -57,7 +58,8 @@ export const actions: Actions = {
             } catch (error) {
                 return actionError(
                     400,
-                    error instanceof Error ? error.message : 'Could not process gallery media'
+                    'admin.gallery.errors.processingFailed',
+                    error instanceof Error ? error.message : undefined
                 );
             }
 

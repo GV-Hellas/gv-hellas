@@ -56,6 +56,91 @@ register('el', () =>
                     deleteFailed: 'Δεν ήταν δυνατή η διαγραφή της εκδήλωσης'
                 }
             },
+            gallery: {
+                subtitle: 'Διαχείριση εικόνων και βίντεο της δημόσιας γκαλερί.',
+                createTitle: 'Νέο στοιχείο γκαλερί',
+                editTitle: 'Επεξεργασία στοιχείου γκαλερί',
+
+                itemSingular: 'στοιχείο',
+                itemPlural: 'στοιχεία',
+
+                createNew: 'Νέο στοιχείο',
+                createFirst: 'Δημιουργία πρώτου στοιχείου',
+                empty: 'Δεν υπάρχουν ακόμα στοιχεία στη γκαλερί.',
+                emptyDescription: 'Ανεβάστε την πρώτη εικόνα ή το πρώτο βίντεο για να εμφανιστεί στη δημόσια γκαλερί.',
+
+                preview: 'Προεπισκόπηση',
+                id: 'ID',
+                idOptional: 'ID προαιρετικό',
+                idHelp: 'Αφήστε το κενό για αυτόματη δημιουργία.',
+                idReadonlyHelp: 'Το ID είναι σταθερό και δεν μπορεί να αλλάξει εδώ.',
+
+                type: 'Τύπος',
+                image: 'Εικόνα',
+                video: 'Βίντεο',
+                alt: 'Εναλλακτικό κείμενο',
+                altPlaceholder: 'Σύντομη περιγραφή',
+
+                tags: 'Ετικέτες',
+                noTags: 'Χωρίς ετικέτες',
+                tagsPlaceholder: 'Ετικέτες χωρισμένες με κόμμα, π.χ. γιορτή, σύλλογος',
+                existingTags: 'Υπάρχουσες ετικέτες',
+
+                files: 'Αρχεία',
+                actions_label: 'Ενέργειες',
+                edit: 'Επεξεργασία',
+                delete: 'Διαγραφή',
+                save: 'Αποθήκευση',
+                cancel: 'Άκυρο',
+
+                mediaUpload: 'Ανέβασμα αρχείου',
+                mediaUploadHelp: 'Οι εικόνες αποθηκεύονται ως WebP 480w και 960w. Τα βίντεο αποθηκεύονται ως WebM.',
+                replaceMedia: 'Αντικατάσταση αρχείου',
+                replaceMediaHelp: 'Αφήστε το κενό για να διατηρηθεί το υπάρχον αρχείο.',
+
+                currentType: 'Τρέχων τύπος',
+                missing: 'Λείπει',
+                missingImage: 'Λείπει εικόνα',
+                missingVideo: 'Λείπει βίντεο',
+                yes: 'ναι',
+                no: 'όχι',
+
+                table: {
+                    preview: 'Προεπισκόπηση',
+                    id: 'ID',
+                    type: 'Τύπος',
+                    alt: 'Περιγραφή',
+                    tags: 'Ετικέτες',
+                    files: 'Αρχεία',
+                    updated: 'Ενημερώθηκε',
+                    actions: 'Ενέργειες'
+                },
+
+                actions: {
+                    edit: 'Επεξεργασία'
+                },
+
+                deleteDialog: {
+                    title: 'Διαγραφή στοιχείου γκαλερί;',
+                    description: 'Αυτή η ενέργεια θα αφαιρέσει το στοιχείο από τη γκαλερί. Τα ήδη ανεβασμένα αρχεία στο R2 δεν διαγράφονται αυτόματα.',
+                    confirm: 'Διαγραφή στοιχείου',
+                    deleting: 'Διαγραφή…'
+                },
+
+                toast: {
+                    deleted: 'Το στοιχείο διαγράφηκε',
+                    deleteFailed: 'Δεν ήταν δυνατή η διαγραφή του στοιχείου.'
+                },
+
+                errors: {
+                    mediaRequired: 'Απαιτείται εικόνα ή βίντεο.',
+                    invalidId: 'Μη έγκυρο ID γκαλερί.',
+                    missingId: 'Λείπει το ID του στοιχείου γκαλερί.',
+                    notFound: 'Το στοιχείο γκαλερί δεν βρέθηκε.',
+                    deleteFailed: 'Παρουσιάστηκε σφάλμα κατά τη διαγραφή του στοιχείου γκαλερί.',
+                    processingFailed: 'Δεν ήταν δυνατή η επεξεργασία του αρχείου.'
+                }
+            },
             links: {
                 title: 'Σύνδεσμοι',
                 subtitle: 'Διαχείριση χρήσιμων εξωτερικών συνδέσμων και λογοτύπων.',
@@ -569,6 +654,91 @@ register('de', () =>
                 toast: {
                     deleted: 'Die Veranstaltung wurde gelöscht',
                     deleteFailed: 'Die Veranstaltung konnte nicht gelöscht werden'
+                }
+            },
+            gallery: {
+                subtitle: 'Bilder und Videos der öffentlichen Galerie verwalten.',
+                createTitle: 'Neuer Galerie-Eintrag',
+                editTitle: 'Galerie-Eintrag bearbeiten',
+
+                itemSingular: 'Eintrag',
+                itemPlural: 'Einträge',
+
+                createNew: 'Neu erstellen',
+                createFirst: 'Ersten Eintrag erstellen',
+                empty: 'Es gibt noch keine Galerie-Einträge.',
+                emptyDescription: 'Laden Sie das erste Bild oder Video hoch, damit es in der öffentlichen Galerie erscheint.',
+
+                preview: 'Vorschau',
+                id: 'ID',
+                idOptional: 'ID optional',
+                idHelp: 'Leer lassen, um automatisch eine ID zu erstellen.',
+                idReadonlyHelp: 'Die ID ist stabil und kann hier nicht geändert werden.',
+
+                type: 'Typ',
+                image: 'Bild',
+                video: 'Video',
+                alt: 'Alternativtext',
+                altPlaceholder: 'Kurze Beschreibung',
+
+                tags: 'Tags',
+                noTags: 'Keine Tags',
+                tagsPlaceholder: 'Tags durch Komma getrennt, z. B. Fest, Verein',
+                existingTags: 'Bestehende Tags',
+
+                files: 'Dateien',
+                actions_label: 'Aktionen',
+                edit: 'Bearbeiten',
+                delete: 'Löschen',
+                save: 'Speichern',
+                cancel: 'Abbrechen',
+
+                mediaUpload: 'Datei hochladen',
+                mediaUploadHelp: 'Bilder werden als WebP in 480w und 960w gespeichert. Videos werden als WebM gespeichert.',
+                replaceMedia: 'Datei ersetzen',
+                replaceMediaHelp: 'Leer lassen, um die aktuelle Datei beizubehalten.',
+
+                currentType: 'Aktueller Typ',
+                missing: 'Fehlt',
+                missingImage: 'Bild fehlt',
+                missingVideo: 'Video fehlt',
+                yes: 'ja',
+                no: 'nein',
+
+                table: {
+                    preview: 'Vorschau',
+                    id: 'ID',
+                    type: 'Typ',
+                    alt: 'Beschreibung',
+                    tags: 'Tags',
+                    files: 'Dateien',
+                    updated: 'Aktualisiert',
+                    actions: 'Aktionen'
+                },
+
+                actions: {
+                    edit: 'Bearbeiten'
+                },
+
+                deleteDialog: {
+                    title: 'Galerie-Eintrag löschen?',
+                    description: 'Diese Aktion entfernt den Eintrag aus der Galerie. Bereits hochgeladene Dateien in R2 werden nicht automatisch gelöscht.',
+                    confirm: 'Eintrag löschen',
+                    deleting: 'Wird gelöscht…'
+                },
+
+                toast: {
+                    deleted: 'Galerie-Eintrag gelöscht',
+                    deleteFailed: 'Der Galerie-Eintrag konnte nicht gelöscht werden.'
+                },
+
+                errors: {
+                    mediaRequired: 'Bild oder Video erforderlich.',
+                    invalidId: 'Ungültige Galerie-ID.',
+                    processingFailed: 'Die Galerie-Datei konnte nicht verarbeitet werden.',
+                    missingId: 'Die ID des Galerie-Eintrags fehlt.',
+                    notFound: 'Der Galerie-Eintrag wurde nicht gefunden.',
+                    deleteFailed: 'Beim Löschen des Galerie-Eintrags ist ein Fehler aufgetreten.'
                 }
             },
             links: {

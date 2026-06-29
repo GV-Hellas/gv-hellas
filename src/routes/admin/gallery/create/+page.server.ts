@@ -22,9 +22,10 @@ function safeId(value: string) {
         .replace(/^-+|-+$/g, '');
 }
 
-function actionError(status: number, message: string) {
+function actionError(status: number, errorKey: string, message?: string) {
     return fail(status, {
         ok: false,
+        errorKey,
         message
     });
 }
@@ -39,16 +40,16 @@ export const load: ServerLoad = async () => {
 export const actions: Actions = {
     save: async ({request}) => {
         const form = await request.formData();
-        const upload = form.get('image');
+        const upload = form.get('media');
 
         if (!(upload instanceof File) || upload.size === 0) {
-            return actionError(400, 'Image or video required');
+            return actionError(400, 'admin.gallery.errors.mediaRequired');
         }
 
         const id = safeId(String(form.get('id') || `g-${crypto.randomUUID()}`));
 
         if (!id) {
-            return actionError(400, 'Invalid gallery item id');
+            return actionError(400, 'admin.gallery.errors.invalidId');
         }
 
         let saved;
@@ -58,7 +59,8 @@ export const actions: Actions = {
         } catch (error) {
             return actionError(
                 400,
-                error instanceof Error ? error.message : 'Could not process gallery media'
+                'admin.gallery.errors.processingFailed',
+                error instanceof Error ? error.message : undefined
             );
         }
 

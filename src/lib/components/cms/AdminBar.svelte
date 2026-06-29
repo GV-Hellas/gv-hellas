@@ -4,6 +4,7 @@
 
     const items = [
         {href: "/admin/events", labelKey: "nav.events"},
+        {href: "/admin/gallery", labelKey: "nav.gallery"},
         {href: "/admin/links", labelKey: "nav.links"},
         {href: "/admin/businesses", labelKey: "nav.businesses"},
     ];

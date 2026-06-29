@@ -1,7 +1,9 @@
-import {listEvents, deleteEvent} from '$lib/server/cms/eventsStore';
-import type {Actions} from '@sveltejs/kit';
+import {fail} from '@sveltejs/kit';
+import type {Actions, ServerLoad} from '@sveltejs/kit';
 
-export const load = async () => {
+import {deleteEvent, listEvents} from '$lib/server/cms/eventsStore';
+
+export const load: ServerLoad = async () => {
     const events = await listEvents();
 
     return {
@@ -10,29 +12,39 @@ export const load = async () => {
 };
 
 export const actions: Actions = {
-    delete: async ({request}: {request: Request}) => {
+    delete: async ({request}) => {
         const formData = await request.formData();
         const slug = String(formData.get('slug') || '').trim();
 
         if (!slug) {
-            return {
+            return fail(400, {
                 ok: false,
+                slug: '',
                 message: 'Missing slug'
-            };
+            });
         }
 
-        const deleted = await deleteEvent(slug);
+        try {
+            const deleted = await deleteEvent(slug);
 
-        if (!deleted) {
+            if (!deleted) {
+                return fail(404, {
+                    ok: false,
+                    slug,
+                    message: 'Event not found'
+                });
+            }
+
             return {
-                ok: false,
-                message: 'Event not found'
+                ok: true,
+                slug
             };
+        } catch (error) {
+            return fail(500, {
+                ok: false,
+                slug,
+                message: error instanceof Error ? error.message : 'Unknown delete error.'
+            });
         }
-
-        return {
-            ok: true,
-            slug
-        };
     }
 };
