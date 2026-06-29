@@ -11,24 +11,31 @@
     import {Badge} from '$lib/components/ui/badge/index.js';
 
     import {toast} from 'svelte-sonner';
+
     import PencilIcon from '@lucide/svelte/icons/pencil';
     import Trash2Icon from '@lucide/svelte/icons/trash-2';
     import ExternalLinkIcon from '@lucide/svelte/icons/external-link';
     import Loader2Icon from '@lucide/svelte/icons/loader-2';
+    import LinkIcon from '@lucide/svelte/icons/link';
+    import ImageIcon from '@lucide/svelte/icons/image';
 
     import {cn} from '$lib/utils.js';
 
     type Lang = 'el' | 'de';
+    type LocalizedText = Partial<Record<Lang, string>> | string | undefined;
 
     type AdminLink = {
         id: number;
         name: Partial<Record<Lang, string>>;
+        descriptionHtml?: Partial<Record<Lang, string>>;
         url: string;
         logo?: string;
         logoVariants?: {
             webp?: string;
             jpg?: string;
         };
+        createdAt?: string;
+        updatedAt?: string;
     };
 
     type PageData = {
@@ -37,7 +44,8 @@
 
     type ActionResponse = {
         ok?: boolean;
-        id?: number;
+        id?: number | null;
+        errorKey?: string;
         message?: string;
     };
 
@@ -55,16 +63,43 @@
         return value === key ? fallback : value;
     }
 
+    function localized(value: LocalizedText) {
+        if (!value) return '';
+        if (typeof value === 'string') return value;
+
+        return value[lang] || value.el || value.de || '';
+    }
+
     function itemTitle(item: AdminLink) {
-        return item.name?.[lang] || item.name?.el || item.name?.de || '—';
+        return localized(item.name) || item.url || '—';
+    }
+
+    function itemDescription(item: AdminLink) {
+        return localized(item.descriptionHtml);
     }
 
     function logoSrc(item: AdminLink) {
-        return item.logo || item.logoVariants?.webp || item.logoVariants?.jpg || '';
+        return item.logoVariants?.webp || item.logo || item.logoVariants?.jpg || '';
     }
 
     function editHref(id: number) {
         return `/admin/links/${id}/edit`;
+    }
+
+    function formatDateTime(value?: string) {
+        if (!value) return '—';
+
+        const date = new Date(value);
+
+        if (Number.isNaN(date.getTime())) {
+            return value;
+        }
+
+        return new Intl.DateTimeFormat(lang === 'de' ? 'de-CH' : 'el-GR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        }).format(date);
     }
 
     function openDeleteDialog(item: AdminLink) {
@@ -76,6 +111,14 @@
         if (!data || typeof data !== 'object') return '';
 
         const maybeData = data as ActionResponse;
+
+        if (typeof maybeData.errorKey === 'string') {
+            const translated = $t(maybeData.errorKey);
+
+            if (translated !== maybeData.errorKey) {
+                return translated;
+            }
+        }
 
         return typeof maybeData.message === 'string' ? maybeData.message : '';
     }
@@ -139,13 +182,13 @@
 </script>
 
 <svelte:head>
-    <title>{$t('admin.links.title')} | Griechischer Verein Hellas</title>
+    <title>{$t('nav.links')} | Griechischer Verein Hellas</title>
 </svelte:head>
 
 <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
     <div>
         <h1 class="text-2xl font-bold tracking-tight">
-            {$t('admin.links.title')}
+            {$t('nav.links')}
         </h1>
 
         <p class="mt-1 text-sm text-slate-500">
@@ -167,11 +210,11 @@
 
             <Table.Header>
                 <Table.Row>
-                    <Table.Head class="w-20">
+                    <Table.Head class="w-24">
                         {$t('admin.links.table.logo')}
                     </Table.Head>
 
-                    <Table.Head class="w-[16rem]">
+                    <Table.Head class="w-[18rem]">
                         {$t('admin.links.table.title')} - {lang.toUpperCase()}
                     </Table.Head>
 
@@ -179,7 +222,11 @@
                         {$t('admin.links.table.url')}
                     </Table.Head>
 
-                    <Table.Head class="w-38 text-right">
+                    <Table.Head class="w-32">
+                        {$t('admin.links.table.updated')}
+                    </Table.Head>
+
+                    <Table.Head class="w-24 text-right">
                         {$t('admin.links.table.actions')}
                     </Table.Head>
                 </Table.Row>
@@ -194,11 +241,12 @@
                                     <img
                                             src={logoSrc(item)}
                                             alt={itemTitle(item)}
-                                            class="size-10 rounded-xl border border-slate-200 bg-white object-cover"
+                                            class="size-12 rounded-xl border border-slate-200 bg-white object-contain p-1"
+                                            loading="lazy"
                                     />
                                 {:else}
-                                    <div class="flex size-10 items-center justify-center rounded-xl border border-dashed border-slate-300 bg-slate-50 text-xs font-bold text-slate-400">
-                                        —
+                                    <div class="flex size-12 items-center justify-center rounded-xl border border-dashed border-slate-300 bg-slate-50 text-slate-400">
+                                        <ImageIcon class="size-5"/>
                                     </div>
                                 {/if}
                             </Table.Cell>
@@ -207,6 +255,12 @@
                                 <div class="truncate font-medium" title={itemTitle(item)}>
                                     {itemTitle(item)}
                                 </div>
+
+                                {#if itemDescription(item)}
+                                    <div class="mt-1 line-clamp-1 text-xs text-slate-500">
+                                        {@html itemDescription(item)}
+                                    </div>
+                                {/if}
 
                                 <Badge variant="secondary" class="mt-1 font-mono text-[0.7rem]">
                                     ID {item.id}
@@ -217,16 +271,20 @@
                                 <a
                                         href={item.url}
                                         target="_blank"
-                                        rel="noopener"
-                                        class="flex min-w-0 items-center gap-1.5 text-primary-dark hover:underline"
+                                        rel="noopener noreferrer"
+                                        class="flex min-w-0 items-center gap-1.5 text-primary hover:underline"
                                         title={item.url}
                                 >
                                     <span class="truncate">
                                         {item.url}
                                     </span>
 
-                                    <ExternalLinkIcon class="size-3.5 shrink-0" />
+                                    <ExternalLinkIcon class="size-3.5 shrink-0"/>
                                 </a>
+                            </Table.Cell>
+
+                            <Table.Cell class="whitespace-nowrap align-middle text-sm text-slate-600">
+                                {formatDateTime(item.updatedAt || item.createdAt)}
                             </Table.Cell>
 
                             <Table.Cell class="align-middle">
@@ -240,7 +298,7 @@
                                             title={$t('admin.links.actions.edit')}
                                             aria-label={$t('admin.links.actions.edit')}
                                     >
-                                        <PencilIcon class="size-4" />
+                                        <PencilIcon class="size-4"/>
                                     </a>
 
                                     <Button
@@ -252,7 +310,7 @@
                                             aria-label={$t('common.delete')}
                                             onclick={() => openDeleteDialog(item)}
                                     >
-                                        <Trash2Icon class="size-4" />
+                                        <Trash2Icon class="size-4"/>
                                     </Button>
                                 </div>
                             </Table.Cell>
@@ -260,8 +318,26 @@
                     {/each}
                 {:else}
                     <Table.Row>
-                        <Table.Cell colspan={4} class="h-28 text-center text-slate-500">
-                            {$t('admin.links.empty')}
+                        <Table.Cell colspan={5} class="h-32 text-center">
+                            <div class="mx-auto flex max-w-sm flex-col items-center gap-3 text-slate-500">
+                                <div class="flex size-12 items-center justify-center rounded-2xl bg-slate-100">
+                                    <LinkIcon class="size-6"/>
+                                </div>
+
+                                <div>
+                                    <p class="font-medium text-slate-700">
+                                        {$t('admin.links.empty')}
+                                    </p>
+
+                                    <p class="mt-1 text-sm text-slate-500">
+                                        {$t('admin.links.emptyDescription')}
+                                    </p>
+                                </div>
+
+                                <a href="/admin/links/create" class={cn(buttonVariants({size: 'sm'}), 'rounded-xl')}>
+                                    {$t('admin.links.createFirst')}
+                                </a>
+                            </div>
                         </Table.Cell>
                     </Table.Row>
                 {/if}
@@ -281,8 +357,14 @@
                 {$t('admin.links.deleteDialog.description')}
 
                 {#if deleteTarget}
-                    <span class="mt-3 block rounded-lg bg-slate-100 px-3 py-2 text-sm text-slate-700">
-                        {itemTitle(deleteTarget)}
+                    <span class="mt-3 block rounded-lg bg-slate-100 px-3 py-2">
+                        <span class="block truncate font-medium text-slate-800">
+                            {itemTitle(deleteTarget)}
+                        </span>
+
+                        <span class="mt-1 block truncate font-mono text-xs text-slate-600">
+                            ID {deleteTarget.id}
+                        </span>
                     </span>
                 {/if}
             </AlertDialog.Description>
@@ -295,7 +377,7 @@
 
             {#if deleteTarget}
                 <form method="POST" action="?/delete" use:enhance={deleteEnhance}>
-                    <input type="hidden" name="id" value={deleteTarget.id} />
+                    <input type="hidden" name="id" value={deleteTarget.id}/>
 
                     <Button
                             type="submit"
@@ -304,11 +386,11 @@
                             disabled={deleting}
                     >
                         {#if deleting}
-                            <Loader2Icon class="mr-2 size-4 animate-spin" />
-                            {$t('admin.links.deleteDialog.deleting')}
+                            <Loader2Icon class="mr-2 size-4 animate-spin"/>
+                            {text('admin.links.deleteDialog.deleting', 'Deleting…')}
                         {:else}
-                            <Trash2Icon class="mr-2 size-4" />
-                            {$t('admin.links.deleteDialog.confirm')}
+                            <Trash2Icon class="mr-2 size-4"/>
+                            {text('admin.links.deleteDialog.confirm', 'Delete link')}
                         {/if}
                     </Button>
                 </form>

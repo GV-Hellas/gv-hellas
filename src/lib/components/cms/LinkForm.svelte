@@ -1,38 +1,50 @@
+<!--suppress ES6UnusedImports -->
 <script lang="ts">
-    import {onDestroy} from 'svelte';
-    import {deserialize} from '$app/forms';
-    import {goto, invalidateAll} from '$app/navigation';
+    import {enhance} from '$app/forms';
+    import {goto} from '$app/navigation';
+    import type {ActionResult} from '@sveltejs/kit';
 
     import {t, locale} from '$lib/i18n';
-    import type {Lang, LinkPayload, StoredLink} from '$lib/cms/links/types';
-    import {linkPayloadSchema} from '$lib/cms/links/schema';
 
-    import LocalizedField from './LocalizedField.svelte';
-    import LocalizedRichText from './LocalizedRichText.svelte';
-
-    import {Button} from '$lib/components/ui/button/index.js';
+    import {Button, buttonVariants} from '$lib/components/ui/button/index.js';
     import {Input} from '$lib/components/ui/input/index.js';
     import {Label} from '$lib/components/ui/label/index.js';
-    import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js';
+    import {Badge} from '$lib/components/ui/badge/index.js';
+
+    import {toast} from 'svelte-sonner';
+
+    import SaveIcon from '@lucide/svelte/icons/save';
+    import ArrowLeftIcon from '@lucide/svelte/icons/arrow-left';
+    import ExternalLinkIcon from '@lucide/svelte/icons/external-link';
+    import Loader2Icon from '@lucide/svelte/icons/loader-2';
+    import ImageIcon from '@lucide/svelte/icons/image';
+
     import {cn} from '$lib/utils.js';
 
-    import type {ActionResult} from '@sveltejs/kit';
-    import type {ZodIssue} from 'zod';
-
-    type LinkItem = Partial<StoredLink> & LinkPayload;
-
+    type Lang = 'el' | 'de';
     type FormMode = 'create' | 'edit';
 
-    type Props = {
-        mode?: FormMode;
-        submitTo?: string;
-        initialItem?: LinkItem | null;
+    type LinkPayload = {
+        name: Record<Lang, string>;
+        descriptionHtml: Record<Lang, string>;
+        url: string;
+        logo: string;
+        logoVariants: {
+            webp: string;
+            jpg: string;
+        };
     };
 
-    type SaveActionData = {
+    type LinkItem = LinkPayload & {
+        id?: number;
+        createdAt?: string;
+        updatedAt?: string;
+    };
+
+    type ActionResponse = {
         ok?: boolean;
-        id?: string | number;
-        slug?: string;
+        id?: number;
+        errorKey?: string;
         message?: string;
     };
 
@@ -40,545 +52,389 @@
         mode = 'create',
         submitTo = '?/save',
         initialItem = null
-    }: Props = $props();
+    }: {
+        mode?: FormMode;
+        submitTo?: string;
+        initialItem?: LinkItem | null;
+    } = $props();
 
     const id = $props.id();
 
-    let loading = $state(false);
-    let error = $state('');
-    let fieldErrors = $state<Record<string, string>>({});
-    let logoFile = $state<File | null>(null);
-    let preview = $state('');
-    let objectUrl = '';
+    let saving = $state(false);
+    let logoPreview = $state('');
+    let logoFileName = $state('');
 
-    let successDialogOpen = $state(false);
-    let successMessage = $state('');
-    let successBackHref = $state('/admin/links');
+    let link = $state<LinkPayload>({
+        name: {
+            el: '',
+            de: ''
+        },
+        descriptionHtml: {
+            el: '',
+            de: ''
+        },
+        url: '',
+        logo: '',
+        logoVariants: {
+            webp: '',
+            jpg: ''
+        }
+    });
+
+    const lang = $derived(($locale || 'el') as Lang);
 
     const controlClass =
         'h-10 rounded-xl border border-slate-300 bg-white shadow-sm focus-visible:border-primary focus-visible:ring-primary/25';
-
-    const invalidControlClass =
-        'border-destructive focus-visible:border-destructive focus-visible:ring-destructive/25';
 
     function text(key: string, fallback: string) {
         const value = $t(key);
         return value === key ? fallback : value;
     }
 
-    function emptyItem(): LinkItem {
+    function cloneInitial(source: LinkItem | null): LinkPayload {
         return {
             name: {
-                el: '',
-                de: ''
+                el: source?.name?.el || '',
+                de: source?.name?.de || ''
             },
             descriptionHtml: {
-                el: '',
-                de: ''
+                el: source?.descriptionHtml?.el || '',
+                de: source?.descriptionHtml?.de || ''
             },
-            url: '',
-            logo: '',
+            url: source?.url || '',
+            logo: source?.logo || '',
             logoVariants: {
-                webp: '',
-                jpg: ''
+                webp: source?.logoVariants?.webp || '',
+                jpg: source?.logoVariants?.jpg || ''
             }
         };
     }
 
-    function normalizeItem(source: LinkItem | null): LinkItem {
-        const item = structuredClone(source ?? emptyItem());
+    function currentLogo() {
+        return logoPreview || link.logoVariants.webp || link.logo || link.logoVariants.jpg || '';
+    }
 
-        return {
-            ...item,
-            name: {
-                el: item.name?.el ?? '',
-                de: item.name?.de ?? ''
-            },
-            descriptionHtml: {
-                el: item.descriptionHtml?.el ?? '',
-                de: item.descriptionHtml?.de ?? ''
-            },
-            url: item.url ?? '',
-            logo: item.logo ?? '',
-            logoVariants: {
-                webp: item.logoVariants?.webp ?? '',
-                jpg: item.logoVariants?.jpg ?? ''
+    function visibleName() {
+        return link.name[lang] || link.name.el || link.name.de || '';
+    }
+
+    function actionMessage(data: unknown) {
+        if (!data || typeof data !== 'object') return '';
+
+        const maybeData = data as ActionResponse;
+
+        if (typeof maybeData.errorKey === 'string') {
+            const translated = $t(maybeData.errorKey);
+
+            if (translated !== maybeData.errorKey) {
+                return translated;
             }
-        };
-    }
-
-    function itemLogoSource(source: LinkItem) {
-        return source.logo || source.logoVariants?.webp || source.logoVariants?.jpg || '';
-    }
-
-    function revokeObjectUrl() {
-        if (!objectUrl) return;
-
-        URL.revokeObjectURL(objectUrl);
-        objectUrl = '';
-    }
-
-    let item = $state<LinkItem>(emptyItem());
-
-    $effect(() => {
-        const nextItem = normalizeItem(initialItem);
-
-        revokeObjectUrl();
-
-        item = nextItem;
-        preview = itemLogoSource(nextItem);
-        logoFile = null;
-        fieldErrors = {};
-        error = '';
-
-        successDialogOpen = false;
-        successMessage = '';
-        successBackHref = '/admin/links';
-    });
-
-    const lang = $derived(($locale || 'el') as Lang);
-    const languageSuffix = $derived(lang.toUpperCase());
-
-    onDestroy(() => {
-        revokeObjectUrl();
-    });
-
-    function localizedLabel(label: string) {
-        return `${label} - ${languageSuffix}`;
-    }
-
-    function issuePath(issue: ZodIssue) {
-        return issue.path.join('.');
-    }
-
-    function mapIssues(issues: ZodIssue[]) {
-        return issues.reduce<Record<string, string>>((acc, issue) => {
-            const path = issuePath(issue);
-
-            if (!acc[path]) {
-                acc[path] = issue.message;
-            }
-
-            return acc;
-        }, {});
-    }
-
-    function getIssueForPath(path: string, issues: ZodIssue[]) {
-        return issues.find((issue) => issuePath(issue) === path);
-    }
-
-    function getPayloadForValidation(): LinkPayload {
-        return {
-            name: {
-                el: item.name.el.trim(),
-                de: item.name.de.trim()
-            },
-            descriptionHtml: {
-                el: item.descriptionHtml.el,
-                de: item.descriptionHtml.de
-            },
-            url: item.url.trim(),
-            logo: item.logo ?? '',
-            logoVariants: {
-                webp: item.logoVariants?.webp ?? '',
-                jpg: item.logoVariants?.jpg ?? ''
-            }
-        };
-    }
-
-    function validateField(path: string) {
-        if (!fieldErrors[path]) return;
-
-        const payload = getPayloadForValidation();
-        const result = linkPayloadSchema.safeParse(payload);
-        const nextErrors = {...fieldErrors};
-
-        if (result.success) {
-            delete nextErrors[path];
-            fieldErrors = nextErrors;
-            return;
         }
 
-        const issue = getIssueForPath(path, result.error.issues);
-
-        if (issue) {
-            nextErrors[path] = issue.message;
-        } else {
-            delete nextErrors[path];
-        }
-
-        fieldErrors = nextErrors;
+        return typeof maybeData.message === 'string' ? maybeData.message : '';
     }
 
-    function validateClient() {
-        const payload = getPayloadForValidation();
-        const result = linkPayloadSchema.safeParse(payload);
-
-        if (!result.success) {
-            fieldErrors = mapIssues(result.error.issues);
-            error = text('admin.links.form.validationFailed', 'Please check the form fields.');
-            return null;
-        }
-
-        fieldErrors = {};
-        return result.data;
-    }
-
-    function onFileChange(event: Event) {
+    function onLogoChange(event: Event) {
         const input = event.currentTarget as HTMLInputElement;
-        const file = input.files?.[0] ?? null;
+        const file = input.files?.[0];
 
-        revokeObjectUrl();
-
-        logoFile = file;
-
-        if (!file) {
-            preview = itemLogoSource(item);
-            return;
+        if (logoPreview && logoPreview.startsWith('blob:')) {
+            URL.revokeObjectURL(logoPreview);
         }
 
-        objectUrl = URL.createObjectURL(file);
-        preview = objectUrl;
+        logoPreview = file ? URL.createObjectURL(file) : '';
+        logoFileName = file?.name || '';
     }
 
-    function actionData(result: ActionResult): SaveActionData | undefined {
-        if ('data' in result) {
-            return result.data as SaveActionData | undefined;
-        }
-
-        return undefined;
+    function payload() {
+        return {
+            ...link,
+            name: {
+                el: link.name.el.trim(),
+                de: link.name.de.trim()
+            },
+            descriptionHtml: {
+                el: link.descriptionHtml.el,
+                de: link.descriptionHtml.de
+            },
+            url: link.url.trim()
+        };
     }
 
-    async function submit() {
-        loading = true;
-        error = '';
+    type EnhanceUpdate = (options?: {
+        reset?: boolean;
+        invalidateAll?: boolean;
+    }) => Promise<void>;
 
-        const payload = validateClient();
+    type EnhanceResult = {
+        result: ActionResult;
+        update: EnhanceUpdate;
+    };
 
-        if (!payload) {
-            loading = false;
-            return;
-        }
+    const submitEnhance = ({formData}: { formData: FormData }) => {
+        saving = true;
 
-        const formData = new FormData();
+        formData.set('payload', JSON.stringify(payload()));
 
-        formData.append('payload', JSON.stringify(payload));
-
-        formData.append('name_el', payload.name.el);
-        formData.append('name_de', payload.name.de);
-        formData.append('description_html_el', payload.descriptionHtml.el);
-        formData.append('description_html_de', payload.descriptionHtml.de);
-        formData.append('url', payload.url);
-
-        if (logoFile) {
-            formData.append('logo', logoFile);
-        }
-
-        try {
-            const response = await fetch(submitTo, {
-                method: 'POST',
-                headers: {
-                    accept: 'application/json',
-                    'x-sveltekit-action': 'true'
-                },
-                body: formData
-            });
-
-            const result = deserialize(await response.text()) as ActionResult;
+        return async ({result, update}: EnhanceResult) => {
+            saving = false;
 
             if (result.type === 'success') {
-                const data = actionData(result);
+                const resultData = result.data as ActionResponse | undefined;
 
-                if (!data?.ok) {
-                    error =
-                        data?.message ||
-                        text('admin.links.form.couldNotSave', 'The link could not be saved.');
-                    return;
-                }
+                toast.success(
+                    text(
+                        mode === 'edit'
+                            ? 'admin.links.toast.updated'
+                            : 'admin.links.toast.created',
+                        mode === 'edit' ? 'Link updated' : 'Link created'
+                    ),
+                    {
+                        description: resultData?.id ? `ID: ${resultData.id}` : visibleName()
+                    }
+                );
 
-                successMessage =
-                    data.message ||
-                    `${text('admin.links.form.saved', 'Saved')}${data.id ? `: ${data.id}` : ''}`;
+                await update({
+                    reset: false,
+                    invalidateAll: true
+                });
 
-                successBackHref = '/admin/links';
-                successDialogOpen = true;
-
-                await invalidateAll();
+                await goto('/admin/links');
                 return;
             }
 
             if (result.type === 'failure') {
-                const data = actionData(result);
+                const message =
+                    actionMessage(result.data) ||
+                    text('admin.links.toast.saveFailed', 'The link could not be saved.');
 
-                error =
-                    data?.message ||
-                    text('admin.links.form.couldNotSave', 'The link could not be saved.');
-                return;
-            }
+                toast.error(text('admin.links.toast.saveFailed', 'The link could not be saved.'), {
+                    description: message
+                });
 
-            if (result.type === 'redirect') {
-                successMessage = text('admin.links.form.saved', 'Saved');
-                successBackHref = result.location || '/admin/links';
-                successDialogOpen = true;
+                await update({
+                    reset: false
+                });
 
-                await invalidateAll();
                 return;
             }
 
             if (result.type === 'error') {
-                error =
-                    result.error?.message ||
-                    text('admin.links.form.couldNotSave', 'The link could not be saved.');
+                toast.error(text('admin.links.toast.saveFailed', 'The link could not be saved.'));
                 return;
             }
 
-            error = text('admin.links.form.couldNotSave', 'The link could not be saved.');
-        } catch {
-            error = text('admin.links.form.couldNotSave', 'The link could not be saved.');
-        } finally {
-            loading = false;
-        }
-    }
+            await update({
+                reset: false
+            });
+        };
+    };
+
+    $effect(() => {
+        link = cloneInitial(initialItem);
+        logoPreview = '';
+        logoFileName = '';
+    });
 </script>
 
-<form
-        class="form"
-        novalidate
-        onsubmit={(submitEvent) => {
-        submitEvent.preventDefault();
-        submit();
-    }}
->
-    <div class="topbar">
-        <div>
-            <h1 class="text-xl font-bold">
-                {mode === 'edit'
-                    ? $t('admin.links.form.editTitle')
-                    : $t('admin.links.form.createTitle')}
-            </h1>
+<div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <div>
+        <h1 class="text-2xl font-bold tracking-tight">
+            {$t(mode === 'edit' ? 'admin.links.editTitle' : 'admin.links.createTitle')}
+        </h1>
 
-            <p>
-                {$t('admin.links.form.subtitle')}
-            </p>
-        </div>
-
-        <div class="lang-indicator" aria-label="Current language">
-            {lang.toUpperCase()}
-        </div>
+        <p class="mt-1 text-sm text-slate-500">
+            {$t('admin.links.form.subtitle')}
+        </p>
     </div>
 
-    <div class="card">
-        <LocalizedField
-                label={$t('admin.links.table.title')}
-                bind:value={item.name}
-                {lang}
-                required={lang === 'el'}
-                error={fieldErrors[`name.${lang}`] || fieldErrors['name.el']}
-                placeholder={
-                lang === 'de'
-                    ? $t('admin.links.form.nameDePlaceholder')
-                    : $t('admin.links.form.nameElPlaceholder')
-            }
-                onValueChange={() => validateField(`name.${lang}`)}
-        />
+    <a href="/admin/links" class={cn(buttonVariants({variant: 'outline'}), 'rounded-xl')}>
+        <ArrowLeftIcon class="mr-2 size-4"/>
+        {$t('admin.links.backToList')}
+    </a>
+</div>
 
-        <LocalizedRichText
-                label={localizedLabel($t('admin.links.form.descriptionHtml'))}
-                bind:value={item.descriptionHtml}
-                {lang}
-        />
+<form
+        method="POST"
+        enctype="multipart/form-data"
+        action={submitTo}
+        use:enhance={submitEnhance}
+        class="grid gap-6"
+>
+    <div class="grid gap-6 lg:grid-cols-[1fr_18rem]">
+        <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div class="mb-4 flex items-center justify-between gap-3">
+                <div>
+                    <h2 class="font-semibold text-slate-900">
+                        {$t('admin.links.form.content')}
+                    </h2>
 
-        <div class="field">
-            <Label for={`${id}-url`} class="px-1">
-                {$t('admin.links.form.url')}
-            </Label>
+                    <p class="mt-1 text-sm text-slate-500">
+                        {$t('admin.links.form.contentHelp')}
+                    </p>
+                </div>
 
-            <Input
-                    id={`${id}-url`}
-                    name="url"
-                    type="url"
-                    bind:value={item.url}
-                    required
-                    aria-invalid={!!fieldErrors.url}
-                    class={cn(controlClass, fieldErrors.url && invalidControlClass)}
-                    placeholder="https://..."
-                    oninput={() => validateField('url')}
-            />
+                <Badge variant="secondary">
+                    {lang.toUpperCase()}
+                </Badge>
+            </div>
 
-            {#if fieldErrors.url}
-                <p class="field-error">
-                    {fieldErrors.url}
-                </p>
-            {/if}
-        </div>
+            <div class="grid gap-4">
+                <div class="grid gap-4 md:grid-cols-2">
+                    <div class="space-y-1.5">
+                        <Label for={`${id}-name-el`}>
+                            {$t('admin.links.form.nameEl')}
+                        </Label>
 
-        <div class="field">
-            <Label for={`${id}-logo`} class="px-1">
-                {$t('admin.links.form.logoUpload')}
-            </Label>
+                        <Input
+                                id={`${id}-name-el`}
+                                name="name_el"
+                                bind:value={link.name.el}
+                                class={controlClass}
+                                required
+                        />
+                    </div>
 
-            <Input
-                    id={`${id}-logo`}
-                    name="logo"
-                    type="file"
-                    accept="image/*"
-                    class="h-10 rounded-xl border border-slate-300 bg-white shadow-sm file:mr-4 file:border-0 file:bg-transparent file:text-sm file:font-medium"
-                    onchange={onFileChange}
-            />
+                    <div class="space-y-1.5">
+                        <Label for={`${id}-name-de`}>
+                            {$t('admin.links.form.nameDe')}
+                        </Label>
 
-            {#if preview}
-                <div class="logo-preview">
-                    <img
-                            src={preview}
-                            alt={$t('admin.links.form.logoPreview')}
-                    />
-
-                    <div>
-                        {mode === 'edit'
-                            ? $t('admin.links.form.currentLogoHint')
-                            : $t('admin.links.form.logoPreview')}
+                        <Input
+                                id={`${id}-name-de`}
+                                name="name_de"
+                                bind:value={link.name.de}
+                                class={controlClass}
+                        />
                     </div>
                 </div>
+
+                <div class="space-y-1.5">
+                    <Label for={`${id}-url`}>
+                        {$t('admin.links.form.url')}
+                    </Label>
+
+                    <div class="flex gap-2">
+                        <Input
+                                id={`${id}-url`}
+                                name="url"
+                                type="url"
+                                bind:value={link.url}
+                                class={controlClass}
+                                placeholder="https://example.com"
+                                required
+                        />
+
+                        {#if link.url}
+                            <a
+                                    href={link.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class={cn(buttonVariants({variant: 'outline', size: 'icon'}), 'size-10 rounded-xl')}
+                                    title={$t('admin.links.form.openUrl')}
+                                    aria-label={$t('admin.links.form.openUrl')}
+                            >
+                                <ExternalLinkIcon class="size-4"/>
+                            </a>
+                        {/if}
+                    </div>
+                </div>
+
+                <div class="grid gap-4 md:grid-cols-2">
+                    <div class="space-y-1.5">
+                        <Label for={`${id}-description-el`}>
+                            {$t('admin.links.form.descriptionEl')}
+                        </Label>
+
+                        <textarea
+                                id={`${id}-description-el`}
+                                name="description_html_el"
+                                bind:value={link.descriptionHtml.el}
+                                rows="7"
+                                class="min-h-36 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25"
+                        ></textarea>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <Label for={`${id}-description-de`}>
+                            {$t('admin.links.form.descriptionDe')}
+                        </Label>
+
+                        <textarea
+                                id={`${id}-description-de`}
+                                name="description_html_de"
+                                bind:value={link.descriptionHtml.de}
+                                rows="7"
+                                class="min-h-36 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25"
+                        ></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <aside class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h2 class="font-semibold text-slate-900">
+                {$t('admin.links.form.logo')}
+            </h2>
+
+            <p class="mt-1 text-sm text-slate-500">
+                {$t('admin.links.form.logoHelp')}
+            </p>
+
+            <div class="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                {#if currentLogo()}
+                    <img
+                            src={currentLogo()}
+                            alt={visibleName() || $t('admin.links.form.logo')}
+                            class="mx-auto size-32 rounded-xl bg-white object-contain p-2 shadow-sm"
+                    />
+                {:else}
+                    <div class="mx-auto flex size-32 items-center justify-center rounded-xl bg-white text-slate-400 shadow-sm">
+                        <ImageIcon class="size-8"/>
+                    </div>
+                {/if}
+            </div>
+
+            {#if logoFileName}
+                <p class="mt-2 truncate text-xs text-slate-500">
+                    {logoFileName}
+                </p>
             {/if}
-        </div>
+
+            <div class="mt-4 space-y-1.5">
+                <Label for={`${id}-logo`}>
+                    {$t(mode === 'edit' ? 'admin.links.form.replaceLogo' : 'admin.links.form.uploadLogo')}
+                </Label>
+
+                <Input
+                        id={`${id}-logo`}
+                        name="logo"
+                        type="file"
+                        accept="image/*"
+                        class="rounded-xl"
+                        onchange={onLogoChange}
+                />
+
+                <p class="text-xs text-slate-500">
+                    {$t('admin.links.form.logoStorageHelp')}
+                </p>
+            </div>
+        </aside>
     </div>
 
-    {#if error}
-        <p class="error">
-            {error}
-        </p>
-    {/if}
-
-    <div class="flex justify-end gap-2 pt-2">
-        <a
-                href="/admin/links"
-                class="inline-flex h-10 items-center justify-center rounded-xl border border-slate-300 bg-white px-4 text-sm font-medium shadow-sm hover:bg-slate-50"
-        >
+    <div class="flex flex-wrap items-center justify-end gap-3">
+        <a href="/admin/links" class={cn(buttonVariants({variant: 'outline'}), 'rounded-xl')}>
             {$t('common.cancel')}
         </a>
 
-        <Button type="submit" disabled={loading} class="rounded-xl">
-            {#if loading}
-                {$t('admin.form.saving')}
-            {:else if mode === 'edit'}
-                {$t('admin.links.form.saveButton')}
+        <Button type="submit" class="rounded-xl" disabled={saving}>
+            {#if saving}
+                <Loader2Icon class="mr-2 size-4 animate-spin"/>
+                {$t('admin.links.form.saving')}
             {:else}
-                {$t('admin.links.form.createButton')}
+                <SaveIcon class="mr-2 size-4"/>
+                {$t('admin.links.form.save')}
             {/if}
         </Button>
     </div>
 </form>
-
-<AlertDialog.Root bind:open={successDialogOpen}>
-    <AlertDialog.Content class="rounded-2xl">
-        <AlertDialog.Header>
-            <AlertDialog.Title>
-                {text('admin.links.form.saved', 'Saved')}
-            </AlertDialog.Title>
-
-            <AlertDialog.Description>
-                {successMessage}
-            </AlertDialog.Description>
-        </AlertDialog.Header>
-
-        <AlertDialog.Footer>
-            <AlertDialog.Action
-                    class="rounded-xl"
-                    onclick={() => goto(successBackHref)}
-            >
-                OK
-            </AlertDialog.Action>
-        </AlertDialog.Footer>
-    </AlertDialog.Content>
-</AlertDialog.Root>
-
-<style>
-    .form {
-        max-width: 980px;
-        margin: 0 auto;
-        display: grid;
-        gap: 1rem;
-    }
-
-    .topbar {
-        display: flex;
-        justify-content: space-between;
-        gap: 1rem;
-        align-items: start;
-    }
-
-    h1 {
-        margin: 0;
-    }
-
-    p {
-        margin: .25rem 0 0;
-        color: #667085;
-    }
-
-    .lang-indicator {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 3rem;
-        border-radius: .8rem;
-        background: #f2f4f7;
-        padding: .5rem .75rem;
-        font-weight: 800;
-        color: #004680;
-    }
-
-    .card {
-        display: grid;
-        gap: 1rem;
-        border: 1px solid #eaecf0;
-        border-radius: 1rem;
-        background: #fff;
-        padding: 1rem;
-    }
-
-    .field {
-        display: flex;
-        flex-direction: column;
-        gap: .5rem;
-    }
-
-    .field-error,
-    .error {
-        margin: 0;
-        color: hsl(var(--destructive));
-    }
-
-    .field-error {
-        font-size: 0.8125rem;
-        line-height: 1.25rem;
-    }
-
-    .logo-preview {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        border: 1px solid #e2e8f0;
-        border-radius: .75rem;
-        background: #f8fafc;
-        padding: .75rem;
-        color: #667085;
-        font-size: .875rem;
-    }
-
-    .logo-preview img {
-        width: 4rem;
-        height: 4rem;
-        border: 1px solid #e2e8f0;
-        border-radius: .75rem;
-        background: white;
-        object-fit: cover;
-    }
-
-    @media (max-width: 720px) {
-        .topbar {
-            display: grid;
-            grid-template-columns: 1fr;
-        }
-    }
-</style>

@@ -142,54 +142,43 @@ register('el', () =>
                 }
             },
             links: {
-                title: 'Σύνδεσμοι',
-                subtitle: 'Διαχείριση χρήσιμων εξωτερικών συνδέσμων και λογοτύπων.',
-                createNew: 'Δημιουργία νέου',
-                empty: 'Δεν υπάρχουν ακόμη σύνδεσμοι.',
-
-                table: {
-                    logo: 'Λογότυπο',
-                    title: 'Τίτλος',
-                    url: 'URL',
-                    actions: 'Ενέργειες'
-                },
-
-                actions: {
-                    edit: 'Επεξεργασία'
-                },
-
-                deleteDialog: {
-                    title: 'Διαγραφή συνδέσμου;',
-                    description: 'Αυτή η ενέργεια δεν μπορεί να αναιρεθεί. Ο επιλεγμένος σύνδεσμος θα διαγραφεί οριστικά.',
-                    confirm: 'Διαγραφή συνδέσμου',
-                    deleting: 'Διαγραφή…'
-                },
+                createTitle: 'Νέος σύνδεσμος',
+                editTitle: 'Επεξεργασία συνδέσμου',
+                backToList: 'Πίσω στους συνδέσμους',
 
                 toast: {
+                    created: 'Ο σύνδεσμος δημιουργήθηκε',
+                    updated: 'Ο σύνδεσμος ενημερώθηκε',
                     deleted: 'Ο σύνδεσμος διαγράφηκε',
-                    deleteFailed: 'Δεν ήταν δυνατή η διαγραφή του συνδέσμου'
+                    saveFailed: 'Δεν ήταν δυνατή η αποθήκευση του συνδέσμου.',
+                    deleteFailed: 'Δεν ήταν δυνατή η διαγραφή του συνδέσμου.'
+                },
+
+                errors: {
+                    invalidId: 'Μη έγκυρο ID συνδέσμου.',
+                    invalidData: 'Τα στοιχεία του συνδέσμου δεν είναι έγκυρα.',
+                    notFound: 'Ο σύνδεσμος δεν βρέθηκε.',
+                    saveFailed: 'Παρουσιάστηκε σφάλμα κατά την αποθήκευση του συνδέσμου.',
+                    deleteFailed: 'Παρουσιάστηκε σφάλμα κατά τη διαγραφή του συνδέσμου.'
                 },
 
                 form: {
-                    createTitle: 'Δημιουργία συνδέσμου',
-                    editTitle: 'Επεξεργασία συνδέσμου',
-                    subtitle: 'Προσθέστε δίγλωσσο τίτλο, URL προορισμού και προαιρετικό λογότυπο.',
-                    detailsTitle: 'Στοιχεία συνδέσμου',
-                    detailsDescription: 'Ο ελληνικός τίτλος χρησιμοποιείται ως κύρια ετικέτα στη διαχείριση.',
-                    nameEl: 'Τίτλος - EL',
-                    nameDe: 'Τίτλος - DE',
-                    nameElPlaceholder: 'Τίτλος',
-                    nameDePlaceholder: 'Titel',
+                    subtitle: 'Συμπληρώστε τα στοιχεία που θα εμφανίζονται στη δημόσια σελίδα συνδέσμων.',
+                    content: 'Περιεχόμενο',
+                    contentHelp: 'Ο τίτλος, η περιγραφή και το URL του συνδέσμου.',
+                    nameEl: 'Όνομα στα Ελληνικά',
+                    nameDe: 'Όνομα στα Γερμανικά',
                     url: 'URL',
-                    logoUpload: 'Ανέβασμα λογοτύπου',
-                    logoPreview: 'Προεπισκόπηση λογοτύπου',
-                    currentLogoHint: 'Τρέχον λογότυπο. Ανεβάστε νέο αρχείο μόνο αν θέλετε να το αντικαταστήσετε.',
-                    createButton: 'Δημιουργία συνδέσμου',
-                    saveButton: 'Αποθήκευση αλλαγών',
-                    descriptionHtml: 'Περιγραφή',
-                    validationNameEl: 'Το πεδίο Τίτλου-EL είναι υποχρεωτικό.',
-                    validationNameDe: 'Το πεδίο Τίτλου-DE είναι υποχρεωτικό.',
-                    validationUrl: 'Το πεδίο είναι υποχρεωτικό και πρέπει να είναι έγκυρο URL.'
+                    openUrl: 'Άνοιγμα συνδέσμου',
+                    descriptionEl: 'Περιγραφή στα Ελληνικά',
+                    descriptionDe: 'Περιγραφή στα Γερμανικά',
+                    logo: 'Λογότυπο',
+                    logoHelp: 'Προαιρετικό λογότυπο για τον σύνδεσμο.',
+                    uploadLogo: 'Ανέβασμα λογότυπου',
+                    replaceLogo: 'Αντικατάσταση λογότυπου',
+                    logoStorageHelp: 'Το λογότυπο μετατρέπεται σε WebP και αποθηκεύεται στο Cloudflare R2.',
+                    save: 'Αποθήκευση συνδέσμου',
+                    saving: 'Αποθήκευση…'
                 }
             },
             businesses: {
@@ -742,54 +731,43 @@ register('de', () =>
                 }
             },
             links: {
-                title: 'Links',
-                subtitle: 'Nützliche externe Links und Logos verwalten.',
-                createNew: 'Neu erstellen',
-                empty: 'Noch keine Links vorhanden.',
-
-                table: {
-                    logo: 'Logo',
-                    title: 'Titel',
-                    url: 'URL',
-                    actions: 'Aktionen'
-                },
-
-                actions: {
-                    edit: 'Bearbeiten'
-                },
-
-                deleteDialog: {
-                    title: 'Link löschen?',
-                    description: 'Diese Aktion kann nicht rückgängig gemacht werden. Der ausgewählte Link wird dauerhaft gelöscht.',
-                    confirm: 'Link löschen',
-                    deleting: 'Löschen…'
-                },
+                createTitle: 'Neuer Link',
+                editTitle: 'Link bearbeiten',
+                backToList: 'Zurück zu den Links',
 
                 toast: {
-                    deleted: 'Der Link wurde gelöscht',
-                    deleteFailed: 'Der Link konnte nicht gelöscht werden'
+                    created: 'Link erstellt',
+                    updated: 'Link aktualisiert',
+                    deleted: 'Link gelöscht',
+                    saveFailed: 'Der Link konnte nicht gespeichert werden.',
+                    deleteFailed: 'Der Link konnte nicht gelöscht werden.'
+                },
+
+                errors: {
+                    invalidId: 'Ungültige Link-ID.',
+                    invalidData: 'Die Link-Daten sind ungültig.',
+                    notFound: 'Der Link wurde nicht gefunden.',
+                    saveFailed: 'Beim Speichern des Links ist ein Fehler aufgetreten.',
+                    deleteFailed: 'Beim Löschen des Links ist ein Fehler aufgetreten.'
                 },
 
                 form: {
-                    createTitle: 'Link erstellen',
-                    editTitle: 'Link bearbeiten',
-                    subtitle: 'Fügen Sie einen zweisprachigen Titel, eine Ziel-URL und optional ein Logo hinzu.',
-                    detailsTitle: 'Linkdetails',
-                    detailsDescription: 'Der griechische Titel wird als primäre Admin-Bezeichnung verwendet.',
-                    nameEl: 'Titel - EL',
-                    nameDe: 'Titel - DE',
-                    nameElPlaceholder: 'Τίτλος',
-                    nameDePlaceholder: 'Titel',
+                    subtitle: 'Erfassen Sie die Angaben, die auf der öffentlichen Link-Seite angezeigt werden.',
+                    content: 'Inhalt',
+                    contentHelp: 'Titel, Beschreibung und URL des Links.',
+                    nameEl: 'Name auf Griechisch',
+                    nameDe: 'Name auf Deutsch',
                     url: 'URL',
-                    logoUpload: 'Logo hochladen',
-                    logoPreview: 'Logo-Vorschau',
-                    currentLogoHint: 'Aktuelles Logo. Laden Sie nur dann eine neue Datei hoch, wenn Sie es ersetzen möchten.',
-                    createButton: 'Link erstellen',
-                    saveButton: 'Änderungen speichern',
-                    descriptionHtml: 'Beschreibung',
-                    validationNameEl: 'Das Feld "Title-EL" ist erforderlich.',
-                    validationNameDe: 'Das Feld "Title-DE" ist erforderlich.',
-                    validationUrl: 'Dieses Feld ist erforderlich und muss eine gültige URL sein.'
+                    openUrl: 'Link öffnen',
+                    descriptionEl: 'Beschreibung auf Griechisch',
+                    descriptionDe: 'Beschreibung auf Deutsch',
+                    logo: 'Logo',
+                    logoHelp: 'Optionales Logo für den Link.',
+                    uploadLogo: 'Logo hochladen',
+                    replaceLogo: 'Logo ersetzen',
+                    logoStorageHelp: 'Das Logo wird in WebP umgewandelt und in Cloudflare R2 gespeichert.',
+                    save: 'Link speichern',
+                    saving: 'Wird gespeichert…'
                 }
             },
             businesses: {

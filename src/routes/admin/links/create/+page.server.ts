@@ -3,18 +3,20 @@ import type {Actions} from '@sveltejs/kit';
 
 import {linkPayloadSchema} from '$lib/cms/links/schema';
 import {upsertLink} from '$lib/server/cms/linkStore';
-import {processImageUpload} from '$lib/server/media';
+import {saveLinkLogo} from '$lib/server/cms/linkMediaStore';
 import {sanitizeEventHtml} from '$lib/server/html/sanitizeEventHtml';
 
 type ActionResponse = {
     ok: boolean;
     id?: number;
+    errorKey?: string;
     message?: string;
 };
 
-function actionError(status: number, message: string) {
+function actionError(status: number, errorKey: string, message?: string) {
     return fail(status, {
         ok: false,
+        errorKey,
         message
     } satisfies ActionResponse);
 }
@@ -62,7 +64,8 @@ export const actions: Actions = {
         if (!result.success) {
             return actionError(
                 400,
-                result.error.issues[0]?.message || 'Invalid link data'
+                'admin.links.errors.invalidData',
+                result.error.issues[0]?.message || undefined
             );
         }
 
@@ -71,25 +74,42 @@ export const actions: Actions = {
         payload.descriptionHtml.el = sanitizeEventHtml(payload.descriptionHtml.el);
         payload.descriptionHtml.de = sanitizeEventHtml(payload.descriptionHtml.de);
 
-        const upload = form.get('logo');
-        const processed =
-            upload instanceof File && upload.size > 0
-                ? await processImageUpload(upload, 'link-logo')
-                : null;
+        try {
+            let stored = await upsertLink({
+                ...payload,
+                logo: '',
+                logoVariants: {
+                    webp: '',
+                    jpg: ''
+                }
+            });
 
-        const stored = upsertLink({
-            ...payload,
-            logo: processed?.original || payload.logo || '',
-            logoVariants: {
-                webp: processed?.webp?.[0]?.src || payload.logoVariants?.webp || '',
-                jpg: processed?.jpg?.[0]?.src || payload.logoVariants?.jpg || ''
+            const upload = form.get('logo');
+
+            if (upload instanceof File && upload.size > 0) {
+                const savedLogo = await saveLinkLogo(upload, stored.id);
+
+                stored = await upsertLink({
+                    id: stored.id,
+                    ...payload,
+                    logo: savedLogo.url,
+                    logoVariants: {
+                        webp: savedLogo.url,
+                        jpg: ''
+                    }
+                });
             }
-        });
 
-        return {
-            ok: true,
-            id: stored.id,
-            message: 'Link saved successfully'
-        } satisfies ActionResponse;
+            return {
+                ok: true,
+                id: stored.id
+            } satisfies ActionResponse;
+        } catch (error) {
+            return actionError(
+                500,
+                'admin.links.errors.saveFailed',
+                error instanceof Error ? error.message : undefined
+            );
+        }
     }
 };

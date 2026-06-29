@@ -1,29 +1,48 @@
-import {type Actions, fail} from '@sveltejs/kit';
+import {fail} from '@sveltejs/kit';
+import type {Actions, ServerLoad} from '@sveltejs/kit';
+
 import {deleteLink, listLinks} from '$lib/server/cms/linkStore';
 
-export const load = async () => {
+export const load: ServerLoad = async () => {
     return {
-        links: listLinks()
+        links: await listLinks()
     };
 };
 
 export const actions: Actions = {
-    delete: async ({request}: { request: Request }) => {
+    delete: async ({request}) => {
         const form = await request.formData();
         const id = Number(form.get('id'));
 
-        if (!Number.isFinite(id)) {
+        if (!Number.isFinite(id) || id <= 0) {
             return fail(400, {
                 ok: false,
-                message: 'Invalid link ID'
+                id: null,
+                errorKey: 'admin.links.errors.invalidId'
             });
         }
 
-        deleteLink(id);
+        try {
+            const deleted = await deleteLink(id);
 
-        return {
-            ok: true,
-            id
-        };
+            if (!deleted) {
+                return fail(404, {
+                    ok: false,
+                    id,
+                    errorKey: 'admin.links.errors.notFound'
+                });
+            }
+
+            return {
+                ok: true,
+                id
+            };
+        } catch {
+            return fail(500, {
+                ok: false,
+                id,
+                errorKey: 'admin.links.errors.deleteFailed'
+            });
+        }
     }
 };

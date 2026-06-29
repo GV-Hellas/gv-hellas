@@ -3,18 +3,20 @@ import type {Actions, ServerLoad} from '@sveltejs/kit';
 
 import {linkPayloadSchema} from '$lib/cms/links/schema';
 import {getLinkById, upsertLink} from '$lib/server/cms/linkStore';
-import {processImageUpload} from '$lib/server/media';
+import {saveLinkLogo} from '$lib/server/cms/linkMediaStore';
 import {sanitizeEventHtml} from '$lib/server/html/sanitizeEventHtml';
 
 type ActionResponse = {
     ok: boolean;
     id?: number;
+    errorKey?: string;
     message?: string;
 };
 
-function actionError(status: number, message: string) {
+function actionError(status: number, errorKey: string, message?: string) {
     return fail(status, {
         ok: false,
+        errorKey,
         message
     } satisfies ActionResponse);
 }
@@ -53,7 +55,8 @@ function parsePayload(form: FormData) {
 }
 
 export const load: ServerLoad = async ({params}) => {
-    const item = getLinkById(Number(params.id));
+    const id = Number(params.id);
+    const item = await getLinkById(id);
 
     if (!item) {
         throw error(404, 'Link not found');
@@ -66,10 +69,11 @@ export const load: ServerLoad = async ({params}) => {
 
 export const actions: Actions = {
     save: async ({request, params}) => {
-        const existing = getLinkById(Number(params.id));
+        const id = Number(params.id);
+        const existing = await getLinkById(id);
 
         if (!existing) {
-            return actionError(404, 'Link not found');
+            return actionError(404, 'admin.links.errors.notFound');
         }
 
         const form = await request.formData();
@@ -80,7 +84,8 @@ export const actions: Actions = {
         if (!result.success) {
             return actionError(
                 400,
-                result.error.issues[0]?.message || 'Invalid link data'
+                'admin.links.errors.invalidData',
+                result.error.issues[0]?.message || undefined
             );
         }
 
@@ -89,34 +94,41 @@ export const actions: Actions = {
         payload.descriptionHtml.el = sanitizeEventHtml(payload.descriptionHtml.el);
         payload.descriptionHtml.de = sanitizeEventHtml(payload.descriptionHtml.de);
 
-        const upload = form.get('logo');
-        const processed =
-            upload instanceof File && upload.size > 0
-                ? await processImageUpload(upload, 'link-logo')
-                : null;
+        try {
+            const upload = form.get('logo');
 
-        const stored = upsertLink({
-            id: existing.id,
-            ...payload,
-            logo: processed?.original || existing.logo || payload.logo || '',
-            logoVariants: {
-                webp:
-                    processed?.webp?.[0]?.src ||
-                    existing.logoVariants?.webp ||
-                    payload.logoVariants?.webp ||
-                    '',
-                jpg:
-                    processed?.jpg?.[0]?.src ||
-                    existing.logoVariants?.jpg ||
-                    payload.logoVariants?.jpg ||
-                    ''
+            let logo = existing.logo || payload.logo || '';
+            let logoWebp = existing.logoVariants?.webp || payload.logoVariants?.webp || '';
+            let logoJpg = existing.logoVariants?.jpg || payload.logoVariants?.jpg || '';
+
+            if (upload instanceof File && upload.size > 0) {
+                const savedLogo = await saveLinkLogo(upload, existing.id);
+
+                logo = savedLogo.url;
+                logoWebp = savedLogo.url;
+                logoJpg = '';
             }
-        });
 
-        return {
-            ok: true,
-            id: stored.id,
-            message: 'Link saved successfully'
-        } satisfies ActionResponse;
+            const stored = await upsertLink({
+                id: existing.id,
+                ...payload,
+                logo,
+                logoVariants: {
+                    webp: logoWebp,
+                    jpg: logoJpg
+                }
+            });
+
+            return {
+                ok: true,
+                id: stored.id
+            } satisfies ActionResponse;
+        } catch (error) {
+            return actionError(
+                500,
+                'admin.links.errors.saveFailed',
+                error instanceof Error ? error.message : undefined
+            );
+        }
     }
 };

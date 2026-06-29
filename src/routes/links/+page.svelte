@@ -1,18 +1,15 @@
 <script lang="ts">
     import {t, locale} from '$lib/i18n';
+    import ExternalLinkIcon from '@lucide/svelte/icons/external-link';
+    import LinkIcon from '@lucide/svelte/icons/link';
 
     type Lang = 'el' | 'de';
+    type LocalizedText = Partial<Record<Lang, string>> | string | undefined;
 
     type LinkItem = {
         id?: number;
-        name: {
-            el?: string;
-            de?: string;
-        };
-        descriptionHtml?: {
-            el?: string;
-            de?: string;
-        };
+        name: Partial<Record<Lang, string>>;
+        descriptionHtml?: Partial<Record<Lang, string>>;
         url: string;
         logo?: string;
         logoVariants?: {
@@ -21,17 +18,24 @@
         };
     };
 
-    let {data}: {data?: {links?: LinkItem[]}} = $props();
+    let {data}: { data?: { links?: LinkItem[] } } = $props();
 
     let lang = $derived((($locale === 'de' ? 'de' : 'el') as Lang));
-    let links = $derived(data?.links ?? []);
+    let links = $derived((data?.links ?? []).filter((link) => Boolean(link.url)));
 
-    function localized(value: LinkItem['name'] | LinkItem['descriptionHtml']) {
-        return value?.[lang] || value?.el || value?.de || '';
+    function localized(value: LocalizedText) {
+        if (!value) return '';
+        if (typeof value === 'string') return value;
+
+        return value[lang] || value.el || value.de || '';
     }
 
     function logoSrc(link: LinkItem) {
         return link.logoVariants?.webp || link.logo || link.logoVariants?.jpg || '';
+    }
+
+    function title(link: LinkItem) {
+        return localized(link.name) || link.url;
     }
 </script>
 
@@ -39,26 +43,32 @@
     <title>{$t('links.headline')} - Griechischer Verein Hellas</title>
 </svelte:head>
 
-<section class="mx-auto max-w-4xl">
-    <h1 class="mb-6 text-3xl font-bold">
-        {$t('links.headline')}
-    </h1>
+<section class="mx-auto max-w-5xl">
+    <header class="mb-8">
+        <h1 class="text-3xl font-bold">
+            {$t('links.headline')}
+        </h1>
+
+        <p class="mt-2 max-w-2xl text-sm text-slate-500">
+            {$t('links.subtitle')}
+        </p>
+    </header>
 
     {#if links.length}
-        <ul class="space-y-4">
+        <div class="grid gap-4 sm:grid-cols-2">
             {#each links as link (link.id ?? link.url)}
-                <li class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
                     <div class="flex items-start gap-4">
                         {#if logoSrc(link)}
                             <img
                                     src={logoSrc(link)}
-                                    alt={localized(link.name) || 'Logo'}
+                                    alt={title(link)}
                                     loading="lazy"
-                                    class="h-14 w-14 shrink-0 rounded-lg object-contain"
+                                    class="size-16 shrink-0 rounded-xl border border-slate-100 bg-white object-contain p-1"
                             />
                         {:else}
-                            <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-sm font-semibold text-slate-500">
-                                GV
+                            <div class="flex size-16 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-500">
+                                <LinkIcon class="size-6"/>
                             </div>
                         {/if}
 
@@ -67,28 +77,38 @@
                                     href={link.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    class="text-lg font-semibold text-primary hover:underline"
+                                    class="group inline-flex max-w-full items-center gap-1.5 text-lg font-semibold text-primary hover:underline"
                             >
-                                {localized(link.name) || link.url}
+                                <span class="truncate">
+                                    {title(link)}
+                                </span>
+
+                                <ExternalLinkIcon class="size-4 shrink-0 transition group-hover:translate-x-0.5"/>
                             </a>
 
                             {#if localized(link.descriptionHtml)}
-                                <div class="mt-1 text-sm text-slate-600">
+                                <div class="mt-2 line-clamp-4 text-sm leading-6 text-slate-600">
                                     {@html localized(link.descriptionHtml)}
                                 </div>
                             {/if}
 
-                            <p class="mt-2 truncate text-xs text-slate-400">
+                            <p class="mt-3 truncate text-xs text-slate-400">
                                 {link.url}
                             </p>
                         </div>
                     </div>
-                </li>
+                </article>
             {/each}
-        </ul>
+        </div>
     {:else}
-        <p class="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center text-slate-500">
-            {lang === 'de' ? 'Keine Links vorhanden.' : 'Δεν υπάρχουν σύνδεσμοι.'}
-        </p>
+        <div class="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center">
+            <div class="mx-auto mb-3 flex size-12 items-center justify-center rounded-2xl bg-white text-slate-400 shadow-sm">
+                <LinkIcon class="size-6"/>
+            </div>
+
+            <p class="font-medium text-slate-700">
+                {$t('links.empty')}
+            </p>
+        </div>
     {/if}
 </section>
