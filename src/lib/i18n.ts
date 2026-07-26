@@ -9,7 +9,7 @@ register('el', () =>
             links: 'Χρήσιμοι Σύνδεσμοι',
             gallery: 'Οπτικοακουστικό Υλικό',
             contact: 'Επικοινωνία',
-            businesses: 'Ελληνοφωνες Επιχειρήσεις',
+            businesses: 'Ελληνόφωνες Επιχειρήσεις',
             equipment: 'Ενοικίαση Εξοπλισμού',
             church: 'Πρόγραμμα Εκκλησίας Olten',
             community: 'Κοινότητα',
@@ -254,6 +254,9 @@ register('el', () =>
                 },
 
                 toast: {
+                    created: 'Η επιχείρηση δημιουργήθηκε',
+                    updated: 'Η επιχείρηση ενημερώθηκε',
+                    saveFailed: 'Δεν ήταν δυνατή η αποθήκευση της επιχείρησης.',
                     deleted: 'Η επιχείρηση διαγράφηκε',
                     deleteFailed: 'Δεν ήταν δυνατή η διαγραφή της επιχείρησης.'
                 },
@@ -342,7 +345,8 @@ register('el', () =>
             readMore: 'Περισσότερα'
         },
         links: {
-            headline: 'Χρήσιμοι Σύνδεσμοι'
+            headline: 'Χρήσιμοι Σύνδεσμοι',
+            subtitle: 'Σύνδεσμοι που μπορεί να σας φανούν χρήσιμοι για την κοινότητά μας.'
         },
         gallery: {
             headline: 'Οπτικοακουστικό Υλικό'
@@ -903,6 +907,9 @@ register('de', () =>
                 },
 
                 toast: {
+                    created: 'Das Unternehmen wurde erstellt',
+                    updated: 'Das Unternehmen wurde aktualisiert',
+                    saveFailed: 'Das Unternehmen konnte nicht gespeichert werden.',
                     deleted: 'Das Unternehmen wurde gelöscht',
                     deleteFailed: 'Das Unternehmen konnte nicht gelöscht werden.'
                 },
@@ -993,7 +1000,8 @@ register('de', () =>
             readMore: 'Mehr lesen'
         },
         links: {
-            headline: 'Nützliche Links'
+            headline: 'Nützliche Links',
+            subtitle: 'Links, die für unsere Gemeinschaft nützlich sein könnten.'
         },
         gallery: {
             headline: 'Fotos und Videos'

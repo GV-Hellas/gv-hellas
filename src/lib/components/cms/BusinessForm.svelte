@@ -1,4 +1,7 @@
 <script lang="ts">
+    import {deserialize} from '$app/forms';
+    import {invalidateAll} from '$app/navigation';
+    import type {ActionResult} from '@sveltejs/kit';
     import {onDestroy} from 'svelte';
 
     import {t, locale} from '$lib/i18n';
@@ -41,6 +44,7 @@
         ok?: boolean;
         id?: number;
         slug?: string;
+        errorKey?: string;
         message?: string;
     };
 
@@ -248,6 +252,31 @@
         logoPreview = logoObjectUrl;
     }
 
+    function actionData(result: ActionResult): SaveResponse | undefined {
+        return 'data' in result
+            ? (result.data as SaveResponse | undefined)
+            : undefined;
+    }
+
+    function actionMessage(data: SaveResponse | undefined) {
+        if (data?.errorKey) {
+            const translated = $t(data.errorKey);
+
+            if (translated !== data.errorKey) {
+                return translated;
+            }
+        }
+
+        return '';
+    }
+
+    function saveFailureMessage(data?: SaveResponse) {
+        return (
+            actionMessage(data) ||
+            $t('admin.businesses.toast.saveFailed')
+        );
+    }
+
     async function submit() {
         loading = true;
         error = '';
@@ -275,19 +304,64 @@
         try {
             const response = await fetch(submitTo, {
                 method: 'POST',
+                headers: {
+                    accept: 'application/json',
+                    'x-sveltekit-action': 'true'
+                },
                 body: formData
             });
 
-            const result = (await response.json()) as SaveResponse;
+            const result = deserialize(await response.text()) as ActionResult;
 
-            if (!response.ok || !result.ok) {
-                error = result.message || $t('admin.form.couldNotSave');
+            if (result.type === 'success') {
+                const data = actionData(result);
+
+                if (!data?.ok) {
+                    error = saveFailureMessage(data);
+                    return;
+                }
+
+                const savedLabel = $t(
+                    mode === 'edit'
+                        ? 'admin.businesses.toast.updated'
+                        : 'admin.businesses.toast.created'
+                );
+
+                success = data.slug
+                    ? `${savedLabel}: ${data.slug}`
+                    : savedLabel;
+
+                await invalidateAll();
                 return;
             }
 
-            success = `${$t('admin.form.saved')}: ${result.slug || result.id}`;
+            if (result.type === 'failure') {
+                error = saveFailureMessage(actionData(result));
+                return;
+            }
+
+            if (result.type === 'redirect') {
+                success = $t(
+                    mode === 'edit'
+                        ? 'admin.businesses.toast.updated'
+                        : 'admin.businesses.toast.created'
+                );
+
+                await invalidateAll();
+                return;
+            }
+
+            if (result.type === 'error') {
+                error =
+                    result.error instanceof Error
+                        ? result.error.message
+                        : $t('admin.businesses.toast.saveFailed');
+                return;
+            }
+
+            error = $t('admin.businesses.toast.saveFailed');
         } catch {
-            error = $t('admin.form.couldNotSave');
+            error = $t('admin.businesses.toast.saveFailed');
         } finally {
             loading = false;
         }
