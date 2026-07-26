@@ -2,6 +2,7 @@
     import '../app.css';
 
     import {afterNavigate} from '$app/navigation';
+    import {browser} from '$app/environment';
     import {page} from '$app/state';
     import {env} from '$env/dynamic/public';
     import {onMount, type Snippet} from 'svelte';
@@ -12,6 +13,7 @@
     import AnalyticsConsent from '$lib/components/AnalyticsConsent.svelte';
     import {Toaster} from '$lib/components/ui/sonner';
     import {initGoogleAnalytics, trackPageView} from '$lib/analytics';
+    import {locale} from '$lib/i18n';
 
     let {children}: {children: Snippet} = $props();
 
@@ -53,6 +55,11 @@
         }
 
         trackCurrentPage(from?.url.href || document.referrer);
+    });
+
+    $effect(() => {
+        if (!browser) return;
+        document.documentElement.lang = $locale === 'de' ? 'de' : 'el';
     });
 </script>
 

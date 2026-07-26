@@ -2,6 +2,7 @@
     import {env} from '$env/dynamic/public';
     import {t, locale} from '$lib/i18n';
     import {trackAnalyticsEvent} from '$lib/analytics';
+    import Seo from '$lib/components/Seo.svelte';
 
     import {Button} from '$lib/components/ui/button/index.js';
     import {Input} from '$lib/components/ui/input/index.js';
@@ -86,6 +87,11 @@
     let fieldErrors = $state<Partial<Record<ContactField, string>>>({});
 
     const lang = $derived(($locale === 'de' ? 'de' : 'el') as UiLang);
+    const seoDescription = $derived(
+        lang === 'de'
+            ? 'Kontaktieren Sie den Griechischen Verein Hellas in der Schweiz und senden Sie uns Ihre Nachricht.'
+            : 'Επικοινωνήστε με τον Ελληνικό Σύλλογο Hellas στην Ελβετία και στείλτε μας το μήνυμά σας.'
+    );
 
     const inputClass =
         'h-10 rounded-xl border border-slate-300 bg-white shadow-sm focus-visible:border-primary focus-visible:ring-primary/25';
@@ -302,9 +308,7 @@
     }
 </script>
 
-<svelte:head>
-    <title>{$t('contact.headline')} - Griechischer Verein Hellas</title>
-</svelte:head>
+<Seo title={$t('contact.headline')} description={seoDescription} />
 
 <section class="grid gap-8 pb-10">
     <div class="max-w-3xl">

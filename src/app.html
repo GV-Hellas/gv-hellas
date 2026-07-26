@@ -1,13 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="el">
 <head>
     <meta charset="utf-8"/>
-    <link rel="icon" href="%sveltekit.assets%/favicon.png"/>
+    <link rel="icon" type="image/png" href="%sveltekit.assets%/images/logo.png"/>
+    <link rel="preconnect" href="https://media.gv-hellas.ch" crossorigin/>
+    <link rel="dns-prefetch" href="https://media.gv-hellas.ch"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <!-- gv-hellas:google-analytics -->
+    <meta name="theme-color" content="#ffffff"/>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Griechischer Verein Hellas",
+            "url": "https://gv-hellas.ch",
+            "logo": "https://gv-hellas.ch/images/logo.png",
+            "sameAs": [
+                "https://www.facebook.com/p/Griechischer-Verein-Hellas-100089940210614/",
+                "https://www.instagram.com/griechischerverein/",
+                "https://www.tiktok.com/@gvhellas"
+            ]
+        }
+    </script>
+    <meta name="gv-hellas-google-analytics-placeholder" content=""/>
     %sveltekit.head%
 </head>
-<body data-sveltekit-preload-data="tap">
+<body data-sveltekit-preload-data="hover" data-sveltekit-preload-code="viewport">
 <div style="display: contents">%sveltekit.body%</div>
 </body>
 </html>

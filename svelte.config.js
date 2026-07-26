@@ -5,7 +5,11 @@ import {vitePreprocess} from '@sveltejs/vite-plugin-svelte';
 const config = {
     preprocess: vitePreprocess(),
     kit: {
-        adapter: adapter(),
+        adapter: adapter({
+            // The association and its audience are in Switzerland. Keeping the
+            // server function in Frankfurt avoids the default iad1 round trip.
+            regions: ['fra1']
+        }),
         alias: {
             '@': './src',
         }

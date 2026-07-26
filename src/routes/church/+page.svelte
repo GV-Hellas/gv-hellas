@@ -1,5 +1,6 @@
 <script lang="ts">
     import { t, json } from '$lib/i18n';
+    import Seo from '$lib/components/Seo.svelte';
 
     // Use $json instead of $t for objects
     $: current = $json('church.schedules.current');
@@ -30,9 +31,7 @@
         Array.isArray(previous?.signature) ? previous.signature : previous?.signature?.lines ?? [];
 </script>
 
-<svelte:head>
-    <title>{$t('church.headline')} - Griechischer Verein Hellas</title>
-</svelte:head>
+<Seo title={$t('church.headline')} description={$t('church.description')} />
 
 <section class="space-y-6">
     <header class="space-y-2">

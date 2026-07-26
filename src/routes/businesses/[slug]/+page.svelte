@@ -1,6 +1,7 @@
 <script lang="ts">
     import {locale, t} from '$lib/i18n';
     import type {BusinessMedia, BusinessSection, Lang, StoredBusiness} from '$lib/cms/business/types';
+    import Seo from '$lib/components/Seo.svelte';
 
     import Building2Icon from '@lucide/svelte/icons/building-2';
     import Globe2Icon from '@lucide/svelte/icons/globe-2';
@@ -84,13 +85,12 @@
     );
 </script>
 
-<svelte:head>
-    <title>{businessName} | Griechischer Verein Hellas</title>
-    <meta
-        name="description"
-        content={plainText(html(business?.description)) || text('businesses.detail.defaultDescription', businessName)}
-    />
-</svelte:head>
+<Seo
+    title={businessName}
+    description={plainText(html(business?.description)) || text('businesses.detail.defaultDescription', businessName)}
+    image={business?.logo || undefined}
+    type="profile"
+/>
 
 <article class="mx-auto max-w-5xl py-10">
     <header class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">

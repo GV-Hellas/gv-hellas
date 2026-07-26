@@ -1,11 +1,10 @@
 <script lang="ts">
   import { t } from '$lib/i18n';
+  import Seo from '$lib/components/Seo.svelte';
   let { data } = $props();
 </script>
 
-<svelte:head>
-  <title>{$t('equipment.headline')} - Griechischer Verein Hellas</title>
-</svelte:head>
+<Seo title={$t('equipment.headline')} description={$t('equipment.description')} />
 
 <h1 class="mb-6 text-3xl font-bold">{$t('equipment.headline')}</h1>
 

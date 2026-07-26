@@ -1,5 +1,6 @@
 <script lang="ts">
     import {t, locale} from '$lib/i18n';
+    import Seo from '$lib/components/Seo.svelte';
 
     let {data} = $props();
 
@@ -35,12 +36,26 @@
         }).format(date);
     }
 
+    function plainText(value: string) {
+        return value.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+    }
+
+    const eventTitle = $derived(titleOf(event) || $t('events.headline'));
+    const eventDescription = $derived(
+        plainText(descriptionOf(event)) ||
+            (lang === 'de'
+                ? 'Details zu einer Veranstaltung des Griechischen Vereins Hellas.'
+                : 'Πληροφορίες για εκδήλωση του Ελληνικού Συλλόγου Hellas.')
+    );
+
     function price(value: number | null | undefined) {
         if (value === null || value === undefined) return '';
         if (Number(value) === 0) return lang === 'de' ? 'Kostenlos' : 'Δωρεάν';
         return `CHF ${Number(value).toFixed(2)}`;
     }
 </script>
+
+<Seo title={eventTitle} description={eventDescription} type="article" />
 
 {#if event}
     <article class="mx-auto max-w-4xl">

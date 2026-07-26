@@ -1,6 +1,7 @@
 <script lang="ts">
     import {t, locale} from '$lib/i18n';
     import MediaSkeleton from '$lib/components/MediaSkeleton.svelte';
+    import Seo from '$lib/components/Seo.svelte';
 
     type GalleryItem = {
         id: string;
@@ -19,6 +20,11 @@
     let {data}: { data?: { items?: GalleryItem[] } } = $props();
 
     let lang = $derived((($locale === 'de' ? 'de' : 'el') as Lang));
+    const seoDescription = $derived(
+        lang === 'de'
+            ? 'Fotos und Videos aus Veranstaltungen und Aktivitäten des Griechischen Vereins Hellas.'
+            : 'Φωτογραφίες και βίντεο από εκδηλώσεις και δράσεις του Ελληνικού Συλλόγου Hellas.'
+    );
 
     function mediaSrc(item: GalleryItem) {
         if (item.type === 'video') return item.videoSrc;
@@ -162,9 +168,7 @@
 
 <svelte:window onkeydown={onKeydown}/>
 
-<svelte:head>
-    <title>{$t('gallery.headline')} - Griechischer Verein Hellas</title>
-</svelte:head>
+<Seo title={$t('gallery.headline')} description={seoDescription} />
 
 <section class="mx-auto max-w-6xl">
     <header class="mb-6">

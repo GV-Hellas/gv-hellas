@@ -20,7 +20,9 @@
         mediaClass = '',
         containerClass = '',
         poster = '',
-        sources = {}
+        sources = {},
+        loading = 'lazy',
+        fetchPriority = 'auto'
     }: {
         type?: 'image' | 'video' | 'audio';
         src?: string;
@@ -29,6 +31,8 @@
         containerClass?: string;
         poster?: string;
         sources?: Sources;
+        loading?: 'eager' | 'lazy';
+        fetchPriority?: 'high' | 'low' | 'auto';
     } = $props();
 
     let loaded = $state(false);
@@ -181,7 +185,8 @@
                     src={activeSrc}
                     {alt}
                     class={`w-full ${mediaClass}`}
-                    loading="lazy"
+                    {loading}
+                    fetchpriority={fetchPriority}
                     decoding="async"
                     use:mediaEvents
             />
@@ -191,7 +196,8 @@
                 src={activeSrc}
                 {alt}
                 class={`w-full ${mediaClass}`}
-                loading="lazy"
+                {loading}
+                fetchpriority={fetchPriority}
                 decoding="async"
                 use:mediaEvents
         />

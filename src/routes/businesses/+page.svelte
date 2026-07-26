@@ -1,6 +1,7 @@
 <script lang="ts">
     import {locale, t} from '$lib/i18n';
     import type {Lang, SponsorType, StoredBusiness} from '$lib/cms/business/types';
+    import Seo from '$lib/components/Seo.svelte';
 
     type PageData = {
         businesses: StoredBusiness[];
@@ -58,13 +59,7 @@
     }
 </script>
 
-<svelte:head>
-    <title>{$t('businesses.headline')} - Griechischer Verein Hellas</title>
-    <meta
-            name="description"
-            content={$t('businesses.subtitle')}
-    />
-</svelte:head>
+<Seo title={$t('businesses.headline')} description={$t('businesses.subtitle')} />
 
 <div class="mb-10 max-w-3xl">
     <p class="text-sm font-bold uppercase tracking-[0.18em] text-primary">

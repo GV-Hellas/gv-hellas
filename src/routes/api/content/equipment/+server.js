@@ -1,6 +1,6 @@
-import { json } from '@sveltejs/kit';
-import { listEquipment } from '$lib/server/cms-store';
+import {json} from '@sveltejs/kit';
+import {listEquipment} from '$lib/server/cms-store';
 
 export async function GET() {
-  return json(listEquipment());
+    return json(await listEquipment());
 }

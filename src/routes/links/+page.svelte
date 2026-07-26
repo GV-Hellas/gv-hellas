@@ -2,6 +2,7 @@
     import {t, locale} from '$lib/i18n';
     import ExternalLinkIcon from '@lucide/svelte/icons/external-link';
     import LinkIcon from '@lucide/svelte/icons/link';
+    import Seo from '$lib/components/Seo.svelte';
 
     type Lang = 'el' | 'de';
     type LocalizedText = Partial<Record<Lang, string>> | string | undefined;
@@ -22,6 +23,11 @@
 
     let lang = $derived((($locale === 'de' ? 'de' : 'el') as Lang));
     let links = $derived((data?.links ?? []).filter((link) => Boolean(link.url)));
+    const seoDescription = $derived(
+        lang === 'de'
+            ? 'Nützliche Links, Partner und Anlaufstellen für die griechische Gemeinschaft in der Schweiz.'
+            : 'Χρήσιμοι σύνδεσμοι, συνεργάτες και φορείς για την ελληνική κοινότητα στην Ελβετία.'
+    );
 
     function localized(value: LocalizedText) {
         if (!value) return '';
@@ -39,9 +45,7 @@
     }
 </script>
 
-<svelte:head>
-    <title>{$t('links.headline')} - Griechischer Verein Hellas</title>
-</svelte:head>
+<Seo title={$t('links.headline')} description={seoDescription} />
 
 <section class="mx-auto max-w-5xl">
     <header class="mb-8">

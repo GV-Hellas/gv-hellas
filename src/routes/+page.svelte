@@ -2,6 +2,7 @@
     import {t, locale} from '$lib/i18n';
     import Slider from '$lib/components/Slider.svelte';
     import EventCard from '$lib/components/EventCard.svelte';
+    import Seo from '$lib/components/Seo.svelte';
     import type {Lang} from "$lib/cms/events/types";
 
     let {data} = $props();
@@ -26,7 +27,14 @@
 
     let lang: Lang = $derived(($locale || 'el') as Lang);
     let events = $derived(data?.events ?? []);
+    const seoDescription = $derived(
+        lang === 'de'
+            ? 'Der Griechische Verein Hellas in der Schweiz verbindet die griechische Gemeinschaft mit Veranstaltungen, Kultur, Informationen und Dienstleistungen.'
+            : 'Ο Ελληνικός Σύλλογος Hellas στην Ελβετία ενώνει την ελληνική κοινότητα με εκδηλώσεις, πολιτιστικές δράσεις, πληροφορίες και υπηρεσίες.'
+    );
 </script>
+
+<Seo title="Griechischer Verein Hellas" description={seoDescription} />
 
 <section>
     <Slider {slides} interval={6500}/>

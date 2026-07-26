@@ -1,6 +1,7 @@
 <script lang="ts">
     import {t, locale} from '$lib/i18n';
     import EventCard from '$lib/components/EventCard.svelte';
+    import Seo from '$lib/components/Seo.svelte';
     import type {Lang} from "$lib/cms/events/types";
 
     /** @type {import('./$types').PageProps} */
@@ -9,11 +10,14 @@
     let lang = $derived(($locale || 'el') as Lang);
     let upcoming = $derived(data?.upcoming ?? []);
     let past = $derived(data?.past ?? []);
+    const seoDescription = $derived(
+        lang === 'de'
+            ? 'Aktuelle und vergangene Veranstaltungen des Griechischen Vereins Hellas in der Schweiz.'
+            : 'Τρέχουσες και προηγούμενες εκδηλώσεις του Ελληνικού Συλλόγου Hellas στην Ελβετία.'
+    );
 </script>
 
-<svelte:head>
-    <title>{$t('events.headline')} - Griechischer Verein Hellas</title>
-</svelte:head>
+<Seo title={$t('events.headline')} description={seoDescription} />
 
 <h1 class="text-3xl font-bold mb-6">{$t('events.headline')}</h1>
 
