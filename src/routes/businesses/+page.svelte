@@ -34,7 +34,7 @@
     }
 
     function businessHref(slug: string) {
-        return `/business/${encodeURIComponent(slug)}`;
+        return `/businesses/${encodeURIComponent(slug)}`;
     }
 
     function sponsorLabel(type: SponsorType) {

@@ -1,9 +1,11 @@
-import {type Actions, fail} from '@sveltejs/kit';
+import {fail} from '@sveltejs/kit';
+import type {Actions, ServerLoad} from '@sveltejs/kit';
+
 import {deleteBusiness, listBusinesses} from '$lib/server/cms/businessStore';
 
-export const load = async () => {
+export const load: ServerLoad = async () => {
     return {
-        businesses: listBusinesses()
+        businesses: await listBusinesses()
     };
 };
 
@@ -12,25 +14,35 @@ export const actions: Actions = {
         const form = await request.formData();
         const id = Number(form.get('id'));
 
-        if (!Number.isFinite(id)) {
+        if (!Number.isFinite(id) || id <= 0) {
             return fail(400, {
                 ok: false,
-                message: 'Invalid business ID'
+                id: null,
+                errorKey: 'admin.businesses.errors.invalidId'
             });
         }
 
-        const deleted = deleteBusiness(id);
+        try {
+            const deleted = await deleteBusiness(id);
 
-        if (!deleted) {
-            return fail(404, {
+            if (!deleted) {
+                return fail(404, {
+                    ok: false,
+                    id,
+                    errorKey: 'admin.businesses.errors.notFound'
+                });
+            }
+
+            return {
+                ok: true,
+                id
+            };
+        } catch {
+            return fail(500, {
                 ok: false,
-                message: 'Business not found'
+                id,
+                errorKey: 'admin.businesses.errors.deleteFailed'
             });
         }
-
-        return {
-            ok: true,
-            id
-        };
     }
 };

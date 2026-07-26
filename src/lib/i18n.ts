@@ -142,6 +142,13 @@ register('el', () =>
                 }
             },
             links: {
+                title: 'Σύνδεσμοι',
+                subtitle: 'Διαχείριση των χρήσιμων συνδέσμων που εμφανίζονται στη δημόσια σελίδα.',
+                createNew: 'Νέος σύνδεσμος',
+                createFirst: 'Δημιουργία πρώτου συνδέσμου',
+                empty: 'Δεν υπάρχουν ακόμα σύνδεσμοι.',
+                emptyDescription: 'Προσθέστε τον πρώτο σύνδεσμο για να εμφανιστεί στη δημόσια σελίδα.',
+
                 createTitle: 'Νέος σύνδεσμος',
                 editTitle: 'Επεξεργασία συνδέσμου',
                 backToList: 'Πίσω στους συνδέσμους',
@@ -179,6 +186,25 @@ register('el', () =>
                     logoStorageHelp: 'Το λογότυπο μετατρέπεται σε WebP και αποθηκεύεται στο Cloudflare R2.',
                     save: 'Αποθήκευση συνδέσμου',
                     saving: 'Αποθήκευση…'
+                },
+
+                table: {
+                    logo: 'Λογότυπο',
+                    title: 'Τίτλος',
+                    url: 'Διεύθυνση URL',
+                    updated: 'Τελευταία ενημέρωση',
+                    actions: 'Ενέργειες'
+                },
+
+                actions: {
+                    edit: 'Επεξεργασία'
+                },
+
+                deleteDialog: {
+                    title: 'Διαγραφή συνδέσμου;',
+                    description: 'Αυτή η ενέργεια θα αφαιρέσει οριστικά τον σύνδεσμο από τη δημόσια σελίδα.',
+                    confirm: 'Διαγραφή συνδέσμου',
+                    deleting: 'Διαγραφή…'
                 }
             },
             businesses: {
@@ -191,7 +217,7 @@ register('el', () =>
                     logo: 'Λογότυπο',
                     name: 'Επωνυμία',
                     sponsorType: 'Χορηγία',
-                    url: 'URL',
+                    url: 'Διεύθυνση URL',
                     contact: 'Επικοινωνία',
                     actions: 'Ενέργειες'
                 },
@@ -224,7 +250,13 @@ register('el', () =>
 
                 toast: {
                     deleted: 'Η επιχείρηση διαγράφηκε',
-                    deleteFailed: 'Δεν ήταν δυνατή η διαγραφή της επιχείρησης'
+                    deleteFailed: 'Δεν ήταν δυνατή η διαγραφή της επιχείρησης.'
+                },
+
+                errors: {
+                    invalidId: 'Μη έγκυρο ID επιχείρησης.',
+                    notFound: 'Η επιχείρηση δεν βρέθηκε.',
+                    deleteFailed: 'Παρουσιάστηκε σφάλμα κατά τη διαγραφή της επιχείρησης.'
                 },
 
                 form: {
@@ -731,6 +763,13 @@ register('de', () =>
                 }
             },
             links: {
+                title: 'Links',
+                subtitle: 'Nützliche Links verwalten, die auf der öffentlichen Seite angezeigt werden.',
+                createNew: 'Neuer Link',
+                createFirst: 'Ersten Link erstellen',
+                empty: 'Es gibt noch keine Links.',
+                emptyDescription: 'Fügen Sie den ersten Link hinzu, damit er auf der öffentlichen Seite erscheint.',
+
                 createTitle: 'Neuer Link',
                 editTitle: 'Link bearbeiten',
                 backToList: 'Zurück zu den Links',
@@ -768,6 +807,25 @@ register('de', () =>
                     logoStorageHelp: 'Das Logo wird in WebP umgewandelt und in Cloudflare R2 gespeichert.',
                     save: 'Link speichern',
                     saving: 'Wird gespeichert…'
+                },
+
+                table: {
+                    logo: 'Logo',
+                    title: 'Titel',
+                    url: 'URL',
+                    updated: 'Zuletzt aktualisiert',
+                    actions: 'Aktionen'
+                },
+
+                actions: {
+                    edit: 'Bearbeiten'
+                },
+
+                deleteDialog: {
+                    title: 'Link löschen?',
+                    description: 'Diese Aktion entfernt den Link dauerhaft von der öffentlichen Seite.',
+                    confirm: 'Link löschen',
+                    deleting: 'Wird gelöscht…'
                 }
             },
             businesses: {
@@ -813,7 +871,13 @@ register('de', () =>
 
                 toast: {
                     deleted: 'Das Unternehmen wurde gelöscht',
-                    deleteFailed: 'Das Unternehmen konnte nicht gelöscht werden'
+                    deleteFailed: 'Das Unternehmen konnte nicht gelöscht werden.'
+                },
+
+                errors: {
+                    invalidId: 'Ungültige Unternehmens-ID.',
+                    notFound: 'Das Unternehmen wurde nicht gefunden.',
+                    deleteFailed: 'Beim Löschen des Unternehmens ist ein Fehler aufgetreten.'
                 },
 
                 form: {

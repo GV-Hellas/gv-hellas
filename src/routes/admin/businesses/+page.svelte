@@ -40,7 +40,8 @@
 
     type ActionResponse = {
         ok?: boolean;
-        id?: number;
+        id?: number | null;
+        errorKey?: string;
         message?: string;
     };
 
@@ -76,12 +77,14 @@
         return item.contactPerson || item.contact_person || item.email || item.telephone || '—';
     }
 
-    function editHref(id: number) {
-        return `/admin/businesses/${id}/edit`;
+    function editHref(item: AdminBusiness) {
+        return item.slug
+            ? `/admin/businesses/${encodeURIComponent(item.slug)}/edit`
+            : '';
     }
 
     function publicHref(item: AdminBusiness) {
-        return item.slug ? `/business/${encodeURIComponent(item.slug)}` : '';
+        return item.slug ? `/businesses/${encodeURIComponent(item.slug)}` : '';
     }
 
     function openDeleteDialog(item: AdminBusiness) {
@@ -93,6 +96,14 @@
         if (!data || typeof data !== 'object') return '';
 
         const maybeData = data as ActionResponse;
+
+        if (typeof maybeData.errorKey === 'string') {
+            const translated = $t(maybeData.errorKey);
+
+            if (translated !== maybeData.errorKey) {
+                return translated;
+            }
+        }
 
         return typeof maybeData.message === 'string' ? maybeData.message : '';
     }
@@ -297,17 +308,19 @@
                                         </a>
                                     {/if}
 
-                                    <a
-                                            href={editHref(item.id)}
-                                            class={cn(
-                                            buttonVariants({variant: 'outline', size: 'icon'}),
-                                            'size-8 rounded-xl'
-                                        )}
-                                            title={$t('admin.businesses.actions.edit')}
-                                            aria-label={$t('admin.businesses.actions.edit')}
-                                    >
-                                        <PencilIcon class="size-4"/>
-                                    </a>
+                                    {#if editHref(item)}
+                                        <a
+                                                href={editHref(item)}
+                                                class={cn(
+                                                buttonVariants({variant: 'outline', size: 'icon'}),
+                                                'size-8 rounded-xl'
+                                            )}
+                                                title={$t('admin.businesses.actions.edit')}
+                                                aria-label={$t('admin.businesses.actions.edit')}
+                                        >
+                                            <PencilIcon class="size-4"/>
+                                        </a>
+                                    {/if}
 
                                     <Button
                                             type="button"
