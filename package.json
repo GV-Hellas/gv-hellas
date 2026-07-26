@@ -50,6 +50,17 @@
       "esbuild": true,
       "ffmpeg-static": true,
       "sharp": true
+    },
+    "supportedArchitectures": {
+      "os": [
+        "current",
+        "linux"
+      ],
+      "cpu": [
+        "current",
+        "x64",
+        "arm64"
+      ]
     }
   },
   "dependencies": {
