@@ -49,6 +49,9 @@
       "ffmpeg-static": true,
       "sharp": true
     },
+    "overrides": {
+      "sanitize-html>htmlparser2": "10.1.0"
+    },
     "supportedArchitectures": {
       "os": [
         "current",
