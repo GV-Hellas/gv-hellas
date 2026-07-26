@@ -1,4 +1,4 @@
-import {fail, redirect} from '@sveltejs/kit';
+import {fail} from '@sveltejs/kit';
 import type {Actions, ServerLoad} from '@sveltejs/kit';
 
 import {allGalleryTags, upsertGallery} from '$lib/server/cms/galleryStore';
@@ -64,18 +64,29 @@ export const actions: Actions = {
             );
         }
 
-        await upsertGallery({
-            id,
-            type: saved.type,
-            src480: saved.src480,
-            src960: saved.src960,
-            videoSrc: saved.videoSrc,
-            alt: String(form.get('alt') || ''),
-            tags: parseTags(form.get('tags')),
-            width: saved.width,
-            height: saved.height
-        });
+        try {
+            await upsertGallery({
+                id,
+                type: saved.type,
+                src480: saved.src480,
+                src960: saved.src960,
+                videoSrc: saved.videoSrc,
+                alt: String(form.get('alt') || ''),
+                tags: parseTags(form.get('tags')),
+                width: saved.width,
+                height: saved.height
+            });
+        } catch (error) {
+            return actionError(
+                500,
+                'admin.gallery.errors.saveFailed',
+                error instanceof Error ? error.message : undefined
+            );
+        }
 
-        throw redirect(303, '/admin/gallery');
+        return {
+            ok: true,
+            id
+        };
     }
 };

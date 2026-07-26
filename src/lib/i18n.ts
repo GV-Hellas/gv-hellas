@@ -52,7 +52,10 @@ register('el', () =>
                     deleting: 'Διαγραφή…'
                 },
                 toast: {
+                    created: 'Η εκδήλωση δημιουργήθηκε',
+                    updated: 'Η εκδήλωση ενημερώθηκε',
                     deleted: 'Η εκδήλωση διαγράφηκε',
+                    saveFailed: 'Δεν ήταν δυνατή η αποθήκευση της εκδήλωσης.',
                     deleteFailed: 'Δεν ήταν δυνατή η διαγραφή της εκδήλωσης'
                 }
             },
@@ -128,8 +131,25 @@ register('el', () =>
                 },
 
                 toast: {
+                    created: 'Το στοιχείο γκαλερί δημιουργήθηκε',
+                    updated: 'Το στοιχείο γκαλερί ενημερώθηκε',
                     deleted: 'Το στοιχείο διαγράφηκε',
+                    saveFailed: 'Δεν ήταν δυνατή η αποθήκευση του στοιχείου γκαλερί.',
                     deleteFailed: 'Δεν ήταν δυνατή η διαγραφή του στοιχείου.'
+                },
+
+                form: {
+                    subtitle: 'Προσθέστε ή ενημερώστε το αρχείο, την περιγραφή και τις ετικέτες του στοιχείου.',
+                    backToList: 'Πίσω στη γκαλερί',
+                    details: 'Στοιχεία',
+                    detailsHelp: 'Βασικές πληροφορίες που χρησιμοποιούνται στη δημόσια γκαλερί.',
+                    altHelp: 'Περιγράψτε σύντομα το περιεχόμενο για προσβασιμότητα και αναζήτηση.',
+                    tagsHelp: 'Χρησιμοποιήστε κόμματα για να χωρίσετε πολλαπλές ετικέτες.',
+                    media: 'Αρχείο πολυμέσων',
+                    noPreview: 'Επιλέξτε μια εικόνα ή ένα βίντεο για προεπισκόπηση.',
+                    selectedFile: 'Επιλεγμένο αρχείο',
+                    save: 'Αποθήκευση στοιχείου',
+                    saving: 'Αποθήκευση…'
                 },
 
                 errors: {
@@ -137,6 +157,7 @@ register('el', () =>
                     invalidId: 'Μη έγκυρο ID γκαλερί.',
                     missingId: 'Λείπει το ID του στοιχείου γκαλερί.',
                     notFound: 'Το στοιχείο γκαλερί δεν βρέθηκε.',
+                    saveFailed: 'Παρουσιάστηκε σφάλμα κατά την αποθήκευση του στοιχείου γκαλερί.',
                     deleteFailed: 'Παρουσιάστηκε σφάλμα κατά τη διαγραφή του στοιχείου γκαλερί.',
                     processingFailed: 'Δεν ήταν δυνατή η επεξεργασία του αρχείου.'
                 }
@@ -705,7 +726,10 @@ register('de', () =>
                     deleting: 'Löschen…'
                 },
                 toast: {
+                    created: 'Die Veranstaltung wurde erstellt',
+                    updated: 'Die Veranstaltung wurde aktualisiert',
                     deleted: 'Die Veranstaltung wurde gelöscht',
+                    saveFailed: 'Die Veranstaltung konnte nicht gespeichert werden.',
                     deleteFailed: 'Die Veranstaltung konnte nicht gelöscht werden'
                 }
             },
@@ -781,8 +805,25 @@ register('de', () =>
                 },
 
                 toast: {
+                    created: 'Galerie-Eintrag erstellt',
+                    updated: 'Galerie-Eintrag aktualisiert',
                     deleted: 'Galerie-Eintrag gelöscht',
+                    saveFailed: 'Der Galerie-Eintrag konnte nicht gespeichert werden.',
                     deleteFailed: 'Der Galerie-Eintrag konnte nicht gelöscht werden.'
+                },
+
+                form: {
+                    subtitle: 'Datei, Beschreibung und Tags des Galerie-Eintrags erfassen oder aktualisieren.',
+                    backToList: 'Zurück zur Galerie',
+                    details: 'Angaben',
+                    detailsHelp: 'Grundlegende Informationen für die öffentliche Galerie.',
+                    altHelp: 'Beschreiben Sie den Inhalt kurz für Barrierefreiheit und Suche.',
+                    tagsHelp: 'Mehrere Tags werden durch Kommas getrennt.',
+                    media: 'Mediendatei',
+                    noPreview: 'Wählen Sie ein Bild oder Video für die Vorschau aus.',
+                    selectedFile: 'Ausgewählte Datei',
+                    save: 'Galerie-Eintrag speichern',
+                    saving: 'Wird gespeichert…'
                 },
 
                 errors: {
@@ -791,6 +832,7 @@ register('de', () =>
                     processingFailed: 'Die Galerie-Datei konnte nicht verarbeitet werden.',
                     missingId: 'Die ID des Galerie-Eintrags fehlt.',
                     notFound: 'Der Galerie-Eintrag wurde nicht gefunden.',
+                    saveFailed: 'Beim Speichern des Galerie-Eintrags ist ein Fehler aufgetreten.',
                     deleteFailed: 'Beim Löschen des Galerie-Eintrags ist ein Fehler aufgetreten.'
                 }
             },

@@ -1,4 +1,4 @@
-import {error, fail, redirect} from '@sveltejs/kit';
+import {error, fail} from '@sveltejs/kit';
 import type {Actions, ServerLoad} from '@sveltejs/kit';
 
 import {allGalleryTags, getGalleryById, upsertGallery} from '$lib/server/cms/galleryStore';
@@ -38,7 +38,7 @@ export const actions: Actions = {
         const existing = await getGalleryById(params.id);
 
         if (!existing) {
-            throw error(404, 'Gallery item not found');
+            return actionError(404, 'admin.gallery.errors.notFound');
         }
 
         const upload = form.get('media');
@@ -71,18 +71,29 @@ export const actions: Actions = {
             height = saved.height;
         }
 
-        await upsertGallery({
-            id: existing.id,
-            type,
-            src480,
-            src960,
-            videoSrc,
-            alt: String(form.get('alt') || ''),
-            tags: parseTags(form.get('tags')),
-            width,
-            height
-        });
+        try {
+            await upsertGallery({
+                id: existing.id,
+                type,
+                src480,
+                src960,
+                videoSrc,
+                alt: String(form.get('alt') || ''),
+                tags: parseTags(form.get('tags')),
+                width,
+                height
+            });
+        } catch (error) {
+            return actionError(
+                500,
+                'admin.gallery.errors.saveFailed',
+                error instanceof Error ? error.message : undefined
+            );
+        }
 
-        throw redirect(303, '/admin/gallery');
+        return {
+            ok: true,
+            id: existing.id
+        };
     }
 };

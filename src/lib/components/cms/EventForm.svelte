@@ -1,7 +1,7 @@
 <!--suppress ES6UnusedImports -->
 <script lang="ts">
     import {deserialize} from '$app/forms';
-    import {goto, invalidateAll} from '$app/navigation';
+    import {goto} from '$app/navigation';
 
     import {t, locale} from '$lib/i18n';
     import type {EventPayload, EventMedia, EventSection, Lang} from '$lib/cms/events/types';
@@ -15,10 +15,10 @@
     import {Label} from '$lib/components/ui/label/index.js';
     import * as Select from '$lib/components/ui/select/index.js';
     import * as Popover from '$lib/components/ui/popover/index.js';
-    import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js';
     import {Calendar} from '$lib/components/ui/calendar/index.js';
 
     import ChevronDownIcon from '@lucide/svelte/icons/chevron-down';
+    import {toast} from 'svelte-sonner';
     import {cn} from '$lib/utils.js';
 
     import {
@@ -42,6 +42,7 @@
         ok?: boolean;
         id?: string | number;
         slug?: string;
+        errorKey?: string;
         message?: string;
     };
 
@@ -57,10 +58,6 @@
     let error = $state('');
     let fieldErrors = $state<Record<string, string>>({});
     let datePickerOpen = $state(false);
-
-    let successDialogOpen = $state(false);
-    let successMessage = $state('');
-    let successBackHref = $state('/admin/events');
 
     const files = new Map<string, File>();
 
@@ -119,10 +116,6 @@
         fieldErrors = {};
         error = '';
         files.clear();
-
-        successDialogOpen = false;
-        successMessage = '';
-        successBackHref = '/admin/events';
     });
 
     const lang = $derived(($locale || 'el') as Lang);
@@ -236,6 +229,55 @@
         return undefined;
     }
 
+    function translatedActionMessage(data?: SaveActionData) {
+        if (!data?.errorKey) return '';
+
+        const translated = $t(data.errorKey);
+        return translated === data.errorKey ? '' : translated;
+    }
+
+    function saveFailureMessage(data?: SaveActionData, fallback?: string) {
+        return (
+            fallback ||
+            translatedActionMessage(data) ||
+            data?.message ||
+            $t('admin.events.toast.saveFailed')
+        );
+    }
+
+    function showSaveError(data?: SaveActionData, fallback?: string) {
+        const title = $t('admin.events.toast.saveFailed');
+        const message = saveFailureMessage(data, fallback);
+
+        error = message;
+
+        toast.error(title, {
+            description: message !== title ? message : undefined
+        });
+    }
+
+    async function showSaveSuccess(data?: SaveActionData, href = '/admin/events') {
+        const title = $t(
+            mode === 'edit'
+                ? 'admin.events.toast.updated'
+                : 'admin.events.toast.created'
+        );
+
+        const eventTitle =
+            event.title[lang]?.trim() ||
+            event.title.el.trim() ||
+            event.title.de.trim() ||
+            data?.slug;
+
+        toast.success(title, {
+            description: eventTitle || undefined
+        });
+
+        await goto(href, {
+            invalidateAll: true
+        });
+    }
+
     async function submit() {
         loading = true;
         error = '';
@@ -270,45 +312,35 @@
                 const data = actionData(result);
 
                 if (!data?.ok) {
-                    error = data?.message || $t('admin.form.couldNotSave');
+                    showSaveError(data);
                     return;
                 }
 
-                successMessage =
-                    data.message ||
-                    `${$t('admin.form.saved')}${data.slug || data.id ? `: ${data.slug || data.id}` : ''}`;
-
-                successBackHref = '/admin/events';
-                successDialogOpen = true;
-
-                await invalidateAll();
+                await showSaveSuccess(data);
                 return;
             }
 
             if (result.type === 'failure') {
-                const data = actionData(result);
-
-                error = data?.message || $t('admin.form.couldNotSave');
+                showSaveError(actionData(result));
                 return;
             }
 
             if (result.type === 'redirect') {
-                successMessage = $t('admin.form.saved');
-                successBackHref = result.location || '/admin/events';
-                successDialogOpen = true;
-
-                await invalidateAll();
+                await showSaveSuccess(undefined, result.location || '/admin/events');
                 return;
             }
 
             if (result.type === 'error') {
-                error = result.error?.message || $t('admin.form.couldNotSave');
+                showSaveError(
+                    undefined,
+                    result.error?.message
+                );
                 return;
             }
 
-            error = $t('admin.form.couldNotSave');
+            showSaveError();
         } catch {
-            error = $t('admin.form.couldNotSave');
+            showSaveError();
         } finally {
             loading = false;
         }
@@ -567,28 +599,6 @@
     </div>
 </form>
 
-<AlertDialog.Root bind:open={successDialogOpen}>
-    <AlertDialog.Content class="rounded-2xl">
-        <AlertDialog.Header>
-            <AlertDialog.Title>
-                {$t('admin.form.saved')}
-            </AlertDialog.Title>
-
-            <AlertDialog.Description>
-                {successMessage}
-            </AlertDialog.Description>
-        </AlertDialog.Header>
-
-        <AlertDialog.Footer>
-            <AlertDialog.Action
-                    class="rounded-xl"
-                    onclick={() => goto(successBackHref)}
-            >
-                OK
-            </AlertDialog.Action>
-        </AlertDialog.Footer>
-    </AlertDialog.Content>
-</AlertDialog.Root>
 
 <style>
     .form {

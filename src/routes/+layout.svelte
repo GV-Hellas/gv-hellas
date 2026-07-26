@@ -64,7 +64,7 @@
 </script>
 
 <div class="flex min-h-screen flex-col bg-slate-50 text-slate-900">
-    <Toaster richColors closeButton position="top-right" />
+    <Toaster richColors closeButton position="bottom-right" />
     <NavigationProgress />
 
     <Nav />

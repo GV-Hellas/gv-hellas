@@ -1,8 +1,9 @@
 <script lang="ts">
     import {deserialize} from '$app/forms';
-    import {invalidateAll} from '$app/navigation';
+    import {goto} from '$app/navigation';
     import type {ActionResult} from '@sveltejs/kit';
     import {onDestroy} from 'svelte';
+    import {toast} from 'svelte-sonner';
 
     import {t, locale} from '$lib/i18n';
     import type {
@@ -58,7 +59,6 @@
 
     let loading = $state(false);
     let error = $state('');
-    let success = $state('');
     let fieldErrors = $state<Record<string, string>>({});
     let logoFile = $state<File | null>(null);
     let logoPreview = $state('');
@@ -139,7 +139,6 @@
         logoFile = null;
         fieldErrors = {};
         error = '';
-        success = '';
         files.clear();
     });
 
@@ -277,10 +276,36 @@
         );
     }
 
+    function showSaveError(data?: SaveResponse, fallback?: string) {
+        const title = $t('admin.businesses.toast.saveFailed');
+        const message = fallback || saveFailureMessage(data);
+
+        error = message;
+
+        toast.error(title, {
+            description: message !== title ? message : undefined
+        });
+    }
+
+    async function showSaveSuccess(data?: SaveResponse) {
+        const title = $t(
+            mode === 'edit'
+                ? 'admin.businesses.toast.updated'
+                : 'admin.businesses.toast.created'
+        );
+
+        toast.success(title, {
+            description: business.name.trim() || data?.slug || undefined
+        });
+
+        await goto('/admin/businesses', {
+            invalidateAll: true
+        });
+    }
+
     async function submit() {
         loading = true;
         error = '';
-        success = '';
 
         const payload = validateClient();
 
@@ -317,51 +342,37 @@
                 const data = actionData(result);
 
                 if (!data?.ok) {
-                    error = saveFailureMessage(data);
+                    showSaveError(data);
                     return;
                 }
 
-                const savedLabel = $t(
-                    mode === 'edit'
-                        ? 'admin.businesses.toast.updated'
-                        : 'admin.businesses.toast.created'
-                );
-
-                success = data.slug
-                    ? `${savedLabel}: ${data.slug}`
-                    : savedLabel;
-
-                await invalidateAll();
+                await showSaveSuccess(data);
                 return;
             }
 
             if (result.type === 'failure') {
-                error = saveFailureMessage(actionData(result));
+                showSaveError(actionData(result));
                 return;
             }
 
             if (result.type === 'redirect') {
-                success = $t(
-                    mode === 'edit'
-                        ? 'admin.businesses.toast.updated'
-                        : 'admin.businesses.toast.created'
-                );
-
-                await invalidateAll();
+                await showSaveSuccess();
                 return;
             }
 
             if (result.type === 'error') {
-                error =
+                showSaveError(
+                    undefined,
                     result.error instanceof Error
                         ? result.error.message
-                        : $t('admin.businesses.toast.saveFailed');
+                        : undefined
+                );
                 return;
             }
 
-            error = $t('admin.businesses.toast.saveFailed');
+            showSaveError();
         } catch {
-            error = $t('admin.businesses.toast.saveFailed');
+            showSaveError();
         } finally {
             loading = false;
         }
@@ -573,10 +584,6 @@
 
     {#if error}
         <p class="error">{error}</p>
-    {/if}
-
-    {#if success}
-        <p class="success">{success}</p>
     {/if}
 
     <div class="flex justify-end gap-2 pt-2">
