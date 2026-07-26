@@ -1,0 +1,1364 @@
+diff --git a/src/lib/analytics.ts b/src/lib/analytics.ts
+new file mode 100644
+index 0000000..8e54a85
+--- /dev/null
++++ b/src/lib/analytics.ts
+@@ -0,0 +1,191 @@
++import {browser} from '$app/environment';
++
++export type AnalyticsConsent = 'granted' | 'denied';
++
++export type AnalyticsEventParameters = Record<
++    string,
++    string | number | boolean | null | undefined
++>;
++
++declare global {
++    interface Window {
++        dataLayer?: unknown[];
++        gtag?: (...args: unknown[]) => void;
++    }
++}
++
++const CONSENT_STORAGE_KEY = 'gv-hellas.analytics-consent.v1';
++const SCRIPT_ID = 'gv-hellas-google-analytics';
++
++let initializedMeasurementId = '';
++
++export function normalizeMeasurementId(value: string | undefined | null) {
++    const measurementId = String(value || '').trim().toUpperCase();
++
++    return /^G-[A-Z0-9]+$/.test(measurementId) ? measurementId : '';
++}
++
++export function getAnalyticsConsent(): AnalyticsConsent | null {
++    if (!browser) return null;
++
++    const value = window.localStorage.getItem(CONSENT_STORAGE_KEY);
++
++    return value === 'granted' || value === 'denied' ? value : null;
++}
++
++export function setAnalyticsConsent(value: AnalyticsConsent) {
++    if (!browser) return;
++
++    window.localStorage.setItem(CONSENT_STORAGE_KEY, value);
++}
++
++export function clearAnalyticsConsent() {
++    if (!browser) return;
++
++    window.localStorage.removeItem(CONSENT_STORAGE_KEY);
++}
++
++export function initGoogleAnalytics(rawMeasurementId: string | undefined | null) {
++    if (!browser) return false;
++
++    const measurementId = normalizeMeasurementId(rawMeasurementId);
++
++    if (!measurementId || getAnalyticsConsent() !== 'granted') {
++        return false;
++    }
++
++    if (initializedMeasurementId === measurementId && window.gtag) {
++        const disableKey = `ga-disable-${measurementId}`;
++        (window as Window & Record<string, unknown>)[disableKey] = false;
++
++        window.gtag('consent', 'update', {
++            analytics_storage: 'granted',
++            ad_storage: 'denied',
++            ad_user_data: 'denied',
++            ad_personalization: 'denied'
++        });
++
++        return true;
++    }
++
++    window.dataLayer = window.dataLayer || [];
++    window.gtag = function (..._args: unknown[]) {
++        window.dataLayer?.push(arguments);
++    };
++
++    const disableKey = `ga-disable-${measurementId}`;
++    (window as Window & Record<string, unknown>)[disableKey] = false;
++
++    window.gtag('consent', 'default', {
++        analytics_storage: 'granted',
++        ad_storage: 'denied',
++        ad_user_data: 'denied',
++        ad_personalization: 'denied'
++    });
++    window.gtag('js', new Date());
++    window.gtag('config', measurementId, {
++        send_page_view: false
++    });
++
++    if (!document.getElementById(SCRIPT_ID)) {
++        const script = document.createElement('script');
++        script.id = SCRIPT_ID;
++        script.async = true;
++        script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
++        document.head.appendChild(script);
++    }
++
++    initializedMeasurementId = measurementId;
++    return true;
++}
++
++
++function expireAnalyticsCookies() {
++    const cookieNames = document.cookie
++        .split(';')
++        .map((entry) => entry.split('=')[0]?.trim())
++        .filter((name) => name === '_ga' || name?.startsWith('_ga_'));
++
++    const hostnameParts = window.location.hostname.split('.');
++    const domains = new Set<string>(['', window.location.hostname]);
++
++    for (let index = 0; index < hostnameParts.length - 1; index += 1) {
++        domains.add(`.${hostnameParts.slice(index).join('.')}`);
++    }
++
++    for (const name of cookieNames) {
++        if (!name) continue;
++
++        for (const domain of domains) {
++            document.cookie = `${name}=; Max-Age=0; path=/; SameSite=Lax${
++                domain ? `; domain=${domain}` : ''
++            }`;
++        }
++    }
++}
++
++export function disableGoogleAnalytics(rawMeasurementId: string | undefined | null) {
++    if (!browser) return;
++
++    const measurementId = normalizeMeasurementId(rawMeasurementId);
++
++    if (!measurementId) return;
++
++    const disableKey = `ga-disable-${measurementId}`;
++    (window as Window & Record<string, unknown>)[disableKey] = true;
++
++    window.gtag?.('consent', 'update', {
++        analytics_storage: 'denied',
++        ad_storage: 'denied',
++        ad_user_data: 'denied',
++        ad_personalization: 'denied'
++    });
++
++    expireAnalyticsCookies();
++}
++
++export function trackPageView(input: {
++    measurementId: string | undefined | null;
++    location: string;
++    title: string;
++    referrer?: string;
++}) {
++    const measurementId = normalizeMeasurementId(input.measurementId);
++
++    if (!measurementId || !initGoogleAnalytics(measurementId) || !window.gtag) {
++        return;
++    }
++
++    const url = new URL(input.location);
++
++    window.gtag('event', 'page_view', {
++        send_to: measurementId,
++        page_location: url.href,
++        page_path: `${url.pathname}${url.search}${url.hash}`,
++        page_title: input.title,
++        ...(input.referrer ? {page_referrer: input.referrer} : {})
++    });
++}
++
++export function trackAnalyticsEvent(
++    rawMeasurementId: string | undefined | null,
++    eventName: string,
++    parameters: AnalyticsEventParameters = {}
++) {
++    const measurementId = normalizeMeasurementId(rawMeasurementId);
++    const normalizedEventName = eventName.trim();
++
++    if (
++        !measurementId ||
++        !normalizedEventName ||
++        !initGoogleAnalytics(measurementId) ||
++        !window.gtag
++    ) {
++        return;
++    }
++
++    window.gtag('event', normalizedEventName, {
++        send_to: measurementId,
++        ...parameters
++    });
++}
+diff --git a/src/lib/components/AnalyticsConsent.svelte b/src/lib/components/AnalyticsConsent.svelte
+new file mode 100644
+index 0000000..452119f
+--- /dev/null
++++ b/src/lib/components/AnalyticsConsent.svelte
+@@ -0,0 +1,102 @@
++<script lang="ts">
++    import {onMount} from 'svelte';
++
++    import {t} from '$lib/i18n';
++    import {Button} from '$lib/components/ui/button/index.js';
++    import {
++        disableGoogleAnalytics,
++        getAnalyticsConsent,
++        normalizeMeasurementId,
++        setAnalyticsConsent
++    } from '$lib/analytics';
++
++    let {
++        measurementId = '',
++        enabled = true,
++        onGranted
++    }: {
++        measurementId?: string;
++        enabled?: boolean;
++        onGranted?: () => void;
++    } = $props();
++
++    let open = $state(false);
++
++    function refreshVisibility() {
++        open = Boolean(
++            enabled &&
++            normalizeMeasurementId(measurementId) &&
++            getAnalyticsConsent() === null
++        );
++    }
++
++    function accept() {
++        setAnalyticsConsent('granted');
++        open = false;
++        onGranted?.();
++    }
++
++    function reject() {
++        setAnalyticsConsent('denied');
++        disableGoogleAnalytics(measurementId);
++        open = false;
++    }
++
++    onMount(() => {
++        refreshVisibility();
++
++        const reopen = () => {
++            if (!enabled || !normalizeMeasurementId(measurementId)) return;
++            open = true;
++        };
++
++        window.addEventListener('gvhellas:open-analytics-settings', reopen);
++
++        return () => {
++            window.removeEventListener('gvhellas:open-analytics-settings', reopen);
++        };
++    });
++
++    $effect(() => {
++        if (!enabled || !normalizeMeasurementId(measurementId)) {
++            open = false;
++            return;
++        }
++
++        if (getAnalyticsConsent() === null) {
++            open = true;
++        }
++    });
++</script>
++
++{#if open}
++    <aside
++        class="fixed inset-x-4 bottom-4 z-[10001] mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white p-5 shadow-2xl sm:p-6"
++        role="dialog"
++        aria-modal="true"
++        aria-labelledby="analytics-consent-title"
++        aria-describedby="analytics-consent-description"
++    >
++        <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
++            <div class="max-w-2xl">
++                <h2 id="analytics-consent-title" class="font-bold text-slate-950">
++                    {$t('analytics.consent.title')}
++                </h2>
++
++                <p id="analytics-consent-description" class="mt-2 text-sm leading-6 text-slate-600">
++                    {$t('analytics.consent.description')}
++                </p>
++            </div>
++
++            <div class="flex shrink-0 flex-wrap gap-2">
++                <Button type="button" variant="outline" class="rounded-xl" onclick={reject}>
++                    {$t('analytics.consent.reject')}
++                </Button>
++
++                <Button type="button" class="rounded-xl" onclick={accept}>
++                    {$t('analytics.consent.accept')}
++                </Button>
++            </div>
++        </div>
++    </aside>
++{/if}
+diff --git a/src/lib/components/Footer.svelte b/src/lib/components/Footer.svelte
+index 82f3386..4f511e3 100644
+--- a/src/lib/components/Footer.svelte
++++ b/src/lib/components/Footer.svelte
+@@ -1,6 +1,13 @@
+-<script>
++<script lang="ts">
++    import {env} from '$env/dynamic/public';
+     import {t} from '$lib/i18n';
+     import {Code, Heart} from '@lucide/svelte';
++
++    const analyticsConfigured = Boolean(env.PUBLIC_GOOGLE_ANALYTICS_ID?.trim());
++
++    function openAnalyticsSettings() {
++        window.dispatchEvent(new CustomEvent('gvhellas:open-analytics-settings'));
++    }
+ </script>
+ 
+ <footer class="mt-auto border-t border-[#b8c9e3] bg-linear-to-r from-[#dbe7f6] via-[#c7d8ee] to-[#d6e2f2]">
+@@ -46,6 +53,16 @@
+                     Thanos Charisoudis
+                 </a>
+             </div>
++
++            {#if analyticsConfigured}
++                <button
++                        type="button"
++                        class="mt-3 text-xs font-medium text-slate-600 underline-offset-4 hover:text-slate-900 hover:underline"
++                        onclick={openAnalyticsSettings}
++                >
++                    {$t('analytics.settings')}
++                </button>
++            {/if}
+         </div>
+     </div>
+ </footer>
+diff --git a/src/lib/components/NavigationProgress.svelte b/src/lib/components/NavigationProgress.svelte
+new file mode 100644
+index 0000000..ca75099
+--- /dev/null
++++ b/src/lib/components/NavigationProgress.svelte
+@@ -0,0 +1,32 @@
++<script lang="ts">
++    import {navigating} from '$app/state';
++    import {t} from '$lib/i18n';
++
++    const loading = $derived(navigating.to !== null);
++</script>
++
++{#if loading}
++    <div
++        class="fixed inset-x-0 top-0 z-[10000] h-1 overflow-hidden bg-primary/15"
++        role="progressbar"
++        aria-label={$t('navigation.loading')}
++        aria-valuetext={$t('navigation.loading')}
++    >
++        <div class="progress-indicator h-full w-2/5 rounded-r-full bg-primary shadow-[0_0_12px_hsl(var(--primary)/0.65)]"></div>
++    </div>
++
++    <div
++        class="fixed inset-0 z-[9998] cursor-progress bg-white/10 backdrop-blur-[1px]"
++        aria-hidden="true"
++    ></div>
++
++    <div
++        class="pointer-events-none fixed inset-x-0 top-4 z-[9999] flex justify-center px-4"
++        aria-live="polite"
++        aria-atomic="true"
++    >
++        <div class="rounded-full border border-slate-200 bg-white/95 px-4 py-2 text-sm font-medium text-slate-700 shadow-lg backdrop-blur">
++            {$t('navigation.loading')}
++        </div>
++    </div>
++{/if}
+diff --git a/src/lib/components/cms/LinkForm.svelte b/src/lib/components/cms/LinkForm.svelte
+index 9699638..c8f73c9 100644
+--- a/src/lib/components/cms/LinkForm.svelte
++++ b/src/lib/components/cms/LinkForm.svelte
+@@ -6,6 +6,8 @@
+ 
+     import {t, locale} from '$lib/i18n';
+ 
++    import LocalizedField from './LocalizedField.svelte';
++
+     import {Button, buttonVariants} from '$lib/components/ui/button/index.js';
+     import {Input} from '$lib/components/ui/input/index.js';
+     import {Label} from '$lib/components/ui/label/index.js';
+@@ -18,6 +20,8 @@
+     import ExternalLinkIcon from '@lucide/svelte/icons/external-link';
+     import Loader2Icon from '@lucide/svelte/icons/loader-2';
+     import ImageIcon from '@lucide/svelte/icons/image';
++    import LanguagesIcon from '@lucide/svelte/icons/languages';
++    import LinkIcon from '@lucide/svelte/icons/link';
+ 
+     import {cn} from '$lib/utils.js';
+ 
+@@ -171,7 +175,7 @@
+         update: EnhanceUpdate;
+     };
+ 
+-    const submitEnhance = ({formData}: { formData: FormData }) => {
++    const submitEnhance = ({formData}: {formData: FormData}) => {
+         saving = true;
+ 
+         formData.set('payload', JSON.stringify(payload()));
+@@ -249,73 +253,70 @@
+     </div>
+ 
+     <a href="/admin/links" class={cn(buttonVariants({variant: 'outline'}), 'rounded-xl')}>
+-        <ArrowLeftIcon class="mr-2 size-4"/>
++        <ArrowLeftIcon class="mr-2 size-4" />
+         {$t('admin.links.backToList')}
+     </a>
+ </div>
+ 
+ <form
+-        method="POST"
+-        enctype="multipart/form-data"
+-        action={submitTo}
+-        use:enhance={submitEnhance}
+-        class="grid gap-6"
++    method="POST"
++    enctype="multipart/form-data"
++    action={submitTo}
++    use:enhance={submitEnhance}
++    class="grid gap-6"
+ >
++    <input type="hidden" name="name_el" value={link.name.el} />
++    <input type="hidden" name="name_de" value={link.name.de} />
++    <input type="hidden" name="description_html_el" value={link.descriptionHtml.el} />
++    <input type="hidden" name="description_html_de" value={link.descriptionHtml.de} />
++
+     <div class="grid gap-6 lg:grid-cols-[1fr_18rem]">
+         <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+-            <div class="mb-4 flex items-center justify-between gap-3">
++            <div class="mb-5 flex flex-col gap-3 border-b border-slate-100 pb-4 sm:flex-row sm:items-start sm:justify-between">
+                 <div>
+-                    <h2 class="font-semibold text-slate-900">
++                    <h2 class="flex items-center gap-2 font-semibold text-slate-900">
++                        <LanguagesIcon class="size-4 text-primary" />
+                         {$t('admin.links.form.content')}
+                     </h2>
+ 
+                     <p class="mt-1 text-sm text-slate-500">
+-                        {$t('admin.links.form.contentHelp')}
++                        {$t('admin.links.form.languageHint')}
+                     </p>
+                 </div>
+ 
+-                <Badge variant="secondary">
++                <Badge variant="secondary" class="w-fit">
+                     {lang.toUpperCase()}
+                 </Badge>
+             </div>
+ 
+-            <div class="grid gap-4">
+-                <div class="grid gap-4 md:grid-cols-2">
+-                    <div class="space-y-1.5">
+-                        <Label for={`${id}-name-el`}>
+-                            {$t('admin.links.form.nameEl')}
+-                        </Label>
++            <div class="grid gap-5">
++                <LocalizedField
++                    label={$t('admin.links.form.name')}
++                    bind:value={link.name}
++                    {lang}
++                    required={lang === 'el'}
++                    maxLength={160}
++                    placeholder={$t('admin.links.form.namePlaceholder')}
++                />
+ 
+-                        <Input
+-                                id={`${id}-name-el`}
+-                                name="name_el"
+-                                bind:value={link.name.el}
+-                                class={controlClass}
+-                                required
+-                        />
+-                    </div>
++                <LocalizedField
++                    label={$t('admin.links.form.description')}
++                    bind:value={link.descriptionHtml}
++                    {lang}
++                    textarea
++                    maxLength={1600}
++                    placeholder={$t('admin.links.form.descriptionPlaceholder')}
++                />
+ 
++                <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                     <div class="space-y-1.5">
+-                        <Label for={`${id}-name-de`}>
+-                            {$t('admin.links.form.nameDe')}
++                        <Label for={`${id}-url`} class="flex items-center gap-2">
++                            <LinkIcon class="size-4 text-primary" />
++                            {$t('admin.links.form.url')}
+                         </Label>
+ 
+-                        <Input
+-                                id={`${id}-name-de`}
+-                                name="name_de"
+-                                bind:value={link.name.de}
+-                                class={controlClass}
+-                        />
+-                    </div>
+-                </div>
+-
+-                <div class="space-y-1.5">
+-                    <Label for={`${id}-url`}>
+-                        {$t('admin.links.form.url')}
+-                    </Label>
+-
+-                    <div class="flex gap-2">
+-                        <Input
++                        <div class="flex gap-2">
++                            <Input
+                                 id={`${id}-url`}
+                                 name="url"
+                                 type="url"
+@@ -323,50 +324,21 @@
+                                 class={controlClass}
+                                 placeholder="https://example.com"
+                                 required
+-                        />
++                            />
+ 
+-                        {#if link.url}
+-                            <a
++                            {#if link.url}
++                                <a
+                                     href={link.url}
+                                     target="_blank"
+                                     rel="noopener noreferrer"
+                                     class={cn(buttonVariants({variant: 'outline', size: 'icon'}), 'size-10 rounded-xl')}
+                                     title={$t('admin.links.form.openUrl')}
+                                     aria-label={$t('admin.links.form.openUrl')}
+-                            >
+-                                <ExternalLinkIcon class="size-4"/>
+-                            </a>
+-                        {/if}
+-                    </div>
+-                </div>
+-
+-                <div class="grid gap-4 md:grid-cols-2">
+-                    <div class="space-y-1.5">
+-                        <Label for={`${id}-description-el`}>
+-                            {$t('admin.links.form.descriptionEl')}
+-                        </Label>
+-
+-                        <textarea
+-                                id={`${id}-description-el`}
+-                                name="description_html_el"
+-                                bind:value={link.descriptionHtml.el}
+-                                rows="7"
+-                                class="min-h-36 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25"
+-                        ></textarea>
+-                    </div>
+-
+-                    <div class="space-y-1.5">
+-                        <Label for={`${id}-description-de`}>
+-                            {$t('admin.links.form.descriptionDe')}
+-                        </Label>
+-
+-                        <textarea
+-                                id={`${id}-description-de`}
+-                                name="description_html_de"
+-                                bind:value={link.descriptionHtml.de}
+-                                rows="7"
+-                                class="min-h-36 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25"
+-                        ></textarea>
++                                >
++                                    <ExternalLinkIcon class="size-4" />
++                                </a>
++                            {/if}
++                        </div>
+                     </div>
+                 </div>
+             </div>
+@@ -384,13 +356,13 @@
+             <div class="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                 {#if currentLogo()}
+                     <img
+-                            src={currentLogo()}
+-                            alt={visibleName() || $t('admin.links.form.logo')}
+-                            class="mx-auto size-32 rounded-xl bg-white object-contain p-2 shadow-sm"
++                        src={currentLogo()}
++                        alt={visibleName() || $t('admin.links.form.logo')}
++                        class="mx-auto size-32 rounded-xl bg-white object-contain p-2 shadow-sm"
+                     />
+                 {:else}
+                     <div class="mx-auto flex size-32 items-center justify-center rounded-xl bg-white text-slate-400 shadow-sm">
+-                        <ImageIcon class="size-8"/>
++                        <ImageIcon class="size-8" />
+                     </div>
+                 {/if}
+             </div>
+@@ -407,12 +379,12 @@
+                 </Label>
+ 
+                 <Input
+-                        id={`${id}-logo`}
+-                        name="logo"
+-                        type="file"
+-                        accept="image/*"
+-                        class="rounded-xl"
+-                        onchange={onLogoChange}
++                    id={`${id}-logo`}
++                    name="logo"
++                    type="file"
++                    accept="image/*"
++                    class="rounded-xl"
++                    onchange={onLogoChange}
+                 />
+ 
+                 <p class="text-xs text-slate-500">
+@@ -429,12 +401,12 @@
+ 
+         <Button type="submit" class="rounded-xl" disabled={saving}>
+             {#if saving}
+-                <Loader2Icon class="mr-2 size-4 animate-spin"/>
++                <Loader2Icon class="mr-2 size-4 animate-spin" />
+                 {$t('admin.links.form.saving')}
+             {:else}
+-                <SaveIcon class="mr-2 size-4"/>
++                <SaveIcon class="mr-2 size-4" />
+                 {$t('admin.links.form.save')}
+             {/if}
+         </Button>
+     </div>
+-</form>
+\ No newline at end of file
++</form>
+diff --git a/src/lib/i18n.ts b/src/lib/i18n.ts
+index 43a2cec..396369d 100644
+--- a/src/lib/i18n.ts
++++ b/src/lib/i18n.ts
+@@ -173,6 +173,11 @@ register('el', () =>
+                     subtitle: 'Συμπληρώστε τα στοιχεία που θα εμφανίζονται στη δημόσια σελίδα συνδέσμων.',
+                     content: 'Περιεχόμενο',
+                     contentHelp: 'Ο τίτλος, η περιγραφή και το URL του συνδέσμου.',
++                    languageHint: 'Επεξεργάζεστε τη γλώσσα που είναι επιλεγμένη στο επάνω μενού. Αλλάξτε γλώσσα για να συμπληρώσετε την άλλη μετάφραση.',
++                    name: 'Όνομα',
++                    namePlaceholder: 'Όνομα οργανισμού ή ιστοσελίδας',
++                    description: 'Περιγραφή',
++                    descriptionPlaceholder: 'Σύντομη περιγραφή του συνδέσμου',
+                     nameEl: 'Όνομα στα Ελληνικά',
+                     nameDe: 'Όνομα στα Γερμανικά',
+                     url: 'URL',
+@@ -348,7 +353,18 @@ register('el', () =>
+             eyebrow: 'Δίκτυο Griechischer Verein Hellas',
+             viewProfile: 'Προβολή προφίλ',
+             empty: 'Δεν έχουν προστεθεί ακόμη επιχειρήσεις.',
+-            thanks: 'Ευχαριστούμε θερμά τους χορηγούς μας για την υποστήριξή τους.'
++            thanks: 'Ευχαριστούμε θερμά τους χορηγούς μας για την υποστήριξή τους.',
++            detail: {
++                unnamed: 'Επιχείρηση',
++                defaultDescription: 'Δεν έχει προστεθεί ακόμη αναλυτική περιγραφή για αυτή την επιχείρηση.',
++                contactTitle: 'Στοιχεία επικοινωνίας',
++                contactSubtitle: 'Επικοινωνήστε απευθείας με την επιχείρηση μέσω των διαθέσιμων στοιχείων.',
++                website: 'Ιστοσελίδα',
++                email: 'Email',
++                telephone: 'Τηλέφωνο',
++                contactPerson: 'Υπεύθυνος επικοινωνίας',
++                noContactDetails: 'Δεν έχουν προστεθεί ακόμη στοιχεία επικοινωνίας.'
++            }
+         },
+         contact: {
+             headline: 'Επικοινωνία',
+@@ -609,6 +625,18 @@ register('el', () =>
+                 }
+             }
+         },
++        navigation: {
++            loading: 'Φόρτωση σελίδας…'
++        },
++        analytics: {
++            settings: 'Ρυθμίσεις απορρήτου',
++            consent: {
++                title: 'Στατιστικά χρήσης',
++                description: 'Με τη συγκατάθεσή σας χρησιμοποιούμε το Google Analytics για να κατανοούμε πώς χρησιμοποιείται ο ιστότοπος και να τον βελτιώνουμε.',
++                accept: 'Αποδοχή στατιστικών',
++                reject: 'Μόνο απαραίτητα'
++            }
++        },
+         common: {
+             yes: 'Ναι',
+             no: 'Όχι',
+@@ -794,6 +822,11 @@ register('de', () =>
+                     subtitle: 'Erfassen Sie die Angaben, die auf der öffentlichen Link-Seite angezeigt werden.',
+                     content: 'Inhalt',
+                     contentHelp: 'Titel, Beschreibung und URL des Links.',
++                    languageHint: 'Sie bearbeiten die im oberen Menü ausgewählte Sprache. Wechseln Sie die Sprache, um die andere Übersetzung zu erfassen.',
++                    name: 'Name',
++                    namePlaceholder: 'Name der Organisation oder Website',
++                    description: 'Beschreibung',
++                    descriptionPlaceholder: 'Kurze Beschreibung des Links',
+                     nameEl: 'Name auf Griechisch',
+                     nameDe: 'Name auf Deutsch',
+                     url: 'URL',
+@@ -971,7 +1004,18 @@ register('de', () =>
+             eyebrow: 'Griechischer Verein Hellas Netzwerk',
+             viewProfile: 'Profil ansehen',
+             empty: 'Es wurden noch keine Unternehmen hinzugefügt.',
+-            thanks: 'Wir möchten unseren Sponsoren herzlich für ihre wertvolle Unterstützung danken.'
++            thanks: 'Wir möchten unseren Sponsoren herzlich für ihre wertvolle Unterstützung danken.',
++            detail: {
++                unnamed: 'Unternehmen',
++                defaultDescription: 'Für dieses Unternehmen wurde noch keine ausführliche Beschreibung hinterlegt.',
++                contactTitle: 'Kontaktdaten',
++                contactSubtitle: 'Kontaktieren Sie das Unternehmen direkt über die verfügbaren Angaben.',
++                website: 'Website',
++                email: 'E-Mail',
++                telephone: 'Telefon',
++                contactPerson: 'Kontaktperson',
++                noContactDetails: 'Es wurden noch keine Kontaktdaten hinterlegt.'
++            }
+         },
+         contact: {
+             headline: 'Kontakt',
+@@ -1229,6 +1273,18 @@ register('de', () =>
+                 }
+             }
+         },
++        navigation: {
++            loading: 'Seite wird geladen…'
++        },
++        analytics: {
++            settings: 'Datenschutzeinstellungen',
++            consent: {
++                title: 'Nutzungsstatistik',
++                description: 'Mit Ihrer Zustimmung verwenden wir Google Analytics, um zu verstehen, wie die Website genutzt wird, und sie zu verbessern.',
++                accept: 'Statistik erlauben',
++                reject: 'Nur notwendige Cookies'
++            }
++        },
+         common: {
+             yes: 'Ja',
+             no: 'Nein',
+diff --git a/src/routes/+layout.svelte b/src/routes/+layout.svelte
+index e7e4421..19a0861 100644
+--- a/src/routes/+layout.svelte
++++ b/src/routes/+layout.svelte
+@@ -1,28 +1,87 @@
+ <script lang="ts">
+-    import "../app.css";
+-    import { page } from "$app/state";
+-    import { fade, fly } from "svelte/transition";
++    import '../app.css';
+ 
+-    import Nav from "$lib/components/Nav.svelte";
+-    import Footer from "$lib/components/Footer.svelte";
+-    import { Toaster } from "$lib/components/ui/sonner";
+-</script>
++    import {afterNavigate} from '$app/navigation';
++    import {page} from '$app/state';
++    import {env} from '$env/dynamic/public';
++    import {onMount} from 'svelte';
++    import {fade, fly} from 'svelte/transition';
++
++    import Nav from '$lib/components/Nav.svelte';
++    import Footer from '$lib/components/Footer.svelte';
++    import NavigationProgress from '$lib/components/NavigationProgress.svelte';
++    import AnalyticsConsent from '$lib/components/AnalyticsConsent.svelte';
++    import {Toaster} from '$lib/components/ui/sonner';
++    import {
++        getAnalyticsConsent,
++        initGoogleAnalytics,
++        trackPageView
++    } from '$lib/analytics';
++
++    const measurementId = $derived(env.PUBLIC_GOOGLE_ANALYTICS_ID || '');
++    const analyticsEnabled = $derived(!page.url.pathname.startsWith('/admin'));
++
++    let lastTrackedLocation = '';
++
++    function trackCurrentPage(referrer = '') {
++        if (!analyticsEnabled || getAnalyticsConsent() !== 'granted') return;
++        if (!initGoogleAnalytics(measurementId)) return;
++
++        const location = window.location.href;
++
++        if (lastTrackedLocation === location) return;
+ 
+-<div class="flex min-h-screen flex-col bg-slate-50 text-slate-900">
++        lastTrackedLocation = location;
+ 
++        requestAnimationFrame(() => {
++            trackPageView({
++                measurementId,
++                location,
++                title: document.title,
++                referrer
++            });
++        });
++    }
++
++    function onAnalyticsGranted() {
++        lastTrackedLocation = '';
++        trackCurrentPage(document.referrer);
++    }
++
++    onMount(() => {
++        trackCurrentPage(document.referrer);
++    });
++
++    afterNavigate(({from, to}) => {
++        if (!to || to.url.pathname.startsWith('/admin')) return;
++
++        trackCurrentPage(from?.url.href || document.referrer);
++    });
++</script>
++
++<div
++    class="flex min-h-screen flex-col bg-slate-50 text-slate-900"
++>
+     <Toaster richColors closeButton position="top-right" />
++    <NavigationProgress />
+ 
+     <Nav />
+ 
+-    {#key page.url.pathname}
++    {#key `${page.url.pathname}${page.url.search}`}
+         <main
+-                class="container mx-auto w-full max-w-7xl flex-1 px-4 py-8 lg:px-6"
+-                in:fly={{ y: 8, duration: 140 }}
+-                out:fade={{ duration: 80 }}
++            class="container mx-auto w-full max-w-7xl flex-1 px-4 py-8 lg:px-6"
++            in:fly={{y: 8, duration: 160}}
++            out:fade={{duration: 90}}
+         >
+             <slot />
+         </main>
+     {/key}
+ 
+     <Footer />
++
++    <AnalyticsConsent
++        {measurementId}
++        enabled={analyticsEnabled}
++        onGranted={onAnalyticsGranted}
++    />
+ </div>
+diff --git a/src/routes/admin/+layout.svelte b/src/routes/admin/+layout.svelte
+index db3a3a2..05299f8 100644
+--- a/src/routes/admin/+layout.svelte
++++ b/src/routes/admin/+layout.svelte
+@@ -1,18 +1,9 @@
+ <script lang="ts">
+-    import {page} from "$app/state";
+-    import {fade, fly} from "svelte/transition";
+-
+-    import AdminBar from "$lib/components/cms/AdminBar.svelte";
++    import AdminBar from '$lib/components/cms/AdminBar.svelte';
+ </script>
+ 
+-<AdminBar/>
++<AdminBar />
+ 
+-{#key page.url.pathname}
+-    <section
+-            class="mx-auto min-h-screen max-w-7xl px-4 py-8 border-2 border-admin"
+-            in:fly={{ y: 8, duration: 140 }}
+-            out:fade={{ duration: 80 }}
+-    >
+-        <slot/>
+-    </section>
+-{/key}
+\ No newline at end of file
++<section class="mx-auto min-h-screen max-w-7xl border-2 border-admin px-4 py-8">
++    <slot />
++</section>
+diff --git a/src/routes/businesses/+page.svelte b/src/routes/businesses/+page.svelte
+index 553e8c1..28e0063 100644
+--- a/src/routes/businesses/+page.svelte
++++ b/src/routes/businesses/+page.svelte
+@@ -41,6 +41,14 @@
+         return $t(`admin.businesses.sponsorTypes.${type}`);
+     }
+ 
++    function businessName(business: StoredBusiness) {
++        return business?.name?.trim() || business?.slug?.trim() || $t('businesses.detail.unnamed');
++    }
++
++    function businessInitial(business: StoredBusiness) {
++        return businessName(business).slice(0, 1).toUpperCase() || '—';
++    }
++
+     function sponsorClass(type: SponsorType) {
+         if (type === 'gold') return 'border-amber-200 bg-amber-50 text-amber-800';
+         if (type === 'silver') return 'border-slate-300 bg-slate-100 text-slate-700';
+@@ -95,13 +103,13 @@
+                                         {#if business.logo}
+                                             <img
+                                                     src={business.logo}
+-                                                    alt={business.name}
++                                                    alt={businessName(business)}
+                                                     class="max-h-full max-w-full rounded-xl object-contain"
+                                                     loading="lazy"
+                                             />
+                                         {:else}
+                                             <span class="text-3xl font-black text-slate-300">
+-                                                {business.name.slice(0, 1)}
++                                                {businessInitial(business)}
+                                             </span>
+                                         {/if}
+                                     </div>
+@@ -112,7 +120,7 @@
+                                         </div>
+ 
+                                         <h3 class="truncate text-lg font-bold text-slate-950 group-hover:text-primary">
+-                                            {business.name}
++                                            {businessName(business)}
+                                         </h3>
+ 
+                                         {#if business.url}
+diff --git a/src/routes/businesses/[slug]/+page.server.ts b/src/routes/businesses/[slug]/+page.server.ts
+index c3e1367..4bb4924 100644
+--- a/src/routes/businesses/[slug]/+page.server.ts
++++ b/src/routes/businesses/[slug]/+page.server.ts
+@@ -1,10 +1,20 @@
+ import {error} from '@sveltejs/kit';
++import type {PageServerLoad} from './$types';
++
+ import {getBusinessBySlug} from '$lib/server/cms/businessStore';
+ 
+-export const load = async ({params}: {params: {slug: string}}) => {
++export const load: PageServerLoad = async ({params}) => {
++    let decodedSlug = params.slug;
++
++    try {
++        decodedSlug = decodeURIComponent(params.slug);
++    } catch {
++        decodedSlug = params.slug;
++    }
++
+     const business =
+-        getBusinessBySlug(params.slug) ??
+-        getBusinessBySlug(encodeURIComponent(params.slug));
++        (await getBusinessBySlug(decodedSlug)) ??
++        (decodedSlug !== params.slug ? await getBusinessBySlug(params.slug) : null);
+ 
+     if (!business) {
+         throw error(404, 'Business not found');
+@@ -13,4 +23,4 @@ export const load = async ({params}: {params: {slug: string}}) => {
+     return {
+         business
+     };
+-};
+\ No newline at end of file
++};
+diff --git a/src/routes/businesses/[slug]/+page.svelte b/src/routes/businesses/[slug]/+page.svelte
+index f9e8a82..2cfeaca 100644
+--- a/src/routes/businesses/[slug]/+page.svelte
++++ b/src/routes/businesses/[slug]/+page.svelte
+@@ -1,6 +1,13 @@
+ <script lang="ts">
+     import {locale, t} from '$lib/i18n';
+-    import type {BusinessMedia, Lang, StoredBusiness} from '$lib/cms/business/types';
++    import type {BusinessMedia, BusinessSection, Lang, StoredBusiness} from '$lib/cms/business/types';
++
++    import Building2Icon from '@lucide/svelte/icons/building-2';
++    import Globe2Icon from '@lucide/svelte/icons/globe-2';
++    import MailIcon from '@lucide/svelte/icons/mail';
++    import PhoneIcon from '@lucide/svelte/icons/phone';
++    import UserRoundIcon from '@lucide/svelte/icons/user-round';
++    import InfoIcon from '@lucide/svelte/icons/info';
+ 
+     type PageData = {
+         business: StoredBusiness;
+@@ -10,159 +17,253 @@
+ 
+     const lang = $derived(($locale || 'el') as Lang);
+     const business = $derived(data.business);
++    const businessName = $derived(
++        business?.name?.trim() || business?.slug?.trim() || $t('businesses.detail.unnamed')
++    );
++    const sections = $derived(
++        (business?.sections ?? []).filter((section) => sectionHasContent(section))
++    );
++
++    function text(key: string, fallback: string) {
++        const value = $t(key);
++        return value === key ? fallback : value;
++    }
+ 
+-    function html(value: Record<Lang, string>) {
+-        return value?.[lang] || value?.el || '';
++    function html(value?: Partial<Record<Lang, string>> | null) {
++        return value?.[lang] || value?.el || value?.de || '';
+     }
+ 
+-    function sponsorLabel(type: string) {
+-        return $t(`admin.businesses.sponsorTypes.${type}`);
++    function sponsorLabel(type?: string) {
++        return text(
++            `admin.businesses.sponsorTypes.${type || 'listed'}`,
++            text('admin.businesses.sponsorTypes.listed', 'Listed business')
++        );
+     }
+ 
+     function isImage(media: BusinessMedia) {
+-        return media.mimeType?.startsWith('image/') || media.type === 'image';
++        return media?.mimeType?.startsWith('image/') || media?.type === 'image';
+     }
+ 
+     function isVideo(media: BusinessMedia) {
+-        return media.mimeType?.startsWith('video/') || media.type === 'video';
++        return media?.mimeType?.startsWith('video/') || media?.type === 'video';
++    }
++
++    function mediaItems(section: BusinessSection) {
++        return (section?.media ?? []).filter((media) => Boolean(media?.url));
++    }
++
++    function sectionHasContent(section: BusinessSection) {
++        return Boolean(
++            html(section?.beforeHtml) ||
++            html(section?.afterHtml) ||
++            mediaItems(section).length
++        );
++    }
++
++    function plainText(value: string) {
++        return value
++            .replace(/<[^>]*>/g, ' ')
++            .replace(/\s+/g, ' ')
++            .trim();
++    }
++
++    function initial(value: string) {
++        return value.trim().slice(0, 1).toUpperCase() || '—';
+     }
++
++    function websiteLabel(value: string) {
++        try {
++            return new URL(value).hostname.replace(/^www\./, '');
++        } catch {
++            return value;
++        }
++    }
++
++    const hasContactDetails = $derived(
++        Boolean(business?.url || business?.email || business?.telephone || business?.contactPerson)
++    );
+ </script>
+ 
+ <svelte:head>
+-    <title>{business.name} | Griechischer Verein Hellas</title>
+-    <meta name="description" content={business.name} />
++    <title>{businessName} | Griechischer Verein Hellas</title>
++    <meta
++        name="description"
++        content={plainText(html(business?.description)) || text('businesses.detail.defaultDescription', businessName)}
++    />
+ </svelte:head>
+ 
+ <article class="mx-auto max-w-5xl py-10">
+     <header class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+         <div class="grid gap-8 p-6 md:grid-cols-[10rem_1fr] md:p-8">
+-            <div class="flex size-40 items-center justify-center rounded-2xl border border-slate-200 bg-slate-50">
+-                {#if business.logo}
++            <div class="flex size-40 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
++                {#if business?.logo}
+                     <img
+-                            src={business.logo}
+-                            alt={business.name}
+-                            class="max-h-full max-w-full rounded-xl object-contain"
++                        src={business.logo}
++                        alt={businessName}
++                        class="max-h-full max-w-full rounded-xl object-contain p-2"
+                     />
+                 {:else}
+-                    <span class="text-4xl font-black text-slate-300">
+-                        {business.name.slice(0, 1)}
+-                    </span>
++                    <div class="flex size-full flex-col items-center justify-center gap-2 text-slate-300">
++                        <Building2Icon class="size-9" />
++                        <span class="text-4xl font-black">
++                            {initial(businessName)}
++                        </span>
++                    </div>
+                 {/if}
+             </div>
+ 
+-            <div>
++            <div class="min-w-0">
+                 <div class="mb-3 inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-slate-600">
+-                    {sponsorLabel(business.sponsorType)}
++                    {sponsorLabel(business?.sponsorType)}
+                 </div>
+ 
+-                <h1 class="text-3xl font-bold tracking-tight text-slate-950 md:text-4xl">
+-                    {business.name}
++                <h1 class="break-words text-3xl font-bold tracking-tight text-slate-950 md:text-4xl">
++                    {businessName}
+                 </h1>
+ 
+-                {#if html(business.description)}
++                {#if html(business?.description)}
+                     <div class="prose prose-slate mt-4 max-w-none">
+                         {@html html(business.description)}
+                     </div>
++                {:else}
++                    <div class="mt-4 flex max-w-2xl items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-600">
++                        <InfoIcon class="mt-0.5 size-4 shrink-0 text-primary" />
++                        <p>
++                            {$t('businesses.detail.defaultDescription')}
++                        </p>
++                    </div>
+                 {/if}
++            </div>
++        </div>
++    </header>
+ 
+-                <dl class="mt-6 grid gap-3 text-sm text-slate-600 sm:grid-cols-2">
+-                    {#if business.url}
+-                        <div>
+-                            <dt class="font-bold text-slate-900">Website</dt>
+-                            <dd>
+-                                <a
+-                                        href={business.url}
+-                                        target="_blank"
+-                                        rel="noopener"
+-                                        class="text-primary-dark hover:underline"
+-                                >
+-                                    {business.url}
+-                                </a>
+-                            </dd>
+-                        </div>
+-                    {/if}
++    <section class="mt-8 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
++        <div class="mb-5">
++            <h2 class="text-xl font-bold text-slate-950">
++                {$t('businesses.detail.contactTitle')}
++            </h2>
++            <p class="mt-1 text-sm text-slate-500">
++                {$t('businesses.detail.contactSubtitle')}
++            </p>
++        </div>
+ 
+-                    {#if business.email}
+-                        <div>
+-                            <dt class="font-bold text-slate-900">Email</dt>
+-                            <dd>
+-                                <a
+-                                        href={`mailto:${business.email}`}
+-                                        class="text-primary-dark hover:underline"
+-                                >
+-                                    {business.email}
+-                                </a>
+-                            </dd>
+-                        </div>
+-                    {/if}
++        {#if hasContactDetails}
++            <dl class="grid gap-4 sm:grid-cols-2">
++                {#if business?.url}
++                    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
++                        <dt class="flex items-center gap-2 text-sm font-bold text-slate-900">
++                            <Globe2Icon class="size-4 text-primary" />
++                            {$t('businesses.detail.website')}
++                        </dt>
++                        <dd class="mt-2 min-w-0">
++                            <a
++                                href={business.url}
++                                target="_blank"
++                                rel="noopener noreferrer"
++                                class="block truncate text-sm font-medium text-primary hover:underline"
++                                title={business.url}
++                            >
++                                {websiteLabel(business.url)}
++                            </a>
++                        </dd>
++                    </div>
++                {/if}
+ 
+-                    {#if business.telephone}
+-                        <div>
+-                            <dt class="font-bold text-slate-900">Telephone</dt>
+-                            <dd>
+-                                <a
+-                                        href={`tel:${business.telephone}`}
+-                                        class="text-primary-dark hover:underline"
+-                                >
+-                                    {business.telephone}
+-                                </a>
+-                            </dd>
+-                        </div>
+-                    {/if}
++                {#if business?.email}
++                    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
++                        <dt class="flex items-center gap-2 text-sm font-bold text-slate-900">
++                            <MailIcon class="size-4 text-primary" />
++                            {$t('businesses.detail.email')}
++                        </dt>
++                        <dd class="mt-2 min-w-0">
++                            <a
++                                href={`mailto:${business.email}`}
++                                class="block truncate text-sm font-medium text-primary hover:underline"
++                                title={business.email}
++                            >
++                                {business.email}
++                            </a>
++                        </dd>
++                    </div>
++                {/if}
+ 
+-                    {#if business.contactPerson}
+-                        <div>
+-                            <dt class="font-bold text-slate-900">Contact</dt>
+-                            <dd>{business.contactPerson}</dd>
+-                        </div>
+-                    {/if}
+-                </dl>
++                {#if business?.telephone}
++                    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
++                        <dt class="flex items-center gap-2 text-sm font-bold text-slate-900">
++                            <PhoneIcon class="size-4 text-primary" />
++                            {$t('businesses.detail.telephone')}
++                        </dt>
++                        <dd class="mt-2">
++                            <a
++                                href={`tel:${business.telephone}`}
++                                class="text-sm font-medium text-primary hover:underline"
++                            >
++                                {business.telephone}
++                            </a>
++                        </dd>
++                    </div>
++                {/if}
++
++                {#if business?.contactPerson}
++                    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
++                        <dt class="flex items-center gap-2 text-sm font-bold text-slate-900">
++                            <UserRoundIcon class="size-4 text-primary" />
++                            {$t('businesses.detail.contactPerson')}
++                        </dt>
++                        <dd class="mt-2 text-sm text-slate-700">
++                            {business.contactPerson}
++                        </dd>
++                    </div>
++                {/if}
++            </dl>
++        {:else}
++            <div class="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center text-sm text-slate-500">
++                {$t('businesses.detail.noContactDetails')}
+             </div>
+-        </div>
+-    </header>
++        {/if}
++    </section>
+ 
+-    {#if business.sections.length > 0}
++    {#if sections.length > 0}
+         <div class="mt-8 grid gap-8">
+-            {#each business.sections as section}
++            {#each sections as section, sectionIndex (section.id || sectionIndex)}
+                 <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
+-                    {#if html(section.beforeHtml)}
++                    {#if html(section?.beforeHtml)}
+                         <div class="prose prose-slate max-w-none">
+                             {@html html(section.beforeHtml)}
+                         </div>
+                     {/if}
+ 
+-                    {#if section.media.length > 0}
++                    {#if mediaItems(section).length > 0}
+                         <div class="my-6 grid gap-4 md:grid-cols-2">
+-                            {#each section.media as media}
+-                                {#if media.url}
+-                                    <figure class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
+-                                        {#if isImage(media)}
+-                                            <img
+-                                                    src={media.url}
+-                                                    alt={html(media.alt ?? {el: business.name, de: business.name})}
+-                                                    class="h-full w-full object-cover"
+-                                            />
+-                                        {:else if isVideo(media)}
+-                                            <!-- svelte-ignore a11y_media_has_caption -->
+-                                            <video
+-                                                    src={media.url}
+-                                                    controls
+-                                                    class="h-full w-full bg-black"
+-                                            ></video>
+-                                        {/if}
+-
+-                                        {#if media.caption && html(media.caption)}
+-                                            <figcaption class="px-4 py-3 text-sm text-slate-600">
+-                                                {@html html(media.caption)}
+-                                            </figcaption>
+-                                        {/if}
+-                                    </figure>
+-                                {/if}
++                            {#each mediaItems(section) as media, mediaIndex (media.id || mediaIndex)}
++                                <figure class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
++                                    {#if isImage(media)}
++                                        <img
++                                            src={media.url}
++                                            alt={html(media.alt) || businessName}
++                                            class="h-full w-full object-cover"
++                                            loading="lazy"
++                                        />
++                                    {:else if isVideo(media)}
++                                        <!-- svelte-ignore a11y_media_has_caption -->
++                                        <video
++                                            src={media.url}
++                                            controls
++                                            class="h-full w-full bg-black"
++                                        ></video>
++                                    {/if}
++
++                                    {#if media.caption && html(media.caption)}
++                                        <figcaption class="px-4 py-3 text-sm text-slate-600">
++                                            {@html html(media.caption)}
++                                        </figcaption>
++                                    {/if}
++                                </figure>
+                             {/each}
+                         </div>
+                     {/if}
+ 
+-                    {#if html(section.afterHtml)}
++                    {#if html(section?.afterHtml)}
+                         <div class="prose prose-slate max-w-none">
+                             {@html html(section.afterHtml)}
+                         </div>
+@@ -171,4 +272,4 @@
+             {/each}
+         </div>
+     {/if}
+-</article>
+\ No newline at end of file
++</article>
+diff --git a/src/routes/contact/+page.svelte b/src/routes/contact/+page.svelte
+index 3011dc2..f373eb0 100644
+--- a/src/routes/contact/+page.svelte
++++ b/src/routes/contact/+page.svelte
+@@ -1,5 +1,7 @@
+ <script lang="ts">
++    import {env} from '$env/dynamic/public';
+     import {t, locale} from '$lib/i18n';
++    import {trackAnalyticsEvent} from '$lib/analytics';
+ 
+     import {Button} from '$lib/components/ui/button/index.js';
+     import {Input} from '$lib/components/ui/input/index.js';
+@@ -283,6 +285,15 @@
+ 
+             submitted = true;
+             resetForm();
++
++            trackAnalyticsEvent(
++                env.PUBLIC_GOOGLE_ANALYTICS_ID,
++                'generate_lead',
++                {
++                    method: 'contact_form',
++                    form_name: 'contact'
++                }
++            );
+         } catch {
+             formError = text('contact.errorMessage');
+         } finally {

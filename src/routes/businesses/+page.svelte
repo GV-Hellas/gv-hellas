@@ -41,6 +41,14 @@
         return $t(`admin.businesses.sponsorTypes.${type}`);
     }
 
+    function businessName(business: StoredBusiness) {
+        return business?.name?.trim() || business?.slug?.trim() || $t('businesses.detail.unnamed');
+    }
+
+    function businessInitial(business: StoredBusiness) {
+        return businessName(business).slice(0, 1).toUpperCase() || '—';
+    }
+
     function sponsorClass(type: SponsorType) {
         if (type === 'gold') return 'border-amber-200 bg-amber-50 text-amber-800';
         if (type === 'silver') return 'border-slate-300 bg-slate-100 text-slate-700';
@@ -95,13 +103,13 @@
                                         {#if business.logo}
                                             <img
                                                     src={business.logo}
-                                                    alt={business.name}
+                                                    alt={businessName(business)}
                                                     class="max-h-full max-w-full rounded-xl object-contain"
                                                     loading="lazy"
                                             />
                                         {:else}
                                             <span class="text-3xl font-black text-slate-300">
-                                                {business.name.slice(0, 1)}
+                                                {businessInitial(business)}
                                             </span>
                                         {/if}
                                     </div>
@@ -112,7 +120,7 @@
                                         </div>
 
                                         <h3 class="truncate text-lg font-bold text-slate-950 group-hover:text-primary">
-                                            {business.name}
+                                            {businessName(business)}
                                         </h3>
 
                                         {#if business.url}

@@ -173,6 +173,11 @@ register('el', () =>
                     subtitle: 'Συμπληρώστε τα στοιχεία που θα εμφανίζονται στη δημόσια σελίδα συνδέσμων.',
                     content: 'Περιεχόμενο',
                     contentHelp: 'Ο τίτλος, η περιγραφή και το URL του συνδέσμου.',
+                    languageHint: 'Επεξεργάζεστε τη γλώσσα που είναι επιλεγμένη στο επάνω μενού. Αλλάξτε γλώσσα για να συμπληρώσετε την άλλη μετάφραση.',
+                    name: 'Όνομα',
+                    namePlaceholder: 'Όνομα οργανισμού ή ιστοσελίδας',
+                    description: 'Περιγραφή',
+                    descriptionPlaceholder: 'Σύντομη περιγραφή του συνδέσμου',
                     nameEl: 'Όνομα στα Ελληνικά',
                     nameDe: 'Όνομα στα Γερμανικά',
                     url: 'URL',
@@ -348,7 +353,18 @@ register('el', () =>
             eyebrow: 'Δίκτυο Griechischer Verein Hellas',
             viewProfile: 'Προβολή προφίλ',
             empty: 'Δεν έχουν προστεθεί ακόμη επιχειρήσεις.',
-            thanks: 'Ευχαριστούμε θερμά τους χορηγούς μας για την υποστήριξή τους.'
+            thanks: 'Ευχαριστούμε θερμά τους χορηγούς μας για την υποστήριξή τους.',
+            detail: {
+                unnamed: 'Επιχείρηση',
+                defaultDescription: 'Δεν έχει προστεθεί ακόμη αναλυτική περιγραφή για αυτή την επιχείρηση.',
+                contactTitle: 'Στοιχεία επικοινωνίας',
+                contactSubtitle: 'Επικοινωνήστε απευθείας με την επιχείρηση μέσω των διαθέσιμων στοιχείων.',
+                website: 'Ιστοσελίδα',
+                email: 'Email',
+                telephone: 'Τηλέφωνο',
+                contactPerson: 'Υπεύθυνος επικοινωνίας',
+                noContactDetails: 'Δεν έχουν προστεθεί ακόμη στοιχεία επικοινωνίας.'
+            }
         },
         contact: {
             headline: 'Επικοινωνία',
@@ -609,6 +625,18 @@ register('el', () =>
                 }
             }
         },
+        navigation: {
+            loading: 'Φόρτωση σελίδας…'
+        },
+        analytics: {
+            settings: 'Ρυθμίσεις απορρήτου',
+            consent: {
+                title: 'Στατιστικά χρήσης',
+                description: 'Με τη συγκατάθεσή σας χρησιμοποιούμε το Google Analytics για να κατανοούμε πώς χρησιμοποιείται ο ιστότοπος και να τον βελτιώνουμε.',
+                accept: 'Αποδοχή στατιστικών',
+                reject: 'Μόνο απαραίτητα'
+            }
+        },
         common: {
             yes: 'Ναι',
             no: 'Όχι',
@@ -794,6 +822,11 @@ register('de', () =>
                     subtitle: 'Erfassen Sie die Angaben, die auf der öffentlichen Link-Seite angezeigt werden.',
                     content: 'Inhalt',
                     contentHelp: 'Titel, Beschreibung und URL des Links.',
+                    languageHint: 'Sie bearbeiten die im oberen Menü ausgewählte Sprache. Wechseln Sie die Sprache, um die andere Übersetzung zu erfassen.',
+                    name: 'Name',
+                    namePlaceholder: 'Name der Organisation oder Website',
+                    description: 'Beschreibung',
+                    descriptionPlaceholder: 'Kurze Beschreibung des Links',
                     nameEl: 'Name auf Griechisch',
                     nameDe: 'Name auf Deutsch',
                     url: 'URL',
@@ -971,7 +1004,18 @@ register('de', () =>
             eyebrow: 'Griechischer Verein Hellas Netzwerk',
             viewProfile: 'Profil ansehen',
             empty: 'Es wurden noch keine Unternehmen hinzugefügt.',
-            thanks: 'Wir möchten unseren Sponsoren herzlich für ihre wertvolle Unterstützung danken.'
+            thanks: 'Wir möchten unseren Sponsoren herzlich für ihre wertvolle Unterstützung danken.',
+            detail: {
+                unnamed: 'Unternehmen',
+                defaultDescription: 'Für dieses Unternehmen wurde noch keine ausführliche Beschreibung hinterlegt.',
+                contactTitle: 'Kontaktdaten',
+                contactSubtitle: 'Kontaktieren Sie das Unternehmen direkt über die verfügbaren Angaben.',
+                website: 'Website',
+                email: 'E-Mail',
+                telephone: 'Telefon',
+                contactPerson: 'Kontaktperson',
+                noContactDetails: 'Es wurden noch keine Kontaktdaten hinterlegt.'
+            }
         },
         contact: {
             headline: 'Kontakt',
@@ -1227,6 +1271,18 @@ register('de', () =>
                             'https://www.facebook.com/search/top/?q=Orthodoxe%20Kirche%20Olten'
                     }
                 }
+            }
+        },
+        navigation: {
+            loading: 'Seite wird geladen…'
+        },
+        analytics: {
+            settings: 'Datenschutzeinstellungen',
+            consent: {
+                title: 'Nutzungsstatistik',
+                description: 'Mit Ihrer Zustimmung verwenden wir Google Analytics, um zu verstehen, wie die Website genutzt wird, und sie zu verbessern.',
+                accept: 'Statistik erlauben',
+                reject: 'Nur notwendige Cookies'
             }
         },
         common: {

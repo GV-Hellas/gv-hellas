@@ -1,6 +1,13 @@
-<script>
+<script lang="ts">
+    import {env} from '$env/dynamic/public';
     import {t} from '$lib/i18n';
     import {Code, Heart} from '@lucide/svelte';
+
+    const analyticsConfigured = Boolean(env.PUBLIC_GOOGLE_ANALYTICS_ID?.trim());
+
+    function openAnalyticsSettings() {
+        window.dispatchEvent(new CustomEvent('gvhellas:open-analytics-settings'));
+    }
 </script>
 
 <footer class="mt-auto border-t border-[#b8c9e3] bg-linear-to-r from-[#dbe7f6] via-[#c7d8ee] to-[#d6e2f2]">
@@ -46,6 +53,16 @@
                     Thanos Charisoudis
                 </a>
             </div>
+
+            {#if analyticsConfigured}
+                <button
+                        type="button"
+                        class="mt-3 text-xs font-medium text-slate-600 underline-offset-4 hover:text-slate-900 hover:underline"
+                        onclick={openAnalyticsSettings}
+                >
+                    {$t('analytics.settings')}
+                </button>
+            {/if}
         </div>
     </div>
 </footer>

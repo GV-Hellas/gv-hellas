@@ -6,6 +6,8 @@
 
     import {t, locale} from '$lib/i18n';
 
+    import LocalizedField from './LocalizedField.svelte';
+
     import {Button, buttonVariants} from '$lib/components/ui/button/index.js';
     import {Input} from '$lib/components/ui/input/index.js';
     import {Label} from '$lib/components/ui/label/index.js';
@@ -18,6 +20,8 @@
     import ExternalLinkIcon from '@lucide/svelte/icons/external-link';
     import Loader2Icon from '@lucide/svelte/icons/loader-2';
     import ImageIcon from '@lucide/svelte/icons/image';
+    import LanguagesIcon from '@lucide/svelte/icons/languages';
+    import LinkIcon from '@lucide/svelte/icons/link';
 
     import {cn} from '$lib/utils.js';
 
@@ -171,7 +175,7 @@
         update: EnhanceUpdate;
     };
 
-    const submitEnhance = ({formData}: { formData: FormData }) => {
+    const submitEnhance = ({formData}: {formData: FormData}) => {
         saving = true;
 
         formData.set('payload', JSON.stringify(payload()));
@@ -249,73 +253,70 @@
     </div>
 
     <a href="/admin/links" class={cn(buttonVariants({variant: 'outline'}), 'rounded-xl')}>
-        <ArrowLeftIcon class="mr-2 size-4"/>
+        <ArrowLeftIcon class="mr-2 size-4" />
         {$t('admin.links.backToList')}
     </a>
 </div>
 
 <form
-        method="POST"
-        enctype="multipart/form-data"
-        action={submitTo}
-        use:enhance={submitEnhance}
-        class="grid gap-6"
+    method="POST"
+    enctype="multipart/form-data"
+    action={submitTo}
+    use:enhance={submitEnhance}
+    class="grid gap-6"
 >
+    <input type="hidden" name="name_el" value={link.name.el} />
+    <input type="hidden" name="name_de" value={link.name.de} />
+    <input type="hidden" name="description_html_el" value={link.descriptionHtml.el} />
+    <input type="hidden" name="description_html_de" value={link.descriptionHtml.de} />
+
     <div class="grid gap-6 lg:grid-cols-[1fr_18rem]">
         <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <div class="mb-4 flex items-center justify-between gap-3">
+            <div class="mb-5 flex flex-col gap-3 border-b border-slate-100 pb-4 sm:flex-row sm:items-start sm:justify-between">
                 <div>
-                    <h2 class="font-semibold text-slate-900">
+                    <h2 class="flex items-center gap-2 font-semibold text-slate-900">
+                        <LanguagesIcon class="size-4 text-primary" />
                         {$t('admin.links.form.content')}
                     </h2>
 
                     <p class="mt-1 text-sm text-slate-500">
-                        {$t('admin.links.form.contentHelp')}
+                        {$t('admin.links.form.languageHint')}
                     </p>
                 </div>
 
-                <Badge variant="secondary">
+                <Badge variant="secondary" class="w-fit">
                     {lang.toUpperCase()}
                 </Badge>
             </div>
 
-            <div class="grid gap-4">
-                <div class="grid gap-4 md:grid-cols-2">
+            <div class="grid gap-5">
+                <LocalizedField
+                    label={$t('admin.links.form.name')}
+                    bind:value={link.name}
+                    {lang}
+                    required={lang === 'el'}
+                    maxLength={160}
+                    placeholder={$t('admin.links.form.namePlaceholder')}
+                />
+
+                <LocalizedField
+                    label={$t('admin.links.form.description')}
+                    bind:value={link.descriptionHtml}
+                    {lang}
+                    textarea
+                    maxLength={1600}
+                    placeholder={$t('admin.links.form.descriptionPlaceholder')}
+                />
+
+                <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                     <div class="space-y-1.5">
-                        <Label for={`${id}-name-el`}>
-                            {$t('admin.links.form.nameEl')}
+                        <Label for={`${id}-url`} class="flex items-center gap-2">
+                            <LinkIcon class="size-4 text-primary" />
+                            {$t('admin.links.form.url')}
                         </Label>
 
-                        <Input
-                                id={`${id}-name-el`}
-                                name="name_el"
-                                bind:value={link.name.el}
-                                class={controlClass}
-                                required
-                        />
-                    </div>
-
-                    <div class="space-y-1.5">
-                        <Label for={`${id}-name-de`}>
-                            {$t('admin.links.form.nameDe')}
-                        </Label>
-
-                        <Input
-                                id={`${id}-name-de`}
-                                name="name_de"
-                                bind:value={link.name.de}
-                                class={controlClass}
-                        />
-                    </div>
-                </div>
-
-                <div class="space-y-1.5">
-                    <Label for={`${id}-url`}>
-                        {$t('admin.links.form.url')}
-                    </Label>
-
-                    <div class="flex gap-2">
-                        <Input
+                        <div class="flex gap-2">
+                            <Input
                                 id={`${id}-url`}
                                 name="url"
                                 type="url"
@@ -323,50 +324,21 @@
                                 class={controlClass}
                                 placeholder="https://example.com"
                                 required
-                        />
+                            />
 
-                        {#if link.url}
-                            <a
+                            {#if link.url}
+                                <a
                                     href={link.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     class={cn(buttonVariants({variant: 'outline', size: 'icon'}), 'size-10 rounded-xl')}
                                     title={$t('admin.links.form.openUrl')}
                                     aria-label={$t('admin.links.form.openUrl')}
-                            >
-                                <ExternalLinkIcon class="size-4"/>
-                            </a>
-                        {/if}
-                    </div>
-                </div>
-
-                <div class="grid gap-4 md:grid-cols-2">
-                    <div class="space-y-1.5">
-                        <Label for={`${id}-description-el`}>
-                            {$t('admin.links.form.descriptionEl')}
-                        </Label>
-
-                        <textarea
-                                id={`${id}-description-el`}
-                                name="description_html_el"
-                                bind:value={link.descriptionHtml.el}
-                                rows="7"
-                                class="min-h-36 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25"
-                        ></textarea>
-                    </div>
-
-                    <div class="space-y-1.5">
-                        <Label for={`${id}-description-de`}>
-                            {$t('admin.links.form.descriptionDe')}
-                        </Label>
-
-                        <textarea
-                                id={`${id}-description-de`}
-                                name="description_html_de"
-                                bind:value={link.descriptionHtml.de}
-                                rows="7"
-                                class="min-h-36 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25"
-                        ></textarea>
+                                >
+                                    <ExternalLinkIcon class="size-4" />
+                                </a>
+                            {/if}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -384,13 +356,13 @@
             <div class="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-4">
                 {#if currentLogo()}
                     <img
-                            src={currentLogo()}
-                            alt={visibleName() || $t('admin.links.form.logo')}
-                            class="mx-auto size-32 rounded-xl bg-white object-contain p-2 shadow-sm"
+                        src={currentLogo()}
+                        alt={visibleName() || $t('admin.links.form.logo')}
+                        class="mx-auto size-32 rounded-xl bg-white object-contain p-2 shadow-sm"
                     />
                 {:else}
                     <div class="mx-auto flex size-32 items-center justify-center rounded-xl bg-white text-slate-400 shadow-sm">
-                        <ImageIcon class="size-8"/>
+                        <ImageIcon class="size-8" />
                     </div>
                 {/if}
             </div>
@@ -407,12 +379,12 @@
                 </Label>
 
                 <Input
-                        id={`${id}-logo`}
-                        name="logo"
-                        type="file"
-                        accept="image/*"
-                        class="rounded-xl"
-                        onchange={onLogoChange}
+                    id={`${id}-logo`}
+                    name="logo"
+                    type="file"
+                    accept="image/*"
+                    class="rounded-xl"
+                    onchange={onLogoChange}
                 />
 
                 <p class="text-xs text-slate-500">
@@ -429,10 +401,10 @@
 
         <Button type="submit" class="rounded-xl" disabled={saving}>
             {#if saving}
-                <Loader2Icon class="mr-2 size-4 animate-spin"/>
+                <Loader2Icon class="mr-2 size-4 animate-spin" />
                 {$t('admin.links.form.saving')}
             {:else}
-                <SaveIcon class="mr-2 size-4"/>
+                <SaveIcon class="mr-2 size-4" />
                 {$t('admin.links.form.save')}
             {/if}
         </Button>

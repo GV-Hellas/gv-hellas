@@ -1,5 +1,7 @@
 <script lang="ts">
+    import {env} from '$env/dynamic/public';
     import {t, locale} from '$lib/i18n';
+    import {trackAnalyticsEvent} from '$lib/analytics';
 
     import {Button} from '$lib/components/ui/button/index.js';
     import {Input} from '$lib/components/ui/input/index.js';
@@ -283,6 +285,15 @@
 
             submitted = true;
             resetForm();
+
+            trackAnalyticsEvent(
+                env.PUBLIC_GOOGLE_ANALYTICS_ID,
+                'generate_lead',
+                {
+                    method: 'contact_form',
+                    form_name: 'contact'
+                }
+            );
         } catch {
             formError = text('contact.errorMessage');
         } finally {
