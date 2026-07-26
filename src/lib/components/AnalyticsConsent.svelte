@@ -4,20 +4,17 @@
     import {t} from '$lib/i18n';
     import {Button} from '$lib/components/ui/button/index.js';
     import {
-        disableGoogleAnalytics,
         getAnalyticsConsent,
         normalizeMeasurementId,
-        setAnalyticsConsent
+        updateGoogleAnalyticsConsent
     } from '$lib/analytics';
 
     let {
         measurementId = '',
-        enabled = true,
-        onGranted
+        enabled = true
     }: {
         measurementId?: string;
         enabled?: boolean;
-        onGranted?: () => void;
     } = $props();
 
     let open = $state(false);
@@ -31,14 +28,12 @@
     }
 
     function accept() {
-        setAnalyticsConsent('granted');
+        updateGoogleAnalyticsConsent(measurementId, 'granted');
         open = false;
-        onGranted?.();
     }
 
     function reject() {
-        setAnalyticsConsent('denied');
-        disableGoogleAnalytics(measurementId);
+        updateGoogleAnalyticsConsent(measurementId, 'denied');
         open = false;
     }
 

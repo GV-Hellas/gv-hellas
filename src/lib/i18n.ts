@@ -632,9 +632,9 @@ register('el', () =>
             settings: 'Ρυθμίσεις απορρήτου',
             consent: {
                 title: 'Στατιστικά χρήσης',
-                description: 'Με τη συγκατάθεσή σας χρησιμοποιούμε το Google Analytics για να κατανοούμε πώς χρησιμοποιείται ο ιστότοπος και να τον βελτιώνουμε.',
+                description: 'Το Google Analytics ξεκινά χωρίς cookies και με απορριφθείσα συγκατάθεση. Αν αποδεχθείτε, επιτρέπονται cookies στατιστικών ώστε να κατανοούμε τη χρήση του ιστότοπου και να τον βελτιώνουμε.',
                 accept: 'Αποδοχή στατιστικών',
-                reject: 'Μόνο απαραίτητα'
+                reject: 'Χωρίς cookies στατιστικών'
             }
         },
         common: {
@@ -1280,9 +1280,9 @@ register('de', () =>
             settings: 'Datenschutzeinstellungen',
             consent: {
                 title: 'Nutzungsstatistik',
-                description: 'Mit Ihrer Zustimmung verwenden wir Google Analytics, um zu verstehen, wie die Website genutzt wird, und sie zu verbessern.',
+                description: 'Google Analytics startet ohne Cookies und mit verweigerter Einwilligung. Wenn Sie zustimmen, werden Statistik-Cookies erlaubt, damit wir die Nutzung der Website verstehen und verbessern können.',
                 accept: 'Statistik erlauben',
-                reject: 'Nur notwendige Cookies'
+                reject: 'Ohne Statistik-Cookies'
             }
         },
         common: {

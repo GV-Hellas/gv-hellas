@@ -11,11 +11,7 @@
     import NavigationProgress from '$lib/components/NavigationProgress.svelte';
     import AnalyticsConsent from '$lib/components/AnalyticsConsent.svelte';
     import {Toaster} from '$lib/components/ui/sonner';
-    import {
-        getAnalyticsConsent,
-        initGoogleAnalytics,
-        trackPageView
-    } from '$lib/analytics';
+    import {initGoogleAnalytics, trackPageView} from '$lib/analytics';
 
     let {children}: {children: Snippet} = $props();
 
@@ -25,8 +21,7 @@
     let lastTrackedLocation = '';
 
     function trackCurrentPage(referrer = '') {
-        if (!analyticsEnabled || getAnalyticsConsent() !== 'granted') return;
-        if (!initGoogleAnalytics(measurementId)) return;
+        if (!analyticsEnabled || !initGoogleAnalytics(measurementId)) return;
 
         const location = window.location.href;
 
@@ -44,17 +39,18 @@
         });
     }
 
-    function onAnalyticsGranted() {
-        lastTrackedLocation = '';
-        trackCurrentPage(document.referrer);
-    }
 
     onMount(() => {
         trackCurrentPage(document.referrer);
     });
 
     afterNavigate(({from, to}) => {
-        if (!to || to.url.pathname.startsWith('/admin')) return;
+        if (!to) return;
+
+        if (to.url.pathname.startsWith('/admin')) {
+            lastTrackedLocation = '';
+            return;
+        }
 
         trackCurrentPage(from?.url.href || document.referrer);
     });
@@ -77,7 +73,6 @@
     <AnalyticsConsent
         {measurementId}
         enabled={analyticsEnabled}
-        onGranted={onAnalyticsGranted}
     />
 </div>
 

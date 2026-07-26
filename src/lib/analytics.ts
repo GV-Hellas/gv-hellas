@@ -1,5 +1,11 @@
 import {browser} from '$app/environment';
 
+import {
+    ANALYTICS_CONSENT_STORAGE_KEY,
+    GOOGLE_ANALYTICS_SCRIPT_ID,
+    normalizeMeasurementId
+} from '$lib/analyticsConfig';
+
 export type AnalyticsConsent = 'granted' | 'denied';
 
 export type AnalyticsEventParameters = Record<
@@ -7,42 +13,139 @@ export type AnalyticsEventParameters = Record<
     string | number | boolean | null | undefined
 >;
 
+type GoogleAnalyticsState = {
+    measurementId: string;
+    consentDefaultSet: boolean;
+    configured: boolean;
+    appliedConsent: AnalyticsConsent | null;
+};
+
 declare global {
     interface Window {
         dataLayer?: unknown[];
         gtag?: (...args: unknown[]) => void;
+        __gvHellasGa4?: GoogleAnalyticsState;
     }
 }
 
-const CONSENT_STORAGE_KEY = 'gv-hellas.analytics-consent.v1';
-const SCRIPT_ID = 'gv-hellas-google-analytics';
-
-let initializedMeasurementId = '';
-
-export function normalizeMeasurementId(value: string | undefined | null) {
-    const measurementId = String(value || '').trim().toUpperCase();
-
-    return /^G-[A-Z0-9]+$/.test(measurementId) ? measurementId : '';
+function consentParameters(value: AnalyticsConsent) {
+    return {
+        ad_storage: 'denied',
+        analytics_storage: value,
+        ad_user_data: 'denied',
+        ad_personalization: 'denied'
+    } as const;
 }
+
+function getGoogleAnalyticsState(measurementId: string) {
+    const existing = window.__gvHellasGa4;
+
+    if (existing?.measurementId === measurementId) {
+        return existing;
+    }
+
+    const state: GoogleAnalyticsState = {
+        measurementId,
+        consentDefaultSet: false,
+        configured: false,
+        appliedConsent: null
+    };
+
+    window.__gvHellasGa4 = state;
+    return state;
+}
+
+function ensureGtag() {
+    window.dataLayer = window.dataLayer || [];
+
+    if (!window.gtag) {
+        window.gtag = function () {
+            window.dataLayer?.push(arguments);
+        };
+    }
+}
+
+function setDefaultConsent(state: GoogleAnalyticsState) {
+    if (state.consentDefaultSet || !window.gtag) return;
+
+    window.gtag('consent', 'default', {
+        ad_storage: 'denied',
+        analytics_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied'
+    });
+
+    state.consentDefaultSet = true;
+}
+
+function applyConsent(state: GoogleAnalyticsState, value: AnalyticsConsent) {
+    if (!window.gtag || state.appliedConsent === value) return;
+
+    window.gtag('consent', 'update', consentParameters(value));
+    state.appliedConsent = value;
+}
+
+function configureGoogleAnalytics(state: GoogleAnalyticsState) {
+    if (state.configured || !window.gtag) return;
+
+    window.gtag('set', 'ads_data_redaction', true);
+    window.gtag('js', new Date());
+    window.gtag('config', state.measurementId, {
+        send_page_view: false,
+        allow_google_signals: false,
+        allow_ad_personalization_signals: false
+    });
+
+    state.configured = true;
+}
+
+function ensureGoogleAnalyticsScript(measurementId: string) {
+    const existing = document.getElementById(GOOGLE_ANALYTICS_SCRIPT_ID) as HTMLScriptElement | null;
+    const expectedSource = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
+
+    if (existing?.src === expectedSource) return;
+
+    existing?.remove();
+
+    const script = document.createElement('script');
+    script.id = GOOGLE_ANALYTICS_SCRIPT_ID;
+    script.async = true;
+    script.src = expectedSource;
+    document.head.appendChild(script);
+}
+
+export {normalizeMeasurementId};
 
 export function getAnalyticsConsent(): AnalyticsConsent | null {
     if (!browser) return null;
 
-    const value = window.localStorage.getItem(CONSENT_STORAGE_KEY);
+    try {
+        const value = window.localStorage.getItem(ANALYTICS_CONSENT_STORAGE_KEY);
 
-    return value === 'granted' || value === 'denied' ? value : null;
+        return value === 'granted' || value === 'denied' ? value : null;
+    } catch {
+        return null;
+    }
 }
 
 export function setAnalyticsConsent(value: AnalyticsConsent) {
     if (!browser) return;
 
-    window.localStorage.setItem(CONSENT_STORAGE_KEY, value);
+    try {
+        window.localStorage.setItem(ANALYTICS_CONSENT_STORAGE_KEY, value);
+    } catch {
+        // Some privacy modes disable localStorage. Consent still applies for this page.
+    }
 }
 
 export function clearAnalyticsConsent() {
     if (!browser) return;
 
-    window.localStorage.removeItem(CONSENT_STORAGE_KEY);
+    try {
+        window.localStorage.removeItem(ANALYTICS_CONSENT_STORAGE_KEY);
+    } catch {
+        // Nothing else to clear when localStorage is unavailable.
+    }
 }
 
 export function initGoogleAnalytics(rawMeasurementId: string | undefined | null) {
@@ -50,55 +153,25 @@ export function initGoogleAnalytics(rawMeasurementId: string | undefined | null)
 
     const measurementId = normalizeMeasurementId(rawMeasurementId);
 
-    if (!measurementId || getAnalyticsConsent() !== 'granted') {
-        return false;
+    if (!measurementId) return false;
+
+    ensureGtag();
+
+    const state = getGoogleAnalyticsState(measurementId);
+
+    setDefaultConsent(state);
+
+    const storedConsent = getAnalyticsConsent();
+
+    if (storedConsent) {
+        applyConsent(state, storedConsent);
     }
 
-    if (initializedMeasurementId === measurementId && window.gtag) {
-        const disableKey = `ga-disable-${measurementId}`;
-        (window as Window & Record<string, unknown>)[disableKey] = false;
+    configureGoogleAnalytics(state);
+    ensureGoogleAnalyticsScript(measurementId);
 
-        window.gtag('consent', 'update', {
-            analytics_storage: 'granted',
-            ad_storage: 'denied',
-            ad_user_data: 'denied',
-            ad_personalization: 'denied'
-        });
-
-        return true;
-    }
-
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function (..._args: unknown[]) {
-        window.dataLayer?.push(arguments);
-    };
-
-    const disableKey = `ga-disable-${measurementId}`;
-    (window as Window & Record<string, unknown>)[disableKey] = false;
-
-    window.gtag('consent', 'default', {
-        analytics_storage: 'granted',
-        ad_storage: 'denied',
-        ad_user_data: 'denied',
-        ad_personalization: 'denied'
-    });
-    window.gtag('js', new Date());
-    window.gtag('config', measurementId, {
-        send_page_view: false
-    });
-
-    if (!document.getElementById(SCRIPT_ID)) {
-        const script = document.createElement('script');
-        script.id = SCRIPT_ID;
-        script.async = true;
-        script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
-        document.head.appendChild(script);
-    }
-
-    initializedMeasurementId = measurementId;
     return true;
 }
-
 
 function expireAnalyticsCookies() {
     const cookieNames = document.cookie
@@ -124,24 +197,36 @@ function expireAnalyticsCookies() {
     }
 }
 
-export function disableGoogleAnalytics(rawMeasurementId: string | undefined | null) {
-    if (!browser) return;
+export function updateGoogleAnalyticsConsent(
+    rawMeasurementId: string | undefined | null,
+    value: AnalyticsConsent
+) {
+    if (!browser) return false;
 
     const measurementId = normalizeMeasurementId(rawMeasurementId);
 
-    if (!measurementId) return;
+    if (!measurementId) return false;
 
-    const disableKey = `ga-disable-${measurementId}`;
-    (window as Window & Record<string, unknown>)[disableKey] = true;
+    setAnalyticsConsent(value);
 
-    window.gtag?.('consent', 'update', {
-        analytics_storage: 'denied',
-        ad_storage: 'denied',
-        ad_user_data: 'denied',
-        ad_personalization: 'denied'
-    });
+    if (!initGoogleAnalytics(measurementId)) return false;
 
-    expireAnalyticsCookies();
+    const state = getGoogleAnalyticsState(measurementId);
+    applyConsent(state, value);
+
+    if (value === 'denied') {
+        expireAnalyticsCookies();
+    }
+
+    return true;
+}
+
+/**
+ * Backward-compatible alias. In advanced Consent Mode, denying consent keeps the
+ * Google tag loaded while preventing Analytics cookies and identifiers.
+ */
+export function disableGoogleAnalytics(rawMeasurementId: string | undefined | null) {
+    updateGoogleAnalyticsConsent(rawMeasurementId, 'denied');
 }
 
 export function trackPageView(input: {
