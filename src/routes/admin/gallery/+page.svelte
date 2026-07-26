@@ -278,7 +278,7 @@
                                                 muted
                                                 playsinline
                                                 preload="metadata"
-                                        />
+                                        ></video>
 
                                         <div class="absolute inset-0 flex items-center justify-center bg-black/25 text-white">
                                             <VideoIcon class="size-5"/>

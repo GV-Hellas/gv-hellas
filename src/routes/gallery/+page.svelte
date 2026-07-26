@@ -374,7 +374,7 @@
                         controls
                         autoplay
                         playsinline
-                />
+                ></video>
             {/if}
         </div>
 

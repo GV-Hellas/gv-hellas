@@ -105,7 +105,7 @@
                             controls
                             muted
                             playsinline
-                    />
+                    ></video>
                 {:else}
                     <img
                             src={preview}

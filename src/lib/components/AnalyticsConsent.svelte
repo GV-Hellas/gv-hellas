@@ -70,12 +70,11 @@
 </script>
 
 {#if open}
-    <aside
+    <section
         class="fixed inset-x-4 bottom-4 z-[10001] mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white p-5 shadow-2xl sm:p-6"
-        role="dialog"
-        aria-modal="true"
         aria-labelledby="analytics-consent-title"
         aria-describedby="analytics-consent-description"
+        aria-live="polite"
     >
         <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div class="max-w-2xl">
@@ -98,5 +97,5 @@
                 </Button>
             </div>
         </div>
-    </aside>
+    </section>
 {/if}
