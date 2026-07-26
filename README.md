@@ -71,7 +71,7 @@ Copy `.env.example` to `.env` and adjust if needed:
 cp .env.example .env
 ```
 
-The app uses internal CMS APIs (`/api/content`) with data persisted in a local SQLite database (`data/cms.db`).
+The app uses internal CMS APIs (`/api/content`) with data persisted in the same Supabase database as the production one (i.e. directly CRUDing production database).
 
 ### 6. Admin UI
 Open:
