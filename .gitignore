@@ -16,4 +16,5 @@ yarn-error.log*
 .env.local
 pnpm-*
 *lock.yaml
+!pnpm-lock.yaml
 data/cms.db
