@@ -328,12 +328,12 @@ register('el', () =>
                 },
 
                 sponsorTypes: {
-                    sponsor: 'Χορηγός',
+                    sponsor: 'Χορηγοί',
                     main: 'Κύριος χορηγός'
                 },
 
                 sponsorTypeDescriptions: {
-                    sponsor: 'Κανονικός χορηγός του συλλόγου.',
+                    sponsor: 'Κανονικοί χορηγοί του συλλόγου.',
                     main: 'Ο κύριος χορηγός εμφανίζεται ξεχωριστά και με μεγαλύτερη προβολή. Μπορεί να υπάρχει μόνο ένας.'
                 },
 
@@ -1272,12 +1272,12 @@ register('de', () =>
                 },
 
                 sponsorTypes: {
-                    sponsor: 'Sponsor',
+                    sponsor: 'Sponsors',
                     main: 'Hauptsponsor'
                 },
 
                 sponsorTypeDescriptions: {
-                    sponsor: 'Regulärer Sponsor des Vereins.',
+                    sponsor: 'Reguläre Sponsors des Vereins.',
                     main: 'Der Hauptsponsor wird separat und besonders prominent dargestellt. Es kann nur einen geben.'
                 },
 
