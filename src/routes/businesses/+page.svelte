@@ -1,6 +1,6 @@
 <script lang="ts">
     import {locale, t} from '$lib/i18n';
-    import type {Lang, SponsorType, StoredBusiness} from '$lib/cms/business/types';
+    import type {Lang, StoredBusiness} from '$lib/cms/business/types';
     import Seo from '$lib/components/Seo.svelte';
 
     type PageData = {
@@ -11,24 +11,8 @@
 
     const lang = $derived(($locale || 'el') as Lang);
     const businesses = $derived(data.businesses ?? []);
-
-    const sponsorOrder: SponsorType[] = ['gold', 'silver', 'bronze', 'listed'];
-
-    const sponsorFallbacks: Record<SponsorType, string> = {
-        gold: 'Gold sponsor',
-        silver: 'Silver sponsor',
-        bronze: 'Bronze sponsor',
-        listed: 'Listed business'
-    };
-
-    const groupedBusinesses = $derived(
-        sponsorOrder
-            .map((type) => ({
-                type,
-                items: businesses.filter((business) => business.sponsorType === type)
-            }))
-            .filter((group) => group.items.length > 0)
-    );
+    const mainSponsor = $derived(businesses.find((business) => business.sponsorType === 'main') ?? null);
+    const sponsors = $derived(businesses.filter((business) => business.sponsorType === 'sponsor'));
 
     function localizedHtml(value?: Partial<Record<Lang, string>> | null) {
         return value?.[lang] || value?.el || '';
@@ -38,24 +22,12 @@
         return `/businesses/${encodeURIComponent(slug)}`;
     }
 
-    function sponsorLabel(type: SponsorType) {
-        return $t(`admin.businesses.sponsorTypes.${type}`);
-    }
-
     function businessName(business: StoredBusiness) {
         return business?.name?.trim() || business?.slug?.trim() || $t('businesses.detail.unnamed');
     }
 
     function businessInitial(business: StoredBusiness) {
         return businessName(business).slice(0, 1).toUpperCase() || '—';
-    }
-
-    function sponsorClass(type: SponsorType) {
-        if (type === 'gold') return 'border-amber-200 bg-amber-50 text-amber-800';
-        if (type === 'silver') return 'border-slate-300 bg-slate-100 text-slate-700';
-        if (type === 'bronze') return 'border-orange-200 bg-orange-50 text-orange-800';
-
-        return 'border-slate-200 bg-slate-50 text-slate-600';
     }
 </script>
 
@@ -75,32 +47,80 @@
     </p>
 </div>
 
-{#if groupedBusinesses.length > 0}
-    <div class="grid gap-10">
-        {#each groupedBusinesses as group (group.type)}
+{#if mainSponsor || sponsors.length > 0}
+    <div class="grid gap-12">
+        {#if mainSponsor}
             <section>
-                <div class="mb-4 flex items-center gap-3">
+                <div class="mb-4 border-b border-primary/25 pb-2">
                     <h2 class="text-xl font-bold text-slate-950">
-                        {sponsorLabel(group.type)}
+                        {$t('admin.businesses.sponsorTypes.main')}
                     </h2>
+                </div>
 
-                    <span class={`rounded-full border px-3 py-1 text-xs font-bold ${sponsorClass(group.type)}`}>
-                        {group.items.length}
-                    </span>
+                <article class="group border-y border-primary/25 bg-primary/[0.025] transition hover:bg-primary/[0.05]">
+                    <a href={businessHref(mainSponsor.slug)} class="grid gap-6 px-4 py-7 md:grid-cols-[14rem_minmax(0,1fr)] md:items-center md:px-7">
+                        <div class="flex h-36 items-center justify-center">
+                            {#if mainSponsor.logo}
+                                <img
+                                    src={mainSponsor.logo}
+                                    alt={businessName(mainSponsor)}
+                                    class="max-h-full max-w-full object-contain"
+                                    loading="lazy"
+                                />
+                            {:else}
+                                <span class="text-6xl font-black text-slate-300">
+                                    {businessInitial(mainSponsor)}
+                                </span>
+                            {/if}
+                        </div>
+
+                        <div class="min-w-0">
+                            <h3 class="text-2xl font-black text-slate-950 group-hover:text-primary">
+                                {businessName(mainSponsor)}
+                            </h3>
+
+                            {#if mainSponsor.url}
+                                <p class="mt-1 truncate text-sm text-slate-500">
+                                    {mainSponsor.url}
+                                </p>
+                            {/if}
+
+                            {#if localizedHtml(mainSponsor.description)}
+                                <div class="description-preview mt-4 max-w-3xl text-sm leading-6 text-slate-600">
+                                    {@html localizedHtml(mainSponsor.description)}
+                                </div>
+                            {/if}
+
+                            <div class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary">
+                                <span>{$t('businesses.viewProfile')}</span>
+                                <span class="transition group-hover:translate-x-1">→</span>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+            </section>
+        {/if}
+
+        {#if sponsors.length > 0}
+            <section>
+                <div class="mb-4 border-b border-slate-200 pb-2">
+                    <h2 class="text-xl font-bold text-slate-950">
+                        {$t('admin.businesses.sponsorTypes.sponsor')}
+                    </h2>
                 </div>
 
                 <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                    {#each group.items as business (business.id)}
-                        <article class="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+                    {#each sponsors as business (business.id)}
+                        <article class="group overflow-hidden border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
                             <a href={businessHref(business.slug)} class="block p-5">
                                 <div class="flex items-start gap-4">
-                                    <div class="flex size-20 shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-slate-50">
+                                    <div class="flex size-20 shrink-0 items-center justify-center">
                                         {#if business.logo}
                                             <img
-                                                    src={business.logo}
-                                                    alt={businessName(business)}
-                                                    class="max-h-full max-w-full rounded-xl object-contain"
-                                                    loading="lazy"
+                                                src={business.logo}
+                                                alt={businessName(business)}
+                                                class="max-h-full max-w-full object-contain"
+                                                loading="lazy"
                                             />
                                         {:else}
                                             <span class="text-3xl font-black text-slate-300">
@@ -110,10 +130,6 @@
                                     </div>
 
                                     <div class="min-w-0">
-                                        <div class={`mb-2 inline-flex rounded-full border px-2.5 py-1 text-[0.7rem] font-bold uppercase tracking-wide ${sponsorClass(business.sponsorType)}`}>
-                                            {sponsorLabel(business.sponsorType)}
-                                        </div>
-
                                         <h3 class="truncate text-lg font-bold text-slate-950 group-hover:text-primary">
                                             {businessName(business)}
                                         </h3>
@@ -146,10 +162,10 @@
                     {/each}
                 </div>
             </section>
-        {/each}
+        {/if}
     </div>
 {:else}
-    <div class="rounded-3xl border border-dashed border-slate-300 bg-white p-10 text-center text-slate-500">
+    <div class="border border-dashed border-slate-300 bg-white p-10 text-center text-slate-500">
         {$t('businesses.empty')}
     </div>
 {/if}

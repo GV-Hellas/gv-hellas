@@ -28,11 +28,13 @@ export const load = async () => {
         .sort(compareEventsNewestFirst)
         .slice(0, 3);
 
-    const sponsors = businesses.filter((business) => business.sponsorType !== 'listed');
+    const mainSponsor = businesses.find((business) => business.sponsorType === 'main') ?? null;
+    const sponsors = businesses.filter((business) => business.sponsorType === 'sponsor');
 
     return {
         activeEvent,
         events: recentEvents,
+        mainSponsor,
         sponsors,
         heroSlides
     };

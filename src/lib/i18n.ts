@@ -309,7 +309,7 @@ register('el', () =>
             },
             businesses: {
                 title: 'Επιχειρήσεις',
-                subtitle: 'Διαχείριση επιχειρήσεων, καταχωρίσεων και χορηγών.',
+                subtitle: 'Διαχείριση επιχειρήσεων και χορηγών.',
                 createNew: 'Δημιουργία νέας',
                 empty: 'Δεν υπάρχουν ακόμη επιχειρήσεις.',
 
@@ -328,17 +328,13 @@ register('el', () =>
                 },
 
                 sponsorTypes: {
-                    listed: 'Απλή καταχώριση',
-                    bronze: 'Χάλκινος χορηγός',
-                    silver: 'Ασημένιος χορηγός',
-                    gold: 'Χρυσός χορηγός'
+                    sponsor: 'Χορηγός',
+                    main: 'Κύριος χορηγός'
                 },
 
                 sponsorTypeDescriptions: {
-                    listed: 'Η επιχείρηση εμφανίζεται στον κατάλογο.',
-                    bronze: 'Βασικό επίπεδο χορηγίας.',
-                    silver: 'Μεσαίο επίπεδο χορηγίας με αυξημένη προβολή.',
-                    gold: 'Κορυφαίο επίπεδο χορηγίας με μέγιστη προβολή.'
+                    sponsor: 'Κανονικός χορηγός του συλλόγου.',
+                    main: 'Ο κύριος χορηγός εμφανίζεται ξεχωριστά και με μεγαλύτερη προβολή. Μπορεί να υπάρχει μόνο ένας.'
                 },
 
                 deleteDialog: {
@@ -493,6 +489,8 @@ register('el', () =>
             activeEvent: 'Επόμενη εκδήλωση',
             recentEventsHint: 'Οι πιο πρόσφατες ανακοινωμένες εκδηλώσεις εμφανίζονται πρώτες.',
             sponsorsHeadline: 'Οι χορηγοί μας',
+            mainSponsor: 'Κύριος χορηγός',
+            sponsorsLabel: 'Χορηγοί',
             sponsorsIntro: 'Οι χορηγοί εμφανίζονται απευθείας από τον κατάλογο επιχειρήσεων του συλλόγου.',
             becomeSponsor: 'Γίνετε χορηγός',
             becomeSponsorHint: 'Στηρίξτε τις δράσεις του συλλόγου και παρουσιάστε την επιχείρησή σας στην κοινότητά μας.',
@@ -1255,7 +1253,7 @@ register('de', () =>
             },
             businesses: {
                 title: 'Unternehmen',
-                subtitle: 'Unternehmen, Einträge und Sponsoren verwalten.',
+                subtitle: 'Unternehmen und Sponsoren verwalten.',
                 createNew: 'Neu erstellen',
                 empty: 'Noch keine Unternehmen vorhanden.',
 
@@ -1274,17 +1272,13 @@ register('de', () =>
                 },
 
                 sponsorTypes: {
-                    listed: 'Einfacher Eintrag',
-                    bronze: 'Bronze-Sponsor',
-                    silver: 'Silber-Sponsor',
-                    gold: 'Gold-Sponsor'
+                    sponsor: 'Sponsor',
+                    main: 'Hauptsponsor'
                 },
 
                 sponsorTypeDescriptions: {
-                    listed: 'Das Unternehmen erscheint im Verzeichnis.',
-                    bronze: 'Basis-Sponsoringstufe.',
-                    silver: 'Mittlere Sponsoringstufe mit erhöhter Sichtbarkeit.',
-                    gold: 'Höchste Sponsoringstufe mit maximaler Sichtbarkeit.'
+                    sponsor: 'Regulärer Sponsor des Vereins.',
+                    main: 'Der Hauptsponsor wird separat und besonders prominent dargestellt. Es kann nur einen geben.'
                 },
 
                 deleteDialog: {
@@ -1441,6 +1435,8 @@ register('de', () =>
             activeEvent: 'Nächste Veranstaltung',
             recentEventsHint: 'Die zuletzt angekündigten Veranstaltungen werden zuerst angezeigt.',
             sponsorsHeadline: 'Unsere Sponsoren',
+            mainSponsor: 'Hauptsponsor',
+            sponsorsLabel: 'Sponsoren',
             sponsorsIntro: 'Die Sponsoren werden direkt aus dem Unternehmensverzeichnis des Vereins übernommen.',
             becomeSponsor: 'Sponsor werden',
             becomeSponsorHint: 'Unterstützen Sie unsere Vereinsarbeit und präsentieren Sie Ihr Unternehmen in unserer Gemeinschaft.',

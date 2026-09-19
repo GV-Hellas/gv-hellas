@@ -22,7 +22,6 @@ type BusinessRow = {
     updated_at: string | null;
 };
 
-const SPONSOR_TYPES = ['listed', 'bronze', 'silver', 'gold'] as const;
 
 function safeSlug(value: string) {
     return value
@@ -37,9 +36,12 @@ function normalizeSlug(value: string | undefined, fallbackName: string) {
 }
 
 function normalizeSponsorType(value: unknown): SponsorType {
-    return typeof value === 'string' && (SPONSOR_TYPES as readonly string[]).includes(value)
-        ? (value as SponsorType)
-        : 'listed';
+    if (value === 'main' || value === 'gold') return 'main';
+    if (value === 'sponsor' || value === 'silver' || value === 'bronze' || value === 'listed') {
+        return 'sponsor';
+    }
+
+    return 'sponsor';
 }
 
 function normalizeSections(value: unknown): BusinessPayload['sections'] {
@@ -97,7 +99,7 @@ function normalizePayload(input: BusinessSaveInput): BusinessPayload {
 
 function businessToRow(business: BusinessPayload) {
     return {
-        sponsor_type: business.sponsorType || 'listed',
+        sponsor_type: business.sponsorType || 'sponsor',
         name: business.name || '',
         slug: business.slug,
         logo: business.logo || '',
@@ -118,6 +120,28 @@ function formatSupabaseError(context: string, error: {message: string}) {
     return new Error(`${context}: ${error.message}`);
 }
 
+async function assertMainSponsorAvailable(exceptId?: number) {
+    let query = supabase
+        .from('businesses')
+        .select('id')
+        .in('sponsor_type', ['main', 'gold'])
+        .limit(1);
+
+    if (exceptId) {
+        query = query.neq('id', exceptId);
+    }
+
+    const {data, error} = await query;
+
+    if (error) {
+        throw formatSupabaseError('Checking main sponsor failed', error);
+    }
+
+    if ((data || []).length > 0) {
+        throw new Error('Only one main sponsor is allowed. Change the current main sponsor first.');
+    }
+}
+
 export async function listBusinesses(): Promise<StoredBusiness[]> {
     const {data, error} = await supabase
         .from('businesses')
@@ -133,10 +157,8 @@ export async function listBusinesses(): Promise<StoredBusiness[]> {
         .map((row) => rowToStoredBusiness(row as BusinessRow))
         .sort((a, b) => {
             const order: Record<SponsorType, number> = {
-                gold: 1,
-                silver: 2,
-                bronze: 3,
-                listed: 4
+                main: 1,
+                sponsor: 2
             };
 
             return order[a.sponsorType] - order[b.sponsorType] || a.name.localeCompare(b.name);
@@ -196,6 +218,10 @@ export async function saveBusiness(input: BusinessSaveInput, currentSlug?: strin
 
     if (!slug) {
         throw new Error('Invalid business slug');
+    }
+
+    if (payload.sponsorType === 'main') {
+        await assertMainSponsorAvailable(existing?.id);
     }
 
     const row = businessToRow({

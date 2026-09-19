@@ -4,7 +4,7 @@ export type Lang = 'el' | 'de';
 
 export type LocalizedHtml = Record<Lang, string>;
 
-export type SponsorType = 'listed' | 'bronze' | 'silver' | 'gold';
+export type SponsorType = 'main' | 'sponsor';
 
 export type BusinessMedia = EventMedia;
 

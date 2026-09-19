@@ -122,13 +122,20 @@ export const actions: Actions = {
             );
         }
 
-        const stored = await saveBusiness(business);
+        try {
+            const stored = await saveBusiness(business);
 
-        return {
-            ok: true,
-            id: stored.id,
-            slug: stored.slug,
-            message: 'Business saved successfully'
-        } satisfies ActionResponse;
+            return {
+                ok: true,
+                id: stored.id,
+                slug: stored.slug,
+                message: 'Business saved successfully'
+            } satisfies ActionResponse;
+        } catch (error) {
+            return actionError(
+                400,
+                error instanceof Error ? error.message : 'Could not save business'
+            );
+        }
     }
 };

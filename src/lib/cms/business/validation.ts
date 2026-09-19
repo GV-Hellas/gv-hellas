@@ -29,7 +29,7 @@ export const businessSectionSchema = z.object({
 });
 
 export const businessPayloadSchema = z.object({
-    sponsorType: z.enum(BUSINESS_SPONSOR_TYPES).default('listed'),
+    sponsorType: z.enum(BUSINESS_SPONSOR_TYPES).default('sponsor'),
     name: z.string().trim().min(1, 'Business name is required'),
     slug: z.string().trim().optional().default(''),
     logo: z.string().optional().default(''),

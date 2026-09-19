@@ -5,12 +5,11 @@
     import Seo from '$lib/components/Seo.svelte';
     import SponsorInquiryDialog from '$lib/components/SponsorInquiryDialog.svelte';
     import type {Lang, StoredEvent} from '$lib/cms/events/types';
-    import type {SponsorType, StoredBusiness} from '$lib/cms/business/types';
+    import type {StoredBusiness} from '$lib/cms/business/types';
     import type {HomepageSlide} from '$lib/cms/home/types';
 
     import CalendarDaysIcon from '@lucide/svelte/icons/calendar-days';
     import MapPinIcon from '@lucide/svelte/icons/map-pin';
-    import MedalIcon from '@lucide/svelte/icons/medal';
 
     let {data} = $props();
 
@@ -80,6 +79,7 @@
     let lang: Lang = $derived(($locale || 'el') as Lang);
     let events: StoredEvent[] = $derived(data?.events ?? []);
     let activeEvent: StoredEvent | null = $derived(data?.activeEvent ?? null);
+    let mainSponsor: StoredBusiness | null = $derived(data?.mainSponsor ?? null);
     let sponsors: StoredBusiness[] = $derived(data?.sponsors ?? []);
     let configuredHeroSlides: HomepageSlide[] = $derived(
         data?.heroSlides?.length ? data.heroSlides : emergencyHeroSlides
@@ -119,16 +119,6 @@
             : '';
 
         return [formatted, time].filter(Boolean).join(' · ');
-    }
-
-    function sponsorMedalClass(type: SponsorType) {
-        if (type === 'gold') return 'text-amber-500';
-        if (type === 'silver') return 'text-slate-400';
-        return 'text-orange-600';
-    }
-
-    function sponsorLabel(type: SponsorType) {
-        return $t(`admin.businesses.sponsorTypes.${type}`);
     }
 
     function slideImage(slide: HomepageSlide) {
@@ -287,39 +277,67 @@
         <p class="mt-2 text-slate-600">{$t('home.sponsorsIntro')}</p>
     </div>
 
-    <div class="mt-7 grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
-        {#each sponsors as business (business.id)}
-            <a
-                href={`/businesses/${encodeURIComponent(business.slug)}`}
-                class="group relative flex min-h-48 flex-col items-center justify-center border-b border-slate-200 px-4 py-5 text-center transition hover:border-primary/50"
-            >
-                <span
-                    class={`absolute right-2 top-2 ${sponsorMedalClass(business.sponsorType)}`}
-                    title={sponsorLabel(business.sponsorType)}
-                    aria-label={sponsorLabel(business.sponsorType)}
-                >
-                    <MedalIcon class="size-7" />
-                </span>
+    {#if mainSponsor}
+        <div class="mt-8">
+            <h3 class="text-sm font-black uppercase tracking-[0.16em] text-primary">
+                {$t('home.mainSponsor')}
+            </h3>
 
-                {#if business.logo}
+            <a
+                href={`/businesses/${encodeURIComponent(mainSponsor.slug)}`}
+                class="group mt-3 flex min-h-56 w-full flex-col items-center justify-center border-y border-primary/25 bg-primary/[0.025] px-6 py-7 text-center transition hover:bg-primary/[0.05]"
+            >
+                {#if mainSponsor.logo}
                     <img
-                        src={business.logo}
-                        alt={business.name}
-                        class="h-28 w-full max-w-56 object-contain transition-transform duration-200 group-hover:scale-[1.03]"
+                        src={mainSponsor.logo}
+                        alt={mainSponsor.name}
+                        class="h-36 w-full max-w-80 object-contain transition-transform duration-200 group-hover:scale-[1.02]"
                         loading="lazy"
                     />
                 {:else}
-                    <div class="flex h-28 items-center justify-center text-5xl font-black text-slate-300">
-                        {business.name?.slice(0, 1).toUpperCase() || '—'}
+                    <div class="flex h-36 items-center justify-center text-6xl font-black text-slate-300">
+                        {mainSponsor.name?.slice(0, 1).toUpperCase() || '—'}
                     </div>
                 {/if}
 
-                <h3 class="mt-4 line-clamp-2 font-bold text-slate-900 group-hover:text-primary">
-                    {business.name}
-                </h3>
+                <h4 class="mt-5 text-xl font-black text-slate-950 group-hover:text-primary">
+                    {mainSponsor.name}
+                </h4>
             </a>
-        {/each}
+        </div>
+    {/if}
 
-        <SponsorInquiryDialog />
+    <div class="mt-9">
+        <h3 class="text-sm font-black uppercase tracking-[0.16em] text-slate-700">
+            {$t('home.sponsorsLabel')}
+        </h3>
+
+        <div class="mt-3 grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+            {#each sponsors as business (business.id)}
+                <a
+                    href={`/businesses/${encodeURIComponent(business.slug)}`}
+                    class="group flex min-h-48 flex-col items-center justify-center border-b border-slate-200 px-4 py-5 text-center transition hover:border-primary/50"
+                >
+                    {#if business.logo}
+                        <img
+                            src={business.logo}
+                            alt={business.name}
+                            class="h-28 w-full max-w-56 object-contain transition-transform duration-200 group-hover:scale-[1.03]"
+                            loading="lazy"
+                        />
+                    {:else}
+                        <div class="flex h-28 items-center justify-center text-5xl font-black text-slate-300">
+                            {business.name?.slice(0, 1).toUpperCase() || '—'}
+                        </div>
+                    {/if}
+
+                    <h4 class="mt-4 line-clamp-2 font-bold text-slate-900 group-hover:text-primary">
+                        {business.name}
+                    </h4>
+                </a>
+            {/each}
+
+            <SponsorInquiryDialog />
+        </div>
     </div>
 </section>

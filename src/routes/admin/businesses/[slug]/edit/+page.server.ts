@@ -45,7 +45,9 @@ function isSponsorType(value: unknown): value is SponsorType {
 }
 
 function normalizeSponsorType(value: unknown): SponsorType {
-    return isSponsorType(value) ? value : 'listed';
+    if (isSponsorType(value)) return value;
+    if (value === 'gold') return 'main';
+    return 'sponsor';
 }
 
 function normalizeBusinessForForm(raw: unknown): BusinessPayload {
@@ -199,13 +201,20 @@ export const actions: Actions = {
             );
         }
 
-        const stored = await saveBusiness(business, existing.slug);
+        try {
+            const stored = await saveBusiness(business, existing.slug);
 
-        return {
-            ok: true,
-            id: stored.id,
-            slug: stored.slug,
-            message: 'Business saved successfully'
-        } satisfies ActionResponse;
+            return {
+                ok: true,
+                id: stored.id,
+                slug: stored.slug,
+                message: 'Business saved successfully'
+            } satisfies ActionResponse;
+        } catch (error) {
+            return actionError(
+                400,
+                error instanceof Error ? error.message : 'Could not save business'
+            );
+        }
     }
 };

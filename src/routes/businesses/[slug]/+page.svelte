@@ -36,8 +36,8 @@
 
     function sponsorLabel(type?: string) {
         return text(
-            `admin.businesses.sponsorTypes.${type || 'listed'}`,
-            text('admin.businesses.sponsorTypes.listed', 'Listed business')
+            `admin.businesses.sponsorTypes.${type || 'sponsor'}`,
+            text('admin.businesses.sponsorTypes.sponsor', 'Sponsor')
         );
     }
 

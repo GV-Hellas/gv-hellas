@@ -83,7 +83,7 @@
 
     function emptyBusiness(): BusinessPayload {
         return {
-            sponsorType: 'listed',
+            sponsorType: 'sponsor',
             name: '',
             slug: '',
             logo: '',
@@ -100,7 +100,7 @@
         const next = structuredClone(source ?? emptyBusiness());
 
         return {
-            sponsorType: next.sponsorType ?? 'listed',
+            sponsorType: next.sponsorType ?? 'sponsor',
             name: next.name ?? '',
             slug: '',
             logo: next.logo ?? '',
@@ -669,7 +669,7 @@
 
     .sponsor-grid {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: .75rem;
         width: 100%;
     }

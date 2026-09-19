@@ -18,7 +18,7 @@
 
     import {cn} from '$lib/utils.js';
 
-    type SponsorType = 'listed' | 'bronze' | 'silver' | 'gold';
+    type SponsorType = 'main' | 'sponsor';
 
     type AdminBusiness = {
         id: number;
@@ -54,7 +54,7 @@
     const businesses = $derived(data.businesses ?? []);
 
     function sponsorType(item: AdminBusiness): SponsorType {
-        return item.sponsorType || item.sponsor_type || 'listed';
+        return item.sponsorType || item.sponsor_type || 'sponsor';
     }
 
     function sponsorLabel(type: SponsorType) {
@@ -62,11 +62,9 @@
     }
 
     function sponsorClass(type: SponsorType) {
-        if (type === 'gold') return 'border-amber-200 bg-amber-50 text-amber-800';
-        if (type === 'silver') return 'border-slate-300 bg-slate-100 text-slate-700';
-        if (type === 'bronze') return 'border-orange-200 bg-orange-50 text-orange-800';
-
-        return 'border-slate-200 bg-slate-50 text-slate-600';
+        return type === 'main'
+            ? 'border-primary/25 bg-primary/10 text-primary'
+            : 'border-slate-200 bg-slate-50 text-slate-700';
     }
 
     function businessTitle(item: AdminBusiness) {
