@@ -10,11 +10,11 @@
     }
 </script>
 
-<footer class="mt-auto border-t border-[#b8c9e3] bg-linear-to-r from-[#dbe7f6] via-[#c7d8ee] to-[#d6e2f2]">
-    <div class="mx-auto grid max-w-7xl gap-8 px-4 py-10 text-sm text-slate-700 md:grid-cols-3 lg:px-6">
+<footer class="mt-auto border-t border-blue-800/20 bg-linear-to-r from-[#b9d2f4] via-[#91b8eb] to-[#abc9f0]">
+    <div class="mx-auto grid max-w-7xl gap-8 px-4 py-10 text-sm text-slate-800 md:grid-cols-3 lg:px-6">
         <div>
             <h3 class="font-semibold text-slate-900">{$t('contact.address')}</h3>
-            <p class="mt-2">4852 Rothrist, Suisse</p>
+            <p class="mt-2 leading-6">Oberwilerweg 30<br />4852 Rothrist<br />Schweiz</p>
             <h3 class="mt-4 font-semibold text-slate-900">Email</h3>
             <p class="mt-1"><a href="mailto:info@gv-hellas.ch" class="text-slate-900 hover:underline">info@gv-hellas.ch</a></p>
             <h3 class="mt-4 font-semibold text-slate-900">{$t('contact.phoneContact')}</h3>

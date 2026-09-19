@@ -1,35 +1,141 @@
-import { fail, redirect } from '@sveltejs/kit';
-import { upsertEquipment } from '$lib/server/cms-store';
-import { processImageUpload, storeVideoUpload } from '$lib/server/media';
+import {fail} from '@sveltejs/kit';
+import type {Actions} from '@sveltejs/kit';
 
-export const actions = {
-  save: async ({ request }) => {
-    const form = await request.formData();
-    const name = String(form.get('name') || '').trim();
-    if (!name) return fail(400, { error: 'Equipment model name is required.' });
+import type {EquipmentPayload} from '$lib/cms/equipment/types';
+import {equipmentPayloadSchema} from '$lib/cms/equipment/schema';
+import {sanitizeEventHtml} from '$lib/server/html/sanitizeEventHtml';
+import {
+    createEquipment,
+    createEquipmentSlug
+} from '$lib/server/cms/equipmentStore';
+import {saveEquipmentMedia} from '$lib/server/cms/equipmentMediaStore';
+import {
+    prepareUploadedMediaFile,
+    translateEquipmentPayloadMissingGerman
+} from '$lib/server/mediaProcessing';
 
-    const images = [];
-    for (const key of ['image1', 'image2', 'image3']) {
-      const file = form.get(key);
-      if (file instanceof File && file.size > 0) {
-        const processed = await processImageUpload(file, `equipment-${key}`);
-        if (processed) images.push({ src: processed.original, variants: { webp: processed.webp?.[0]?.src || '', jpg: processed.jpg?.[0]?.src || '' } });
-      }
+type ActionResponse = {
+    ok: boolean;
+    id?: number;
+    slug?: string;
+    errorKey?: string;
+    message?: string;
+};
+
+function actionError(status: number, errorKey: string, message?: string) {
+    return fail(status, {
+        ok: false,
+        errorKey,
+        message
+    } satisfies ActionResponse);
+}
+
+function sanitizeEquipment(equipment: EquipmentPayload) {
+    for (const section of equipment.sections) {
+        section.beforeHtml.el = sanitizeEventHtml(section.beforeHtml.el);
+        section.beforeHtml.de = sanitizeEventHtml(section.beforeHtml.de);
+        section.afterHtml.el = sanitizeEventHtml(section.afterHtml.el);
+        section.afterHtml.de = sanitizeEventHtml(section.afterHtml.de);
     }
 
-    const videoFile = form.get('video');
-    const video = videoFile instanceof File && videoFile.size > 0 ? await storeVideoUpload(videoFile, 'equipment-video') : '';
+    return equipment;
+}
 
-    upsertEquipment({
-      name,
-      brand: String(form.get('brand') || ''),
-      modelYear: String(form.get('model_year') || ''),
-      description: String(form.get('description') || ''),
-      pricePerDay: Number(form.get('price_per_day') || 0),
-      images,
-      video
-    });
+async function attachProcessedMedia(
+    equipment: EquipmentPayload,
+    formData: FormData,
+    slug: string
+) {
+    for (const section of equipment.sections) {
+        for (const media of section.media) {
+            if (!media.uploadKey) continue;
 
-    throw redirect(303, '/admin/equipment');
-  }
+            const file = formData.get(media.uploadKey);
+
+            if (file instanceof File && file.size > 0) {
+                const processed = await prepareUploadedMediaFile(file);
+                const saved = await saveEquipmentMedia(processed.file, slug);
+
+                media.type = processed.kind;
+                media.url = saved.url;
+                media.filename = saved.filename;
+                media.originalFilename = file.name;
+                media.mimeType = saved.mimeType;
+                media.size = saved.size;
+            }
+
+            delete media.uploadKey;
+        }
+    }
+}
+
+export const actions: Actions = {
+    create: async ({request}) => {
+        const formData = await request.formData();
+        const rawPayload = formData.get('payload');
+
+        if (typeof rawPayload !== 'string') {
+            return actionError(400, 'admin.equipment.errors.invalidData');
+        }
+
+        let parsedJson: unknown;
+
+        try {
+            parsedJson = JSON.parse(rawPayload);
+        } catch {
+            return actionError(400, 'admin.equipment.errors.invalidData');
+        }
+
+        const source = parsedJson && typeof parsedJson === 'object'
+            ? (parsedJson as Record<string, unknown>)
+            : {};
+
+        const normalized = {
+            ...source,
+            pricePerDay: Number(source.pricePerDay)
+        };
+
+        const result = equipmentPayloadSchema.safeParse(normalized);
+
+        if (!result.success) {
+            return actionError(
+                400,
+                'admin.equipment.errors.invalidData',
+                result.error.issues[0]?.message
+            );
+        }
+
+        const equipment = sanitizeEquipment(result.data as EquipmentPayload);
+
+        await translateEquipmentPayloadMissingGerman(equipment);
+        sanitizeEquipment(equipment);
+
+        const slug = await createEquipmentSlug(equipment.title.el || equipment.title.de);
+
+        try {
+            await attachProcessedMedia(equipment, formData, slug);
+        } catch (error) {
+            return actionError(
+                400,
+                'admin.equipment.errors.mediaFailed',
+                error instanceof Error ? error.message : undefined
+            );
+        }
+
+        try {
+            const stored = await createEquipment(equipment, slug);
+
+            return {
+                ok: true,
+                id: stored.id,
+                slug: stored.slug
+            } satisfies ActionResponse;
+        } catch (error) {
+            return actionError(
+                500,
+                'admin.equipment.errors.saveFailed',
+                error instanceof Error ? error.message : undefined
+            );
+        }
+    }
 };

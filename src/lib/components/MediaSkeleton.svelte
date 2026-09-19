@@ -21,8 +21,11 @@
         containerClass = '',
         poster = '',
         sources = {},
+        fallbackSrc = '',
+        errorText = 'Media unavailable',
         loading = 'lazy',
-        fetchPriority = 'auto'
+        fetchPriority = 'auto',
+        sizes = '(max-width: 768px) 100vw, 33vw'
     }: {
         type?: 'image' | 'video' | 'audio';
         src?: string;
@@ -31,14 +34,25 @@
         containerClass?: string;
         poster?: string;
         sources?: Sources;
+        fallbackSrc?: string;
+        errorText?: string;
         loading?: 'eager' | 'lazy';
         fetchPriority?: 'high' | 'low' | 'auto';
+        sizes?: string;
     } = $props();
 
     let loaded = $state(false);
     let failed = $state(false);
-    let activeSrc = $state('');
+    // Keep the real source in the SSR HTML. If this starts as an empty string,
+    // a <picture> source can finish loading before hydration and its load event
+    // is then missed, leaving the skeleton over an otherwise valid image.
+    function initialSrc() {
+        return src;
+    }
+
+    let activeSrc = $state(initialSrc());
     let retriedPlainSrc = $state(false);
+    let retriedFallback = $state(false);
 
     function normalize(input: SourceInput): SourceVariant[] {
         if (!input) return [];
@@ -73,12 +87,18 @@
             retriedPlainSrc = true;
             loaded = false;
             failed = false;
-            activeSrc = '';
+            activeSrc = src;
+            return;
+        }
 
-            requestAnimationFrame(() => {
-                activeSrc = src;
-            });
-
+        // Hero/media sources can disappear independently. Retry a slide-local fallback
+        // rather than allowing one broken asset to leave the slide unusable.
+        if (type === 'image' && fallbackSrc && fallbackSrc !== activeSrc && !retriedFallback) {
+            retriedFallback = true;
+            retriedPlainSrc = true;
+            loaded = false;
+            failed = false;
+            activeSrc = fallbackSrc;
             return;
         }
 
@@ -90,12 +110,29 @@
         node: HTMLImageElement | HTMLVideoElement | HTMLAudioElement
     ): { destroy: () => void } {
         const loadEvent = node.tagName === 'IMG' ? 'load' : 'loadeddata';
+        let destroyed = false;
 
         node.addEventListener(loadEvent, markLoaded);
         node.addEventListener('error', markFailed);
 
+        // On a full SSR page load the browser may fetch a <picture> source before
+        // Svelte hydrates and attaches this listener. Detect that already-complete
+        // state explicitly so the skeleton cannot remain on top forever.
+        if (node instanceof HTMLImageElement) {
+            queueMicrotask(() => {
+                if (destroyed || !node.complete) return;
+
+                if (node.naturalWidth > 0) {
+                    markLoaded();
+                } else if (node.currentSrc || node.src) {
+                    markFailed();
+                }
+            });
+        }
+
         return {
             destroy: () => {
+                destroyed = true;
                 node.removeEventListener(loadEvent, markLoaded);
                 node.removeEventListener('error', markFailed);
             }
@@ -103,19 +140,23 @@
     }
 
     $effect(() => {
+        // Read every source input so the state also resets when responsive
+        // variants are replaced while the component instance is retained.
+        void sources.webp;
+        void sources.jpg;
+        void sources.jpeg;
+        void sources.png;
+        void fallbackSrc;
+
         loaded = false;
         failed = false;
-        activeSrc = '';
+        activeSrc = src;
         retriedPlainSrc = false;
+        retriedFallback = false;
 
         if (!src) {
             loaded = true;
-            return;
         }
-
-        requestAnimationFrame(() => {
-            activeSrc = src;
-        });
     });
 </script>
 
@@ -128,9 +169,11 @@
     {/if}
 
     {#if failed}
-        <div class="flex min-h-40 items-center justify-center p-4 text-sm text-slate-500">
-            Media unavailable
-        </div>
+        {#if errorText}
+            <div class="flex min-h-40 items-center justify-center p-4 text-sm text-slate-500">
+                {errorText}
+            </div>
+        {/if}
     {:else if type === 'video'}
         <!-- svelte-ignore a11y_media_has_caption -->
         <video
@@ -161,7 +204,7 @@
                 <source
                         srcset={toSrcSet(sources.webp)}
                         type="image/webp"
-                        sizes="(max-width: 768px) 100vw, 33vw"
+                        {sizes}
                 />
             {/if}
 
@@ -169,7 +212,7 @@
                 <source
                         srcset={toSrcSet(sources.jpg || sources.jpeg)}
                         type="image/jpeg"
-                        sizes="(max-width: 768px) 100vw, 33vw"
+                        {sizes}
                 />
             {/if}
 
@@ -177,7 +220,7 @@
                 <source
                         srcset={toSrcSet(sources.png)}
                         type="image/png"
-                        sizes="(max-width: 768px) 100vw, 33vw"
+                        {sizes}
                 />
             {/if}
 

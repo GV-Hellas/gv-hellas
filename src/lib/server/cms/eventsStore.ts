@@ -6,6 +6,7 @@ type EventRow = {
     slug: string;
     date: string | null;
     time: string | null;
+    end_time: string | null;
     title_el: string | null;
     title_de: string | null;
     description_el: string | null;
@@ -82,6 +83,7 @@ function rowToStoredEvent(row: EventRow): StoredEvent {
         },
         date: row.date || '',
         time: row.time || '',
+        endTime: row.end_time || '',
         location: row.location || '',
         category: normalizeCategory(row.category),
         priceMembers: nullableNumber(row.price_members),
@@ -97,6 +99,7 @@ function eventToRow(event: EventPayload, slug: string) {
         slug,
         date: event.date || '',
         time: event.time || '',
+        end_time: event.endTime || '',
         title_el: event.title.el || '',
         title_de: event.title.de || event.title.el || '',
         description_el: event.description.el || '',

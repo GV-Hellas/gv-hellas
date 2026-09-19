@@ -6,18 +6,21 @@ const CMS_TIMEOUT_MS = Number(import.meta.env.VITE_CMS_TIMEOUT_MS || 5000);
 type FetchImpl = typeof fetch;
 
 type LocalizedText = { el: string; de: string };
-type ImageVariant = { width: number; src: string };
 
 export type LinkItem = { id?: number; name: LocalizedText; url: string; logo?: string };
 export type BusinessItem = { id?: number; name: string; url: string; logo?: string };
 
 export type GalleryItem = {
     id: string;
-    type: 'image' | 'video' | 'audio';
-    src: string;
-    srcVariants?: { webp?: string | ImageVariant[]; jpg?: string | ImageVariant[] };
-    alt: string;
-    tags: string[];
+    type: 'image' | 'video';
+    src480: string;
+    src960: string;
+    videoSrc: string;
+    alt: LocalizedText;
+    tags: Array<{id: number; name: LocalizedText}>;
+    year: number | null;
+    width: number | null;
+    height: number | null;
 };
 
 export type EquipmentItem = {

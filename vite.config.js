@@ -4,6 +4,7 @@ import {defineConfig} from 'vite';
 
 const lucideIcons = [
     '@lucide/svelte/icons/arrow-left',
+    '@lucide/svelte/icons/arrow-right',
     '@lucide/svelte/icons/building-2',
     '@lucide/svelte/icons/check',
     '@lucide/svelte/icons/chevron-down',
@@ -23,14 +24,28 @@ const lucideIcons = [
     '@lucide/svelte/icons/mail',
     '@lucide/svelte/icons/minus',
     '@lucide/svelte/icons/octagon-x',
+    '@lucide/svelte/icons/package',
     '@lucide/svelte/icons/pencil',
     '@lucide/svelte/icons/phone',
+    '@lucide/svelte/icons/play',
     '@lucide/svelte/icons/save',
     '@lucide/svelte/icons/tags',
     '@lucide/svelte/icons/trash-2',
     '@lucide/svelte/icons/triangle-alert',
     '@lucide/svelte/icons/user-round',
     '@lucide/svelte/icons/video',
+    '@lucide/svelte/icons/calendar-days',
+    '@lucide/svelte/icons/door-open',
+    '@lucide/svelte/icons/file-text',
+    '@lucide/svelte/icons/landmark',
+    '@lucide/svelte/icons/lock-keyhole',
+    '@lucide/svelte/icons/map-pin',
+    '@lucide/svelte/icons/medal',
+    '@lucide/svelte/icons/plus',
+    '@lucide/svelte/icons/school',
+    '@lucide/svelte/icons/send',
+    '@lucide/svelte/icons/shield-check',
+    '@lucide/svelte/icons/users',
     '@lucide/svelte/icons/x'
 ];
 

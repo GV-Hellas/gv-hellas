@@ -1,18 +1,7 @@
 <script lang="ts">
     import {t} from '$lib/i18n';
     import GalleryForm from '$lib/components/cms/GalleryForm.svelte';
-
-    type GalleryItem = {
-        id: string;
-        type: 'image' | 'video';
-        src480: string;
-        src960: string;
-        videoSrc: string;
-        alt: string;
-        tags: string[];
-        width: number | null;
-        height: number | null;
-    };
+    import type {GalleryItem, GalleryTag} from '$lib/cms/gallery/types';
 
     type ActionResponse = {
         ok?: boolean;
@@ -25,7 +14,7 @@
         data,
         form
     }: {
-        data: {item: GalleryItem; tags: string[]};
+        data: {item: GalleryItem; tags: GalleryTag[]};
         form?: ActionResponse | null;
     } = $props();
 </script>

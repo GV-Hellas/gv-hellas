@@ -49,6 +49,7 @@ export const eventPayloadSchema = z.object({
     description: optionalLocalizedTextSchema,
     date: z.string().trim().min(1, 'Required'),
     time: z.string().trim().min(1, 'Required'),
+    endTime: z.string().trim().optional().default(''),
     location: z.string().trim().min(1, 'Required'),
     category: z.enum(EVENT_CATEGORIES).default('general'),
     priceMembers: nullablePriceSchema,

@@ -3,10 +3,12 @@
     import {t} from "$lib/i18n";
 
     const items = [
+        {href: "/admin/home", labelKey: "admin.homepage.navLabel"},
         {href: "/admin/events", labelKey: "nav.events"},
         {href: "/admin/gallery", labelKey: "nav.gallery"},
         {href: "/admin/links", labelKey: "nav.links"},
         {href: "/admin/businesses", labelKey: "nav.businesses"},
+        {href: "/admin/equipment", labelKey: "nav.equipment"},
     ];
 
     function isActive(href: string) {

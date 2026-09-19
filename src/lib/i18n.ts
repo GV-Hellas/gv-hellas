@@ -12,6 +12,8 @@ register('el', () =>
             businesses: 'Ελληνόφωνες Επιχειρήσεις',
             equipment: 'Ενοικίαση Εξοπλισμού',
             church: 'Πρόγραμμα Εκκλησίας Olten',
+            verein: 'Ο Σύλλογος',
+            school: 'Ελληνικό Σχολείο',
             community: 'Κοινότητα',
             services: 'Πληροφορίες & Υπηρεσίες'
         },
@@ -24,6 +26,73 @@ register('el', () =>
                 createEvent: 'Νέα εκδήλωση',
                 editPages: 'Επεξεργασία σελίδων',
                 manageGallery: 'Διαχείριση υλικού'
+            },
+            homepage: {
+                navLabel: 'Αρχική',
+                title: 'Αρχική σελίδα',
+                subtitle: 'Διαχείριση των εικόνων, τίτλων και περιγραφών του κεντρικού slider.',
+                createNew: 'Νέα διαφάνεια',
+                createTitle: 'Νέα διαφάνεια αρχικής',
+                editTitle: 'Επεξεργασία διαφάνειας αρχικής',
+                empty: 'Δεν υπάρχουν διαφάνειες αρχικής.',
+                emptyDescription: 'Προσθέστε μια εικόνα για να εμφανιστεί στο κεντρικό slider.',
+                enabled: 'Ενεργή',
+                disabled: 'Ανενεργή',
+                table: {
+                    preview: 'Προεπισκόπηση',
+                    title: 'Τίτλος',
+                    order: 'Σειρά',
+                    status: 'Κατάσταση',
+                    updated: 'Ενημερώθηκε',
+                    actions: 'Ενέργειες'
+                },
+                actions: {
+                    edit: 'Επεξεργασία'
+                },
+                form: {
+                    subtitle: 'Οι εικόνες βελτιστοποιούνται αυτόματα για την αρχική σελίδα.',
+                    backToList: 'Πίσω στην αρχική',
+                    content: 'Περιεχόμενο διαφάνειας',
+                    languageHint: 'Αλλάξτε γλώσσα από το επάνω μενού για να συμπληρώσετε και τη δεύτερη μετάφραση.',
+                    title: 'Τίτλος',
+                    titlePlaceholder: 'Τίτλος που εμφανίζεται πάνω στην εικόνα',
+                    description: 'Περιγραφή',
+                    descriptionPlaceholder: 'Σύντομο κείμενο κάτω από τον τίτλο',
+                    alt: 'Εναλλακτικό κείμενο εικόνας',
+                    altPlaceholder: 'Περιγραφή της εικόνας για SEO και προσβασιμότητα',
+                    sortOrder: 'Σειρά εμφάνισης',
+                    sortOrderHelp: 'Μικρότερος αριθμός εμφανίζεται πρώτος.',
+                    visibility: 'Ορατότητα',
+                    enabled: 'Εμφάνιση στο slider',
+                    image: 'Εικόνα hero',
+                    imageHelp: 'Χρησιμοποιήστε φωτογραφία υψηλής ανάλυσης με οριζόντια σύνθεση.',
+                    uploadImage: 'Ανέβασμα εικόνας',
+                    replaceImage: 'Αντικατάσταση εικόνας',
+                    imageOptimizationHelp: 'Η εικόνα κόβεται σε αναλογία 16:7 και δημιουργούνται αυτόματα WebP 480w, 960w και 1920w.',
+                    save: 'Αποθήκευση διαφάνειας',
+                    saving: 'Αποθήκευση…'
+                },
+                deleteDialog: {
+                    title: 'Διαγραφή διαφάνειας;',
+                    description: 'Η διαφάνεια θα αφαιρεθεί από την αρχική σελίδα.',
+                    confirm: 'Διαγραφή διαφάνειας',
+                    deleting: 'Διαγραφή…'
+                },
+                toast: {
+                    created: 'Η διαφάνεια δημιουργήθηκε',
+                    updated: 'Η διαφάνεια ενημερώθηκε',
+                    deleted: 'Η διαφάνεια διαγράφηκε',
+                    saveFailed: 'Δεν ήταν δυνατή η αποθήκευση της διαφάνειας.',
+                    deleteFailed: 'Δεν ήταν δυνατή η διαγραφή της διαφάνειας.'
+                },
+                errors: {
+                    invalidId: 'Μη έγκυρο ID διαφάνειας.',
+                    notFound: 'Η διαφάνεια δεν βρέθηκε.',
+                    titleRequired: 'Ο ελληνικός τίτλος είναι υποχρεωτικός.',
+                    imageRequired: 'Απαιτείται εικόνα.',
+                    saveFailed: 'Παρουσιάστηκε σφάλμα κατά την αποθήκευση της διαφάνειας.',
+                    deleteFailed: 'Παρουσιάστηκε σφάλμα κατά τη διαγραφή της διαφάνειας.'
+                }
             },
             events: {
                 title: 'Διαχείριση εκδηλώσεων',
@@ -83,6 +152,7 @@ register('el', () =>
                 video: 'Βίντεο',
                 alt: 'Εναλλακτικό κείμενο',
                 altPlaceholder: 'Σύντομη περιγραφή',
+                year: 'Έτος',
 
                 tags: 'Ετικέτες',
                 noTags: 'Χωρίς ετικέτες',
@@ -112,6 +182,7 @@ register('el', () =>
                     preview: 'Προεπισκόπηση',
                     id: 'ID',
                     type: 'Τύπος',
+                    year: 'Έτος',
                     alt: 'Περιγραφή',
                     tags: 'Ετικέτες',
                     files: 'Αρχεία',
@@ -144,7 +215,10 @@ register('el', () =>
                     details: 'Στοιχεία',
                     detailsHelp: 'Βασικές πληροφορίες που χρησιμοποιούνται στη δημόσια γκαλερί.',
                     altHelp: 'Περιγράψτε σύντομα το περιεχόμενο για προσβασιμότητα και αναζήτηση.',
-                    tagsHelp: 'Χρησιμοποιήστε κόμματα για να χωρίσετε πολλαπλές ετικέτες.',
+                    yearHelp: 'Συμπληρώνεται αυτόματα από τα μεταδεδομένα της εικόνας, όταν υπάρχουν, και μπορεί να αλλάξει.',
+                    tagNames: 'Ονόματα ετικετών',
+                    tagsHelp: 'Χρησιμοποιήστε κόμματα. Κρατήστε τις μεταφράσεις στην ίδια σειρά και στις δύο γλώσσες.',
+                    languageHint: 'Αλλάξτε γλώσσα από το επάνω μενού για να συμπληρώσετε το εναλλακτικό κείμενο και τις ετικέτες και στη δεύτερη γλώσσα.',
                     media: 'Αρχείο πολυμέσων',
                     noPreview: 'Επιλέξτε μια εικόνα ή ένα βίντεο για προεπισκόπηση.',
                     selectedFile: 'Επιλεγμένο αρχείο',
@@ -318,6 +392,63 @@ register('el', () =>
                     saveChanges: 'Αποθήκευση αλλαγών'
                 }
             },
+            equipment: {
+                title: 'Ενοικίαση εξοπλισμού',
+                subtitle: 'Διαχείριση του εξοπλισμού που διατίθεται προς ενοικίαση.',
+                createNew: 'Νέος εξοπλισμός',
+                createFirst: 'Προσθήκη πρώτου εξοπλισμού',
+                empty: 'Δεν υπάρχει ακόμη εξοπλισμός.',
+                emptyDescription: 'Προσθέστε το πρώτο αντικείμενο προς ενοικίαση.',
+
+                table: {
+                    title: 'Τίτλος',
+                    price: 'Τιμή / ημέρα',
+                    updated: 'Ενημερώθηκε',
+                    actions: 'Ενέργειες'
+                },
+
+                actions: {
+                    edit: 'Επεξεργασία'
+                },
+
+                deleteDialog: {
+                    title: 'Διαγραφή εξοπλισμού;',
+                    description: 'Αυτή η ενέργεια δεν μπορεί να αναιρεθεί. Το επιλεγμένο αντικείμενο θα διαγραφεί οριστικά.',
+                    confirm: 'Διαγραφή εξοπλισμού',
+                    deleting: 'Διαγραφή…'
+                },
+
+                toast: {
+                    created: 'Ο εξοπλισμός δημιουργήθηκε',
+                    updated: 'Ο εξοπλισμός ενημερώθηκε',
+                    deleted: 'Ο εξοπλισμός διαγράφηκε',
+                    saveFailed: 'Δεν ήταν δυνατή η αποθήκευση του εξοπλισμού.',
+                    deleteFailed: 'Δεν ήταν δυνατή η διαγραφή του εξοπλισμού.'
+                },
+
+                errors: {
+                    invalidId: 'Μη έγκυρο ID εξοπλισμού.',
+                    invalidData: 'Τα στοιχεία του εξοπλισμού δεν είναι έγκυρα.',
+                    notFound: 'Ο εξοπλισμός δεν βρέθηκε.',
+                    mediaFailed: 'Δεν ήταν δυνατή η επεξεργασία των πολυμέσων.',
+                    saveFailed: 'Παρουσιάστηκε σφάλμα κατά την αποθήκευση του εξοπλισμού.',
+                    deleteFailed: 'Παρουσιάστηκε σφάλμα κατά τη διαγραφή του εξοπλισμού.'
+                },
+
+                form: {
+                    create: 'Νέος εξοπλισμός',
+                    edit: 'Επεξεργασία εξοπλισμού',
+                    languageHint: 'Επεξεργάζεστε τη γλώσσα που είναι επιλεγμένη στο επάνω μενού. Αλλάξτε γλώσσα για να συμπληρώσετε την άλλη μετάφραση.',
+                    title: 'Τίτλος',
+                    description: 'Σύντομη περιγραφή',
+                    pricePerDay: 'Τιμή ανά ημέρα',
+                    priceHint: 'Η τιμή εμφανίζεται σε CHF ανά ημέρα ενοικίασης.',
+                    validationFailed: 'Παρακαλώ ελέγξτε τα πεδία της φόρμας.',
+                    save: 'Αποθήκευση εξοπλισμού',
+                    saveChanges: 'Αποθήκευση αλλαγών',
+                    saving: 'Αποθήκευση…'
+                }
+            },
             login: {
                 title: 'Σύνδεση CMS Admin',
                 username: 'Όνομα χρήστη',
@@ -334,7 +465,9 @@ register('el', () =>
                 date: 'Ημερομηνία',
                 pickDate: 'Επιλέξτε ημερομηνία',
                 dateRequired: 'Παρακαλώ επιλέξτε ημερομηνία',
-                time: 'Ώρα',
+                time: 'Ώρα έναρξης',
+                endTime: 'Ώρα λήξης',
+                endTimeHint: 'Προαιρετικό. Π.χ. 23:00 για εκδήλωση 19:00–23:00.',
                 location: 'Τοποθεσία',
                 category: 'Κατηγορία',
                 priceMembers: 'Τιμή μελών CHF',
@@ -354,23 +487,117 @@ register('el', () =>
             welcomeTitle: 'Καλώς ήρθατε στην ιστοσελίδα μας!',
             welcomeSubtitle: 'Σύλλογος ομογενών Ελλήνων Rothrist',
             aboutHeadline: 'Σύλλογος ομογενών του Rothrist',
-            aboutText: 'Ιδρυμένος το 2019, ο σύλλογος μας έχει στόχο τη διατήρηση και προώθηση των ελληνικών παραδοσεων, της γλώσσας και του πολιτισμού στην Ελβετία.',
+            aboutText: 'Ιδρυμένος το 2019, ο σύλλογος μας έχει στόχο τη διατήρηση και προώθηση των ελληνικών παραδόσεων, της γλώσσας και του πολιτισμού στην Ελβετία.',
             activitiesHeadline: 'Δράσεις',
             activitiesIntro: 'Σκοπός του Συλλόγου είναι η ενεργός παρέμβασή του στα πολιτιστικά δρώμενα της κοινότητας των Ελλήνων ομογενών του Rothrist, η αξιοποίηση και διάσωση των ζωντανών στοιχείων της παράδοσης και του λαϊκού μας πολιτισμού όπως οι χοροί τα τραγούδια και έθιμα, η ελληνική γλώσσα, διοργανώνοντας δράσεις σχετικές με τις παρακάτω θεματικές ενότητες:',
-            sponsorsHeadline: 'Ευγενικοί χορηγοί'
+            activeEvent: 'Επόμενη εκδήλωση',
+            recentEventsHint: 'Οι πιο πρόσφατες ανακοινωμένες εκδηλώσεις εμφανίζονται πρώτες.',
+            sponsorsHeadline: 'Οι χορηγοί μας',
+            sponsorsIntro: 'Οι χορηγοί εμφανίζονται απευθείας από τον κατάλογο επιχειρήσεων του συλλόγου.',
+            becomeSponsor: 'Γίνετε χορηγός',
+            becomeSponsorHint: 'Στηρίξτε τις δράσεις του συλλόγου και παρουσιάστε την επιχείρησή σας στην κοινότητά μας.',
+            sponsorInquiryTitle: 'Ενδιαφέρον για χορηγία',
+            sponsorInquiryDescription: 'Στείλτε μας τα στοιχεία σας και θα επικοινωνήσουμε μαζί σας για τις διαθέσιμες επιλογές χορηγίας.',
+            sponsorInquiryPlaceholder: 'Πείτε μας λίγα λόγια για την επιχείρησή σας ή για το είδος συνεργασίας που σας ενδιαφέρει.',
+            sponsorInquirySend: 'Αποστολή ενδιαφέροντος',
+            sponsorInquirySending: 'Αποστολή…',
+            sponsorInquirySuccess: 'Το ενδιαφέρον σας για χορηγία στάλθηκε. Ευχαριστούμε!',
+            sponsorInquiryError: 'Δεν ήταν δυνατή η αποστολή. Παρακαλώ δοκιμάστε ξανά.',
+            sponsorInquiryEmailPrefix: 'Νέο ενδιαφέρον για χορηγία μέσω της αρχικής σελίδας.'
         },
         events: {
             headline: 'Εκδηλώσεις',
             upcoming: 'Επερχόμενες εκδηλώσεις',
             past: 'Παρελθόντα γεγονότα',
+            active: 'Ενεργή / επερχόμενη',
+            time: 'Ώρα',
             readMore: 'Περισσότερα'
+        },
+        verein: {
+            eyebrow: 'Griechischer Verein Hellas',
+            headline: 'Ο Σύλλογος',
+            intro: 'Ο Ελληνικός Σύλλογος Hellas στο Rothrist ιδρύθηκε το 2019 με στόχο τη διατήρηση και προώθηση της ελληνικής γλώσσας, των παραδόσεων και του πολιτισμού στην Ελβετία.',
+            facts: {
+                foundedLabel: 'Έτος ίδρυσης',
+                baseLabel: 'Έδρα',
+                membersLabel: 'Αριθμός μελών',
+                membersPending: 'Θα ενημερωθεί σύντομα'
+            },
+            board: {
+                eyebrow: 'Διοικητικό συμβούλιο',
+                title: 'Η διοίκηση του συλλόγου',
+                description: 'Τα μέλη του διοικητικού συμβουλίου του Griechischer Verein Hellas.',
+                roles: {
+                    president: 'Πρόεδρος',
+                    vicePresident: 'Αντιπρόεδρος',
+                    secretary: 'Γραμματέας',
+                    treasurer: 'Ταμίας'
+                }
+            },
+            mission: {
+                title: 'Σκοπός και δράση',
+                text: 'Ο σύλλογος στηρίζει την ελληνική κοινότητα, οργανώνει πολιτιστικές και κοινωνικές δράσεις και συμβάλλει στη διατήρηση της γλώσσας, της μουσικής, των χορών, των εθίμων και της επαφής μεταξύ των μελών.'
+            },
+            membersArea: {
+                title: 'Περιοχή μελών',
+                description: 'Εδώ θα συγκεντρώνεται υλικό που αφορά αποκλειστικά τα μέλη. Η πρόσβαση μελών μπορεί να ενεργοποιηθεί όταν προστεθεί σύστημα σύνδεσης.',
+                materialTitle: 'Υλικό για μέλη',
+                financialStatements: 'Οικονομικές καταστάσεις',
+                minutes: 'Πρακτικά συνελεύσεων',
+                documents: 'Έγγραφα και ανακοινώσεις',
+                placeholder: 'Θέση για μελλοντικό προστατευμένο υλικό μελών.'
+            }
+        },
+        school: {
+            headline: 'Ελληνικό Σχολείο',
+            intro: 'Ένας χώρος για τη γλώσσα, τον πολιτισμό και την επαφή των παιδιών με την ελληνική τους κληρονομιά. Οι αναλυτικές πληροφορίες του σχολείου θα συμπληρωθούν μόλις οριστικοποιηθούν.',
+            facts: {
+                address: 'Διεύθυνση',
+                classrooms: 'Αίθουσες διδασκαλίας',
+                ageGroups: 'Ηλικιακές ομάδες',
+                pending: 'Θα ενημερωθεί σύντομα'
+            },
+            photos: {
+                title: 'Φωτογραφίες του σχολείου',
+                description: 'Εδώ μπορούν να προστεθούν φωτογραφίες από τις αίθουσες, τις δραστηριότητες και τις σχολικές εκδηλώσεις.',
+                placeholder: 'Φωτογραφία'
+            },
+            form: {
+                title: 'Εκδήλωση ενδιαφέροντος / Εγγραφή',
+                description: 'Οι γονείς μπορούν να συμπληρώσουν τη φόρμα για να λάβουμε τα στοιχεία του παιδιού και να επικοινωνήσουμε μαζί τους σχετικά με την εγγραφή.',
+                parentName: 'Ονοματεπώνυμο γονέα / κηδεμόνα',
+                childName: 'Ονοματεπώνυμο παιδιού',
+                childBirthDate: 'Ημερομηνία γέννησης παιδιού',
+                languageLevel: 'Επίπεδο Ελληνικών',
+                languageLevelPlaceholder: 'π.χ. αρχάριο, καταλαβαίνει αλλά δεν γράφει',
+                message: 'Πρόσθετες πληροφορίες',
+                consent: 'Συμφωνώ να χρησιμοποιηθούν τα παραπάνω στοιχεία αποκλειστικά για την επικοινωνία σχετικά με το Ελληνικό Σχολείο.',
+                submit: 'Αποστολή εγγραφής',
+                sending: 'Αποστολή…',
+                success: 'Η αίτηση εγγραφής στάλθηκε. Θα επικοινωνήσουμε μαζί σας.',
+                error: 'Η αίτηση δεν μπόρεσε να σταλεί. Παρακαλώ δοκιμάστε ξανά.'
+            }
         },
         links: {
             headline: 'Χρήσιμοι Σύνδεσμοι',
             subtitle: 'Σύνδεσμοι που μπορεί να σας φανούν χρήσιμοι για την κοινότητά μας.'
         },
         gallery: {
-            headline: 'Οπτικοακουστικό Υλικό'
+            headline: 'Οπτικοακουστικό Υλικό',
+            itemSingular: 'στοιχείο πολυμέσων',
+            itemPlural: 'στοιχεία πολυμέσων',
+            all: 'Όλα',
+            groupByYear: 'Ομαδοποίηση ανά έτος',
+            unknownYear: 'Χωρίς έτος',
+            empty: 'Δεν υπάρχει ακόμα υλικό.',
+            emptyFilter: 'Δεν υπάρχει υλικό για αυτό το φίλτρο.',
+            clearFilter: 'Καθαρισμός φίλτρου',
+            openItem: 'Άνοιγμα',
+            close: 'Κλείσιμο',
+            previous: 'Προηγούμενο',
+            next: 'Επόμενο',
+            loadingImage: 'Φόρτωση εικόνας…',
+            imageLoadFailed: 'Δεν ήταν δυνατή η φόρτωση της εικόνας.'
         },
         businesses: {
             headline: 'Ελληνόφωνες Επιχειρήσεις',
@@ -394,18 +621,62 @@ register('el', () =>
         contact: {
             headline: 'Επικοινωνία',
             formHeadline: 'Στείλτε μας ένα μήνυμα',
+            formSubtitle: 'Συμπληρώστε τη φόρμα και θα επικοινωνήσουμε μαζί σας το συντομότερο δυνατό.',
             name: 'Ονοματεπώνυμο',
+            namePlaceholder: 'Το ονοματεπώνυμό σας',
             email: 'Email',
+            emailPlaceholder: 'name@example.com',
             phone: 'Τηλέφωνο',
+            phonePlaceholder: '+41 …',
             message: 'Μήνυμα',
+            messagePlaceholder: 'Πώς μπορούμε να σας βοηθήσουμε;',
             send: 'Αποστολή',
+            sending: 'Αποστολή…',
             address: 'Διεύθυνση',
             phoneContact: 'Τηλέφωνο Επικοινωνίας',
-            followUs: 'Ακολουθήστε μας'
+            followUs: 'Ακολουθήστε μας',
+            successMessage: 'Σας ευχαριστούμε. Το μήνυμά σας στάλθηκε με επιτυχία.',
+            errorMessage: 'Το μήνυμα δεν μπόρεσε να σταλεί. Παρακαλώ δοκιμάστε ξανά αργότερα.',
+            securityTitle: 'Έλεγχος ασφαλείας',
+            securityDescription: 'Ο έλεγχος Cloudflare Turnstile προστατεύει τη φόρμα από ανεπιθύμητα αυτοματοποιημένα μηνύματα.',
+            openInMaps: 'Άνοιγμα στο OpenStreetMap',
+            validation: {
+                form: 'Παρακαλώ ελέγξτε τα πεδία που έχουν επισημανθεί.',
+                name: 'Παρακαλώ συμπληρώστε το όνομά σας.',
+                nameLong: 'Το όνομα είναι πολύ μεγάλο.',
+                email: 'Παρακαλώ συμπληρώστε μια έγκυρη διεύθυνση email.',
+                emailLong: 'Η διεύθυνση email είναι πολύ μεγάλη.',
+                phone: 'Παρακαλώ συμπληρώστε έναν έγκυρο αριθμό τηλεφώνου.',
+                phoneLong: 'Ο αριθμός τηλεφώνου είναι πολύ μεγάλος.',
+                message: 'Παρακαλώ γράψτε ένα μήνυμα με τουλάχιστον 10 χαρακτήρες.',
+                messageLong: 'Το μήνυμα είναι πολύ μεγάλο.',
+                rateLimit: 'Στάλθηκαν πολλά μηνύματα. Παρακαλώ δοκιμάστε ξανά αργότερα.',
+                captcha: 'Παρακαλώ ολοκληρώστε τον έλεγχο ασφαλείας.',
+                captchaFailed: 'Ο έλεγχος ασφαλείας απέτυχε ή έληξε. Παρακαλώ δοκιμάστε ξανά.',
+                captchaConfig: 'Ο έλεγχος ασφαλείας δεν έχει ρυθμιστεί ακόμη.'
+            }
         },
         equipment: {
             headline: 'Ενοικίαση Εξοπλισμού',
-            description: 'Σύντομα θα προστεθούν πληροφορίες σχετικά με τη δυνατότητα ενοικίασης εξοπλισμού.'
+            eyebrow: 'Εξοπλισμός του συλλόγου',
+            description: 'Δείτε τον διαθέσιμο εξοπλισμό του συλλόγου και επικοινωνήστε μαζί μας για ενοικίαση.',
+            perDay: 'ανά ημέρα',
+            details: 'Περισσότερες πληροφορίες',
+            interested: 'Ενδιαφέρομαι',
+            back: 'Πίσω στον εξοπλισμό',
+            empty: 'Δεν υπάρχει διαθέσιμος εξοπλισμός αυτή τη στιγμή.',
+            inquiry: {
+                title: 'Ενδιαφέρον για ενοικίαση',
+                description: 'Συμπληρώστε τα στοιχεία σας και θα επικοινωνήσουμε μαζί σας για τη διαθεσιμότητα.',
+                from: 'Επιθυμητή ημερομηνία από',
+                until: 'Επιθυμητή ημερομηνία έως',
+                message: 'Μήνυμα / λεπτομέρειες',
+                messagePlaceholder: 'Πείτε μας τι χρειάζεστε ή οποιαδήποτε άλλη χρήσιμη πληροφορία.',
+                send: 'Αποστολή ενδιαφέροντος',
+                sending: 'Αποστολή…',
+                success: 'Το ενδιαφέρον σας στάλθηκε με επιτυχία.',
+                error: 'Δεν ήταν δυνατή η αποστολή του ενδιαφέροντος. Παρακαλώ δοκιμάστε ξανά.'
+            }
         },
         church: {
             headline: 'Πρόγραμμα Εκκλησίας Olten',
@@ -562,9 +833,7 @@ register('el', () =>
                         facebookName: 'Ορθόδοξη Εκκλησία Ολτεν',
                         phone: '0041 (0) 76 574 96 41',
                         email: 'p.fanourios@hotmail.com',
-                        // Replace with your exact Facebook page URL if you have it (you mentioned you do).
-                        facebookUrl:
-                            'https://www.facebook.com/search/top/?q=%CE%9F%CF%81%CE%B8%CF%8C%CE%B4%CE%BF%CE%BE%CE%B7%20%CE%95%CE%BA%CE%BA%CE%BB%CE%B7%CF%83%CE%AF%CE%B1%20%CE%9F%CE%BB%CF%84%CE%B5%CE%BD'
+                        facebookUrl: 'https://www.facebook.com/grorthodoxchurchofolten'
                     }
                 },
 
@@ -670,7 +939,10 @@ register('el', () =>
             delete: 'Διαγραφή',
             published: 'Δημοσιευμένο',
             draft: 'Πρόχειρο',
-            validationFailed: 'Παρακαλώ ελέγξτε τα πεδία της φόρμας'
+            validationFailed: 'Παρακαλώ ελέγξτε τα πεδία της φόρμας',
+            previous: 'Προηγούμενο',
+            next: 'Επόμενο',
+            slide: 'Διαφάνεια'
         }
     })
 );
@@ -686,6 +958,8 @@ register('de', () =>
             businesses: 'Griechischsprachige Unternehmen',
             equipment: 'Materialvermietung',
             church: 'Kirchenprogramm Olten',
+            verein: 'Der Verein',
+            school: 'Griechische Schule',
             community: 'Vereinsleben',
             services: 'Infos & Services'
         },
@@ -698,6 +972,73 @@ register('de', () =>
                 createEvent: 'Neue Veranstaltung',
                 editPages: 'Seiten bearbeiten',
                 manageGallery: 'Medien verwalten'
+            },
+            homepage: {
+                navLabel: 'Startseite',
+                title: 'Startseite',
+                subtitle: 'Bilder, Titel und Beschreibungen des Hero-Sliders verwalten.',
+                createNew: 'Neue Folie',
+                createTitle: 'Neue Startseiten-Folie',
+                editTitle: 'Startseiten-Folie bearbeiten',
+                empty: 'Es gibt noch keine Startseiten-Folien.',
+                emptyDescription: 'Fügen Sie ein Bild hinzu, damit es im Hero-Slider erscheint.',
+                enabled: 'Aktiv',
+                disabled: 'Inaktiv',
+                table: {
+                    preview: 'Vorschau',
+                    title: 'Titel',
+                    order: 'Reihenfolge',
+                    status: 'Status',
+                    updated: 'Aktualisiert',
+                    actions: 'Aktionen'
+                },
+                actions: {
+                    edit: 'Bearbeiten'
+                },
+                form: {
+                    subtitle: 'Die Bilder werden automatisch für die Startseite optimiert.',
+                    backToList: 'Zurück zur Startseite',
+                    content: 'Folieninhalt',
+                    languageHint: 'Wechseln Sie die Sprache im oberen Menü, um auch die zweite Übersetzung auszufüllen.',
+                    title: 'Titel',
+                    titlePlaceholder: 'Titel über dem Hero-Bild',
+                    description: 'Beschreibung',
+                    descriptionPlaceholder: 'Kurzer Text unter dem Titel',
+                    alt: 'Alternativtext des Bildes',
+                    altPlaceholder: 'Bildbeschreibung für SEO und Barrierefreiheit',
+                    sortOrder: 'Reihenfolge',
+                    sortOrderHelp: 'Eine kleinere Zahl wird zuerst angezeigt.',
+                    visibility: 'Sichtbarkeit',
+                    enabled: 'Im Slider anzeigen',
+                    image: 'Hero-Bild',
+                    imageHelp: 'Verwenden Sie ein hochauflösendes Foto mit horizontaler Bildkomposition.',
+                    uploadImage: 'Bild hochladen',
+                    replaceImage: 'Bild ersetzen',
+                    imageOptimizationHelp: 'Das Bild wird auf 16:7 zugeschnitten und automatisch als WebP mit 480w, 960w und 1920w erzeugt.',
+                    save: 'Folie speichern',
+                    saving: 'Wird gespeichert…'
+                },
+                deleteDialog: {
+                    title: 'Folie löschen?',
+                    description: 'Die Folie wird von der Startseite entfernt.',
+                    confirm: 'Folie löschen',
+                    deleting: 'Wird gelöscht…'
+                },
+                toast: {
+                    created: 'Folie erstellt',
+                    updated: 'Folie aktualisiert',
+                    deleted: 'Folie gelöscht',
+                    saveFailed: 'Die Folie konnte nicht gespeichert werden.',
+                    deleteFailed: 'Die Folie konnte nicht gelöscht werden.'
+                },
+                errors: {
+                    invalidId: 'Ungültige Folien-ID.',
+                    notFound: 'Die Folie wurde nicht gefunden.',
+                    titleRequired: 'Der griechische Titel ist erforderlich.',
+                    imageRequired: 'Ein Bild ist erforderlich.',
+                    saveFailed: 'Beim Speichern der Folie ist ein Fehler aufgetreten.',
+                    deleteFailed: 'Beim Löschen der Folie ist ein Fehler aufgetreten.'
+                }
             },
             events: {
                 title: 'Veranstaltungen verwalten',
@@ -757,6 +1098,7 @@ register('de', () =>
                 video: 'Video',
                 alt: 'Alternativtext',
                 altPlaceholder: 'Kurze Beschreibung',
+                year: 'Jahr',
 
                 tags: 'Tags',
                 noTags: 'Keine Tags',
@@ -786,6 +1128,7 @@ register('de', () =>
                     preview: 'Vorschau',
                     id: 'ID',
                     type: 'Typ',
+                    year: 'Jahr',
                     alt: 'Beschreibung',
                     tags: 'Tags',
                     files: 'Dateien',
@@ -818,7 +1161,10 @@ register('de', () =>
                     details: 'Angaben',
                     detailsHelp: 'Grundlegende Informationen für die öffentliche Galerie.',
                     altHelp: 'Beschreiben Sie den Inhalt kurz für Barrierefreiheit und Suche.',
-                    tagsHelp: 'Mehrere Tags werden durch Kommas getrennt.',
+                    yearHelp: 'Wird, wenn vorhanden, automatisch aus den Bildmetadaten übernommen und kann bearbeitet werden.',
+                    tagNames: 'Tag-Namen',
+                    tagsHelp: 'Mehrere Tags mit Kommas trennen. Halten Sie die Übersetzungen in beiden Sprachen in derselben Reihenfolge.',
+                    languageHint: 'Wechseln Sie oben die Sprache, um Alternativtext und Tags auch in der zweiten Sprache zu erfassen.',
                     media: 'Mediendatei',
                     noPreview: 'Wählen Sie ein Bild oder Video für die Vorschau aus.',
                     selectedFile: 'Ausgewählte Datei',
@@ -992,6 +1338,63 @@ register('de', () =>
                     saveChanges: 'Änderungen speichern'
                 }
             },
+            equipment: {
+                title: 'Materialvermietung',
+                subtitle: 'Mietmaterial und die dazugehörigen Inhalte verwalten.',
+                createNew: 'Neues Mietmaterial',
+                createFirst: 'Ersten Eintrag erstellen',
+                empty: 'Noch kein Mietmaterial vorhanden.',
+                emptyDescription: 'Fügen Sie den ersten Gegenstand zur Vermietung hinzu.',
+
+                table: {
+                    title: 'Titel',
+                    price: 'Preis / Tag',
+                    updated: 'Aktualisiert',
+                    actions: 'Aktionen'
+                },
+
+                actions: {
+                    edit: 'Bearbeiten'
+                },
+
+                deleteDialog: {
+                    title: 'Mietmaterial löschen?',
+                    description: 'Diese Aktion kann nicht rückgängig gemacht werden. Der ausgewählte Eintrag wird dauerhaft gelöscht.',
+                    confirm: 'Mietmaterial löschen',
+                    deleting: 'Wird gelöscht…'
+                },
+
+                toast: {
+                    created: 'Mietmaterial erstellt',
+                    updated: 'Mietmaterial aktualisiert',
+                    deleted: 'Mietmaterial gelöscht',
+                    saveFailed: 'Das Mietmaterial konnte nicht gespeichert werden.',
+                    deleteFailed: 'Das Mietmaterial konnte nicht gelöscht werden.'
+                },
+
+                errors: {
+                    invalidId: 'Ungültige Material-ID.',
+                    invalidData: 'Die Materialdaten sind ungültig.',
+                    notFound: 'Das Mietmaterial wurde nicht gefunden.',
+                    mediaFailed: 'Die Mediendateien konnten nicht verarbeitet werden.',
+                    saveFailed: 'Beim Speichern des Mietmaterials ist ein Fehler aufgetreten.',
+                    deleteFailed: 'Beim Löschen des Mietmaterials ist ein Fehler aufgetreten.'
+                },
+
+                form: {
+                    create: 'Neues Mietmaterial',
+                    edit: 'Mietmaterial bearbeiten',
+                    languageHint: 'Sie bearbeiten die im oberen Menü ausgewählte Sprache. Wechseln Sie die Sprache, um die andere Übersetzung zu erfassen.',
+                    title: 'Titel',
+                    description: 'Kurzbeschreibung',
+                    pricePerDay: 'Preis pro Tag',
+                    priceHint: 'Der Preis wird in CHF pro Miettag angezeigt.',
+                    validationFailed: 'Bitte überprüfen Sie die Felder im Formular.',
+                    save: 'Mietmaterial speichern',
+                    saveChanges: 'Änderungen speichern',
+                    saving: 'Wird gespeichert…'
+                }
+            },
             login: {
                 title: 'CMS Admin Login',
                 username: 'Benutzername',
@@ -1008,7 +1411,9 @@ register('de', () =>
                 date: 'Datum',
                 pickDate: 'Datum auswählen',
                 dateRequired: 'Bitte wählen Sie ein Datum aus',
-                time: 'Uhrzeit',
+                time: 'Startzeit',
+                endTime: 'Endzeit',
+                endTimeHint: 'Optional. Z. B. 23:00 für eine Veranstaltung von 19:00–23:00 Uhr.',
                 location: 'Ort',
                 category: 'Kategorie',
                 priceMembers: 'Mitgliederpreis CHF',
@@ -1033,20 +1438,114 @@ register('de', () =>
             activitiesHeadline: 'Aktivitäten',
             activitiesIntro:
                 'Ziel des Vereins ist die aktive Mitwirkung am kulturellen Leben der griechischen Gemeinde in Rothrist sowie die Pflege und Bewahrung lebendiger Elemente unserer Tradition und Volkskultur – wie Tänze, Lieder, Bräuche und die griechische Sprache – durch Aktionen zu den folgenden Themenschwerpunkten:',
-            sponsorsHeadline: 'Liebenswürdige Sponsoren'
+            activeEvent: 'Nächste Veranstaltung',
+            recentEventsHint: 'Die zuletzt angekündigten Veranstaltungen werden zuerst angezeigt.',
+            sponsorsHeadline: 'Unsere Sponsoren',
+            sponsorsIntro: 'Die Sponsoren werden direkt aus dem Unternehmensverzeichnis des Vereins übernommen.',
+            becomeSponsor: 'Sponsor werden',
+            becomeSponsorHint: 'Unterstützen Sie unsere Vereinsarbeit und präsentieren Sie Ihr Unternehmen in unserer Gemeinschaft.',
+            sponsorInquiryTitle: 'Interesse an einem Sponsoring',
+            sponsorInquiryDescription: 'Senden Sie uns Ihre Kontaktdaten. Wir melden uns bei Ihnen zu den verfügbaren Sponsoring-Möglichkeiten.',
+            sponsorInquiryPlaceholder: 'Erzählen Sie uns kurz etwas über Ihr Unternehmen oder die gewünschte Zusammenarbeit.',
+            sponsorInquirySend: 'Anfrage senden',
+            sponsorInquirySending: 'Wird gesendet…',
+            sponsorInquirySuccess: 'Ihre Sponsoring-Anfrage wurde gesendet. Vielen Dank!',
+            sponsorInquiryError: 'Die Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut.',
+            sponsorInquiryEmailPrefix: 'Neue Sponsoring-Anfrage über die Startseite.'
         },
         events: {
             headline: 'Veranstaltungen',
             upcoming: 'Bevorstehende Veranstaltungen',
             past: 'Vergangene Veranstaltungen',
+            active: 'Aktiv / bevorstehend',
+            time: 'Uhrzeit',
             readMore: 'Mehr lesen'
+        },
+        verein: {
+            eyebrow: 'Griechischer Verein Hellas',
+            headline: 'Der Verein',
+            intro: 'Der Griechische Verein Hellas in Rothrist wurde 2019 gegründet, um die griechische Sprache, Traditionen und Kultur in der Schweiz zu pflegen und zu fördern.',
+            facts: {
+                foundedLabel: 'Gründungsjahr',
+                baseLabel: 'Sitz',
+                membersLabel: 'Mitgliederzahl',
+                membersPending: 'Wird demnächst ergänzt'
+            },
+            board: {
+                eyebrow: 'Vorstand',
+                title: 'Unser Vereinsvorstand',
+                description: 'Die Vorstandsmitglieder des Griechischen Vereins Hellas.',
+                roles: {
+                    president: 'Präsident',
+                    vicePresident: 'Vizepräsident',
+                    secretary: 'Sekretärin',
+                    treasurer: 'Kassier'
+                }
+            },
+            mission: {
+                title: 'Zweck und Vereinsleben',
+                text: 'Der Verein unterstützt die griechische Gemeinschaft, organisiert kulturelle und gesellschaftliche Aktivitäten und trägt zur Pflege von Sprache, Musik, Tänzen, Bräuchen und dem Austausch zwischen den Mitgliedern bei.'
+            },
+            membersArea: {
+                title: 'Mitgliederbereich',
+                description: 'Hier wird künftig Material bereitgestellt, das nur für Mitglieder bestimmt ist. Ein geschützter Zugang kann aktiviert werden, sobald eine Anmeldung für Mitglieder eingerichtet ist.',
+                materialTitle: 'Material für Mitglieder',
+                financialStatements: 'Jahres- und Finanzberichte',
+                minutes: 'Versammlungsprotokolle',
+                documents: 'Dokumente und Mitteilungen',
+                placeholder: 'Platzhalter für zukünftige geschützte Mitgliederunterlagen.'
+            }
+        },
+        school: {
+            headline: 'Griechische Schule',
+            intro: 'Ein Ort für Sprache, Kultur und die Verbindung der Kinder mit ihrem griechischen Erbe. Die detaillierten Schuldaten werden ergänzt, sobald sie final bestätigt sind.',
+            facts: {
+                address: 'Adresse',
+                classrooms: 'Unterrichtsräume',
+                ageGroups: 'Altersgruppen',
+                pending: 'Wird demnächst ergänzt'
+            },
+            photos: {
+                title: 'Fotos der Schule',
+                description: 'Hier können Fotos der Unterrichtsräume, Aktivitäten und Schulveranstaltungen ergänzt werden.',
+                placeholder: 'Foto'
+            },
+            form: {
+                title: 'Interesse / Anmeldung',
+                description: 'Eltern können das Formular ausfüllen, damit wir die Angaben des Kindes erhalten und sie zur Anmeldung kontaktieren können.',
+                parentName: 'Name Elternteil / Erziehungsberechtigte Person',
+                childName: 'Name des Kindes',
+                childBirthDate: 'Geburtsdatum des Kindes',
+                languageLevel: 'Griechischkenntnisse',
+                languageLevelPlaceholder: 'z. B. Anfänger, versteht Griechisch, schreibt noch nicht',
+                message: 'Zusätzliche Informationen',
+                consent: 'Ich bin damit einverstanden, dass die obigen Angaben ausschliesslich zur Kontaktaufnahme bezüglich der Griechischen Schule verwendet werden.',
+                submit: 'Anmeldung senden',
+                sending: 'Wird gesendet…',
+                success: 'Die Anmeldung wurde gesendet. Wir werden Sie kontaktieren.',
+                error: 'Die Anmeldung konnte nicht gesendet werden. Bitte versuchen Sie es erneut.'
+            }
         },
         links: {
             headline: 'Nützliche Links',
             subtitle: 'Links, die für unsere Gemeinschaft nützlich sein könnten.'
         },
         gallery: {
-            headline: 'Fotos und Videos'
+            headline: 'Fotos und Videos',
+            itemSingular: 'Medieneintrag',
+            itemPlural: 'Medieneinträge',
+            all: 'Alle',
+            groupByYear: 'Nach Jahr gruppieren',
+            unknownYear: 'Ohne Jahr',
+            empty: 'Noch keine Medien vorhanden.',
+            emptyFilter: 'Keine Medien für diesen Filter.',
+            clearFilter: 'Filter zurücksetzen',
+            openItem: 'Öffnen',
+            close: 'Schliessen',
+            previous: 'Vorheriges Medium',
+            next: 'Nächstes Medium',
+            loadingImage: 'Bild wird geladen…',
+            imageLoadFailed: 'Bild konnte nicht geladen werden.'
         },
         businesses: {
             headline: 'Griechischsprachige Unternehmen',
@@ -1070,18 +1569,62 @@ register('de', () =>
         contact: {
             headline: 'Kontakt',
             formHeadline: 'Schicken Sie uns eine Nachricht',
+            formSubtitle: 'Füllen Sie das Formular aus. Wir melden uns so bald wie möglich bei Ihnen.',
             name: 'Name',
-            email: 'Email',
+            namePlaceholder: 'Ihr Vor- und Nachname',
+            email: 'E-Mail',
+            emailPlaceholder: 'name@example.com',
             phone: 'Telefon',
+            phonePlaceholder: '+41 …',
             message: 'Nachricht',
+            messagePlaceholder: 'Wie können wir Ihnen helfen?',
             send: 'Senden',
+            sending: 'Wird gesendet…',
             address: 'Adresse',
             phoneContact: 'Telefonischer Kontakt',
-            followUs: 'Folgen Sie uns'
+            followUs: 'Folgen Sie uns',
+            successMessage: 'Vielen Dank. Ihre Nachricht wurde erfolgreich gesendet.',
+            errorMessage: 'Die Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es später erneut.',
+            securityTitle: 'Sicherheitsprüfung',
+            securityDescription: 'Cloudflare Turnstile schützt das Formular vor automatisierten Spam-Nachrichten.',
+            openInMaps: 'In OpenStreetMap öffnen',
+            validation: {
+                form: 'Bitte überprüfen Sie die markierten Felder.',
+                name: 'Bitte geben Sie Ihren Namen ein.',
+                nameLong: 'Der Name ist zu lang.',
+                email: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.',
+                emailLong: 'Die E-Mail-Adresse ist zu lang.',
+                phone: 'Bitte geben Sie eine gültige Telefonnummer ein.',
+                phoneLong: 'Die Telefonnummer ist zu lang.',
+                message: 'Bitte geben Sie eine Nachricht mit mindestens 10 Zeichen ein.',
+                messageLong: 'Die Nachricht ist zu lang.',
+                rateLimit: 'Zu viele Nachrichten. Bitte versuchen Sie es später erneut.',
+                captcha: 'Bitte schließen Sie die Sicherheitsprüfung ab.',
+                captchaFailed: 'Die Sicherheitsprüfung ist fehlgeschlagen oder abgelaufen. Bitte versuchen Sie es erneut.',
+                captchaConfig: 'Die Sicherheitsprüfung ist noch nicht konfiguriert.'
+            }
         },
         equipment: {
             headline: 'Materialvermietung',
-            description: 'Bald werden Informationen zur Mietausrüstung verfügbar sein.'
+            eyebrow: 'Material des Vereins',
+            description: 'Entdecken Sie das verfügbare Mietmaterial des Vereins und senden Sie uns bei Interesse eine Anfrage.',
+            perDay: 'pro Tag',
+            details: 'Mehr Informationen',
+            interested: 'Ich bin interessiert',
+            back: 'Zurück zum Mietmaterial',
+            empty: 'Zurzeit ist kein Mietmaterial verfügbar.',
+            inquiry: {
+                title: 'Interesse an einer Miete',
+                description: 'Senden Sie uns Ihre Kontaktdaten. Wir melden uns bei Ihnen bezüglich der Verfügbarkeit.',
+                from: 'Gewünschtes Datum von',
+                until: 'Gewünschtes Datum bis',
+                message: 'Nachricht / Details',
+                messagePlaceholder: 'Teilen Sie uns mit, was Sie benötigen oder welche weiteren Informationen wichtig sind.',
+                send: 'Anfrage senden',
+                sending: 'Wird gesendet…',
+                success: 'Ihre Mietanfrage wurde erfolgreich gesendet.',
+                error: 'Die Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut.'
+            }
         },
         church: {
             headline: 'Kirchenprogramm Olten',
@@ -1343,7 +1886,10 @@ register('de', () =>
             delete: 'Löschen',
             published: 'Veröffentlicht',
             draft: 'Entwurf',
-            validationFailed: 'Bitte überprüfen Sie die Formularfelder'
+            validationFailed: 'Bitte überprüfen Sie die Formularfelder',
+            previous: 'Zurück',
+            next: 'Weiter',
+            slide: 'Folie'
         }
     })
 );

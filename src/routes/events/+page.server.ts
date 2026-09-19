@@ -1,25 +1,22 @@
 import {listEvents} from '$lib/server/cms/eventsStore';
-
-function eventTimestamp(event: {date?: string; time?: string}) {
-    const date = event.date || '';
-    const time = event.time || '00:00';
-
-    const timestamp = new Date(`${date}T${time}`).getTime();
-
-    return Number.isFinite(timestamp) ? timestamp : 0;
-}
+import {
+    compareEventsNewestFirst,
+    compareEventsSoonestFirst,
+    isEventUpcoming,
+    zurichNowKey
+} from '$lib/cms/events/time';
 
 export const load = async () => {
     const events = await listEvents();
-    const now = Date.now();
+    const nowKey = zurichNowKey();
 
     const upcoming = events
-        .filter((event) => eventTimestamp(event) >= now)
-        .sort((a, b) => eventTimestamp(a) - eventTimestamp(b));
+        .filter((event) => isEventUpcoming(event, nowKey))
+        .sort(compareEventsSoonestFirst);
 
     const past = events
-        .filter((event) => eventTimestamp(event) < now)
-        .sort((a, b) => eventTimestamp(b) - eventTimestamp(a));
+        .filter((event) => !isEventUpcoming(event, nowKey))
+        .sort(compareEventsNewestFirst);
 
     return {
         upcoming,

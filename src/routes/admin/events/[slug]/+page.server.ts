@@ -67,6 +67,7 @@ function normalizeEventForForm(raw: unknown): EventPayload {
         description: localizedText(source.description ?? source.excerpt),
         date: typeof source.date === 'string' ? source.date : '',
         time: typeof source.time === 'string' ? source.time : '',
+        endTime: typeof source.endTime === 'string' ? source.endTime : '',
         location: typeof source.location === 'string' ? source.location : '',
         category: normalizeCategory(source.category),
         priceMembers: parsePrice(source.priceMembers),

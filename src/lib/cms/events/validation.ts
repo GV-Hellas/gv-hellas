@@ -25,6 +25,7 @@ export const eventPayloadSchema = z.object({
 
     date: z.string().trim().min(1, 'Required'),
     time: z.string().trim().min(1, 'Required'),
+    endTime: z.string().trim().optional().default(''),
     location: z.string().trim().min(1, 'Required'),
 
     category: z.string().refine(

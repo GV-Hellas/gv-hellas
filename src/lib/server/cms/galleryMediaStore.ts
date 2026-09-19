@@ -1,10 +1,9 @@
-import sharp from 'sharp';
+import sharp, {type Metadata} from 'sharp';
 
 import {uploadToR2} from '$lib/server/r2';
 import {prepareUploadedMediaFile} from '$lib/server/mediaProcessing';
 
 const MAX_FILE_SIZE_BYTES = 250 * 1024 * 1024;
-
 const IMAGE_QUALITY = 78;
 
 function safeId(value: string) {
@@ -55,6 +54,32 @@ async function imageVariant(input: Buffer, width: number) {
     };
 }
 
+function yearFromMetadata(metadata: Metadata) {
+    const blobs = [metadata.exif, metadata.xmp, metadata.iptc].filter(Boolean) as Buffer[];
+
+    const preferredPatterns = [
+        /DateTimeOriginal[^0-9]{0,96}((?:19|20)\d{2})[-:]/i,
+        /DateTimeDigitized[^0-9]{0,96}((?:19|20)\d{2})[-:]/i,
+        /CreateDate[^0-9]{0,96}((?:19|20)\d{2})[-:]/i,
+        /DateCreated[^0-9]{0,96}((?:19|20)\d{2})[-:]/i,
+        /ModifyDate[^0-9]{0,96}((?:19|20)\d{2})[-:]/i
+    ];
+
+    for (const blob of blobs) {
+        const text = blob.toString('latin1');
+
+        for (const pattern of preferredPatterns) {
+            const match = text.match(pattern);
+            if (match?.[1]) return Number(match[1]);
+        }
+
+        const generic = text.match(/\b((?:19|20)\d{2})[-:](?:0[1-9]|1[0-2])[-:](?:0[1-9]|[12]\d|3[01])/);
+        if (generic?.[1]) return Number(generic[1]);
+    }
+
+    return null;
+}
+
 function fileFromBuffer(buffer: Buffer, name: string, type: string) {
     // @ts-ignore
     return new File([buffer], name, {type});
@@ -62,21 +87,23 @@ function fileFromBuffer(buffer: Buffer, name: string, type: string) {
 
 export type SavedGalleryMedia =
     | {
-    type: 'image';
-    src480: string;
-    src960: string;
-    videoSrc: '';
-    width: number | null;
-    height: number | null;
-}
+          type: 'image';
+          src480: string;
+          src960: string;
+          videoSrc: '';
+          year: number | null;
+          width: number | null;
+          height: number | null;
+      }
     | {
-    type: 'video';
-    src480: '';
-    src960: '';
-    videoSrc: string;
-    width: null;
-    height: null;
-};
+          type: 'video';
+          src480: '';
+          src960: '';
+          videoSrc: string;
+          year: null;
+          width: null;
+          height: null;
+      };
 
 export async function saveGalleryMedia(file: File, itemId: string): Promise<SavedGalleryMedia> {
     assertValidInputFile(file);
@@ -91,6 +118,8 @@ export async function saveGalleryMedia(file: File, itemId: string): Promise<Save
 
     if (file.type.startsWith('image/')) {
         const source = await fileToBuffer(file);
+        const sourceMetadata = await sharp(source).metadata();
+        const year = yearFromMetadata(sourceMetadata);
         const variant480 = await imageVariant(source, 480);
         const variant960 = await imageVariant(source, 960);
 
@@ -114,6 +143,7 @@ export async function saveGalleryMedia(file: File, itemId: string): Promise<Save
             src480: uploaded480.url,
             src960: uploaded960.url,
             videoSrc: '',
+            year,
             width: variant960.width,
             height: variant960.height
         };
@@ -136,6 +166,7 @@ export async function saveGalleryMedia(file: File, itemId: string): Promise<Save
         src480: '',
         src960: '',
         videoSrc: uploaded.url,
+        year: null,
         width: null,
         height: null
     };

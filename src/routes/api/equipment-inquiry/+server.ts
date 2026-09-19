@@ -1,0 +1,180 @@
+import {json, type RequestHandler} from '@sveltejs/kit';
+import {env} from '$env/dynamic/private';
+import {Resend} from 'resend';
+import {z} from 'zod';
+
+import {verifyTurnstile} from '$lib/server/turnstile';
+import {getEquipmentBySlug} from '$lib/server/cms/equipmentStore';
+
+const schema = z.object({
+    equipmentSlug: z.string().trim().min(1).max(200),
+    name: z.string().trim().min(2).max(120),
+    email: z.string().trim().email().max(254),
+    phone: z.string().trim().max(50).optional().default(''),
+    rentalFrom: z.string().trim().max(20).optional().default(''),
+    rentalUntil: z.string().trim().max(20).optional().default(''),
+    message: z.string().trim().max(3000).optional().default(''),
+    website: z.string().trim().max(200).optional().default(''),
+    turnstileToken: z.string().trim().min(1).max(2048)
+}).refine(
+    (value) => !value.rentalFrom || !value.rentalUntil || value.rentalUntil >= value.rentalFrom,
+    {path: ['rentalUntil'], message: 'Rental end date must not be before the start date.'}
+);
+
+type Inquiry = z.infer<typeof schema>;
+type RateBucket = {count: number; resetAt: number};
+
+const rateLimits = new Map<string, RateBucket>();
+const WINDOW_MS = 15 * 60 * 1000;
+const MAX_REQUESTS = 5;
+
+function rateLimited(ip: string) {
+    const now = Date.now();
+    const current = rateLimits.get(ip);
+
+    if (!current || current.resetAt <= now) {
+        rateLimits.set(ip, {count: 1, resetAt: now + WINDOW_MS});
+        return false;
+    }
+
+    current.count += 1;
+    rateLimits.set(ip, current);
+    return current.count > MAX_REQUESTS;
+}
+
+function escapeHtml(value: string) {
+    return value
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+}
+
+function recipients() {
+    return (env.CONTACT_TO_EMAIL || 'info@gv-hellas.ch')
+        .split(',')
+        .map((value) => value.trim())
+        .filter(Boolean);
+}
+
+function textBody(data: Inquiry, titleEl: string, titleDe: string) {
+    return [
+        'New equipment rental inquiry',
+        '',
+        `Equipment: ${titleEl}${titleDe && titleDe !== titleEl ? ` / ${titleDe}` : ''}`,
+        `Slug: ${data.equipmentSlug}`,
+        `Name: ${data.name}`,
+        `Email: ${data.email}`,
+        `Phone: ${data.phone || '-'}`,
+        `Rental from: ${data.rentalFrom || '-'}`,
+        `Rental until: ${data.rentalUntil || '-'}`,
+        '',
+        'Message:',
+        data.message || '-'
+    ].join('\n');
+}
+
+function htmlBody(data: Inquiry, titleEl: string, titleDe: string) {
+    const equipment = `${titleEl}${titleDe && titleDe !== titleEl ? ` / ${titleDe}` : ''}`;
+    const rows = [
+        ['Equipment', equipment],
+        ['Slug', data.equipmentSlug],
+        ['Name', data.name],
+        ['Email', data.email],
+        ['Phone', data.phone || '-'],
+        ['Rental from', data.rentalFrom || '-'],
+        ['Rental until', data.rentalUntil || '-']
+    ];
+
+    return `
+        <div style="font-family:Arial,sans-serif;line-height:1.5;color:#111827">
+            <h2>New equipment rental inquiry</h2>
+            <table cellpadding="6" cellspacing="0" style="border-collapse:collapse">
+                ${rows.map(([label, value]) => `<tr><td><strong>${escapeHtml(label)}</strong></td><td>${escapeHtml(value)}</td></tr>`).join('')}
+            </table>
+            <hr style="margin:20px 0;border:0;border-top:1px solid #e5e7eb" />
+            <p><strong>Message</strong></p>
+            <p>${escapeHtml(data.message || '-').replaceAll('\n', '<br>')}</p>
+        </div>
+    `;
+}
+
+export const POST: RequestHandler = async ({request, getClientAddress, url}) => {
+    let body: unknown;
+
+    try {
+        body = await request.json();
+    } catch {
+        return json({ok: false, message: 'Invalid request body.'}, {status: 400});
+    }
+
+    const parsed = schema.safeParse(body);
+
+    if (!parsed.success) {
+        return json({ok: false, message: 'Please check the inquiry form.'}, {status: 400});
+    }
+
+    const data = parsed.data;
+    if (data.website) return json({ok: true});
+
+    const equipment = await getEquipmentBySlug(data.equipmentSlug);
+
+    if (!equipment) {
+        return json({ok: false, message: 'Equipment item not found.'}, {status: 404});
+    }
+
+    const ip = getClientAddress();
+
+    if (rateLimited(ip)) {
+        return json({ok: false, message: 'Too many requests. Please try again later.'}, {status: 429});
+    }
+
+    const turnstile = await verifyTurnstile({
+        token: data.turnstileToken,
+        remoteIp: ip,
+        expectedHostname: url.hostname,
+        expectedAction: 'equipment_inquiry'
+    });
+
+    if (!turnstile.ok) {
+        if (turnstile.status === 500) console.error(turnstile.reason);
+        return json(
+            {ok: false, code: turnstile.code, message: 'Security verification failed.'},
+            {status: turnstile.status}
+        );
+    }
+
+    if (!env.RESEND_API_KEY || !env.CONTACT_FROM_EMAIL) {
+        console.error('Equipment inquiry email delivery is not configured');
+        return json({ok: false, message: 'Email delivery is not configured.'}, {status: 500});
+    }
+
+    const to = recipients();
+
+    if (!to.length) {
+        return json({ok: false, message: 'Email recipient is not configured.'}, {status: 500});
+    }
+
+    try {
+        const resend = new Resend(env.RESEND_API_KEY);
+        const {error} = await resend.emails.send({
+            from: env.CONTACT_FROM_EMAIL,
+            to,
+            replyTo: data.email,
+            subject: `Equipment rental inquiry: ${equipment.title.de || equipment.title.el}`,
+            text: textBody(data, equipment.title.el, equipment.title.de),
+            html: htmlBody(data, equipment.title.el, equipment.title.de)
+        });
+
+        if (error) {
+            console.error('Equipment inquiry Resend error:', error);
+            return json({ok: false, message: 'The inquiry could not be sent.'}, {status: 502});
+        }
+
+        return json({ok: true});
+    } catch (error) {
+        console.error('Equipment inquiry email error:', error);
+        return json({ok: false, message: 'The inquiry could not be sent.'}, {status: 502});
+    }
+};

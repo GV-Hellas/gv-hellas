@@ -1,20 +1,12 @@
 import {supabase} from '$lib/server/supabaseClient';
+import type {
+    GalleryItem,
+    GalleryLocalizedText,
+    GalleryMediaType,
+    GalleryTag
+} from '$lib/cms/gallery/types';
 
-export type GalleryMediaType = 'image' | 'video';
-
-export type GalleryItem = {
-    id: string;
-    type: GalleryMediaType;
-    src480: string;
-    src960: string;
-    videoSrc: string;
-    alt: string;
-    tags: string[];
-    width: number | null;
-    height: number | null;
-    createdAt?: string;
-    updatedAt?: string;
-};
+export type {GalleryItem, GalleryLocalizedText, GalleryMediaType, GalleryTag};
 
 type GalleryItemRow = {
     id: string;
@@ -22,7 +14,9 @@ type GalleryItemRow = {
     src_480: string | null;
     src_960: string | null;
     video_src: string | null;
-    alt: string | null;
+    alt_el: string | null;
+    alt_de: string | null;
+    year: number | null;
     width: number | null;
     height: number | null;
     created_at: string | null;
@@ -31,7 +25,8 @@ type GalleryItemRow = {
 
 type GalleryTagRow = {
     id: number;
-    name: string;
+    name_el: string | null;
+    name_de: string | null;
 };
 
 type GalleryItemTagRow = {
@@ -47,15 +42,33 @@ function normalizeType(value: unknown): GalleryMediaType {
     return value === 'video' ? 'video' : 'image';
 }
 
-function rowToGalleryItem(row: GalleryItemRow, tags: string[] = []): GalleryItem {
+function localizedText(el: unknown, de: unknown): GalleryLocalizedText {
+    const greek = String(el || '').trim();
+    const german = String(de || '').trim();
+
+    return {
+        el: greek || german,
+        de: german || greek
+    };
+}
+
+function rowToGalleryTag(row: GalleryTagRow): GalleryTag {
+    return {
+        id: Number(row.id),
+        name: localizedText(row.name_el, row.name_de)
+    };
+}
+
+function rowToGalleryItem(row: GalleryItemRow, tags: GalleryTag[] = []): GalleryItem {
     return {
         id: row.id,
         type: normalizeType(row.type),
         src480: row.src_480 || '',
         src960: row.src_960 || '',
         videoSrc: row.video_src || '',
-        alt: row.alt || '',
+        alt: localizedText(row.alt_el, row.alt_de),
         tags,
+        year: Number.isInteger(row.year) ? Number(row.year) : null,
         width: row.width ?? null,
         height: row.height ?? null,
         createdAt: row.created_at || undefined,
@@ -75,13 +88,17 @@ function validateGalleryItem(item: GalleryItem) {
     if (item.type === 'video' && !item.videoSrc) {
         throw new Error('Gallery video requires videoSrc');
     }
+
+    if (item.year !== null && (!Number.isInteger(item.year) || item.year < 1800 || item.year > 2200)) {
+        throw new Error('Gallery year is invalid');
+    }
 }
 
 async function loadTagMap() {
     const {data: tags, error: tagsError} = await supabase
         .from('gallery_tags')
-        .select('id, name')
-        .order('name', {ascending: true});
+        .select('id, name_el, name_de')
+        .order('name_el', {ascending: true});
 
     if (tagsError) {
         throw formatSupabaseError('Loading gallery tags failed', tagsError);
@@ -95,21 +112,22 @@ async function loadTagMap() {
         throw formatSupabaseError('Loading gallery item tags failed', joinsError);
     }
 
-    const tagById = new Map<number, string>();
+    const tagById = new Map<number, GalleryTag>();
 
-    for (const tag of (tags || []) as GalleryTagRow[]) {
-        tagById.set(Number(tag.id), tag.name);
+    for (const row of (tags || []) as GalleryTagRow[]) {
+        const tag = rowToGalleryTag(row);
+        tagById.set(tag.id, tag);
     }
 
-    const tagsByItemId = new Map<string, string[]>();
+    const tagsByItemId = new Map<string, GalleryTag[]>();
 
     for (const join of (joins || []) as GalleryItemTagRow[]) {
-        const tagName = tagById.get(Number(join.tag_id));
+        const tag = tagById.get(Number(join.tag_id));
 
-        if (!tagName) continue;
+        if (!tag) continue;
 
         const existing = tagsByItemId.get(join.item_id) || [];
-        existing.push(tagName);
+        existing.push(tag);
         tagsByItemId.set(join.item_id, existing);
     }
 
@@ -119,7 +137,8 @@ async function loadTagMap() {
 export async function listGallery(): Promise<GalleryItem[]> {
     const {data, error} = await supabase
         .from('gallery_items')
-        .select('*')
+        .select('id, type, src_480, src_960, video_src, alt_el, alt_de, year, width, height, created_at, updated_at')
+        .order('year', {ascending: false, nullsFirst: false})
         .order('created_at', {ascending: false});
 
     if (error) {
@@ -133,19 +152,19 @@ export async function listGallery(): Promise<GalleryItem[]> {
     );
 }
 
-export async function allGalleryTags(): Promise<string[]> {
+export async function allGalleryTags(): Promise<GalleryTag[]> {
     const {data, error} = await supabase
         .from('gallery_tags')
-        .select('name')
-        .order('name', {ascending: true});
+        .select('id, name_el, name_de')
+        .order('name_el', {ascending: true});
 
     if (error) {
         throw formatSupabaseError('Listing gallery tags failed', error);
     }
 
-    return (data || [])
-        .map((row) => String(row.name || '').trim())
-        .filter(Boolean);
+    return ((data || []) as GalleryTagRow[])
+        .map(rowToGalleryTag)
+        .filter((tag) => tag.name.el || tag.name.de);
 }
 
 export async function getGalleryById(id: string): Promise<GalleryItem | null> {
@@ -155,7 +174,7 @@ export async function getGalleryById(id: string): Promise<GalleryItem | null> {
 
     const {data, error} = await supabase
         .from('gallery_items')
-        .select('*')
+        .select('id, type, src_480, src_960, video_src, alt_el, alt_de, year, width, height, created_at, updated_at')
         .eq('id', cleanId)
         .maybeSingle<GalleryItemRow>();
 
@@ -170,28 +189,42 @@ export async function getGalleryById(id: string): Promise<GalleryItem | null> {
     return rowToGalleryItem(data, tagMap.get(data.id) || []);
 }
 
-async function ensureTag(name: string) {
-    const cleanName = name.trim();
+function normalizeTagInput(tag: Omit<GalleryTag, 'id'> | GalleryTag): GalleryLocalizedText | null {
+    const name = localizedText(tag.name?.el, tag.name?.de);
 
-    if (!cleanName) return null;
+    if (!name.el && !name.de) return null;
+
+    return name;
+}
+
+async function ensureTag(input: Omit<GalleryTag, 'id'> | GalleryTag) {
+    const name = normalizeTagInput(input);
+
+    if (!name) return null;
 
     const {data, error} = await supabase
         .from('gallery_tags')
         .upsert(
-            {name: cleanName},
-            {onConflict: 'name'}
+            {
+                name_el: name.el,
+                name_de: name.de,
+                // Keep the legacy column unique during the transition while the
+                // bilingual pair becomes the canonical identity.
+                name: name.el === name.de ? name.el : `${name.el} / ${name.de}`
+            },
+            {onConflict: 'name_el,name_de'}
         )
-        .select('id, name')
+        .select('id, name_el, name_de')
         .single<GalleryTagRow>();
 
     if (error) {
-        throw formatSupabaseError(`Saving gallery tag "${cleanName}" failed`, error);
+        throw formatSupabaseError(`Saving gallery tag "${name.el || name.de}" failed`, error);
     }
 
     return data;
 }
 
-async function replaceGalleryItemTags(itemId: string, tags: string[]) {
+async function replaceGalleryItemTags(itemId: string, tags: GalleryTag[]) {
     const {error: deleteError} = await supabase
         .from('gallery_item_tags')
         .delete()
@@ -201,10 +234,20 @@ async function replaceGalleryItemTags(itemId: string, tags: string[]) {
         throw formatSupabaseError(`Clearing tags for gallery item "${itemId}" failed`, deleteError);
     }
 
-    const uniqueTags = [...new Set(tags.map((tag) => tag.trim()).filter(Boolean))];
+    const unique = new Map<string, GalleryTag>();
 
-    for (const tagName of uniqueTags) {
-        const tag = await ensureTag(tagName);
+    for (const tag of tags) {
+        const name = normalizeTagInput(tag);
+        if (!name) continue;
+
+        unique.set(`${name.el.toLocaleLowerCase()}\u0000${name.de.toLocaleLowerCase()}`, {
+            id: tag.id || 0,
+            name
+        });
+    }
+
+    for (const tagInput of unique.values()) {
+        const tag = await ensureTag(tagInput);
 
         if (!tag?.id) continue;
 
@@ -222,7 +265,7 @@ async function replaceGalleryItemTags(itemId: string, tags: string[]) {
 
         if (joinError) {
             throw formatSupabaseError(
-                `Linking gallery item "${itemId}" to tag "${tagName}" failed`,
+                `Linking gallery item "${itemId}" to tag "${tag.name_el || tag.name_de}" failed`,
                 joinError
             );
         }
@@ -233,6 +276,7 @@ export async function upsertGallery(item: GalleryItem): Promise<GalleryItem> {
     validateGalleryItem(item);
 
     const id = item.id.trim();
+    const normalizedAlt = localizedText(item.alt?.el, item.alt?.de);
 
     const row = {
         id,
@@ -240,7 +284,11 @@ export async function upsertGallery(item: GalleryItem): Promise<GalleryItem> {
         src_480: item.type === 'image' ? item.src480 || '' : '',
         src_960: item.type === 'image' ? item.src960 || item.src480 || '' : '',
         video_src: item.type === 'video' ? item.videoSrc || '' : '',
-        alt: item.alt || '',
+        alt_el: normalizedAlt.el,
+        alt_de: normalizedAlt.de,
+        // Keep the legacy field populated until it is intentionally removed from Supabase.
+        alt: normalizedAlt.el || normalizedAlt.de,
+        year: item.year,
         width: item.width ?? null,
         height: item.height ?? null,
         updated_at: new Date().toISOString()
@@ -249,7 +297,7 @@ export async function upsertGallery(item: GalleryItem): Promise<GalleryItem> {
     const {data, error} = await supabase
         .from('gallery_items')
         .upsert(row, {onConflict: 'id'})
-        .select('*')
+        .select('id, type, src_480, src_960, video_src, alt_el, alt_de, year, width, height, created_at, updated_at')
         .single<GalleryItemRow>();
 
     if (error) {

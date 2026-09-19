@@ -2,9 +2,10 @@
     import {t} from '$lib/i18n';
     import type {Lang, StoredEvent, EventMedia} from '$lib/cms/events/types';
 
-    let {event, lang = 'el'} = $props<{
+    let {event, lang = 'el', featured = false} = $props<{
         event: StoredEvent;
         lang?: Lang;
+        featured?: boolean;
     }>();
 
     function firstMedia(event: StoredEvent): EventMedia | null {
@@ -42,9 +43,14 @@
 
 <a
         href={`/events/${event.slug}`}
-        class="group block overflow-hidden rounded-2xl border border-border bg-card text-card-foreground shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
+        class={`group block overflow-hidden rounded-2xl border bg-card text-card-foreground shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg ${featured ? 'border-primary/40 ring-2 ring-primary/15' : 'border-border'}`}
 >
     <div class="relative aspect-4/3 overflow-hidden bg-muted">
+        {#if featured}
+            <div class="absolute left-3 top-3 z-10 rounded-full bg-primary px-3 py-1 text-xs font-bold text-primary-foreground shadow-sm">
+                {$t('events.active')}
+            </div>
+        {/if}
         {#if cardMedia?.type === 'image' && cardMedia.url}
             <img
                     src={cardMedia.url}
@@ -72,7 +78,7 @@
         <div class="text-sm font-medium text-muted-foreground">
             {event.date}
             {#if event.time}
-                · {event.time}
+                · {event.time}{event.endTime ? `–${event.endTime}` : ''}
             {/if}
         </div>
 

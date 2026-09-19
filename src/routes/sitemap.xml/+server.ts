@@ -2,11 +2,14 @@ import type {RequestHandler} from './$types';
 
 import {listBusinesses} from '$lib/server/cms/businessStore';
 import {listEvents} from '$lib/server/cms/eventsStore';
+import {listEquipment} from '$lib/server/cms/equipmentStore';
 
 const SITE_URL = 'https://gv-hellas.ch';
 
 const STATIC_ROUTES = [
     '/',
+    '/verein',
+    '/school',
     '/events',
     '/gallery',
     '/businesses',
@@ -38,13 +41,15 @@ function urlEntry(pathname: string, lastModified?: string) {
 }
 
 export const GET: RequestHandler = async () => {
-    const [eventsResult, businessesResult] = await Promise.allSettled([
+    const [eventsResult, businessesResult, equipmentResult] = await Promise.allSettled([
         listEvents(),
-        listBusinesses()
+        listBusinesses(),
+        listEquipment()
     ]);
 
     const events = eventsResult.status === 'fulfilled' ? eventsResult.value : [];
     const businesses = businessesResult.status === 'fulfilled' ? businessesResult.value : [];
+    const equipment = equipmentResult.status === 'fulfilled' ? equipmentResult.value : [];
 
     const entries = [
         ...STATIC_ROUTES.map((pathname) => urlEntry(pathname)),
@@ -53,6 +58,9 @@ export const GET: RequestHandler = async () => {
         ),
         ...businesses.map((business) =>
             urlEntry(`/businesses/${encodeURIComponent(business.slug)}`, business.updatedAt)
+        ),
+        ...equipment.map((item) =>
+            urlEntry(`/equipment/${encodeURIComponent(item.slug)}`, item.updatedAt)
         )
     ];
 

@@ -46,7 +46,7 @@
     <!-- NEW (current) schedule -->
     <article class="rounded-2xl border border-slate-200/70 bg-white/70 backdrop-blur shadow-sm">
         <div class="p-6 sm:p-8">
-            <!-- Header block (keep your UI/typography) -->
+            <!-- Header block -->
             <div class="relative">
                 <div class="float-left text-left space-y-1">
                     <div class="space-y-1">
@@ -277,7 +277,7 @@
     {#if showPrevious}
         <article class="rounded-2xl border border-slate-200/70 bg-white/70 backdrop-blur shadow-sm">
             <div class="p-6 sm:p-8">
-                <!-- Header block (reuse your UI) -->
+                <!-- Header block -->
                 <div class="relative">
                     <div class="float-left text-left space-y-1">
                         <div class="space-y-1">

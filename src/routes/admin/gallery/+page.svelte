@@ -21,22 +21,7 @@
     import FileImageIcon from '@lucide/svelte/icons/file-image';
 
     import {cn} from '$lib/utils.js';
-
-    type Lang = 'el' | 'de';
-
-    type GalleryItem = {
-        id: string;
-        type: 'image' | 'video';
-        src480: string;
-        src960: string;
-        videoSrc: string;
-        alt: string;
-        tags: string[];
-        width: number | null;
-        height: number | null;
-        createdAt?: string;
-        updatedAt?: string;
-    };
+    import type {GalleryItem, GalleryLang, GalleryLocalizedText, GalleryTag} from '$lib/cms/gallery/types';
 
     type PageData = {
         items: GalleryItem[];
@@ -55,7 +40,7 @@
     let deleteTarget = $state<GalleryItem | null>(null);
     let deleting = $state(false);
 
-    const lang = $derived(($locale || 'el') as Lang);
+    const lang = $derived(($locale || 'el') as GalleryLang);
 
     function text(key: string, fallback: string) {
         const value = $t(key);
@@ -66,8 +51,17 @@
         return item.type === 'video' ? item.videoSrc : item.src480 || item.src960;
     }
 
+    function localized(value: GalleryLocalizedText | undefined) {
+        if (!value) return '';
+        return value[lang] || value.el || value.de || '';
+    }
+
+    function tagLabel(tag: GalleryTag) {
+        return localized(tag.name);
+    }
+
     function itemLabel(item: GalleryItem) {
-        return item.alt || item.id;
+        return localized(item.alt) || item.id;
     }
 
     function itemTypeLabel(item: GalleryItem) {
@@ -236,6 +230,10 @@
                         {$t('admin.gallery.table.type')}
                     </Table.Head>
 
+                    <Table.Head class="w-20">
+                        {$t('admin.gallery.table.year')}
+                    </Table.Head>
+
                     <Table.Head>
                         {$t('admin.gallery.table.alt')}
                     </Table.Head>
@@ -313,23 +311,30 @@
                                 </Badge>
                             </Table.Cell>
 
+                            <Table.Cell class="align-middle text-sm font-semibold tabular-nums text-slate-600">
+                                {item.year ?? '—'}
+                            </Table.Cell>
+
                             <Table.Cell class="align-middle">
                                 <div class="truncate font-medium" title={itemLabel(item)}>
-                                    {item.alt || '—'}
+                                    {localized(item.alt) || '—'}
                                 </div>
                             </Table.Cell>
 
                             <Table.Cell class="align-middle">
                                 {#if item.tags?.length}
                                     <div class="flex max-w-full flex-wrap gap-1">
-                                        {#each item.tags.slice(0, 3) as tag}
-                                            <Badge variant="outline" class="max-w-28 truncate" title={tag}>
-                                                {tag}
+                                        {#each item.tags.slice(0, 3) as tag (tag.id)}
+                                            <Badge variant="outline" class="max-w-28 truncate" title={tagLabel(tag)}>
+                                                {tagLabel(tag)}
                                             </Badge>
                                         {/each}
 
                                         {#if item.tags.length > 3}
-                                            <Badge variant="secondary" title={item.tags.join(', ')}>
+                                            <Badge
+                                                variant="secondary"
+                                                title={item.tags.map(tagLabel).join(', ')}
+                                            >
                                                 +{item.tags.length - 3}
                                             </Badge>
                                         {/if}
@@ -389,7 +394,7 @@
                     {/each}
                 {:else}
                     <Table.Row>
-                        <Table.Cell colspan={8} class="h-32 text-center">
+                        <Table.Cell colspan={9} class="h-32 text-center">
                             <div class="mx-auto flex max-w-sm flex-col items-center gap-3 text-slate-500">
                                 <div class="flex size-12 items-center justify-center rounded-2xl bg-slate-100">
                                     <ImageIcon class="size-6"/>

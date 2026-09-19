@@ -26,14 +26,18 @@
     function formatDate(event: any) {
         if (!event?.date) return '';
 
-        const date = new Date(`${event.date}T${event.time || '00:00'}`);
+        const date = new Date(`${event.date}T00:00:00`);
 
         if (Number.isNaN(date.getTime())) return event.date;
 
         return new Intl.DateTimeFormat(lang === 'de' ? 'de-CH' : 'el-GR', {
-            dateStyle: 'long',
-            timeStyle: event.time ? 'short' : undefined
+            dateStyle: 'long'
         }).format(date);
+    }
+
+    function formatTimeRange(event: any) {
+        if (!event?.time) return '';
+        return event.endTime ? `${event.time}–${event.endTime}` : event.time;
     }
 
     function plainText(value: string) {
@@ -79,6 +83,13 @@
                     <dt class="font-semibold text-slate-500">{lang === 'de' ? 'Datum' : 'Ημερομηνία'}</dt>
                     <dd>{formatDate(event)}</dd>
                 </div>
+
+                {#if formatTimeRange(event)}
+                    <div>
+                        <dt class="font-semibold text-slate-500">{$t('events.time')}</dt>
+                        <dd>{formatTimeRange(event)}</dd>
+                    </div>
+                {/if}
 
                 {#if event.location}
                     <div>

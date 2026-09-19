@@ -6,9 +6,11 @@
         {
             key: 'community',
             items: [
+                {key: 'verein', href: '/verein'},
                 {key: 'events', href: '/events'},
                 {key: 'gallery', href: '/gallery'},
-                {key: 'church', href: '/church'}
+                {key: 'church', href: '/church'},
+                {key: 'school', href: '/school'}
             ]
         },
         {
@@ -58,12 +60,12 @@
     }
 </script>
 
-<nav class="sticky top-0 z-30 border-b border-[#8ea8cf] bg-header text-slate-900 shadow-lg backdrop-blur-md">
+<nav class="sticky top-0 z-30 border-b border-blue-800/25 bg-header text-slate-900 shadow-lg backdrop-blur-md">
     <div class="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 lg:px-6">
-        <div class="flex min-w-[18rem] items-center gap-3">
+        <div class="flex min-w-[20rem] items-center gap-3">
             <a href="/" class="flex items-center gap-3">
-                <img src="/images/logo.png" alt="Griechischer Verein Hellas" class="h-20"/>
-                <span class="leading-tight text-sm font-black sm:text-lg">Griechischer Verein<br/>Hellas</span>
+                <img src="/images/logo.svg" alt="Griechischer Verein Hellas" class="h-18"/>
+<!--                <span class="leading-tight text-sm font-black sm:text-lg">Griechischer Verein<br/>Hellas</span>-->
             </a>
         </div>
 
@@ -94,10 +96,10 @@
                             onfocusin={() => openMenu(group.key)}
                             onfocusout={closeMenuWithDelay}
                     >
-                        <div class="min-w-60 rounded-2xl border border-slate-200 bg-white p-2 text-slate-800 shadow-xl">
+                        <div class="min-w-60 rounded-md border border-slate-200 bg-white p-2 text-slate-800 shadow-xl">
                             {#each group.items as item}
                                 <a href={item.href}
-                                   class={`block rounded-xl px-3 py-2.5 text-sm transition ${isActive(item.href) ? 'bg-header-accent font-black' : 'hover:bg-slate-100 font-semibold'}`}>
+                                   class={`block rounded-sm px-3 py-2.5 text-sm transition ${isActive(item.href) ? 'bg-header-accent font-black' : 'hover:bg-slate-100 font-semibold'}`}>
                                     {$t(`nav.${item.key}`)}
                                 </a>
                             {/each}

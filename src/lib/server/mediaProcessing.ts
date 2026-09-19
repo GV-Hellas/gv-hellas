@@ -9,6 +9,7 @@ import {env} from '$env/dynamic/private';
 
 import type {BusinessPayload} from '$lib/cms/business/types';
 import type {EventPayload} from '$lib/cms/events/types';
+import type {EquipmentPayload} from '$lib/cms/equipment/types';
 import {needsGermanTranslation, slugify, swissGerman} from '$lib/utils';
 
 const execFileAsync = promisify(execFile);
@@ -287,6 +288,22 @@ export async function translateEventPayloadMissingGerman(event: EventPayload) {
     );
 
     return event;
+}
+
+export async function translateEquipmentPayloadMissingGerman(equipment: EquipmentPayload) {
+    equipment.title = await translateLocalizedElToDe(equipment.title, {html: false});
+    equipment.description = await translateLocalizedElToDe(equipment.description, {html: false});
+
+    equipment.sections = await Promise.all(
+        equipment.sections.map(async (section) => ({
+            ...section,
+            beforeHtml: await translateLocalizedElToDe(section.beforeHtml, {html: true}),
+            media: section.media,
+            afterHtml: await translateLocalizedElToDe(section.afterHtml, {html: true})
+        }))
+    );
+
+    return equipment;
 }
 
 export async function translateBusinessPayloadMissingGerman(business: BusinessPayload) {

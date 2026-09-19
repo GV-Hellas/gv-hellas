@@ -82,6 +82,7 @@
             description: {el: '', de: ''},
             date: '',
             time: '',
+            endTime: '',
             location: '',
             category: 'general',
             priceMembers: null,
@@ -460,6 +461,28 @@
             </div>
 
             <div class="field">
+                <Label for={`${id}-end-time`} class="px-1">
+                    {$t('admin.form.endTime')}
+                </Label>
+
+                <Input
+                        id={`${id}-end-time`}
+                        type="time"
+                        step="60"
+                        bind:value={event.endTime}
+                        aria-invalid={!!fieldErrors.endTime}
+                        class={cn(controlClass, fieldErrors.endTime && invalidControlClass)}
+                        oninput={() => validateField('endTime')}
+                />
+
+                <p class="field-hint">{$t('admin.form.endTimeHint')}</p>
+
+                {#if fieldErrors.endTime}
+                    <p class="field-error">{fieldErrors.endTime}</p>
+                {/if}
+            </div>
+
+            <div class="field">
                 <Label for={`${id}-location`} class="px-1">
                     {$t('admin.form.location')}
                 </Label>
@@ -669,6 +692,13 @@
     .error {
         margin: 0;
         color: hsl(var(--destructive));
+    }
+
+    .field-hint {
+        margin: 0;
+        font-size: 0.75rem;
+        line-height: 1.1rem;
+        color: #667085;
     }
 
     .field-error {

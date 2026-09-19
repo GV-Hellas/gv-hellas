@@ -38,6 +38,7 @@ export type EventPayload = {
     description: LocalizedText;
     date: string;
     time: string;
+    endTime: string;
     location: string;
     category: string;
     priceMembers: number | null;
