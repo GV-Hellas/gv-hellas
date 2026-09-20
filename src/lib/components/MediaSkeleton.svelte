@@ -139,14 +139,29 @@
         };
     }
 
+    let lastMediaIdentity = '';
+
+    function mediaIdentity() {
+        // Parent components may recreate the `sources` object when unrelated
+        // reactive data changes (for example when the locale changes). Compare
+        // the actual URLs instead of the object identity so an already-loaded
+        // image does not go back to its skeleton state unnecessarily.
+        return [
+            type,
+            src,
+            fallbackSrc,
+            poster,
+            toSrcSet(sources.webp),
+            toSrcSet(sources.jpg || sources.jpeg),
+            toSrcSet(sources.png)
+        ].join('\u0001');
+    }
+
     $effect(() => {
-        // Read every source input so the state also resets when responsive
-        // variants are replaced while the component instance is retained.
-        void sources.webp;
-        void sources.jpg;
-        void sources.jpeg;
-        void sources.png;
-        void fallbackSrc;
+        const nextMediaIdentity = mediaIdentity();
+
+        if (nextMediaIdentity === lastMediaIdentity) return;
+        lastMediaIdentity = nextMediaIdentity;
 
         loaded = false;
         failed = false;
