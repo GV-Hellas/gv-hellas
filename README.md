@@ -6,18 +6,18 @@ The project mirrors the structure of the existing WordPress site ([gv-hellas.ch]
 
 ## TODO
 
-- [ ] Main: Logo Decide on a modernization
-- [ ] Main: Active color seems washed out
-- [ ] Main: buttons appear washed out and only on hover show better
+- [x] Main: Logo Decide on a modernization
+- [x] Main: Active color seems washed out
+- [x] Main: buttons appear washed out and only on hover show better
 - [ ] Main: cursor pointer when hovering over all buttons and links
 - [x] Add: CMS/Businesses
 - [x] CMS/Links: Add description
 - [x] CMS/Links: Logo displayed incorrectly + submit button seems always disabled
 - [ ] Check content licences
-- [ ] Events-first landing page
+- [x] Events-first landing page
 - [ ] from Nov.2019: X years
 - [ ] FB Api: fetch FB posts
-- [ ] Content for Equipment Rentals
+- [x] Content for Equipment Rentals
 - [ ] Event Registration
 - [x] GA4 Integration
 
