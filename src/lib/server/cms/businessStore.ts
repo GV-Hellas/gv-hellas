@@ -1,6 +1,6 @@
 import type {BusinessPayload, BusinessSaveInput, StoredBusiness, SponsorType} from '$lib/cms/business/types';
 import {businessPayloadSchema} from '$lib/cms/business/validation';
-import {supabase} from '$lib/server/supabaseClient';
+import {getSql} from '$lib/server/neonClient';
 import {slugify} from '$lib/utils';
 
 type BusinessRow = {
@@ -116,158 +116,29 @@ function businessToRow(business: BusinessPayload) {
     };
 }
 
-function formatSupabaseError(context: string, error: {message: string}) {
-    return new Error(`${context}: ${error.message}`);
-}
 
 async function assertMainSponsorAvailable(exceptId?: number) {
-    let query = supabase
-        .from('businesses')
-        .select('id')
-        .in('sponsor_type', ['main', 'gold'])
-        .limit(1);
-
-    if (exceptId) {
-        query = query.neq('id', exceptId);
-    }
-
-    const {data, error} = await query;
-
-    if (error) {
-        throw formatSupabaseError('Checking main sponsor failed', error);
-    }
-
-    if ((data || []).length > 0) {
-        throw new Error('Only one main sponsor is allowed. Change the current main sponsor first.');
-    }
+    const rows = exceptId
+        ? await getSql()`SELECT id FROM businesses WHERE sponsor_type IN ('main','gold') AND id <> ${exceptId} LIMIT 1`
+        : await getSql()`SELECT id FROM businesses WHERE sponsor_type IN ('main','gold') LIMIT 1`;
+    if (rows.length) throw new Error('Only one main sponsor is allowed. Change the current main sponsor first.');
 }
 
 export async function listBusinesses(): Promise<StoredBusiness[]> {
-    const {data, error} = await supabase
-        .from('businesses')
-        .select('*')
-        .order('sponsor_type', {ascending: true})
-        .order('name', {ascending: true});
-
-    if (error) {
-        throw formatSupabaseError('Listing businesses failed', error);
-    }
-
-    return (data || [])
-        .map((row) => rowToStoredBusiness(row as BusinessRow))
-        .sort((a, b) => {
-            const order: Record<SponsorType, number> = {
-                main: 1,
-                sponsor: 2
-            };
-
-            return order[a.sponsorType] - order[b.sponsorType] || a.name.localeCompare(b.name);
-        });
-}
-
-export async function getBusinessById(id: number): Promise<StoredBusiness | null> {
-    if (!Number.isFinite(id)) return null;
-
-    const {data, error} = await supabase
-        .from('businesses')
-        .select('*')
-        .eq('id', id)
-        .maybeSingle<BusinessRow>();
-
-    if (error) {
-        throw formatSupabaseError(`Loading business "${id}" failed`, error);
-    }
-
-    return data ? rowToStoredBusiness(data) : null;
-}
-
-export async function getBusinessBySlug(slug: string): Promise<StoredBusiness | null> {
-    const cleanSlug = safeSlug(slug);
-
-    if (!cleanSlug) return null;
-
-    const {data, error} = await supabase
-        .from('businesses')
-        .select('*')
-        .eq('slug', cleanSlug)
-        .maybeSingle<BusinessRow>();
-
-    if (error) {
-        throw formatSupabaseError(`Loading business "${cleanSlug}" failed`, error);
-    }
-
-    return data ? rowToStoredBusiness(data) : null;
-}
-
-export async function saveBusiness(input: BusinessSaveInput, currentSlug?: string): Promise<StoredBusiness> {
-    const existing =
-        input.id
-            ? await getBusinessById(input.id)
-            : currentSlug
-                ? await getBusinessBySlug(currentSlug)
-                : input.slug
-                    ? await getBusinessBySlug(input.slug)
-                    : null;
-
-    const payload = normalizePayload({
-        ...input,
-        slug: normalizeSlug(input.slug, input.name)
+    const rows = await getSql()`SELECT * FROM businesses ORDER BY sponsor_type ASC, name ASC`;
+    return rows.map(r => rowToStoredBusiness(r as BusinessRow)).sort((a,b) => {
+        const order: Record<SponsorType, number> = {main:1,sponsor:2};
+        return order[a.sponsorType]-order[b.sponsorType] || a.name.localeCompare(b.name);
     });
-
-    const slug = existing?.slug || normalizeSlug(payload.slug, payload.name);
-
-    if (!slug) {
-        throw new Error('Invalid business slug');
-    }
-
-    if (payload.sponsorType === 'main') {
-        await assertMainSponsorAvailable(existing?.id);
-    }
-
-    const row = businessToRow({
-        ...payload,
-        slug
-    });
-
-    if (existing?.id) {
-        const {data, error} = await supabase
-            .from('businesses')
-            .update(row)
-            .eq('id', existing.id)
-            .select('*')
-            .single<BusinessRow>();
-
-        if (error) {
-            throw formatSupabaseError(`Updating business "${slug}" failed`, error);
-        }
-
-        return rowToStoredBusiness(data);
-    }
-
-    const {data, error} = await supabase
-        .from('businesses')
-        .insert(row)
-        .select('*')
-        .single<BusinessRow>();
-
-    if (error) {
-        throw formatSupabaseError(`Creating business "${slug}" failed`, error);
-    }
-
-    return rowToStoredBusiness(data);
 }
-
-export async function deleteBusiness(id: number): Promise<boolean> {
-    if (!Number.isFinite(id)) return false;
-
-    const {error, count} = await supabase
-        .from('businesses')
-        .delete({count: 'exact'})
-        .eq('id', id);
-
-    if (error) {
-        throw formatSupabaseError(`Deleting business "${id}" failed`, error);
-    }
-
-    return (count ?? 0) > 0;
+export async function getBusinessById(id:number):Promise<StoredBusiness|null>{if(!Number.isFinite(id))return null;const rows=await getSql()`SELECT * FROM businesses WHERE id=${id} LIMIT 1`;return rows[0]?rowToStoredBusiness(rows[0] as BusinessRow):null}
+export async function getBusinessBySlug(slug:string):Promise<StoredBusiness|null>{const clean=safeSlug(slug);if(!clean)return null;const rows=await getSql()`SELECT * FROM businesses WHERE slug=${clean} LIMIT 1`;return rows[0]?rowToStoredBusiness(rows[0] as BusinessRow):null}
+export async function saveBusiness(input:BusinessSaveInput,currentSlug?:string):Promise<StoredBusiness>{
+    const existing=input.id?await getBusinessById(input.id):currentSlug?await getBusinessBySlug(currentSlug):input.slug?await getBusinessBySlug(input.slug):null;
+    const payload=normalizePayload({...input,slug:normalizeSlug(input.slug,input.name)});const slug=existing?.slug||normalizeSlug(payload.slug,payload.name);if(!slug)throw new Error('Invalid business slug');if(payload.sponsorType==='main')await assertMainSponsorAvailable(existing?.id);
+    const r=businessToRow({...payload,slug});const sections=JSON.stringify(r.sections||[]);let rows;
+    if(existing?.id){rows=await getSql()`UPDATE businesses SET sponsor_type=${r.sponsor_type},name=${r.name},slug=${r.slug},logo=${r.logo},logo_webp=${r.logo_webp},logo_jpg=${r.logo_jpg},description_el=${r.description_el},description_de=${r.description_de},url=${r.url},email=${r.email},telephone=${r.telephone},contact_person=${r.contact_person},sections=${sections}::jsonb,updated_at=NOW() WHERE id=${existing.id} RETURNING *`}
+    else{rows=await getSql()`INSERT INTO businesses(sponsor_type,name,slug,logo,logo_webp,logo_jpg,description_el,description_de,url,email,telephone,contact_person,sections,updated_at) VALUES(${r.sponsor_type},${r.name},${r.slug},${r.logo},${r.logo_webp},${r.logo_jpg},${r.description_el},${r.description_de},${r.url},${r.email},${r.telephone},${r.contact_person},${sections}::jsonb,NOW()) RETURNING *`}
+    return rowToStoredBusiness(rows[0] as BusinessRow);
 }
+export async function deleteBusiness(id:number):Promise<boolean>{if(!Number.isFinite(id))return false;return (await getSql()`DELETE FROM businesses WHERE id=${id} RETURNING id`).length>0}

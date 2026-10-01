@@ -1,52 +1,32 @@
-import type {PostgrestError} from '@supabase/supabase-js';
-
-import {supabase} from '$lib/server/supabaseClient';
+import {getSql} from '$lib/server/neonClient';
 
 let readyPromise: Promise<void> | null = null;
 
-type CmsTableCheck = {
-    table: string;
-    column: string;
-};
-
-const TABLES: CmsTableCheck[] = [
-    {table: 'events', column: 'slug'},
-    {table: 'gallery_items', column: 'id'},
-    {table: 'gallery_tags', column: 'id'},
-    {table: 'gallery_item_tags', column: 'item_id'},
-    {table: 'links', column: 'id'},
-    {table: 'businesses', column: 'id'},
-    {table: 'equipment', column: 'id'}
-];
-
-function formatSupabaseError(error: PostgrestError) {
-    return [error.message, error.details, error.hint]
-        .filter(Boolean)
-        .join(' ');
-}
-
-async function assertTableReadable(table: string, column: string) {
-    const {error} = await supabase
-        .from(table)
-        .select(column, {
-            head: true,
-            count: 'exact'
-        })
-        .limit(1);
-
-    if (error) {
-        throw new Error(
-            `Supabase table "${table}" is not readable. ` +
-            `Create the table in Supabase and check RLS policies. ` +
-            formatSupabaseError(error)
-        );
-    }
-}
+const TABLES = [
+    'events',
+    'gallery_items',
+    'gallery_tags',
+    'gallery_item_tags',
+    'links',
+    'businesses',
+    'equipment',
+    'homepage_slides'
+] as const;
 
 async function verifyDatabase() {
-    for (const item of TABLES) {
-        await assertTableReadable(item.table, item.column);
-    }
+    const sql = getSql();
+    const rows = await sql`
+        SELECT table_name
+        FROM information_schema.tables
+        WHERE table_schema = 'public'
+          AND table_name IN (
+              'events', 'gallery_items', 'gallery_tags', 'gallery_item_tags',
+              'links', 'businesses', 'equipment', 'homepage_slides'
+          )
+    `;
+    const found = new Set(rows.map((row) => String(row.table_name)));
+    const missing = TABLES.filter((table) => !found.has(table));
+    if (missing.length) throw new Error(`Neon database is missing required table(s): ${missing.join(', ')}`);
 }
 
 export function ensureDatabase() {
@@ -56,14 +36,12 @@ export function ensureDatabase() {
             throw error;
         });
     }
-
     return readyPromise;
 }
 
 export async function getDB() {
     await ensureDatabase();
-
-    return supabase;
+    return getSql();
 }
 
-export {supabase};
+export {getSql as sql};

@@ -1,6 +1,6 @@
 import type {EquipmentPayload, StoredEquipment} from '$lib/cms/equipment/types';
 import {equipmentPayloadSchema} from '$lib/cms/equipment/schema';
-import {supabase} from '$lib/server/supabaseClient';
+import {getSql} from '$lib/server/neonClient';
 import {slugify} from '$lib/utils';
 
 type EquipmentRow = {
@@ -106,148 +106,14 @@ function equipmentToRow(equipment: EquipmentPayload, slug: string) {
     };
 }
 
-function formatSupabaseError(context: string, error: {message: string}) {
-    return new Error(`${context}: ${error.message}`);
-}
 
-async function slugExists(slug: string) {
-    const {data, error} = await supabase
-        .from('equipment')
-        .select('id')
-        .eq('slug', slug)
-        .limit(1);
-
-    if (error) {
-        throw formatSupabaseError(`Checking equipment slug "${slug}" failed`, error);
-    }
-
-    return (data || []).length > 0;
-}
-
-async function uniqueSlug(base: string) {
-    const cleanBase = safeSlug(base) || `equipment-${crypto.randomUUID()}`;
-    let candidate = cleanBase;
-    let counter = 2;
-
-    while (await slugExists(candidate)) {
-        candidate = `${cleanBase}-${counter}`;
-        counter += 1;
-    }
-
-    return candidate;
-}
-
-export async function listEquipment(): Promise<StoredEquipment[]> {
-    const {data, error} = await supabase
-        .from('equipment')
-        .select('*')
-        .order('created_at', {ascending: false});
-
-    if (error) {
-        throw formatSupabaseError('Listing equipment failed', error);
-    }
-
-    return (data || []).map((row) => rowToStoredEquipment(row as EquipmentRow));
-}
-
-export async function getEquipmentById(id: number): Promise<StoredEquipment | null> {
-    if (!Number.isFinite(id)) return null;
-
-    const {data, error} = await supabase
-        .from('equipment')
-        .select('*')
-        .eq('id', id)
-        .maybeSingle<EquipmentRow>();
-
-    if (error) {
-        throw formatSupabaseError(`Loading equipment "${id}" failed`, error);
-    }
-
-    return data ? rowToStoredEquipment(data) : null;
-}
-
-export async function getEquipmentBySlug(slug: string): Promise<StoredEquipment | null> {
-    const cleanSlug = safeSlug(slug);
-
-    if (!cleanSlug) return null;
-
-    const {data, error} = await supabase
-        .from('equipment')
-        .select('*')
-        .eq('slug', cleanSlug)
-        .maybeSingle<EquipmentRow>();
-
-    if (error) {
-        throw formatSupabaseError(`Loading equipment "${cleanSlug}" failed`, error);
-    }
-
-    return data ? rowToStoredEquipment(data) : null;
-}
-
-export async function createEquipmentSlug(title: string): Promise<string> {
-    const baseSlug = slugify(title) || `equipment-${crypto.randomUUID()}`;
-    return uniqueSlug(baseSlug);
-}
-
-export async function createEquipment(input: EquipmentPayload, requestedSlug?: string): Promise<StoredEquipment> {
-    const equipment = normalizePayload(input);
-    const slug = requestedSlug
-        ? safeSlug(requestedSlug)
-        : await createEquipmentSlug(equipment.title.el || equipment.title.de);
-
-    if (!slug) {
-        throw new Error('Invalid equipment slug');
-    }
-    const row = equipmentToRow(equipment, slug);
-
-    const {data, error} = await supabase
-        .from('equipment')
-        .insert(row)
-        .select('*')
-        .single<EquipmentRow>();
-
-    if (error) {
-        throw formatSupabaseError(`Creating equipment "${slug}" failed`, error);
-    }
-
-    return rowToStoredEquipment(data);
-}
-
-export async function updateEquipment(id: number, input: EquipmentPayload): Promise<StoredEquipment> {
-    const existing = await getEquipmentById(id);
-
-    if (!existing) {
-        throw new Error('Equipment not found');
-    }
-
-    const equipment = normalizePayload(input);
-    const row = equipmentToRow(equipment, existing.slug);
-
-    const {data, error} = await supabase
-        .from('equipment')
-        .update(row)
-        .eq('id', existing.id)
-        .select('*')
-        .single<EquipmentRow>();
-
-    if (error) {
-        throw formatSupabaseError(`Updating equipment "${existing.slug}" failed`, error);
-    }
-
-    return rowToStoredEquipment(data);
-}
-
-export async function deleteEquipment(id: number): Promise<boolean> {
-    if (!Number.isFinite(id)) return false;
-
-    const {error, count} = await supabase
-        .from('equipment')
-        .delete({count: 'exact'})
-        .eq('id', id);
-
-    if (error) {
-        throw formatSupabaseError(`Deleting equipment "${id}" failed`, error);
-    }
-
-    return (count ?? 0) > 0;
-}
+async function slugExists(slug:string){return (await getSql()`SELECT id FROM equipment WHERE slug=${slug} LIMIT 1`).length>0}
+async function uniqueSlug(base:string){const clean=safeSlug(base)||`equipment-${crypto.randomUUID()}`;let c=clean,n=2;while(await slugExists(c)){c=`${clean}-${n++}`}return c}
+export async function listEquipment():Promise<StoredEquipment[]>{const rows=await getSql()`SELECT * FROM equipment ORDER BY created_at DESC`;return rows.map(r=>rowToStoredEquipment(r as EquipmentRow))}
+export async function getEquipmentById(id:number):Promise<StoredEquipment|null>{if(!Number.isFinite(id))return null;const rows=await getSql()`SELECT * FROM equipment WHERE id=${id} LIMIT 1`;return rows[0]?rowToStoredEquipment(rows[0] as EquipmentRow):null}
+export async function getEquipmentBySlug(slug:string):Promise<StoredEquipment|null>{const clean=safeSlug(slug);if(!clean)return null;const rows=await getSql()`SELECT * FROM equipment WHERE slug=${clean} LIMIT 1`;return rows[0]?rowToStoredEquipment(rows[0] as EquipmentRow):null}
+export async function createEquipmentSlug(title:string){return uniqueSlug(slugify(title)||`equipment-${crypto.randomUUID()}`)}
+async function writeEquipment(row:ReturnType<typeof equipmentToRow>, id?:number){const sections=JSON.stringify(row.sections||[]);if(id){return await getSql()`UPDATE equipment SET slug=${row.slug},title_el=${row.title_el},title_de=${row.title_de},description_el=${row.description_el},description_de=${row.description_de},price_per_day=${row.price_per_day},sections=${sections}::jsonb,name=${row.name},brand=${row.brand},model_year=${row.model_year},description=${row.description},image_1=${row.image_1},image_1_webp=${row.image_1_webp},image_1_jpg=${row.image_1_jpg},image_2=${row.image_2},image_2_webp=${row.image_2_webp},image_2_jpg=${row.image_2_jpg},image_3=${row.image_3},image_3_webp=${row.image_3_webp},image_3_jpg=${row.image_3_jpg},video=${row.video},updated_at=NOW() WHERE id=${id} RETURNING *`}return await getSql()`INSERT INTO equipment(slug,title_el,title_de,description_el,description_de,price_per_day,sections,name,brand,model_year,description,image_1,image_1_webp,image_1_jpg,image_2,image_2_webp,image_2_jpg,image_3,image_3_webp,image_3_jpg,video,updated_at) VALUES(${row.slug},${row.title_el},${row.title_de},${row.description_el},${row.description_de},${row.price_per_day},${sections}::jsonb,${row.name},${row.brand},${row.model_year},${row.description},${row.image_1},${row.image_1_webp},${row.image_1_jpg},${row.image_2},${row.image_2_webp},${row.image_2_jpg},${row.image_3},${row.image_3_webp},${row.image_3_jpg},${row.video},NOW()) RETURNING *`}
+export async function createEquipment(input:EquipmentPayload,requestedSlug?:string){const e=normalizePayload(input);const slug=requestedSlug?safeSlug(requestedSlug):await createEquipmentSlug(e.title.el||e.title.de);if(!slug)throw new Error('Invalid equipment slug');const rows=await writeEquipment(equipmentToRow(e,slug));return rowToStoredEquipment(rows[0] as EquipmentRow)}
+export async function updateEquipment(id:number,input:EquipmentPayload){const existing=await getEquipmentById(id);if(!existing)throw new Error('Equipment not found');const rows=await writeEquipment(equipmentToRow(normalizePayload(input),existing.slug),existing.id);return rowToStoredEquipment(rows[0] as EquipmentRow)}
+export async function deleteEquipment(id:number){if(!Number.isFinite(id))return false;return (await getSql()`DELETE FROM equipment WHERE id=${id} RETURNING id`).length>0}
